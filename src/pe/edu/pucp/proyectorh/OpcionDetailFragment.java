@@ -38,13 +38,10 @@ public class OpcionDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_opcion_detail,
 				container, false);
 		if (mItem != null) {
-<<<<<<< HEAD
+
 			// ((TextView) rootView.findViewById(R.id.opcion_detail))
 			// .setText(mItem.content);
-			System.out.println("mIten="+mItem);
-			
-=======
->>>>>>> 3fcf1576e19c7e0268e740e05cfdbca827b8130d
+			System.out.println("mIten="+mItem);			
 			((TextView) rootView.findViewById(R.id.opcion_detail))
 					.setText(mItem.nombre);
 		}
