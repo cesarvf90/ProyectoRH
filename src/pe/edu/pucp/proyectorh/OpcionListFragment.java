@@ -1,6 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
-import pe.edu.pucp.proyectorh.dummy.DummyContent;
+import pe.edu.pucp.proyectorh.model.Modulo;
 
 import android.R;
 import android.app.Activity;
@@ -40,9 +40,8 @@ public class OpcionListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-				R.layout.simple_list_item_activated_1, R.id.text1,
-				DummyContent.ITEMS));
+		setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),
+				R.layout.simple_list_item_activated_1, R.id.text1, Modulo.ITEMS));
 	}
 
 	@Override
@@ -78,7 +77,7 @@ public class OpcionListFragment extends ListFragment {
 
 		System.out.println("entra a onList");
 		super.onListItemClick(listView, view, position, id);
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(Modulo.ITEMS.get(position).id);
 	}
 
 	@Override
