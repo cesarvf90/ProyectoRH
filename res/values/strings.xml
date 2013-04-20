@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">RH++</string>
+    <string name="title_opcion_detail">Opcion Detail</string>
+    <string name="title_opcion_list">Opciones</string>
+
+</resources>
