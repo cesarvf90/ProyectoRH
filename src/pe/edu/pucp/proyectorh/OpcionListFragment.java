@@ -1,8 +1,11 @@
 package pe.edu.pucp.proyectorh;
 
-import pe.edu.pucp.proyectorh.model.Modulo;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.R;
+import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -41,7 +44,8 @@ public class OpcionListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),
-				R.layout.simple_list_item_activated_1, R.id.text1, Modulo.ITEMS));
+				R.layout.accordion_list, R.id.accordion_list, Modulo.ITEMS));
+		// R.layout.simple_list_item_activated_1, R.id.text1, Modulo.ITEMS));
 	}
 
 	@Override
@@ -75,6 +79,32 @@ public class OpcionListFragment extends ListFragment {
 	public void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		super.onListItemClick(listView, view, position, id);
+		// nuevo codigo//
+		OpcionListActivity.NAVEGACION = 2;
+		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
+		switch ((int) id) {
+		case 1:
+			submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
+			break;
+		case 2:
+			submodulos = Modulo.obtenerFuncionalidadesAdministracion();
+			break;
+		case 3:
+			submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
+			break;
+		case 4:
+			submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
+			break;
+		case 5:
+			submodulos = Modulo.obtenerFuncionalidadesObjetivos();
+			break;
+		case 6:
+			submodulos = Modulo.obtenerFuncionalidadesReportes();
+			break;
+		}
+		setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),
+				R.layout.accordion_list, R.id.accordion_list, submodulos));
+		// nuevo codigo//
 		mCallbacks.onItemSelected(Modulo.ITEMS.get(position).id);
 	}
 

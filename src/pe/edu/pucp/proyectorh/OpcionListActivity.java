@@ -1,8 +1,10 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.model.Modulo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.ArrayAdapter;
 
 /**
  * Actividad principal
@@ -13,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 public class OpcionListActivity extends FragmentActivity implements
 		OpcionListFragment.Callbacks {
 
+	public static int NAVEGACION = 1;
 	private boolean dosPaneles;
 
 	@Override
@@ -41,6 +44,18 @@ public class OpcionListActivity extends FragmentActivity implements
 			Intent detailIntent = new Intent(this, OpcionDetailActivity.class);
 			detailIntent.putExtra(OpcionDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (NAVEGACION == 2) {
+			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
+					R.id.opcion_list))
+					.setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(
+							getBaseContext(), R.layout.accordion_list,
+							R.id.accordion_list, Modulo.ITEMS));
+			NAVEGACION = 1;
 		}
 	}
 }
