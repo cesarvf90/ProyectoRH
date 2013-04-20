@@ -75,6 +75,8 @@ public class OpcionListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position,
 			long id) {
+
+		System.out.println("entra a onList");
 		super.onListItemClick(listView, view, position, id);
 		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
 	}

@@ -41,6 +41,8 @@ public class OpcionDetailFragment extends Fragment {
 		if (mItem != null) {
 			// ((TextView) rootView.findViewById(R.id.opcion_detail))
 			// .setText(mItem.content);
+			System.out.println("mIten="+mItem);
+			
 			((TextView) rootView.findViewById(R.id.opcion_detail))
 					.setText("Arriba Alianza!!!");
 		}
