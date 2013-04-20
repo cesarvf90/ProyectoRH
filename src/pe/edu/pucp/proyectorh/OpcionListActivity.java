@@ -32,6 +32,7 @@ public class OpcionListActivity extends FragmentActivity implements
 
 	@Override
 	public void onItemSelected(String id) {
+		System.out.println("id="+id);
 		if (dosPaneles) {
 			Bundle arguments = new Bundle();
 			arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
