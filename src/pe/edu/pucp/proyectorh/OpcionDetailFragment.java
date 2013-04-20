@@ -1,6 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
-import pe.edu.pucp.proyectorh.dummy.DummyContent;
+import pe.edu.pucp.proyectorh.model.Modulo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +19,7 @@ public class OpcionDetailFragment extends Fragment {
 
 	public static final String ARG_ITEM_ID = "item_id";
 
-	DummyContent.DummyItem mItem;
+	Modulo.ModuloItem mItem;
 
 	public OpcionDetailFragment() {
 	}
@@ -28,8 +28,7 @@ public class OpcionDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
+			mItem = Modulo.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 		}
 	}
 
@@ -39,10 +38,10 @@ public class OpcionDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_opcion_detail,
 				container, false);
 		if (mItem != null) {
-			// ((TextView) rootView.findViewById(R.id.opcion_detail))
-			// .setText(mItem.content);
 			((TextView) rootView.findViewById(R.id.opcion_detail))
-					.setText("Arriba Alianza!!!");
+					.setText(mItem.nombre);
+			// ((TextView) rootView.findViewById(R.id.opcion_detail))
+			// .setText("Arriba Alianza!!!");
 		}
 		return rootView;
 	}
