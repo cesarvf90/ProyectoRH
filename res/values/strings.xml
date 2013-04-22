@@ -3,5 +3,9 @@
     <string name="app_name">RH++</string>
     <string name="title_opcion_detail">Opcion Detail</string>
     <string name="title_opcion_list">Opciones</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="Login">Ingresar</string>
 
 </resources>
