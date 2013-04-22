@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.model.Modulo;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -32,7 +33,6 @@ public class OpcionListActivity extends FragmentActivity implements
 
 	@Override
 	public void onItemSelected(String id) {
-		System.out.println("id="+id);
 		if (dosPaneles) {
 			Bundle arguments = new Bundle();
 			arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
@@ -51,12 +51,21 @@ public class OpcionListActivity extends FragmentActivity implements
 	@Override
 	public void onBackPressed() {
 		if (NAVEGACION == 2) {
+			NAVEGACION = 1;
+			Modulo.MODULOS_MOSTRADOS_ACTUAL = Modulo.MODULOS;
 			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.opcion_list))
 					.setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(
 							getBaseContext(), R.layout.accordion_list,
-							R.id.accordion_list, Modulo.ITEMS));
-			NAVEGACION = 1;
+							R.id.accordion_list,
+							Modulo.MODULOS_MOSTRADOS_ACTUAL));
+		} else if (NAVEGACION == 1) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Cerrar sesión");
+			builder.setMessage("¿Está seguro que desea salir de la aplicación?");
+			builder.setPositiveButton("OK", null);
+			builder.create();
+			builder.show();
 		}
 	}
 }

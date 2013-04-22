@@ -22,19 +22,18 @@ public class LoginActivity extends Activity {
 		// View root = view.getRootView();
 		// root.setBackgroundColor(getResources().getColor(
 		// android.R.color.holo_green_light));
-		Button loginButton = (Button) findViewById(R.id.button1);
+		Button loginButton = (Button) findViewById(R.id.loginButton);
 		loginButton.getBackground().setColorFilter(0xFF91E2A9,
 				PorterDuff.Mode.MULTIPLY);
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				EditText usuarioText = (EditText) findViewById(R.id.editText1);
-				EditText contrasenaText = (EditText) findViewById(R.id.editText2);
+				EditText usuarioText = (EditText) findViewById(R.id.usuarioText);
+				EditText contrasenaText = (EditText) findViewById(R.id.contrasenaText);
 				if (!Constante.CADENA_VACIA.equals(usuarioText.getText()
 						.toString())
 						&& !Constante.CADENA_VACIA.equals(contrasenaText
 								.getText().toString())) {
-					Button loginButton = (Button) findViewById(R.id.button1);
 					Intent mainIntent = new Intent(v.getContext(),
 							OpcionListActivity.class);
 					startActivity(mainIntent);

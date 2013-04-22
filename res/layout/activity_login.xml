@@ -30,8 +30,8 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText1"
-                android:layout_width="91dp"
+                android:id="@+id/usuarioText"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content" >
 
                 <requestFocus />
@@ -55,20 +55,20 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText2"
-                android:layout_width="91dp"
+                android:id="@+id/contrasenaText"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="80dp"
         android:text="@string/Login" />
 
 </RelativeLayout>

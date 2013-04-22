@@ -19,7 +19,7 @@ public class OpcionDetailFragment extends Fragment {
 
 	public static final String ARG_ITEM_ID = "item_id";
 
-	Modulo.ModuloItem mItem;
+	Modulo.ModuloItem tituloFuncionalidad;
 
 	public OpcionDetailFragment() {
 	}
@@ -28,7 +28,13 @@ public class OpcionDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			mItem = Modulo.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+			// tituloFuncionalidad = Modulo.MODULOS_MAP.get(getArguments()
+			// .getString(ARG_ITEM_ID));
+			System.out.println("-------Seleccionado Id:"
+					+ String.valueOf((Integer.parseInt((getArguments()
+							.getString(ARG_ITEM_ID))) - 1)));
+			tituloFuncionalidad = Modulo.MODULOS_MOSTRADOS_ACTUAL.get(Integer
+					.parseInt(getArguments().getString(ARG_ITEM_ID)) - 1);
 		}
 	}
 
@@ -37,13 +43,9 @@ public class OpcionDetailFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_opcion_detail,
 				container, false);
-		if (mItem != null) {
-
-			// ((TextView) rootView.findViewById(R.id.opcion_detail))
-			// .setText(mItem.content);
-			System.out.println("mIten="+mItem);			
+		if (tituloFuncionalidad != null) {
 			((TextView) rootView.findViewById(R.id.opcion_detail))
-					.setText(mItem.nombre);
+					.setText(tituloFuncionalidad.nombre);
 		}
 		return rootView;
 	}

@@ -23,8 +23,10 @@ public class Modulo {
 		}
 	}
 
-	public static List<ModuloItem> ITEMS = new ArrayList<ModuloItem>();
-	public static Map<String, ModuloItem> ITEM_MAP = new HashMap<String, ModuloItem>();
+	public static List<ModuloItem> MODULOS_MOSTRADOS_ACTUAL = new ArrayList<ModuloItem>();
+
+	public static List<ModuloItem> MODULOS = new ArrayList<ModuloItem>();
+	public static Map<String, ModuloItem> MODULOS_MAP = new HashMap<String, ModuloItem>();
 
 	static {
 		addItem(new ModuloItem("1", "Mi información"));
@@ -33,58 +35,63 @@ public class Modulo {
 		addItem(new ModuloItem("4", "Evaluación 360"));
 		addItem(new ModuloItem("5", "Objetivos"));
 		addItem(new ModuloItem("6", "Reportes"));
+		MODULOS_MOSTRADOS_ACTUAL = MODULOS;
 	}
 
 	private static void addItem(ModuloItem item) {
-		ITEMS.add(item);
-		ITEM_MAP.put(item.id, item);
+		MODULOS.add(item);
+		MODULOS_MAP.put(item.id, item);
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesMiInformacion() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("7", "Mii111"));
-		submodulos.add(new ModuloItem("8", "Mii222"));
-		submodulos.add(new ModuloItem("9", "Mii333"));
+		submodulos.add(new ModuloItem("1", "Información personal"));
+		submodulos.add(new ModuloItem("2", "Mi equipo de trabajo"));
+		submodulos.add(new ModuloItem("3", "Mis contactos"));
+		submodulos.add(new ModuloItem("4", "Agenda"));
 		return submodulos;
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesAdministracion() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("10", "Adm111"));
-		submodulos.add(new ModuloItem("11", "Adm222"));
-		submodulos.add(new ModuloItem("12", "Adm333"));
+		submodulos.add(new ModuloItem("1", "Administrar empleados"));
 		return submodulos;
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesReclutamiento() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("13", "Rec111"));
-		submodulos.add(new ModuloItem("14", "Rec222"));
-		submodulos.add(new ModuloItem("15", "Rec333"));
+		submodulos.add(new ModuloItem("1", "Aprobar postulante"));
+		submodulos
+				.add(new ModuloItem("2", "Aceptar solicitudes oferta laboral"));
+		submodulos.add(new ModuloItem("3", "Aceptar solicitudes de promoción"));
+		submodulos.add(new ModuloItem("4", "Evaluar postulante"));
 		return submodulos;
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesEvaluacion360() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("16", "Eva111"));
-		submodulos.add(new ModuloItem("17", "Eva222"));
-		submodulos.add(new ModuloItem("18", "Eva333"));
+		submodulos.add(new ModuloItem("1", "Mis evaluaciones"));
+		submodulos.add(new ModuloItem("2", "Rol evaluador"));
+		submodulos.add(new ModuloItem("3", "Mis subordinados"));
 		return submodulos;
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesObjetivos() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("19", "Obj111"));
-		submodulos.add(new ModuloItem("20", "Obj222"));
-		submodulos.add(new ModuloItem("21", "Obj333"));
+		submodulos.add(new ModuloItem("1", "Objetivos"));
+		submodulos.add(new ModuloItem("2", "Empresa"));
+		submodulos.add(new ModuloItem("3", "Mis objetivos"));
+		submodulos.add(new ModuloItem("4", "Objetivos subordinados"));
+		submodulos.add(new ModuloItem("5", "Avance"));
+		submodulos.add(new ModuloItem("6", "Monitoreo"));
 		return submodulos;
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesReportes() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("22", "Rep111"));
-		submodulos.add(new ModuloItem("23", "Rep222"));
-		submodulos.add(new ModuloItem("24", "Rep333"));
+		submodulos.add(new ModuloItem("1", "Reporte de reclutamiento"));
+		submodulos.add(new ModuloItem("2", "Reporte 360"));
+		submodulos.add(new ModuloItem("3", "Reporte de avance"));
 		return submodulos;
 	}
 
