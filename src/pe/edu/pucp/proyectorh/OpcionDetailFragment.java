@@ -28,8 +28,6 @@ public class OpcionDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// tituloFuncionalidad = Modulo.MODULOS_MAP.get(getArguments()
-			// .getString(ARG_ITEM_ID));
 			System.out.println("-------Seleccionado Id:"
 					+ String.valueOf((Integer.parseInt((getArguments()
 							.getString(ARG_ITEM_ID))) - 1)));

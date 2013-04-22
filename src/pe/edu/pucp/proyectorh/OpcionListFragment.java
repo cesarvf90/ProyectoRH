@@ -81,7 +81,6 @@ public class OpcionListFragment extends ListFragment {
 		if (OpcionListActivity.NAVEGACION == 1) {
 			OpcionListActivity.NAVEGACION = 2;
 			List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-			System.out.println("-------Id:" + (int) id);
 			switch (((int) id) + 1) {
 			case 1:
 				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
@@ -104,8 +103,6 @@ public class OpcionListFragment extends ListFragment {
 			}
 			setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),
 					R.layout.accordion_list, R.id.accordion_list, submodulos));
-			// mCallbacks.onItemSelected(Modulo.MODULOS_MOSTRADOS_ACTUAL
-			// .get(position).id);
 			Modulo.MODULOS_MOSTRADOS_ACTUAL = submodulos;
 		} else if (OpcionListActivity.NAVEGACION == 2) {
 			mCallbacks.onItemSelected(Modulo.MODULOS_MOSTRADOS_ACTUAL

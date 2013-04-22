@@ -53,12 +53,19 @@ public class OpcionListActivity extends FragmentActivity implements
 		if (NAVEGACION == 2) {
 			NAVEGACION = 1;
 			Modulo.MODULOS_MOSTRADOS_ACTUAL = Modulo.MODULOS;
+			// Se actualiza el menu izquierdo
 			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.opcion_list))
 					.setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(
 							getBaseContext(), R.layout.accordion_list,
 							R.id.accordion_list,
 							Modulo.MODULOS_MOSTRADOS_ACTUAL));
+			// Se muestra contenido vacio en el fragmento derecho
+			Bundle arguments = new Bundle();
+			OpcionDetailFragment fragment = new OpcionDetailFragment();
+			fragment.setArguments(arguments);
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.opcion_detail_container, fragment).commit();
 		} else if (NAVEGACION == 1) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Cerrar sesión");
