@@ -1,6 +1,8 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,13 +40,21 @@ public class OpcionListActivity extends FragmentActivity implements
 	@Override
 	public void onItemSelected(String id) {
 		if (dosPaneles) {
-			Bundle arguments = new Bundle();
-			arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
-			OpcionDetailFragment fragment = new OpcionDetailFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.opcion_detail_container, fragment).commit();
-
+			if ((Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO)
+					&& ("4".equals(id))) {
+				RendirEvaluacionesFragment fragment = new RendirEvaluacionesFragment();
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
+			} else {
+				Bundle arguments = new Bundle();
+				arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
+				OpcionDetailFragment fragment = new OpcionDetailFragment();
+				fragment.setArguments(arguments);
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
+			}
 		} else {
 			Intent detailIntent = new Intent(this, OpcionDetailActivity.class);
 			detailIntent.putExtra(OpcionDetailFragment.ARG_ITEM_ID, id);
@@ -57,6 +67,7 @@ public class OpcionListActivity extends FragmentActivity implements
 		if (NAVEGACION == 2) {
 			NAVEGACION = 1;
 			Modulo.MODULOS_MOSTRADOS_ACTUAL = Modulo.MODULOS;
+			Modulo.MODULO_ACTUAL = Constante.PRINCIPAL;
 			// Se actualiza el menu izquierdo
 			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.opcion_list))
@@ -113,6 +124,7 @@ public class OpcionListActivity extends FragmentActivity implements
 	}
 
 	protected void cerrarSesion() {
+		NAVEGACION = 1;
 		finish();
 	}
 }
