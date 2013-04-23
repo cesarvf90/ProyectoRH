@@ -2,9 +2,13 @@ package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.model.Modulo;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 /**
@@ -66,13 +70,49 @@ public class OpcionListActivity extends FragmentActivity implements
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.replace(R.id.opcion_detail_container, fragment).commit();
-		} else if (NAVEGACION == 1) {
+		}
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options_menu, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.about:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Cerrar sesión");
-			builder.setMessage("¿Está seguro que desea salir de la aplicación?");
-			builder.setPositiveButton("OK", null);
+			builder.setMessage("¿Está seguro que desea cerrar sesión?");
+			builder.setCancelable(false);
+			builder.setNegativeButton("Cancelar",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+			builder.setPositiveButton("Aceptar",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							cerrarSesion();
+						}
+					});
 			builder.create();
 			builder.show();
+			return false;
+		case R.id.help:
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	protected void cerrarSesion() {
+		finish();
 	}
 }
