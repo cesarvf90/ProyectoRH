@@ -5,6 +5,7 @@ import java.util.List;
 
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
+import pe.edu.pucp.proyectorh.utils.Constante;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -84,21 +85,31 @@ public class OpcionListFragment extends ListFragment {
 			switch (((int) id) + 1) {
 			case 1:
 				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
+				Modulo.MODULO_ACTUAL = Constante.MI_INFORMACION;
 				break;
 			case 2:
 				submodulos = Modulo.obtenerFuncionalidadesAdministracion();
+				Modulo.MODULO_ACTUAL = Constante.ADMINISTRACION;
 				break;
 			case 3:
 				submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
+				Modulo.MODULO_ACTUAL = Constante.RECLUTAMIENTO;
 				break;
 			case 4:
 				submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
+				Modulo.MODULO_ACTUAL = Constante.EVALUACION_360;
 				break;
 			case 5:
 				submodulos = Modulo.obtenerFuncionalidadesObjetivos();
+				Modulo.MODULO_ACTUAL = Constante.OBJETIVOS;
 				break;
 			case 6:
+				submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
+				Modulo.MODULO_ACTUAL = Constante.LINEA_DE_CARRERA;
+				break;
+			case 7:
 				submodulos = Modulo.obtenerFuncionalidadesReportes();
+				Modulo.MODULO_ACTUAL = Constante.REPORTES;
 				break;
 			}
 			setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),

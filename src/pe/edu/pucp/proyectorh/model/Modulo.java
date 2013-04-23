@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pe.edu.pucp.proyectorh.utils.Constante;
+
 public class Modulo {
 
 	public static class ModuloItem {
@@ -24,7 +26,7 @@ public class Modulo {
 	}
 
 	public static List<ModuloItem> MODULOS_MOSTRADOS_ACTUAL = new ArrayList<ModuloItem>();
-
+	public static int MODULO_ACTUAL = Constante.PRINCIPAL;
 	public static List<ModuloItem> MODULOS = new ArrayList<ModuloItem>();
 	public static Map<String, ModuloItem> MODULOS_MAP = new HashMap<String, ModuloItem>();
 
@@ -34,7 +36,8 @@ public class Modulo {
 		addItem(new ModuloItem("3", "Reclutamiento"));
 		addItem(new ModuloItem("4", "Evaluación 360"));
 		addItem(new ModuloItem("5", "Objetivos"));
-		addItem(new ModuloItem("6", "Reportes"));
+		addItem(new ModuloItem("6", "Línea de carrera"));
+		addItem(new ModuloItem("7", "Reportes"));
 		MODULOS_MOSTRADOS_ACTUAL = MODULOS;
 	}
 
@@ -87,11 +90,19 @@ public class Modulo {
 		return submodulos;
 	}
 
+	public static List<ModuloItem> obtenerFuncionalidadesLineaDeCarrera() {
+		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
+		submodulos.add(new ModuloItem("1", "Comparar capacidades"));
+		submodulos.add(new ModuloItem("2", "Candidatos por puesto"));
+		return submodulos;
+	}
+
+	
 	public static List<ModuloItem> obtenerFuncionalidadesReportes() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Reporte de reclutamiento"));
-		submodulos.add(new ModuloItem("2", "Reporte 360"));
-		submodulos.add(new ModuloItem("3", "Reporte de avance"));
+		submodulos.add(new ModuloItem("1", "Reporte de Evaluación 360"));
+		submodulos.add(new ModuloItem("2", "Reporte de Evaluación de Objetivos"));
+		submodulos.add(new ModuloItem("3", "Reporte de Historial de Puestos"));
 		return submodulos;
 	}
 

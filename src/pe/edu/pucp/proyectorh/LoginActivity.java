@@ -3,12 +3,9 @@ package pe.edu.pucp.proyectorh;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,6 +46,15 @@ public class LoginActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_login, menu);
 		return true;
+	}
+
+	@Override
+	protected void onRestart() {
+		EditText usuarioText = (EditText) findViewById(R.id.usuarioText);
+		EditText contrasenaText = (EditText) findViewById(R.id.contrasenaText);
+		usuarioText.setText(Constante.CADENA_VACIA);
+		contrasenaText.setText(Constante.CADENA_VACIA);
+		super.onRestart();
 	}
 
 }
