@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="periodos">
+        <item >01/01/2013 al 31/12/2013</item>
+        <item >01/01/2012 al 31/12/2012</item>
+    </string-array>
+</resources>
