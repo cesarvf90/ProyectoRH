@@ -16,8 +16,10 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
+        public static final int about=0x7f07000b;
         public static final int accordion_list=0x7f070000;
         public static final int contrasenaText=0x7f070005;
+        public static final int help=0x7f07000c;
         public static final int linearLayout1=0x7f070001;
         public static final int loginButton=0x7f070006;
         public static final int menu_settings=0x7f07000a;
@@ -38,6 +40,7 @@ public final class R {
     }
     public static final class menu {
         public static final int activity_login=0x7f060000;
+        public static final int options_menu=0x7f060001;
     }
     public static final class string {
         public static final int Login=0x7f040006;
