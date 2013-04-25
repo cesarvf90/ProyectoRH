@@ -32,11 +32,11 @@ public class Constante {
 	/**
 	 * Texto de de advertencia de eliminacion de un registro
 	 */
-	public final static String ADVERTENCIA_ELIMINACION_UNO = "¿Está seguro de que desea elminar este registro?";
+	public final static String ADVERTENCIA_ELIMINACION_UNO = "¿Está seguro de que desea eliminar este registro?";
 	/**
 	 * Texto de de advertencia de eliminacion de varios registros
 	 */
-	public final static String ADVERTENCIA_ELIMINACION_VARIOS = "¿Está seguro de que desea elminar estos registros?";
+	public final static String ADVERTENCIA_ELIMINACION_VARIOS = "¿Está seguro de que desea eliminar estos registros?";
 
 	/**
 	 * Indicadores de modulos

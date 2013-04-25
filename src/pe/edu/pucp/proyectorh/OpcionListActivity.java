@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -46,7 +47,18 @@ public class OpcionListActivity extends FragmentActivity implements
 				getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
 						.commit();
-			} else {
+			} 
+			
+			else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
+					&& ("4".equals(id))){
+				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
+			}
+			
+			
+			else {
 				Bundle arguments = new Bundle();
 				arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
 				OpcionDetailFragment fragment = new OpcionDetailFragment();
@@ -61,7 +73,7 @@ public class OpcionListActivity extends FragmentActivity implements
 			startActivity(detailIntent);
 		}
 	}
-
+	
 	@Override
 	public void onBackPressed() {
 		if (NAVEGACION == 2) {
