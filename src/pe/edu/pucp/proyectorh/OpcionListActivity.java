@@ -57,7 +57,37 @@ public class OpcionListActivity extends FragmentActivity implements
 						.commit();
 			}
 			
-			
+			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360){
+				if(id.equals("1")){	//Mis evaluaciones
+					
+				}
+				if(id.equals("2")){//Rol evaluadores
+									
+								}
+				if(id.equals("3")){//Mis subordinados
+					
+				}
+			}
+			else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS){
+				if(id.equals("1")){	//Objetivos Empresa
+					
+				}
+				if(id.equals("2")){//Mis Objetivos
+				
+				}
+				if(id.equals("3")){//Objetivos Subordinados
+					
+				}
+				if(id.equals("4")){//Registrar Avance
+									
+								}
+				if(id.equals("5")){//Mis Avances
+					
+				}
+				if(id.equals("6")){//Monitoreo
+					
+				}
+			}		
 			else {
 				Bundle arguments = new Bundle();
 				arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
