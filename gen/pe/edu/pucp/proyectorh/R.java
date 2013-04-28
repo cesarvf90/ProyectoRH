@@ -22,34 +22,35 @@ public final class R {
         public static final int logorh2=0x7f020005;
     }
     public static final class id {
-        public static final int about=0x7f08001a;
+        public static final int about=0x7f08001b;
         public static final int accordion_list=0x7f080000;
-        public static final int contrasenaText=0x7f080005;
-        public static final int finalizar=0x7f080016;
-        public static final int help=0x7f08001b;
-        public static final int linearLayout1=0x7f080001;
-        public static final int loginButton=0x7f080006;
-        public static final int menu_settings=0x7f080019;
-        public static final int opcion_detail=0x7f080009;
-        public static final int opcion_detail_container=0x7f080007;
-        public static final int opcion_list=0x7f080008;
-        public static final int pregunta1=0x7f080010;
-        public static final int pregunta2=0x7f080012;
-        public static final int pregunta3=0x7f080014;
-        public static final int ratingPregunta1=0x7f080011;
-        public static final int ratingPregunta2=0x7f080013;
-        public static final int ratingPregunta3=0x7f080015;
-        public static final int reportebscbtnConsultar=0x7f080018;
-        public static final int reportebscspinner=0x7f080017;
-        public static final int spinner1=0x7f08000a;
-        public static final int tab1=0x7f08000b;
-        public static final int tab2=0x7f08000c;
-        public static final int tab3=0x7f08000d;
-        public static final int tab4=0x7f08000e;
-        public static final int textView1=0x7f080002;
-        public static final int textView2=0x7f080004;
-        public static final int title=0x7f08000f;
-        public static final int usuarioText=0x7f080003;
+        public static final int contrasenaText=0x7f080006;
+        public static final int finalizar=0x7f080017;
+        public static final int help=0x7f08001c;
+        public static final int linearLayout1=0x7f080002;
+        public static final int loginButton=0x7f080007;
+        public static final int menu_settings=0x7f08001a;
+        public static final int opcion_detail=0x7f08000a;
+        public static final int opcion_detail_container=0x7f080008;
+        public static final int opcion_list=0x7f080009;
+        public static final int pregunta1=0x7f080011;
+        public static final int pregunta2=0x7f080013;
+        public static final int pregunta3=0x7f080015;
+        public static final int ratingPregunta1=0x7f080012;
+        public static final int ratingPregunta2=0x7f080014;
+        public static final int ratingPregunta3=0x7f080016;
+        public static final int reportebscbtnConsultar=0x7f080019;
+        public static final int reportebscspinner=0x7f080018;
+        public static final int spinner1=0x7f08000b;
+        public static final int tab1=0x7f08000c;
+        public static final int tab2=0x7f08000d;
+        public static final int tab3=0x7f08000e;
+        public static final int tab4=0x7f08000f;
+        public static final int textView1=0x7f080003;
+        public static final int textView2=0x7f080005;
+        public static final int textView3=0x7f080001;
+        public static final int title=0x7f080010;
+        public static final int usuarioText=0x7f080004;
     }
     public static final class layout {
         public static final int accordion_list=0x7f030000;
@@ -68,12 +69,15 @@ public final class R {
     }
     public static final class string {
         public static final int Login=0x7f050006;
+        public static final int Mensaje_Bienvenida=0x7f050009;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050003;
         public static final int menu_settings=0x7f050004;
+        public static final int password=0x7f050007;
         public static final int title_activity_login=0x7f050005;
         public static final int title_opcion_detail=0x7f050001;
         public static final int title_opcion_list=0x7f050002;
+        public static final int user=0x7f050008;
     }
     public static final class style {
         public static final int AppTheme=0x7f060000;

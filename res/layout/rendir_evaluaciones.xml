@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgreen"
     android:gravity="center" >
 
     <TextView
@@ -12,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
         android:text="Evaluar postulante"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/black" />
     
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -28,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Desarrollar proyecciones de variables por campaña y anual."
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
         <RatingBar
             android:id="@+id/ratingPregunta1"
@@ -40,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Desarrollar informes y presentaciones requeridos por la corporación, para talleres y eventos."
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
         <RatingBar
             android:id="@+id/ratingPregunta2"
@@ -52,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores."
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
     <RatingBar
@@ -61,13 +60,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1" />
-
+
     <Button
         android:id="@+id/finalizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ratingPregunta3"
         android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal|center"
         android:text="Finalizar evaluación" />
 
 </RelativeLayout>

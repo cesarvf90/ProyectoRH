@@ -1,76 +1,101 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@drawable/gradiente_verde_green2"
-    android:gravity="center" >
+    android:baselineAligned="false"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/Mensaje_Bienvenida"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="100dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Usuario"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/usuarioText"
-                android:textColor="@android:color/white"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content" >
-
-                <requestFocus />
-            </EditText>
+                android:layout_gravity="right"
+                android:contentDescription="RH++"
+                android:src="@drawable/logorh1" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="100dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contraseña"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
-                android:textStyle="bold" />
+                android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/contrasenaText"
-                android:textColor="@android:color/white"
-                android:layout_width="150dp"
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/usuarioText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@android:color/white" >
+
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/contrasenaText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:text="@string/Login" />
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1"
-        android:layout_marginLeft="80dp"
-        android:text="@string/Login" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -22,8 +22,6 @@ public class RendirEvaluacionesFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.rendir_evaluaciones,
 				container, false);
-		// ((TextView) rootView.findViewById(R.id.opcion_detail))
-		// .setText("Fragmento de Rendir evaluaciones");
 		return rootView;
 	}
 
