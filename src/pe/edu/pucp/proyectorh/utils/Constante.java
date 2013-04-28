@@ -1,7 +1,5 @@
 package pe.edu.pucp.proyectorh.utils;
 
-import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
-
 /**
  * Almacena todas las constantes utilizadas en el sistema
  * 
