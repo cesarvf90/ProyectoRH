@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
+import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
@@ -41,54 +42,71 @@ public class OpcionListActivity extends FragmentActivity implements
 	@Override
 	public void onItemSelected(String id) {
 		if (dosPaneles) {
-			if ((Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO)
+			if (Modulo.MODULO_ACTUAL == Constante.MI_INFORMACION) {
+
+				if (id.equals("1")) { // Información personal
+					VisualizarInfoColaboradoFragment fragment = new VisualizarInfoColaboradoFragment();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+
+				}
+				if (id.equals("2")) {// Rol evaluadores
+
+				}
+				if (id.equals("3")) {// Mis subordinados
+
+				}
+				if (id.equals("4")) {// Mis subordinados
+
+				}
+
+			} else if ((Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO)
 					&& ("4".equals(id))) {
 				RendirEvaluacionesFragment fragment = new RendirEvaluacionesFragment();
 				getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
 						.commit();
-			} 
-			
+			}
+
 			else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
-					&& ("4".equals(id))){
+					&& ("4".equals(id))) {
 				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
 				getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
 						.commit();
 			}
-			
-			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360){
-				if(id.equals("1")){	//Mis evaluaciones
-					
+
+			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) {
+				if (id.equals("1")) { // Mis evaluaciones
+
 				}
-				if(id.equals("2")){//Rol evaluadores
-									
-								}
-				if(id.equals("3")){//Mis subordinados
-					
+				if (id.equals("2")) {// Rol evaluadores
+
 				}
-			}
-			else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS){
-				if(id.equals("1")){	//Objetivos Empresa
-					
+				if (id.equals("3")) {// Mis subordinados
+
 				}
-				if(id.equals("2")){//Mis Objetivos
-				
+			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
+				if (id.equals("1")) { // Objetivos Empresa
+
 				}
-				if(id.equals("3")){//Objetivos Subordinados
-					
+				if (id.equals("2")) {// Mis Objetivos
+
 				}
-				if(id.equals("4")){//Registrar Avance
-									
-								}
-				if(id.equals("5")){//Mis Avances
-					
+				if (id.equals("3")) {// Objetivos Subordinados
+
 				}
-				if(id.equals("6")){//Monitoreo
-					
+				if (id.equals("4")) {// Registrar Avance
+
 				}
-			}		
-			else {
+				if (id.equals("5")) {// Mis Avances
+
+				}
+				if (id.equals("6")) {// Monitoreo
+
+				}
+			} else {
 				Bundle arguments = new Bundle();
 				arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
 				OpcionDetailFragment fragment = new OpcionDetailFragment();
@@ -103,7 +121,7 @@ public class OpcionListActivity extends FragmentActivity implements
 			startActivity(detailIntent);
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		if (NAVEGACION == 2) {

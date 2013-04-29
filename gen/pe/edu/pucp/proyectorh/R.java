@@ -24,14 +24,51 @@ public final class R {
         public static final int textview_backred=0x7f020007;
     }
     public static final class id {
-        public static final int about=0x7f08001b;
+        public static final int about=0x7f080040;
         public static final int accordion_list=0x7f080000;
         public static final int contrasenaText=0x7f080006;
         public static final int finalizar=0x7f080017;
-        public static final int help=0x7f08001c;
+        public static final int help=0x7f080041;
         public static final int linearLayout1=0x7f080002;
         public static final int loginButton=0x7f080007;
-        public static final int menu_settings=0x7f08001a;
+        public static final int menu_settings=0x7f08003f;
+        public static final int mi_info_input_apemat=0x7f080023;
+        public static final int mi_info_input_apepat=0x7f080020;
+        public static final int mi_info_input_area=0x7f08003b;
+        public static final int mi_info_input_direccion=0x7f080032;
+        public static final int mi_info_input_doc=0x7f080029;
+        public static final int mi_info_input_email=0x7f080038;
+        public static final int mi_info_input_fechanac=0x7f08002c;
+        public static final int mi_info_input_nombres=0x7f08001d;
+        public static final int mi_info_input_pais=0x7f08002f;
+        public static final int mi_info_input_puesto=0x7f08003e;
+        public static final int mi_info_input_telefono=0x7f080035;
+        public static final int mi_info_input_tipodoc=0x7f080026;
+        public static final int mi_info_lbl_apemat=0x7f080022;
+        public static final int mi_info_lbl_apepat=0x7f08001f;
+        public static final int mi_info_lbl_area=0x7f08003a;
+        public static final int mi_info_lbl_direccion=0x7f080031;
+        public static final int mi_info_lbl_doc=0x7f080028;
+        public static final int mi_info_lbl_email=0x7f080037;
+        public static final int mi_info_lbl_fechanac=0x7f08002b;
+        public static final int mi_info_lbl_nombres=0x7f08001c;
+        public static final int mi_info_lbl_pais=0x7f08002e;
+        public static final int mi_info_lbl_puesto=0x7f08003d;
+        public static final int mi_info_lbl_telefono=0x7f080034;
+        public static final int mi_info_lbl_tipodoc=0x7f080025;
+        public static final int mi_info_tableLayout1=0x7f08001a;
+        public static final int mi_info_tableRow1=0x7f08001b;
+        public static final int mi_info_tableRow10=0x7f080036;
+        public static final int mi_info_tableRow11=0x7f080039;
+        public static final int mi_info_tableRow12=0x7f08003c;
+        public static final int mi_info_tableRow2=0x7f08001e;
+        public static final int mi_info_tableRow3=0x7f080021;
+        public static final int mi_info_tableRow4=0x7f080024;
+        public static final int mi_info_tableRow5=0x7f080027;
+        public static final int mi_info_tableRow6=0x7f08002a;
+        public static final int mi_info_tableRow7=0x7f08002d;
+        public static final int mi_info_tableRow8=0x7f080030;
+        public static final int mi_info_tableRow9=0x7f080033;
         public static final int opcion_detail=0x7f08000a;
         public static final int opcion_detail_container=0x7f080008;
         public static final int opcion_list=0x7f080009;
@@ -64,6 +101,7 @@ public final class R {
         public static final int objetivosbsc=0x7f030006;
         public static final int rendir_evaluaciones=0x7f030007;
         public static final int reportebsc1principal=0x7f030008;
+        public static final int visualizar_info_colaborador=0x7f030009;
     }
     public static final class menu {
         public static final int activity_login=0x7f070000;

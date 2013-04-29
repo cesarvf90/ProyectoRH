@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiente_verde_green2"
     android:gravity="center" >
-
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
