@@ -48,7 +48,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/pregunta3"
+            android:id="@+id/mi_info_lblmaterno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores."
