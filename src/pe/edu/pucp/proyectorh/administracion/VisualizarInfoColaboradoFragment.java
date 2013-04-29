@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class RendirEvaluacionesFragment extends Fragment {
+public class VisualizarInfoColaboradoFragment extends Fragment {
 
-	public RendirEvaluacionesFragment() {
+	public VisualizarInfoColaboradoFragment() {
 	}
 
 	@Override
@@ -20,8 +20,10 @@ public class RendirEvaluacionesFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.rendir_evaluaciones,
+		View rootView = inflater.inflate(R.layout.visualizar_info_colaborador,
 				container, false);
+		// ((TextView) rootView.findViewById(R.id.opcion_detail))
+		// .setText("Fragmento de Rendir evaluaciones");
 		return rootView;
 	}
 
