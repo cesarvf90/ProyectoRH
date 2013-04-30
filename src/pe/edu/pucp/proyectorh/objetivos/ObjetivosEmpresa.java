@@ -34,7 +34,8 @@ import android.widget.Toast;
 public class ObjetivosEmpresa extends Fragment {
 	
 	private Spinner spinnerPeriodo;
-	private Button btnSubmit;
+	private Button btnDescCambios;
+	private Button btnGuardarCambios;
 	
 	int periodoSelec;
 	String titulo;
@@ -56,7 +57,10 @@ public class ObjetivosEmpresa extends Fragment {
 			
 			Resources res = getResources();
 			
-			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinner1);
+			/*
+			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
+			 */
+			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
 			List<String> lista = new ArrayList<String>();
 			
 			lista.add("01/01/2013 al 31/12/2013");
@@ -88,30 +92,33 @@ public class ObjetivosEmpresa extends Fragment {
 				  }
 				
 			});
-				
+			
+			/*
+			 * CODIGO PARA MANEJO DE PERSPECTIVA (TABS)
+			 */				
 			TabHost tabs=(TabHost)rootView.findViewById(android.R.id.tabhost);
 			tabs.setup();
 			 
 			TabHost.TabSpec spec=tabs.newTabSpec("Cliente");
-			spec.setContent(R.id.tab1);
+			spec.setContent(R.id.objEmpTab1);
 			spec.setIndicator("Cliente",
 			    res.getDrawable(android.R.drawable.ic_btn_speak_now));
 			tabs.addTab(spec);
 			 
 			spec=tabs.newTabSpec("Aprendizaje y Crecimiento");
-			spec.setContent(R.id.tab2);
+			spec.setContent(R.id.objEmpTab2);
 			spec.setIndicator("Aprendizaje y Crecimiento",
 			    res.getDrawable(android.R.drawable.ic_dialog_map));
 			tabs.addTab(spec);
 			
 			spec=tabs.newTabSpec("Financiero");
-			spec.setContent(R.id.tab3);
+			spec.setContent(R.id.objEmpTab3);
 			spec.setIndicator("Financiero",
 			    res.getDrawable(android.R.drawable.ic_dialog_map));
 			tabs.addTab(spec);
 			
 			spec=tabs.newTabSpec("Procesos Internos");
-			spec.setContent(R.id.tab2);
+			spec.setContent(R.id.objEmpTab4);
 			spec.setIndicator("Procesos Internos",
 			    res.getDrawable(android.R.drawable.ic_dialog_map));
 			tabs.addTab(spec);
@@ -125,9 +132,13 @@ public class ObjetivosEmpresa extends Fragment {
 			        Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
 			    }
 			});
+			
+			/*
+			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
+			 */				
 	/*
-			btnSubmit = (Button) rootView.findViewById(R.id.reportebscbtnConsultar);
-			btnSubmit.setOnClickListener(new OnClickListener() {
+			btnDescCambios = (Button) rootView.findViewById(R.id.ObjEmpDescCambios);
+			btnDescCambios.setOnClickListener(new OnClickListener() {
 				  @Override
 				  public void onClick(View v) {
 					  
@@ -149,8 +160,38 @@ public class ObjetivosEmpresa extends Fragment {
 					  
 				  }
 			 
-				});
+			});
 			*/
+			
+			/*
+			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
+			 */		
+			/*
+			btnGuardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);			
+			btnGuardarCambios.setOnClickListener(new OnClickListener() {
+				  @Override
+				  public void onClick(View v) {
+					  
+			 
+				    Toast.makeText(v.getContext(),
+					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
+						Toast.LENGTH_SHORT).show();
+					  
+				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+				      
+				      Bundle argumentos = new Bundle();
+				      argumentos.putString("PeriodoSelec", titulo);
+				      fragment.setArguments(argumentos);
+				      
+					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+					  ft.replace(R.id.opcion_detail_container, fragment);
+					  ft.addToBackStack(null);
+					  ft.commit();
+					  
+				  }
+			 
+			});
+		*/
 		return rootView;
 	}
 
