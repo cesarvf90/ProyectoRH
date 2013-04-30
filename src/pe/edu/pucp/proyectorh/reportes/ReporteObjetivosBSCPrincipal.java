@@ -66,10 +66,11 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
 			
 			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+				/*
 				Toast.makeText(parent.getContext(), 
 					"seleccionado : " + parent.getItemAtPosition(pos).toString(),
 					Toast.LENGTH_SHORT).show();
-				
+				*/
 				periodoSelec = 1; //aqui idobjetivo selec
 				titulo = parent.getItemAtPosition(pos).toString();
 
@@ -90,14 +91,18 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			 
 			  @Override
 			  public void onClick(View v) {
-				  /*
+				  
 		 
 			    Toast.makeText(v.getContext(),
-				"OnClickListener : " + 
-		                "\nSpinner 1 : "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-					Toast.LENGTH_SHORT).show();*/
+				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
+					Toast.LENGTH_SHORT).show();
 				  
-				  RendirEvaluacionesFragment fragment = new RendirEvaluacionesFragment();
+			      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+			      
+			      Bundle argumentos = new Bundle();
+			      argumentos.putString("PeriodoSelec", titulo);
+			      fragment.setArguments(argumentos);
+			      
 				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
 				  ft.replace(R.id.opcion_detail_container, fragment);
 				  ft.addToBackStack(null);
