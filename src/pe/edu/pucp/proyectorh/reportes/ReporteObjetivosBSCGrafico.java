@@ -1,5 +1,10 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,14 +20,20 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	
 	private WebView browser;
 	
-	String[] meses = new String[] { 
-			"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"};
 	
-	int[] avance = new int[] { 10, 15, 18, 25, 30, 33 };
 
 	
 	public ReporteObjetivosBSCGrafico(){
 		
+	}
+	
+	public class DataObject {
+		String[] meses = new String[] { 
+				"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"};
+		
+		int[] avance = new int[] { 10, 15, 18, 25, 30, 33 };
+		
+
 	}
 	
 	public class InterfaceChartLineal {
@@ -38,15 +49,21 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	        Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
 	    }*/
 	    
-	    public String[] getMeses(){
-	    	return meses;
-	    }
+	    public String getData(){
+	    	
+	    	DataObject obj = new DataObject();
+	    	Gson gson = new Gson();
+	    	 
+	    	// convert java object to JSON format,
+	    	// and returned as JSON formatted string
+	    	String json = gson.toJson(obj);
 	    
-	    public int[] getAvance(){
-	    	return avance;
+	    	return json;
 	    }
+
 	    
 	    public String getTitulo(){
+
 	    	return "Cumplimiento";
 	    }
 	    

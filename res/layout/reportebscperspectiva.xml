@@ -7,8 +7,7 @@
     <TextView
         android:id="@+id/reportebscPerspectivalabel"
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:text="@+id/label"
+        android:layout_height="100dp"
         android:textSize="20sp"
         android:gravity="center" >
     </TextView>

@@ -3,6 +3,8 @@ package pe.edu.pucp.proyectorh.reportes;
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,16 +63,16 @@ public class ObjetivoAdapter extends BaseAdapter {
 			}*/
 			
 			switch (position){
-			case 0 : gridView.setBackgroundColor(Color.parseColor("#00FF00"));break;
-			case 1 : gridView.setBackgroundColor(Color.parseColor("#40FF00"));break;
-			case 2 : gridView.setBackgroundColor(Color.parseColor("#80FF00"));break;
-			case 3 : gridView.setBackgroundColor(Color.parseColor("#BFFF00"));break;
-			case 4 : gridView.setBackgroundColor(Color.parseColor("#FFFF00"));break;
-			case 5 : gridView.setBackgroundColor(Color.parseColor("#FFBF00"));break;
-			case 6 : gridView.setBackgroundColor(Color.parseColor("#FF8000"));break;
-			case 7 : gridView.setBackgroundColor(Color.parseColor("#FF4000"));break;
-			case 8 : gridView.setBackgroundColor(Color.parseColor("#FF0000"));break;
-			case 9 : gridView.setBackgroundColor(Color.parseColor("#FF0000"));break;
+			case 0 : gridView.setBackgroundDrawable(getBackg(0xFF49b700,0xFF378900));break;
+			case 1 : gridView.setBackgroundDrawable(getBackg(0xFF5ba825,0xFF377d00));break;
+			case 2 : gridView.setBackgroundDrawable(getBackg(0xFF9cc925,0xFF7ba60d));break;
+			case 3 : gridView.setBackgroundDrawable(getBackg(0xFFd4de1b,0xFFb5bf07));break;
+			case 4 : gridView.setBackgroundDrawable(getBackg(0xFFfff300,0xFFffd400));break;
+			case 5 : gridView.setBackgroundDrawable(getBackg(0xFFffd900,0xFFffa400));break;
+			case 6 : gridView.setBackgroundDrawable(getBackg(0xFFffb300,0xFFed7710));break;
+			case 7 : gridView.setBackgroundDrawable(getBackg(0xFFff7518,0xFFaa3e00));break;
+			case 8 : gridView.setBackgroundDrawable(getBackg(0xFFff4e00,0xFFc72b00));break;
+			case 9 : gridView.setBackgroundDrawable(getBackg(0xFFce2029,0xFF9e030b));break;
 	
 			}
 			
@@ -83,6 +85,16 @@ public class ObjetivoAdapter extends BaseAdapter {
  
 		return gridView;
 	}
+	
+	public Drawable getBackg(int startColor, int endColor){
+		GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, 
+				new int[] {startColor, endColor });
+	    //gd.setCornerRadius(0f);
+	    gd.setStroke(1, Color.parseColor("#000000"));
+	    //gd.setCornerRadius(3f);
+	    return gd;
+	}
+	
  
 	@Override
 	public int getCount() {

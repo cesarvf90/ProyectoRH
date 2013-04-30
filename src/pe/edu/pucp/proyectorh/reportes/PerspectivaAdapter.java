@@ -3,6 +3,8 @@ package pe.edu.pucp.proyectorh.reportes;
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +52,13 @@ public class PerspectivaAdapter extends BaseAdapter {
 			String mobile = arrPerspectivas[position];
 			
 			if (mobile.equals("Financiera")) {
-				gridView.setBackgroundColor(Color.BLUE);
+				gridView.setBackgroundDrawable(getBackg(0xFF0085ff,0xFF0064bf));
 			} else if (mobile.equals("Clientes")) {
-				gridView.setBackgroundColor(Color.RED);
+				gridView.setBackgroundDrawable(getBackg(0xFFce2029,0xFF9e030b));
 			} else if (mobile.equals("Interno")) {
-				gridView.setBackgroundColor(Color.YELLOW);
+				gridView.setBackgroundDrawable(getBackg(0xFFffca1d,0xFFf5a71c));
 			} else {
-				gridView.setBackgroundColor(Color.GREEN);
+				gridView.setBackgroundDrawable(getBackg(0xFF49b700,0xFF378900));
 			}
 			
 			
@@ -68,6 +70,19 @@ public class PerspectivaAdapter extends BaseAdapter {
  
 		return gridView;
 	}
+	
+	public Drawable getBackg(int startColor, int endColor){
+		GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, 
+				new int[] {startColor, endColor });
+	    gd.setCornerRadius(0f);
+	    gd.setStroke(1, Color.parseColor("#000000"));
+	    gd.setCornerRadius(3f);
+	    return gd;
+	}
+	
+	
+	
+	
  
 	@Override
 	public int getCount() {

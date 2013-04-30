@@ -6,11 +6,20 @@
     
     <TextView
         android:id="@+id/reportebscObjetivolabel"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:text="@+id/label"
         android:textSize="20sp"
-        android:gravity="center" >
+        android:gravity="left"
+        android:paddingLeft="10dp" >
+    </TextView>
+    
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="90%"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_gravity="right" >"
     </TextView>
     
 
