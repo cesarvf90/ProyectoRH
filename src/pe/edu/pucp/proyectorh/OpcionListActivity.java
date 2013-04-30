@@ -4,6 +4,8 @@ import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
 import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.*;
+import pe.edu.pucp.proyectorh.evaluacion360.*;
+import pe.edu.pucp.proyectorh.objetivos.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -89,7 +91,10 @@ public class OpcionListActivity extends FragmentActivity implements
 				}
 			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
 				if (id.equals("1")) { // Objetivos Empresa
-
+					ObjetivosEmpresa fragment = new ObjetivosEmpresa();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 				if (id.equals("2")) {// Mis Objetivos
 
