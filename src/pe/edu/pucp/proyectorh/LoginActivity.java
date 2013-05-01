@@ -70,6 +70,7 @@ public class LoginActivity extends Activity {
 	private boolean validaServicioLogin(String usuario, String contrasena) {
 		if (ConnectionManager.connect(this)) {
 			// fetch data
+			//construir llamada
 			new LoginUsuario().execute(Servicio.LoginService);
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio

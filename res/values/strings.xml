@@ -10,5 +10,7 @@
     <string name="password">Contraseña</string>
     <string name="user">Usuario</string>
     <string name="Mensaje_Bienvenida">Bienvenido a RH++!</string>
+    <string name="evaluar_postulante">Evaluar postulante</string>
+    <string name="seleccione_periodo_">"Seleccione Periodo: "</string>
 
 </resources>

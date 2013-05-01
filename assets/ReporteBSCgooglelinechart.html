@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+      
+        var jsonString = Android.getData();
+        var arrAvance = JSON.parse(jsonString);
+      
+      	var data0 = new google.visualization.DataTable();
+      	
+      	data0.addColumn('string', 'Mes');
+		data0.addColumn('number', 'Avance %');
+		
+        
+        for (var i=0; i<5;i++){
+        	data0.addRow([arrAvance.meses[i],arrAvance.avance[i]]);
+        }
+        
+
+        var options = {
+          title: 'Cumplimiento',
+          pointSize : 8,
+          lineWidth : 4,
+          animation:{
+	        duration: 1000,
+	        easing: 'in',
+	      }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data0, options);
+
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 600px; height: 400px;"></div>
+  </body>
+</html>

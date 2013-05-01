@@ -2,73 +2,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgreen"
+    android:background="@drawable/gradiente_verde_green2"
     android:gravity="center" >
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
-        android:text="Evaluar postulante"
-        android:textColor="@android:color/white" />
-    
+        android:text="@string/evaluar_postulante"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/pregunta1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:text="Entrevista final: Se evalúan las funciones según el puesto de trabajo"
+        android:textColor="@android:color/white"
+        android:textStyle="normal" />
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="0dp"
-        android:orientation="vertical" >
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:paddingTop="100dp" >
 
         <TextView
             android:id="@+id/pregunta1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Desarrollar proyecciones de variables por campaña y anual."
+            android:text="1) Desarrollar proyecciones de variables por campaña y anual."
             android:textColor="@android:color/white" />
 
         <RatingBar
             android:id="@+id/ratingPregunta1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp" />
 
         <TextView
             android:id="@+id/pregunta2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Desarrollar informes y presentaciones requeridos por la corporación, para talleres y eventos."
+            android:text="2) Desarrollar informes y presentaciones requeridos por la corporación, para talleres y eventos."
             android:textColor="@android:color/white" />
 
         <RatingBar
             android:id="@+id/ratingPregunta2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp" />
 
         <TextView
-            android:id="@+id/mi_info_lblmaterno"
+            android:id="@+id/pregunta3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores."
+            android:text="3) Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores."
             android:textColor="@android:color/white" />
+
+        <RatingBar
+            android:id="@+id/ratingPregunta3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4) Desarrollar el informe de cobertura / rentabilidad de zonas por campaña."
+            android:textColor="@android:color/white" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5) Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país."
+            android:textColor="@android:color/white" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="30dp" />
+
+        <Button
+            android:id="@+id/finalizar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Finalizar evaluación" />
     </LinearLayout>
-
-    <RatingBar
-        android:id="@+id/ratingPregunta3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" />
-
-    <Button
-        android:id="@+id/finalizar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingPregunta3"
-        android:layout_centerHorizontal="true"
-        android:text="Finalizar evaluación" />
-
 
 </RelativeLayout>
