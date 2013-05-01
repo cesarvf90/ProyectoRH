@@ -51,13 +51,13 @@ public class OpcionListActivity extends FragmentActivity implements
 							.commit();
 
 				}
-				if (id.equals("2")) {// Rol evaluadores
+				if (id.equals("2")) {// Mi equipo de trabajo
 
 				}
-				if (id.equals("3")) {// Mis subordinados
+				if (id.equals("3")) {// Mis contactos
 
 				}
-				if (id.equals("4")) {// Mis subordinados
+				if (id.equals("4")) {// Mi agenda
 
 				}
 
