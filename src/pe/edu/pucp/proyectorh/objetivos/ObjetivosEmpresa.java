@@ -12,11 +12,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,10 +31,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ObjetivosEmpresa extends Fragment {
@@ -48,11 +62,12 @@ public class ObjetivosEmpresa extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
+			Context contexto = rootView.getContext();
 			rootView.findViewById(R.layout.objetivosbsc);
 			
 			Resources res = getResources();
@@ -133,6 +148,101 @@ public class ObjetivosEmpresa extends Fragment {
 			    }
 			});
 			
+			/**AGREGA UN TEXTBOX**/
+			 		
+			TableLayout layoutTab1 = (TableLayout) rootView.findViewById(R.id.objEmpTab1);
+			//CABECERA
+			
+			TableRow cabecera = new TableRow(contexto);
+			cabecera.setLayoutParams(new TableLayout.LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			layoutTab1.addView(cabecera);
+			
+			//columna.setTextColor(Color.parseColor("#005500")); //columna.setGravity(Gravity.CENTER_HORIZONTAL);//columna.setPadding(5, 5, 5, 5);
+
+			TextView columna1 = new TextView(contexto);
+		    columna1.setLayoutParams(new TableRow.LayoutParams(450, LayoutParams.WRAP_CONTENT));
+		    columna1.setText("Descripción del Objetivo:");
+		    cabecera.addView(columna1);
+		    
+		    TextView columna2 = new TextView(contexto);
+		    columna2.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
+		    columna2.setText("Peso:");
+		    cabecera.addView(columna2);
+		    
+		    TextView columna3 = new TextView(contexto);
+		    columna3.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
+		    columna3.setText("Creador:");
+		    cabecera.addView(columna3);
+		    
+		    // Línea que separa la cabecera de los datos
+		    TableRow separador_cabecera = new TableRow(contexto);
+		    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		    FrameLayout linea_cabecera = new FrameLayout(contexto);
+		    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, 2);
+		    linea_cabecera_params.span = 6;
+		    linea_cabecera.setBackgroundColor(Color.parseColor("#CC2266"));
+		    separador_cabecera.addView(linea_cabecera, linea_cabecera_params);
+		    layoutTab1.addView(separador_cabecera);
+		    
+		    /*
+			    // Línea que separa los datos de la fila de totales
+			    TableRow separador_totales = new TableRow(this);
+			    separador_totales.setLayoutParams(new TableLayout.LayoutParams(
+			       LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			    FrameLayout linea_totales = new FrameLayout(this);
+			    TableRow.LayoutParams linea_totales_params =
+			       new TableRow.LayoutParams(LayoutParams.FILL_PARENT, 2);
+			    linea_totales_params.span = 6;
+			    linea_totales.setBackgroundColor(Color.parseColor("#FFFFFF"));
+			    separador_totales.addView(linea_totales, linea_totales_params);
+			    tabla.addView(separador_totales);
+			 
+			    // Fila de totales
+			    TableRow totales = new TableRow(this);
+			    totales.setLayoutParams(new TableLayout.LayoutParams(
+			       LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			 
+			    TextView texto_total = new TextView(this);
+			    TableRow.LayoutParams texto_total_params =
+			       new TableRow.LayoutParams(
+			          LayoutParams.WRAP_CONTENT,
+			          LayoutParams.WRAP_CONTENT);
+			    texto_total_params.span = 2;
+			    texto_total.setText("Total");
+			    texto_total.setTextColor(Color.parseColor("#0000CC"));
+			    texto_total.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+			    texto_total.setGravity(Gravity.RIGHT);
+			    totales.addView(texto_total, texto_total_params);
+			 
+			    for (int i = 0; i < 3; i++)
+			    {
+			       TextView columna = new TextView(this);
+			       columna.setLayoutParams(new TableRow.LayoutParams(
+			          LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			       columna.setText(String.valueOf(valores_totales[i]));
+			       columna.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+			       columna.setGravity(Gravity.CENTER);
+			       totales.addView(columna);
+			    }
+			 
+			    tabla.addView(totales);
+			 
+			    // Añadimos la tabla a la actividad
+			    setContentView(tabla);
+		     */
+		    EditText descripObj = new EditText(contexto);
+		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
+		    layoutTab1.addView(descripObj);
+			
+		    EditText peso = new EditText(contexto);
+		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
+		    layoutTab1.addView(peso);
+		    
+		    Button aumentarObj = new Button(contexto);
+		    aumentarObj.setText("+");
+		    layoutTab1.addView(aumentarObj);	
+		    
 			/*
 			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
 			 */				
