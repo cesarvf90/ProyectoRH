@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <TableLayout
         android:id="@+id/mi_info_tableLayout1"
@@ -18,12 +18,12 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_nombres"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Nombres:"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/mi_info_input_nombres"
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:text="Christian Miguel"
-                    android:textSize="18sp"/>
+                    android:textSize="24sp" />
             </LinearLayout>
         </TableRow>
 
@@ -44,21 +44,21 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/mi_info_lbl_apepat"
-                    android:layout_width="140dp"
+                    android:id="@+id/mi_info_lbl_apellidos"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Apellido Paterno:"
+                    android:text="Apellidos:"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/mi_info_input_apepat"
+                    android:id="@+id/mi_info_input_apellidos"
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Mendez"
-                    android:textSize="18sp" />
+                    android:text="Mendez Anchante"
+                    android:textSize="24sp" />
             </LinearLayout>
         </TableRow>
 
@@ -69,23 +69,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_apemat"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Apellido Materno:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_apemat"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Anchante"
-                    android:textSize="18sp" />
             </LinearLayout>
         </TableRow>
 
@@ -96,23 +79,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_tipodoc"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Tipo Documento:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_tipodoc"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="DNI"
-                    android:textSize="18sp" />
             </LinearLayout>
         </TableRow>
 
@@ -123,23 +89,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_doc"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Documento:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_doc"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="46394691"
-                    android:textSize="18sp" />
             </LinearLayout>
         </TableRow>
 
@@ -150,23 +99,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_fechanac"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Fecha Nacimiento:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_fechanac"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="01/12/1989"
-                    android:textSize="18sp" />
             </LinearLayout>
         </TableRow>
 
@@ -177,23 +109,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_pais"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="País:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_pais"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Perú"
-                    android:textSize="18sp" />
             </LinearLayout>
         </TableRow>
 
@@ -204,77 +119,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_direccion"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Dirección:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_direccion"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Av. Malachowsky 345 Dpto 502"
-                    android:textSize="18sp" />
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow9" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_telefono"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Teléfono:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_telefono"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="998560879"
-                    android:textSize="18sp" />
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow10" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/mi_info_lbl_email"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Correo Electrónico:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/mi_info_input_email"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="c.mendez@pucp.pe"
-                    android:textSize="18sp" />
             </LinearLayout>
         </TableRow>
 
@@ -288,12 +132,12 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_area"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Área:"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/mi_info_input_area"
@@ -301,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:text="Sistemas"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
             </LinearLayout>
         </TableRow>
 
@@ -315,12 +159,12 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_puesto"
-                    android:layout_width="140dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Puesto:"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/mi_info_input_puesto"
@@ -328,7 +172,88 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:text="Analista"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:id="@+id/mi_info_tableRow10" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/mi_info_lbl_email"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Correo Electrónico:"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/mi_info_input_email"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="c.mendez@pucp.pe"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:id="@+id/mi_info_tableRow9" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/mi_info_lbl_telefono"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Anexo:"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/mi_info_input_telefono"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="3321"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:id="@+id/mi_info_tableRow13" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/mi_info_lbl_fechaingreso"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fecha Ingreso:"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/mi_info_input_fechaingreso"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="05/01/2012"
+                    android:textSize="24sp" />
             </LinearLayout>
         </TableRow>
     </TableLayout>
