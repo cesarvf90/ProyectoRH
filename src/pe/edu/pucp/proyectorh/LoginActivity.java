@@ -69,9 +69,10 @@ public class LoginActivity extends Activity {
 	 */
 	private boolean validaServicioLogin(String usuario, String contrasena) {
 		if (ConnectionManager.connect(this)) {
-			// fetch data
-			//construir llamada
-			new LoginUsuario().execute(Servicio.LoginService);
+			// construir llamada al servicio
+			String request = Servicio.LoginService1 + "?username=" + usuario
+					+ "&password=" + contrasena;
+			new LoginUsuario().execute(request);
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -107,14 +108,15 @@ public class LoginActivity extends Activity {
 			Log.i(LoginUsuario.class.getName(),
 					"Recibido: " + result.toString());
 			final Gson gson = new Gson();
-			final P product = gson.fromJson(result, P.class);
+			final RespuestaLogin respuestaLogin = gson.fromJson(result,
+					RespuestaLogin.class);
 		}
 	}
 
-	public class P {
-		public String nombre;
+	public class RespuestaLogin {
+		public String respuesta;
 
-		public P() {
+		public RespuestaLogin() {
 		}
 	}
 }
