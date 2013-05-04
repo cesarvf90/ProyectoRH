@@ -5,12 +5,7 @@ public class Servicio {
 	/**
 	 * Servicio de autenticacion de usuario
 	 */
-	public final static String LoginService = "http://dp2kendo.apphb.com/WSLogin/Login?username=admin&password=admin";
-	
-	/**
-	 * Servicio de autenticacion de usuario
-	 */
-	public final static String LoginService1 = "http://dp2kendo.apphb.com/WSLogin/Login";
+	public final static String LoginService = "http://dp2kendo.apphb.com/WSLogin/Login";
 
 	/**
 	 * Servicio de consulta de informacion personal del usuario

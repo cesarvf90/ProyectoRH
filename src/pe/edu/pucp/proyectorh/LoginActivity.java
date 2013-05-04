@@ -20,6 +20,9 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
 
+	public static final String USUARIO_VALIDO = "1";
+	public static final String USUARIO_INVALIDO = "0";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,19 +37,15 @@ public class LoginActivity extends Activity {
 						.getText().toString();
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
-				if (validaUsuario(usuario, contrasena)) {
-					Intent mainIntent = new Intent(v.getContext(),
-							OpcionListActivity.class);
-					startActivity(mainIntent);
-				}
+				validaUsuario(usuario, contrasena);
 			}
 		});
 	}
 
-	protected boolean validaUsuario(String usuario, String contrasena) {
+	protected void validaUsuario(String usuario, String contrasena) {
 		if (!Constante.CADENA_VACIA.equals(usuario)
 				&& !Constante.CADENA_VACIA.equals(contrasena)) {
-			return validaServicioLogin(usuario, contrasena);
+			validaServicioLogin(usuario, contrasena);
 		} else {
 			// Se muestra mensaje de campos incompletos
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -56,7 +55,6 @@ public class LoginActivity extends Activity {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
 		}
 	}
 
@@ -65,12 +63,11 @@ public class LoginActivity extends Activity {
 	 * 
 	 * @param usuario
 	 * @param contrasena
-	 * @return
 	 */
-	private boolean validaServicioLogin(String usuario, String contrasena) {
+	private void validaServicioLogin(String usuario, String contrasena) {
 		if (ConnectionManager.connect(this)) {
 			// construir llamada al servicio
-			String request = Servicio.LoginService1 + "?username=" + usuario
+			String request = Servicio.LoginService + "?username=" + usuario
 					+ "&password=" + contrasena;
 			new LoginUsuario().execute(request);
 		} else {
@@ -82,9 +79,7 @@ public class LoginActivity extends Activity {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
 		}
-		return true;
 	}
 
 	@Override
@@ -105,18 +100,48 @@ public class LoginActivity extends Activity {
 	public class LoginUsuario extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			Log.i(LoginUsuario.class.getName(),
-					"Recibido: " + result.toString());
+			// Log.i(LoginUsuario.class.getName(),
+			// "Recibido: " + result.toString());
+			System.out.println("Recibido: " + result.toString());
+
 			final Gson gson = new Gson();
 			final RespuestaLogin respuestaLogin = gson.fromJson(result,
 					RespuestaLogin.class);
+			procesaLogin(respuestaLogin.getRespuesta());
 		}
 	}
 
 	public class RespuestaLogin {
-		public String respuesta;
+		private String respuesta;
 
 		public RespuestaLogin() {
+		}
+
+		public String getRespuesta() {
+			return respuesta;
+		}
+
+		public void setRespuesta(String respuesta) {
+			this.respuesta = respuesta;
+		}
+
+	}
+
+	public void procesaLogin(String respuestaServidor) {
+		if (USUARIO_VALIDO.equals(respuestaServidor)) {
+			// Intent mainIntent = new Intent(v.getContext(),
+			Intent loginIntent = new Intent(getApplicationContext(),
+					OpcionListActivity.class);
+			startActivity(loginIntent);
+		} else if (USUARIO_INVALIDO.equals(respuestaServidor)) {
+			// Se muestra mensaje de usuario invalido
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Login inválido");
+			builder.setMessage("Combinación de usuario y/o contraseña incorrectos.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
 		}
 	}
 }
