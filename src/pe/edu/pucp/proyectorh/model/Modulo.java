@@ -23,6 +23,23 @@ public class Modulo {
 		public String toString() {
 			return nombre;
 		}
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
 	}
 
 	public static List<ModuloItem> MODULOS_MOSTRADOS_ACTUAL = new ArrayList<ModuloItem>();
@@ -96,11 +113,11 @@ public class Modulo {
 		return submodulos;
 	}
 
-	
 	public static List<ModuloItem> obtenerFuncionalidadesReportes() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Reporte de Evaluación 360"));
-		submodulos.add(new ModuloItem("2", "Reporte de Evaluación de Objetivos"));
+		submodulos
+				.add(new ModuloItem("2", "Reporte de Evaluación de Objetivos"));
 		submodulos.add(new ModuloItem("3", "Reporte de Historial de Puestos"));
 		submodulos.add(new ModuloItem("4", "Reporte de Objetivos BSC"));
 		return submodulos;

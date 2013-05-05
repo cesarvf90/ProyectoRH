@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -129,7 +128,6 @@ public class LoginActivity extends Activity {
 
 	public void procesaLogin(String respuestaServidor) {
 		if (USUARIO_VALIDO.equals(respuestaServidor)) {
-			// Intent mainIntent = new Intent(v.getContext(),
 			Intent loginIntent = new Intent(getApplicationContext(),
 					OpcionListActivity.class);
 			startActivity(loginIntent);

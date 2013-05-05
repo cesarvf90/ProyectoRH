@@ -1,18 +1,23 @@
 package pe.edu.pucp.proyectorh;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
-import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.ExpandableListFragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ListView;
+import android.widget.SimpleExpandableListAdapter;
 
 /**
  * Fragmento que contiene la lista de opciones
@@ -20,15 +25,20 @@ import android.widget.ListView;
  * @author Cesar
  * 
  */
-public class OpcionListFragment extends ListFragment {
-
-	private static final String STATE_ACTIVATED_POSITION = "activated_position";
+public class OpcionListFragment extends ExpandableListFragment {
 
 	private Callbacks mCallbacks = menuOpcionesCallbacks;
-	private int mActivatedPosition = ListView.INVALID_POSITION;
+	// nuevo adapter
+	private SimpleExpandableListAdapter mAdapter;
+	private static final String ID = "Id";
+	private static final String NAME = "Name";
+	private static final String IS_EVEN = "Is even";
+	private ExpandableListView elv;
+	View lastColored;
+	private int grupoSeleccionado;
+	private int hijoSeleccionado;
 
 	public interface Callbacks {
-
 		public void onItemSelected(String id);
 	}
 
@@ -44,18 +54,130 @@ public class OpcionListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),
-				R.layout.accordion_list, R.id.accordion_list, Modulo.MODULOS));
+
+		// nueva lista
+		List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+		List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
+		// for (int i = 0; i < 4; i++) {
+		// Map<String, String> curGroupMap = new HashMap<String, String>();
+		// groupData.add(curGroupMap);
+		// curGroupMap.put(NAME, "Item " + i);
+		// curGroupMap.put(IS_EVEN, (i % 2 == 0) ? "This group is even"
+		// : "This group is odd");
+		//
+		// List<Map<String, String>> children = new ArrayList<Map<String,
+		// String>>();
+		// for (int j = 0; j < 5; j++) {
+		// Map<String, String> curChildMap = new HashMap<String, String>();
+		// children.add(curChildMap);
+		// curChildMap.put(IS_EVEN, (j % 2 == 0) ? "Hello " + j
+		// : "Good Morning " + j);
+		// }
+		// childData.add(children);
+		// }
+
+		/* Se agregan las funcionalidades de RH++ */
+		for (ModuloItem modulo : Modulo.MODULOS) {
+			Map<String, String> curGroupMap = new HashMap<String, String>();
+			groupData.add(curGroupMap);
+			curGroupMap.put(ID, modulo.getId());
+			curGroupMap.put(NAME, modulo.getNombre());
+		}
+
+		for (int i = 0; i < 7; i++) {
+			List<Map<String, String>> children = new ArrayList<Map<String, String>>();
+			List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
+			switch (i + 1) {
+			case 1:
+				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
+				break;
+			case 2:
+				submodulos = Modulo.obtenerFuncionalidadesAdministracion();
+				break;
+			case 3:
+				submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
+				break;
+			case 4:
+				submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
+				break;
+			case 5:
+				submodulos = Modulo.obtenerFuncionalidadesObjetivos();
+				break;
+			case 6:
+				submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
+				break;
+			case 7:
+				submodulos = Modulo.obtenerFuncionalidadesReportes();
+				break;
+			}
+
+			// for (int j = 0; j < 5; j++) {
+			for (ModuloItem modulo : submodulos) {
+				Map<String, String> curChildMap = new HashMap<String, String>();
+				children.add(curChildMap);
+				// curChildMap.put(IS_EVEN, (j % 2 == 0) ? "Hello " + j
+				// : "Good Morning " + j);
+				curChildMap.put(ID, modulo.getId());
+				curChildMap.put(NAME, modulo.getNombre());
+			}
+			childData.add(children);
+		}
+
+		// mAdapter = new SimpleExpandableListAdapter(getActivity()
+		// .getApplicationContext(), groupData,
+		// android.R.layout.simple_expandable_list_item_1, new String[] {
+		// NAME, IS_EVEN }, new int[] { android.R.id.text1,
+		// android.R.id.text2 }, childData,
+		// android.R.layout.simple_expandable_list_item_2, new String[] {
+		// NAME, IS_EVEN }, new int[] { android.R.id.text1,
+		// android.R.id.text2 });
+		mAdapter = new SimpleExpandableListAdapter(getActivity()
+				.getApplicationContext(), groupData,
+				R.layout.custom_simple_expandable_list_item_1, new String[] {
+						NAME, IS_EVEN }, new int[] { R.id.text1, R.id.text2 },
+				childData, R.layout.custom_simple_expandable_list_item_2,
+				new String[] { NAME, IS_EVEN }, new int[] { R.id.text1,
+						R.id.text2 });
+
+		setListAdapter(mAdapter);
+
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		if (savedInstanceState != null
-				&& savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-			setActivatedPosition(savedInstanceState
-					.getInt(STATE_ACTIVATED_POSITION));
-		}
+		elv = getExpandableListView();
+		elv.setOnGroupClickListener(new OnGroupClickListener() {
+			public boolean onGroupClick(ExpandableListView parent, View v,
+					int groupPosition, long id) {
+				System.out.println("Group number " + groupPosition
+						+ " is clicked ");
+				grupoSeleccionado = groupPosition;
+				Modulo.MODULO_ACTUAL = groupPosition + 1;
+				return false;
+			}
+		});
+		elv.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				System.out.println("Group number " + groupPosition
+						+ " Child numer" + childPosition + " is clicked ");
+				int _groupPosition = groupPosition;
+
+				mCallbacks.onItemSelected(String.valueOf(childPosition + 1));
+
+				// cambiar color de hijo elegido
+				if (lastColored != null) {
+					lastColored.setBackgroundColor(Color.TRANSPARENT);
+					lastColored.invalidate();
+				}
+				lastColored = v;
+				v.setBackgroundColor(Color.rgb(11, 58, 23));
+
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -76,57 +198,8 @@ public class OpcionListFragment extends ListFragment {
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id) {
-		super.onListItemClick(listView, view, position, id);
-		if (OpcionListActivity.NAVEGACION == 1) {
-			OpcionListActivity.NAVEGACION = 2;
-			List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-			switch (((int) id) + 1) {
-			case 1:
-				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
-				Modulo.MODULO_ACTUAL = Constante.MI_INFORMACION;
-				break;
-			case 2:
-				submodulos = Modulo.obtenerFuncionalidadesAdministracion();
-				Modulo.MODULO_ACTUAL = Constante.ADMINISTRACION;
-				break;
-			case 3:
-				submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
-				Modulo.MODULO_ACTUAL = Constante.RECLUTAMIENTO;
-				break;
-			case 4:
-				submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
-				Modulo.MODULO_ACTUAL = Constante.EVALUACION_360;
-				break;
-			case 5:
-				submodulos = Modulo.obtenerFuncionalidadesObjetivos();
-				Modulo.MODULO_ACTUAL = Constante.OBJETIVOS;
-				break;
-			case 6:
-				submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
-				Modulo.MODULO_ACTUAL = Constante.LINEA_DE_CARRERA;
-				break;
-			case 7:
-				submodulos = Modulo.obtenerFuncionalidadesReportes();
-				Modulo.MODULO_ACTUAL = Constante.REPORTES;
-				break;
-			}
-			setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(getActivity(),
-					R.layout.accordion_list, R.id.accordion_list, submodulos));
-			Modulo.MODULOS_MOSTRADOS_ACTUAL = submodulos;
-		} else if (OpcionListActivity.NAVEGACION == 2) {
-			mCallbacks.onItemSelected(Modulo.MODULOS_MOSTRADOS_ACTUAL
-					.get(position).id);
-		}
-	}
-
-	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		if (mActivatedPosition != ListView.INVALID_POSITION) {
-			outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
-		}
 	}
 
 	public void setActivateOnItemClick(boolean activateOnItemClick) {
@@ -135,13 +208,22 @@ public class OpcionListFragment extends ListFragment {
 						: ListView.CHOICE_MODE_NONE);
 	}
 
-	public void setActivatedPosition(int position) {
-		if (position == ListView.INVALID_POSITION) {
-			getListView().setItemChecked(mActivatedPosition, false);
-		} else {
-			getListView().setItemChecked(position, true);
-		}
+	@Override
+	public void onListItemClick(ExpandableListView l, View v, int position,
+			long id) {
+		System.out.println("Evento activado");
+	}
 
-		mActivatedPosition = position;
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		System.out.println("Evento activado");
+		return true;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		elv = getExpandableListView();
 	}
 }

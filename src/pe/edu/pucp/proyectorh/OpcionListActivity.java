@@ -4,7 +4,6 @@ import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
 import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.*;
-import pe.edu.pucp.proyectorh.evaluacion360.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
@@ -15,7 +14,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
 /**
  * Actividad principal
@@ -127,27 +125,27 @@ public class OpcionListActivity extends FragmentActivity implements
 		}
 	}
 
-	@Override
-	public void onBackPressed() {
-		if (NAVEGACION == 2) {
-			NAVEGACION = 1;
-			Modulo.MODULOS_MOSTRADOS_ACTUAL = Modulo.MODULOS;
-			Modulo.MODULO_ACTUAL = Constante.PRINCIPAL;
-			// Se actualiza el menu izquierdo
-			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
-					R.id.opcion_list))
-					.setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(
-							getBaseContext(), R.layout.accordion_list,
-							R.id.accordion_list,
-							Modulo.MODULOS_MOSTRADOS_ACTUAL));
-			// Se muestra contenido vacio en el fragmento derecho
-			Bundle arguments = new Bundle();
-			OpcionDetailFragment fragment = new OpcionDetailFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.opcion_detail_container, fragment).commit();
-		}
-	}
+//	@Override
+//	public void onBackPressed() {
+//		if (NAVEGACION == 2) {
+//			NAVEGACION = 1;
+//			Modulo.MODULOS_MOSTRADOS_ACTUAL = Modulo.MODULOS;
+//			Modulo.MODULO_ACTUAL = Constante.PRINCIPAL;
+//			// Se actualiza el menu izquierdo
+//			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
+//					R.id.opcion_list))
+//					.setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(
+//							getBaseContext(), R.layout.accordion_list,
+//							R.id.accordion_list,
+//							Modulo.MODULOS_MOSTRADOS_ACTUAL));
+//			// Se muestra contenido vacio en el fragmento derecho
+//			Bundle arguments = new Bundle();
+//			OpcionDetailFragment fragment = new OpcionDetailFragment();
+//			fragment.setArguments(arguments);
+//			getSupportFragmentManager().beginTransaction()
+//					.replace(R.id.opcion_detail_container, fragment).commit();
+//		}
+//	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
