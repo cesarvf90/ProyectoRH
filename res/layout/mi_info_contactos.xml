@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/mi_info_contactos_title_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100px"
         android:layout_alignParentTop="true"
         android:orientation="horizontal" >
 
@@ -18,7 +18,8 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
-        <TextView
+
+        <TextView
             android:id="@+id/detalleContacto_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,39 +28,144 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ListView
+        android:id="@+id/mi_info_contactos_list"
+        android:layout_width="550px"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/mi_info_contactos_title_layout"
-        android:orientation="horizontal"
-        android:weightSum="2" >
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/mi_info_contactos_title_layout" >
+    </ListView>
 
-        <ListView
-            android:id="@+id/mi_info_contactos_list"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-        </ListView>
+    <LinearLayout
+        android:id="@+id/mi_info_detalle_contacto_part"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/mi_info_contactos_title_layout"
+        android:layout_toRightOf="@+id/mi_info_contactos_list"
+        android:orientation="horizontal" >
 
         <LinearLayout
-            android:id="@+id/mi_info_detalle_contacto_part"
-            android:layout_width="wrap_content"
+            android:layout_width="250px"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-            </LinearLayout>
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Nombres:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-            </LinearLayout>
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Apellidos:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Área:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Puesto:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Fecha de nacimiento:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Fecha ingreso:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Correo electrónico:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Teléfono:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300px"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Nombres:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Apellidos:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Área:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Puesto:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Fecha de nacimiento:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Fecha ingreso:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Correo electrónico:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Teléfono:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 
