@@ -82,9 +82,10 @@ public class Modulo {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Aprobar postulante"));
 		submodulos
-				.add(new ModuloItem("2", "Aceptar solicitudes oferta laboral"));
+				.add(new ModuloItem("2", "Aceptar solicitudes de oferta laboral"));
 		submodulos.add(new ModuloItem("3", "Aceptar solicitudes de promoción"));
 		submodulos.add(new ModuloItem("4", "Evaluar postulante"));
+		submodulos.add(new ModuloItem("5", "Postular a convocatoria"));
 		return submodulos;
 	}
 
