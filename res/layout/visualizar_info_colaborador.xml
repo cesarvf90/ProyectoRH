@@ -24,7 +24,7 @@
         android:id="@+id/mi_info_tableLayout1"
         android:layout_width="700dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mi_info_title_layout">
+        android:layout_below="@+id/mi_info_title_layout" >
 
         <TableRow android:id="@+id/mi_info_tableRow1" >
 
@@ -36,8 +36,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_nombres"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_nombres"
                     android:textColor="@android:color/black"
@@ -46,7 +46,7 @@
                 <TextView
                     android:id="@+id/mi_info_input_nombres"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_nombres"
                     android:textSize="24sp" />
@@ -63,8 +63,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_apellidos"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_apellidos"
                     android:textColor="@android:color/black"
@@ -73,70 +73,10 @@
                 <TextView
                     android:id="@+id/mi_info_input_apellidos"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_apellidos"
                     android:textSize="24sp" />
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow3" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow4" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow5" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow6" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow7" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:id="@+id/mi_info_tableRow8" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal" >
             </LinearLayout>
         </TableRow>
 
@@ -150,8 +90,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_area"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_area"
                     android:textColor="@android:color/black"
@@ -160,7 +100,7 @@
                 <TextView
                     android:id="@+id/mi_info_input_area"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_area"
                     android:textSize="24sp" />
@@ -177,8 +117,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_puesto"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_puesto"
                     android:textColor="@android:color/black"
@@ -187,7 +127,7 @@
                 <TextView
                     android:id="@+id/mi_info_input_puesto"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_cargo"
                     android:textSize="24sp" />
@@ -204,8 +144,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_email"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_email"
                     android:textColor="@android:color/black"
@@ -214,7 +154,7 @@
                 <TextView
                     android:id="@+id/mi_info_input_email"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_email"
                     android:textSize="24sp" />
@@ -231,8 +171,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_telefono"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_anexo"
                     android:textColor="@android:color/black"
@@ -241,7 +181,7 @@
                 <TextView
                     android:id="@+id/mi_info_input_telefono"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_anexo"
                     android:textSize="24sp" />
@@ -258,8 +198,8 @@
 
                 <TextView
                     android:id="@+id/mi_info_lbl_fechaingreso"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="@string/mi_info_fecha_ingreso"
                     android:textColor="@android:color/black"
@@ -268,7 +208,7 @@
                 <TextView
                     android:id="@+id/mi_info_input_fechaingreso"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:text="@string/mi_info_value_fecha_ingreso"
                     android:textSize="24sp" />

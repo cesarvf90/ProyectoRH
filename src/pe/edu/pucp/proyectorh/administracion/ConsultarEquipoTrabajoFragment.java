@@ -35,7 +35,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.visualizar_info_colaborador,
+		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
 
 		System.out.println("el usuario es: " + LoginActivity.idUsuario);
