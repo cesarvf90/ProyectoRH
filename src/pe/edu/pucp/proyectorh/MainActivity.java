@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.administracion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
@@ -59,7 +60,10 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("2")) {// Mi equipo de trabajo
-
+					ConsultarEquipoTrabajoFragment fragment = new ConsultarEquipoTrabajoFragment();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 				if (id.equals("3")) {// Mis contactos
 
