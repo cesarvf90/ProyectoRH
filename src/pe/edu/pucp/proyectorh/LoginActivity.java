@@ -3,14 +3,18 @@ package pe.edu.pucp.proyectorh;
 import com.google.gson.Gson;
 
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.RespuestaLogin;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,6 +46,9 @@ public class LoginActivity extends Activity {
 				validaUsuario(usuario, contrasena);
 			}
 		});
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+		bar.setTitle("RH++");
 	}
 
 	protected void validaUsuario(String usuario, String contrasena) {
@@ -102,8 +109,6 @@ public class LoginActivity extends Activity {
 	public class LoginUsuario extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			// Log.i(LoginUsuario.class.getName(),
-			// "Recibido: " + result.toString());
 			System.out.println("Recibido: " + result.toString());
 
 			final Gson gson = new Gson();
@@ -113,26 +118,10 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	public class RespuestaLogin {
-		private String respuesta;
-
-		public RespuestaLogin() {
-		}
-
-		public String getRespuesta() {
-			return respuesta;
-		}
-
-		public void setRespuesta(String respuesta) {
-			this.respuesta = respuesta;
-		}
-
-	}
-
 	public void procesaLogin(String respuestaServidor) {
 		if (USUARIO_VALIDO.equals(respuestaServidor)) {
 			Intent loginIntent = new Intent(getApplicationContext(),
-					OpcionListActivity.class);
+					MainActivity.class);
 			startActivity(loginIntent);
 		} else if (USUARIO_INVALIDO.equals(respuestaServidor)) {
 			// Se muestra mensaje de usuario invalido

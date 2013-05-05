@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import pe.edu.pucp.proyectorh.OpcionDetailFragment;
+import pe.edu.pucp.proyectorh.DetalleFragment;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
+import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
