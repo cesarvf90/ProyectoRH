@@ -2,18 +2,11 @@ package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.model.Modulo;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 
 /**
@@ -47,13 +40,13 @@ public class OpcionDetailFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-			View rootView;
+		View rootView;
 		if (tituloFuncionalidad != null) {
-				rootView = inflater.inflate(R.layout.fragment_opcion_detail,
-						container, false);
-				((TextView) rootView.findViewById(R.id.opcion_detail))
-				.setText(tituloFuncionalidad.nombre);
-		}else{
+			rootView = inflater.inflate(R.layout.fragment_opcion_detail,
+					container, false);
+			((TextView) rootView.findViewById(R.id.opcion_detail))
+					.setText(tituloFuncionalidad.nombre);
+		} else {
 			rootView = inflater.inflate(R.layout.fragment_opcion_detail,
 					container, false);
 		}

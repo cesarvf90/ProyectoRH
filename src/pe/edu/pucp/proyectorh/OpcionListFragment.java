@@ -28,15 +28,12 @@ import android.widget.SimpleExpandableListAdapter;
 public class OpcionListFragment extends ExpandableListFragment {
 
 	private Callbacks mCallbacks = menuOpcionesCallbacks;
-	// nuevo adapter
 	private SimpleExpandableListAdapter mAdapter;
 	private static final String ID = "Id";
 	private static final String NAME = "Name";
 	private static final String IS_EVEN = "Is even";
 	private ExpandableListView elv;
 	View lastColored;
-	private int grupoSeleccionado;
-	private int hijoSeleccionado;
 
 	public interface Callbacks {
 		public void onItemSelected(String id);
@@ -54,27 +51,9 @@ public class OpcionListFragment extends ExpandableListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// nueva lista
 		List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
 		List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
-		// for (int i = 0; i < 4; i++) {
-		// Map<String, String> curGroupMap = new HashMap<String, String>();
-		// groupData.add(curGroupMap);
-		// curGroupMap.put(NAME, "Item " + i);
-		// curGroupMap.put(IS_EVEN, (i % 2 == 0) ? "This group is even"
-		// : "This group is odd");
-		//
-		// List<Map<String, String>> children = new ArrayList<Map<String,
-		// String>>();
-		// for (int j = 0; j < 5; j++) {
-		// Map<String, String> curChildMap = new HashMap<String, String>();
-		// children.add(curChildMap);
-		// curChildMap.put(IS_EVEN, (j % 2 == 0) ? "Hello " + j
-		// : "Good Morning " + j);
-		// }
-		// childData.add(children);
-		// }
 
 		/* Se agregan las funcionalidades de RH++ */
 		for (ModuloItem modulo : Modulo.MODULOS) {
@@ -111,26 +90,15 @@ public class OpcionListFragment extends ExpandableListFragment {
 				break;
 			}
 
-			// for (int j = 0; j < 5; j++) {
 			for (ModuloItem modulo : submodulos) {
 				Map<String, String> curChildMap = new HashMap<String, String>();
 				children.add(curChildMap);
-				// curChildMap.put(IS_EVEN, (j % 2 == 0) ? "Hello " + j
-				// : "Good Morning " + j);
 				curChildMap.put(ID, modulo.getId());
 				curChildMap.put(NAME, modulo.getNombre());
 			}
 			childData.add(children);
 		}
 
-		// mAdapter = new SimpleExpandableListAdapter(getActivity()
-		// .getApplicationContext(), groupData,
-		// android.R.layout.simple_expandable_list_item_1, new String[] {
-		// NAME, IS_EVEN }, new int[] { android.R.id.text1,
-		// android.R.id.text2 }, childData,
-		// android.R.layout.simple_expandable_list_item_2, new String[] {
-		// NAME, IS_EVEN }, new int[] { android.R.id.text1,
-		// android.R.id.text2 });
 		mAdapter = new SimpleExpandableListAdapter(getActivity()
 				.getApplicationContext(), groupData,
 				R.layout.custom_simple_expandable_list_item_1, new String[] {
@@ -152,7 +120,6 @@ public class OpcionListFragment extends ExpandableListFragment {
 					int groupPosition, long id) {
 				System.out.println("Group number " + groupPosition
 						+ " is clicked ");
-				grupoSeleccionado = groupPosition;
 				Modulo.MODULO_ACTUAL = groupPosition + 1;
 				return false;
 			}
@@ -163,10 +130,6 @@ public class OpcionListFragment extends ExpandableListFragment {
 					int groupPosition, int childPosition, long id) {
 				System.out.println("Group number " + groupPosition
 						+ " Child numer" + childPosition + " is clicked ");
-				int _groupPosition = groupPosition;
-
-				mCallbacks.onItemSelected(String.valueOf(childPosition + 1));
-
 				// cambiar color de hijo elegido
 				if (lastColored != null) {
 					lastColored.setBackgroundColor(Color.TRANSPARENT);
@@ -174,7 +137,7 @@ public class OpcionListFragment extends ExpandableListFragment {
 				}
 				lastColored = v;
 				v.setBackgroundColor(Color.rgb(11, 58, 23));
-
+				mCallbacks.onItemSelected(String.valueOf(childPosition + 1));
 				return false;
 			}
 		});

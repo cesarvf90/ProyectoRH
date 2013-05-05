@@ -99,8 +99,6 @@ public class LoginActivity extends Activity {
 	public class LoginUsuario extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			// Log.i(LoginUsuario.class.getName(),
-			// "Recibido: " + result.toString());
 			System.out.println("Recibido: " + result.toString());
 
 			final Gson gson = new Gson();
