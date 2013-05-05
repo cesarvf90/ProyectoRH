@@ -21,6 +21,7 @@ public class LoginActivity extends Activity {
 
 	public static final String USUARIO_VALIDO = "1";
 	public static final String USUARIO_INVALIDO = "0";
+	public static String idUsuario;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 				String usuario = ((EditText) findViewById(R.id.usuarioText))
 						.getText().toString();
+				idUsuario = usuario; //guardamos el ID de la persona que se logeo
+				System.out.println("el usuario login es: "+idUsuario);
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
 				validaUsuario(usuario, contrasena);
