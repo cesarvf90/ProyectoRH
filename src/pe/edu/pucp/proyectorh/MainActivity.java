@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
+import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.reportes.*;
@@ -41,7 +42,8 @@ public class MainActivity extends FragmentActivity implements
 					R.id.opcion_list)).setActivateOnItemClick(true);
 		}
 		ActionBar bar = getActionBar();
-		//bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23))); //color web original verde olivo
+		// bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23)));
+		// //color web original verde olivo
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 100, 23)));
 		bar.setTitle("RH++");
 	}
@@ -62,7 +64,10 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("3")) {// Mis contactos
-
+					ContactosFragment fragment = new ContactosFragment();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 				if (id.equals("4")) {// Mi agenda
 
