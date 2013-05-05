@@ -7,9 +7,9 @@
     android:layout_marginRight="16dp"
     android:divider="?android:attr/dividerHorizontal"
     android:showDividers="middle"
-    tools:context=".OpcionListActivity">
+    tools:context=".MainActivity">
 
-    <fragment android:name="pe.edu.pucp.proyectorh.OpcionListFragment"
+    <fragment android:name="pe.edu.pucp.proyectorh.MenuFragment"
         android:id="@+id/opcion_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"

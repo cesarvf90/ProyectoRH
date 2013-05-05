@@ -118,7 +118,7 @@ public class LoginActivity extends Activity {
 	public void procesaLogin(String respuestaServidor) {
 		if (USUARIO_VALIDO.equals(respuestaServidor)) {
 			Intent loginIntent = new Intent(getApplicationContext(),
-					OpcionListActivity.class);
+					MainActivity.class);
 			startActivity(loginIntent);
 		} else if (USUARIO_INVALIDO.equals(respuestaServidor)) {
 			// Se muestra mensaje de usuario invalido

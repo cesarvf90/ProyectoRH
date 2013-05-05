@@ -12,7 +12,7 @@ import android.view.MenuItem;
  * @author Cesar
  * 
  */
-public class OpcionDetailActivity extends FragmentActivity {
+public class DetalleActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +23,9 @@ public class OpcionDetailActivity extends FragmentActivity {
 
 		if (savedInstanceState == null) {
 			Bundle arguments = new Bundle();
-			arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, getIntent()
-					.getStringExtra(OpcionDetailFragment.ARG_ITEM_ID));
-			OpcionDetailFragment fragment = new OpcionDetailFragment();
+			arguments.putString(DetalleFragment.ARG_ITEM_ID, getIntent()
+					.getStringExtra(DetalleFragment.ARG_ITEM_ID));
+			DetalleFragment fragment = new DetalleFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.opcion_detail_container, fragment).commit();
@@ -36,7 +36,7 @@ public class OpcionDetailActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
 			NavUtils.navigateUpTo(this, new Intent(this,
-					OpcionListActivity.class));
+					MainActivity.class));
 			return true;
 		}
 

@@ -25,7 +25,7 @@ import android.widget.SimpleExpandableListAdapter;
  * @author Cesar
  * 
  */
-public class OpcionListFragment extends ExpandableListFragment {
+public class MenuFragment extends ExpandableListFragment {
 
 	private Callbacks mCallbacks = menuOpcionesCallbacks;
 	private SimpleExpandableListAdapter mAdapter;
@@ -45,17 +45,16 @@ public class OpcionListFragment extends ExpandableListFragment {
 		}
 	};
 
-	public OpcionListFragment() {
+	public MenuFragment() {
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// nueva lista
 		List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
 		List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
 
-		/* Se agregan las funcionalidades de RH++ */
+		// Se agregan las funcionalidades de RH++
 		for (ModuloItem modulo : Modulo.MODULOS) {
 			Map<String, String> curGroupMap = new HashMap<String, String>();
 			groupData.add(curGroupMap);

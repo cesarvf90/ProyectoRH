@@ -15,13 +15,13 @@ import android.widget.TextView;
  * @author Cesar
  * 
  */
-public class OpcionDetailFragment extends Fragment {
+public class DetalleFragment extends Fragment {
 
 	public static final String ARG_ITEM_ID = "item_id";
 
 	Modulo.ModuloItem tituloFuncionalidad;
 
-	public OpcionDetailFragment() {
+	public DetalleFragment() {
 	}
 
 	@Override

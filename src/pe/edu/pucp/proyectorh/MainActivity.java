@@ -24,8 +24,8 @@ import android.view.MenuItem;
  * @author Cesar
  * 
  */
-public class OpcionListActivity extends FragmentActivity implements
-		OpcionListFragment.Callbacks {
+public class MainActivity extends FragmentActivity implements
+		MenuFragment.Callbacks {
 
 	public static int NAVEGACION = 1;
 	private boolean dosPaneles;
@@ -37,11 +37,11 @@ public class OpcionListActivity extends FragmentActivity implements
 
 		if (findViewById(R.id.opcion_detail_container) != null) {
 			dosPaneles = true;
-			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
+			((MenuFragment) getSupportFragmentManager().findFragmentById(
 					R.id.opcion_list)).setActivateOnItemClick(true);
 		}
 		ActionBar bar = getActionBar();
-		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23)));
+		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 100, 23)));
 		bar.setTitle("RH++");
 	}
 
@@ -117,16 +117,16 @@ public class OpcionListActivity extends FragmentActivity implements
 				}
 			} else {
 				Bundle arguments = new Bundle();
-				arguments.putString(OpcionDetailFragment.ARG_ITEM_ID, id);
-				OpcionDetailFragment fragment = new OpcionDetailFragment();
+				arguments.putString(DetalleFragment.ARG_ITEM_ID, id);
+				DetalleFragment fragment = new DetalleFragment();
 				fragment.setArguments(arguments);
 				getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
 						.commit();
 			}
 		} else {
-			Intent detailIntent = new Intent(this, OpcionDetailActivity.class);
-			detailIntent.putExtra(OpcionDetailFragment.ARG_ITEM_ID, id);
+			Intent detailIntent = new Intent(this, DetalleActivity.class);
+			detailIntent.putExtra(DetalleFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
 	}
