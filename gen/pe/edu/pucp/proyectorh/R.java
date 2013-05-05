@@ -17,15 +17,41 @@ public final class R {
         public static final int Title=0x7f040000;
     }
     public static final class drawable {
-        public static final int backgreen=0x7f020000;
-        public static final int fondo_plomo_claro=0x7f020001;
-        public static final int gradiente_verde_green2=0x7f020002;
-        public static final int ic_action_search=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int logorh1=0x7f020005;
-        public static final int logorh2=0x7f020006;
-        public static final int textview_back=0x7f020007;
-        public static final int textview_backred=0x7f020008;
+        public static final int ab_bottom_solid_rhactionbar=0x7f020000;
+        public static final int ab_solid_rhactionbar=0x7f020001;
+        public static final int ab_stacked_solid_rhactionbar=0x7f020002;
+        public static final int ab_texture_tile_rhactionbar=0x7f020003;
+        public static final int ab_transparent_rhactionbar=0x7f020004;
+        public static final int backgreen=0x7f020005;
+        public static final int btn_cab_done_default_rhactionbar=0x7f020006;
+        public static final int btn_cab_done_focused_rhactionbar=0x7f020007;
+        public static final int btn_cab_done_pressed_rhactionbar=0x7f020008;
+        public static final int cab_background_bottom_rhactionbar=0x7f020009;
+        public static final int cab_background_top_rhactionbar=0x7f02000a;
+        public static final int fondo_plomo_claro=0x7f02000b;
+        public static final int gradiente_verde_green2=0x7f02000c;
+        public static final int ic_action_search=0x7f02000d;
+        public static final int ic_launcher=0x7f02000e;
+        public static final int list_focused_rhactionbar=0x7f02000f;
+        public static final int logorh1=0x7f020010;
+        public static final int logorh2=0x7f020011;
+        public static final int menu_dropdown_panel_rhactionbar=0x7f020012;
+        public static final int progress_bg_rhactionbar=0x7f020013;
+        public static final int progress_primary_rhactionbar=0x7f020014;
+        public static final int progress_secondary_rhactionbar=0x7f020015;
+        public static final int spinner_ab_default_rhactionbar=0x7f020016;
+        public static final int spinner_ab_disabled_rhactionbar=0x7f020017;
+        public static final int spinner_ab_focused_rhactionbar=0x7f020018;
+        public static final int spinner_ab_pressed_rhactionbar=0x7f020019;
+        public static final int tab_selected_focused_rhactionbar=0x7f02001a;
+        public static final int tab_selected_pressed_rhactionbar=0x7f02001b;
+        public static final int tab_selected_rhactionbar=0x7f02001c;
+        public static final int tab_unselected_focused_rhactionbar=0x7f02001d;
+        public static final int tab_unselected_pressed_rhactionbar=0x7f02001e;
+        public static final int tab_unselected_rhactionbar=0x7f02001f;
+        public static final int tema_verde=0x7f020020;
+        public static final int textview_back=0x7f020021;
+        public static final int textview_backred=0x7f020022;
     }
     public static final class id {
         public static final int ObjEmpDescCambios=0x7f090018;
@@ -145,5 +171,8 @@ public final class R {
     }
     public static final class style {
         public static final int AppTheme=0x7f070000;
+        /**  style for the action bar backgrounds 
+         */
+        public static final int MyActionBar=0x7f070001;
     }
 }

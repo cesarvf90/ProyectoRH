@@ -6,9 +6,12 @@ import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -37,6 +40,9 @@ public class OpcionListActivity extends FragmentActivity implements
 			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.opcion_list)).setActivateOnItemClick(true);
 		}
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23)));
+		bar.setTitle("RH++");
 	}
 
 	@Override
@@ -125,28 +131,6 @@ public class OpcionListActivity extends FragmentActivity implements
 		}
 	}
 
-//	@Override
-//	public void onBackPressed() {
-//		if (NAVEGACION == 2) {
-//			NAVEGACION = 1;
-//			Modulo.MODULOS_MOSTRADOS_ACTUAL = Modulo.MODULOS;
-//			Modulo.MODULO_ACTUAL = Constante.PRINCIPAL;
-//			// Se actualiza el menu izquierdo
-//			((OpcionListFragment) getSupportFragmentManager().findFragmentById(
-//					R.id.opcion_list))
-//					.setListAdapter(new ArrayAdapter<Modulo.ModuloItem>(
-//							getBaseContext(), R.layout.accordion_list,
-//							R.id.accordion_list,
-//							Modulo.MODULOS_MOSTRADOS_ACTUAL));
-//			// Se muestra contenido vacio en el fragmento derecho
-//			Bundle arguments = new Bundle();
-//			OpcionDetailFragment fragment = new OpcionDetailFragment();
-//			fragment.setArguments(arguments);
-//			getSupportFragmentManager().beginTransaction()
-//					.replace(R.id.opcion_detail_container, fragment).commit();
-//		}
-//	}
-
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.options_menu, menu);
@@ -184,6 +168,10 @@ public class OpcionListActivity extends FragmentActivity implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
 	}
 
 	protected void cerrarSesion() {
