@@ -1,8 +1,8 @@
 package pe.edu.pucp.proyectorh;
 
-import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
 import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
@@ -41,6 +41,7 @@ public class MainActivity extends FragmentActivity implements
 					R.id.opcion_list)).setActivateOnItemClick(true);
 		}
 		ActionBar bar = getActionBar();
+		//bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23))); //color web original verde olivo
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 100, 23)));
 		bar.setTitle("RH++");
 	}
@@ -69,7 +70,7 @@ public class MainActivity extends FragmentActivity implements
 
 			} else if ((Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO)
 					&& ("4".equals(id))) {
-				RendirEvaluacionesFragment fragment = new RendirEvaluacionesFragment();
+				EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
 				getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
 						.commit();

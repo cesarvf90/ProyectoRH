@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class EvaluarPostulanteMenu extends Fragment {
+public class EvaluarMenuFragment extends Fragment {
 
-	public EvaluarPostulanteMenu() {
+	public EvaluarMenuFragment() {
 	}
 
 	@Override

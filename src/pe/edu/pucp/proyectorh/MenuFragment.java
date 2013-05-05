@@ -11,6 +11,7 @@ import pe.edu.pucp.proyectorh.utils.ExpandableListFragment;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -117,9 +118,7 @@ public class MenuFragment extends ExpandableListFragment {
 		elv.setOnGroupClickListener(new OnGroupClickListener() {
 			public boolean onGroupClick(ExpandableListView parent, View v,
 					int groupPosition, long id) {
-				System.out.println("Group number " + groupPosition
-						+ " is clicked ");
-				Modulo.MODULO_ACTUAL = groupPosition + 1;
+				System.out.println("Grupo " + (groupPosition + 1));
 				return false;
 			}
 		});
@@ -127,19 +126,52 @@ public class MenuFragment extends ExpandableListFragment {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
-				System.out.println("Group number " + groupPosition
-						+ " Child numer" + childPosition + " is clicked ");
+				System.out.println("Grupo " + (groupPosition + 1) + "/ Hijo "
+						+ (childPosition + 1));
 				// cambiar color de hijo elegido
 				if (lastColored != null) {
 					lastColored.setBackgroundColor(Color.TRANSPARENT);
 					lastColored.invalidate();
 				}
 				lastColored = v;
-				v.setBackgroundColor(Color.rgb(11, 58, 23));
+				// bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58,
+				// 23))); //color web original verde olivo
+				v.setBackgroundDrawable(new ColorDrawable(Color
+						.rgb(11, 100, 23)));
+				Modulo.MODULO_ACTUAL = groupPosition + 1;
+				Modulo.MODULOS_MOSTRADOS_ACTUAL = obtenerSubModulosSegunId(groupPosition);
 				mCallbacks.onItemSelected(String.valueOf(childPosition + 1));
 				return false;
 			}
 		});
+	}
+
+	protected List<ModuloItem> obtenerSubModulosSegunId(int i) {
+		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
+		switch (i + 1) {
+		case 1:
+			submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
+			break;
+		case 2:
+			submodulos = Modulo.obtenerFuncionalidadesAdministracion();
+			break;
+		case 3:
+			submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
+			break;
+		case 4:
+			submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
+			break;
+		case 5:
+			submodulos = Modulo.obtenerFuncionalidadesObjetivos();
+			break;
+		case 6:
+			submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
+			break;
+		case 7:
+			submodulos = Modulo.obtenerFuncionalidadesReportes();
+			break;
+		}
+		return submodulos;
 	}
 
 	@Override

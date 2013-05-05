@@ -1,4 +1,4 @@
-package pe.edu.pucp.proyectorh.administracion;
+package pe.edu.pucp.proyectorh.reclutamiento;
 
 import pe.edu.pucp.proyectorh.R;
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class RendirEvaluacionesFragment extends Fragment {
+public class EvaluacionPostulanteFragment extends Fragment {
 
-	public RendirEvaluacionesFragment() {
+	public EvaluacionPostulanteFragment() {
 	}
 
 	@Override
