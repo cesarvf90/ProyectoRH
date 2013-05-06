@@ -23,6 +23,8 @@ public class ObjetivoAdapter extends BaseAdapter {
  
 	public View getView(int position, View convertView, ViewGroup parent) {
  
+		
+		
 		LayoutInflater inflater = (LayoutInflater) context
 			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  
@@ -40,44 +42,17 @@ public class ObjetivoAdapter extends BaseAdapter {
 			TextView textView = (TextView) gridView
 					.findViewById(R.id.reportebscObjetivolabel);
 			textView.setText(objetivos[position]);
+			
+			TextView textAvance = (TextView) gridView
+					.findViewById(R.id.reportebscObjetivoAvance);
+			
+			int avance = (position*10);
+			textAvance.setText(avance + "%");
  
-			//String mobile = mobileValues[position];
-			/*
-			WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-			Display display = wm.getDefaultDisplay();
-			int height = display.getHeight();  // deprecated
-			
-			gridView.setMinimumHeight(height/2);
-			*/
-			
-			//String objetivo = objetivos[position];
-			/*
-			if (position == 0) {
-				gridView.setBackgroundColor(Color.GREEN);
-			} else if (position == 1) {
-				gridView.setBackgroundColor(Color.YELLOW);
-			} else if (position == 2) {
-				gridView.setBackgroundColor(Color.BLUE);
-			} else {
-				gridView.setBackgroundColor(Color.RED);
-			}*/
-			
-			switch (position){
-			case 0 : gridView.setBackgroundDrawable(getBackg(0xFF49b700,0xFF378900));break;
-			case 1 : gridView.setBackgroundDrawable(getBackg(0xFF5ba825,0xFF377d00));break;
-			case 2 : gridView.setBackgroundDrawable(getBackg(0xFF9cc925,0xFF7ba60d));break;
-			case 3 : gridView.setBackgroundDrawable(getBackg(0xFFd4de1b,0xFFb5bf07));break;
-			case 4 : gridView.setBackgroundDrawable(getBackg(0xFFfff300,0xFFffd400));break;
-			case 5 : gridView.setBackgroundDrawable(getBackg(0xFFffd900,0xFFffa400));break;
-			case 6 : gridView.setBackgroundDrawable(getBackg(0xFFffb300,0xFFed7710));break;
-			case 7 : gridView.setBackgroundDrawable(getBackg(0xFFff7518,0xFFaa3e00));break;
-			case 8 : gridView.setBackgroundDrawable(getBackg(0xFFff4e00,0xFFc72b00));break;
-			case 9 : gridView.setBackgroundDrawable(getBackg(0xFFce2029,0xFF9e030b));break;
-	
-			}
-			
-			
 
+			
+			setColor(avance, gridView );
+			
  
 		} else {
 			gridView = (View) convertView;
@@ -93,6 +68,40 @@ public class ObjetivoAdapter extends BaseAdapter {
 	    gd.setStroke(1, Color.parseColor("#000000"));
 	    //gd.setCornerRadius(3f);
 	    return gd;
+	}
+	
+	public void setColor(int avance, View gridView){
+		
+		if (avance < 10){
+			gridView.setBackgroundDrawable(getBackg(0xFFce2029,0xFF9e030b));
+		}
+		else if (avance < 20){
+			gridView.setBackgroundDrawable(getBackg(0xFFff4e00,0xFFc72b00));
+		}
+		else if (avance < 30){
+			gridView.setBackgroundDrawable(getBackg(0xFFff7518,0xFFaa3e00));
+		}
+		else if (avance < 40){
+			gridView.setBackgroundDrawable(getBackg(0xFFffb300,0xFFed7710));
+		}
+		else if (avance < 50){
+			gridView.setBackgroundDrawable(getBackg(0xFFffd900,0xFFffa400));
+		}
+		else if (avance < 60){
+			gridView.setBackgroundDrawable(getBackg(0xFFfff300,0xFFffd400));
+		}
+		else if (avance < 70){
+			gridView.setBackgroundDrawable(getBackg(0xFFd4de1b,0xFFb5bf07));
+		}
+		else if (avance < 80){
+			gridView.setBackgroundDrawable(getBackg(0xFF9cc925,0xFF7ba60d));
+		}
+		else if (avance < 90){
+			gridView.setBackgroundDrawable(getBackg(0xFF5ba825,0xFF377d00));
+		}
+		else{
+			gridView.setBackgroundDrawable(getBackg(0xFF49b700,0xFF378900));
+		}
 	}
 	
  

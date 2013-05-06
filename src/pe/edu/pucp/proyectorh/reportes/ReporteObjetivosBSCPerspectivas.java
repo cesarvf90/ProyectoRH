@@ -31,6 +31,8 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 	
+	
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

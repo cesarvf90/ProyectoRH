@@ -27,6 +27,8 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 		
 	}
 	
+	
+	
 	public class DataObject {
 		String[] meses = new String[] { 
 				"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"};
@@ -92,7 +94,7 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 		browser.addJavascriptInterface(new InterfaceChartLineal(rootView.getContext()), "Android");
 		
 		
-		browser.loadUrl("file:///android_asset/ReporteBSCgooglelinechart.html");
+		browser.loadUrl("file:///android_asset/ReporteBSCperspectivabarchart.html");
 		
 		
 		String titulo = getArguments().getString("titulo");
