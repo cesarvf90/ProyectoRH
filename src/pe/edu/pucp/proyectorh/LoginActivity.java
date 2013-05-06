@@ -1,17 +1,21 @@
 package pe.edu.pucp.proyectorh;
 
-import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.util.Log;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +23,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity {
+
+	public static final String USUARIO_VALIDO = "1";
+	public static final String USUARIO_INVALIDO = "0";
+	public static String idUsuario;
+	public static Usuario usuario;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,21 +41,23 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 				String usuario = ((EditText) findViewById(R.id.usuarioText))
 						.getText().toString();
+				idUsuario = usuario; // guardamos el ID de la persona que se
+										// logeo
+				System.out.println("el usuario login es: " + idUsuario);
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
-				if (validaUsuario(usuario, contrasena)) {
-					Intent mainIntent = new Intent(v.getContext(),
-							OpcionListActivity.class);
-					startActivity(mainIntent);
-				}
+				validaUsuario(usuario, contrasena);
 			}
 		});
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+		bar.setTitle("RH++");
 	}
 
-	protected boolean validaUsuario(String usuario, String contrasena) {
+	protected void validaUsuario(String usuario, String contrasena) {
 		if (!Constante.CADENA_VACIA.equals(usuario)
 				&& !Constante.CADENA_VACIA.equals(contrasena)) {
-			return validaServicioLogin(usuario, contrasena);
+			validaServicioLogin(usuario, contrasena);
 		} else {
 			// Se muestra mensaje de campos incompletos
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -56,7 +67,6 @@ public class LoginActivity extends Activity {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
 		}
 	}
 
@@ -65,25 +75,23 @@ public class LoginActivity extends Activity {
 	 * 
 	 * @param usuario
 	 * @param contrasena
-	 * @return
 	 */
-	private boolean validaServicioLogin(String usuario, String contrasena) {
+	private void validaServicioLogin(String usuario, String contrasena) {
 		if (ConnectionManager.connect(this)) {
-			// fetch data
-			//construir llamada
-			new LoginUsuario().execute(Servicio.LoginService);
+			// construir llamada al servicio
+			String request = Servicio.LoginService + "?username=" + usuario
+					+ "&password=" + contrasena;
+			new LoginUsuario().execute(request);
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Error de conexción");
+			builder.setTitle("Error de conexión");
 			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
 		}
-		return true;
 	}
 
 	@Override
@@ -104,17 +112,72 @@ public class LoginActivity extends Activity {
 	public class LoginUsuario extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			Log.i(LoginUsuario.class.getName(),
-					"Recibido: " + result.toString());
-			final Gson gson = new Gson();
-			final P product = gson.fromJson(result, P.class);
+			System.out.println("Recibido: " + result.toString());
+			// deserializando el json parte por parte
+			try {
+				JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("respuesta");
+				if (procesaRespuesta(respuesta)) {
+					JSONObject usuarioObject = (JSONObject) jsonObject
+							.get("usuario");
+					usuario = new Usuario(usuarioObject.getString("ID"),
+							usuarioObject.getString("Username"),
+							usuarioObject.getString("Password"));
+					Intent loginIntent = new Intent(getApplicationContext(),
+							MainActivity.class);
+					startActivity(loginIntent);
+				}
+			} catch (JSONException e) {
+				mostrarErrorComunicacion(e.toString());
+			} catch (NullPointerException ex) {
+				mostrarErrorComunicacion(ex.toString());
+			}
 		}
 	}
 
-	public class P {
-		public String nombre;
-
-		public P() {
+	public boolean procesaRespuesta(String respuestaServidor) {
+		if (USUARIO_VALIDO.equals(respuestaServidor)) {
+			return true;
+		} else if (USUARIO_INVALIDO.equals(respuestaServidor)) {
+			// Se muestra mensaje de usuario invalido
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Login inválido");
+			builder.setMessage("Combinación de usuario y/o contraseña incorrectos.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		} else {
+			// Se muestra mensaje de usuario invalido
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Problema en el servidor");
+			builder.setMessage("Hay un problema en el servidor.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
 		}
 	}
+
+	public static Usuario getUsuario() {
+		return usuario;
+	}
+
+	public static void setUsuario(Usuario usuario) {
+		LoginActivity.usuario = usuario;
+	}
+
+	private void mostrarErrorComunicacion(String excepcion) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Error de servicio");
+		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
+				+ excepcion.toString());
+		builder.setCancelable(false);
+		builder.setPositiveButton("Ok", null);
+		builder.create();
+		builder.show();
+	}
+
 }

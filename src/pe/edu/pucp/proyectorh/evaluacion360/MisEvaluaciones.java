@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import pe.edu.pucp.proyectorh.OpcionDetailFragment;
+import pe.edu.pucp.proyectorh.DetalleFragment;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
+import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -97,7 +97,7 @@ public class MisEvaluaciones extends Fragment {
 		                "\nSpinner 1 : "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
 					Toast.LENGTH_SHORT).show();*/
 				  
-				  RendirEvaluacionesFragment fragment = new RendirEvaluacionesFragment();
+				  EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
 				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
 				  ft.replace(R.id.opcion_detail_container, fragment);
 				  ft.addToBackStack(null);

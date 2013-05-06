@@ -1,10 +1,10 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="pe.edu.pucp.proyectorh.OpcionListFragment"
+    android:name="pe.edu.pucp.proyectorh.MenuFragment"
     android:id="@+id/opcion_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:background="#CBA"
-    tools:context=".OpcionListActivity" />
+    tools:context=".MainActivity" />
