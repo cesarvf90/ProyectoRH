@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
 import android.graphics.Color;
@@ -23,6 +24,8 @@ public class PerspectivaAdapter extends BaseAdapter {
  
 	public View getView(int position, View convertView, ViewGroup parent) {
  
+		
+		
 		LayoutInflater inflater = (LayoutInflater) context
 			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  
@@ -39,29 +42,13 @@ public class PerspectivaAdapter extends BaseAdapter {
 			TextView textView = (TextView) gridView
 					.findViewById(R.id.reportebscPerspectivalabel);
 			textView.setText(arrPerspectivas[position]);
+			
+			TextView textAvance = (TextView) gridView
+					.findViewById(R.id.reportebscPerspectivaAvance);
+			int avance = (position*20);
+			textAvance.setText(avance + "%");
  
-			//String mobile = mobileValues[position];
-			/*
-			WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-			Display display = wm.getDefaultDisplay();
-			int height = display.getHeight();  // deprecated
-			
-			gridView.setMinimumHeight(height/2);
-			*/
-			
-			String mobile = arrPerspectivas[position];
-			
-			if (mobile.equals("Financiera")) {
-				gridView.setBackgroundDrawable(getBackg(0xFF0085ff,0xFF0064bf));
-			} else if (mobile.equals("Clientes")) {
-				gridView.setBackgroundDrawable(getBackg(0xFFce2029,0xFF9e030b));
-			} else if (mobile.equals("Interno")) {
-				gridView.setBackgroundDrawable(getBackg(0xFFffca1d,0xFFf5a71c));
-			} else {
-				gridView.setBackgroundDrawable(getBackg(0xFF49b700,0xFF378900));
-			}
-			
-			
+			setColor(avance, gridView);
 
  
 		} else {
@@ -74,15 +61,44 @@ public class PerspectivaAdapter extends BaseAdapter {
 	public Drawable getBackg(int startColor, int endColor){
 		GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, 
 				new int[] {startColor, endColor });
-	    gd.setCornerRadius(0f);
 	    gd.setStroke(1, Color.parseColor("#000000"));
-	    gd.setCornerRadius(3f);
 	    return gd;
 	}
 	
-	
-	
-	
+public void setColor(int avance, View gridView){
+		
+		if (avance < 10){
+			gridView.setBackgroundDrawable(getBackg(0xFFce2029,0xFF9e030b));
+		}
+		else if (avance < 20){
+			gridView.setBackgroundDrawable(getBackg(0xFFff4e00,0xFFc72b00));
+		}
+		else if (avance < 30){
+			gridView.setBackgroundDrawable(getBackg(0xFFff7518,0xFFaa3e00));
+		}
+		else if (avance < 40){
+			gridView.setBackgroundDrawable(getBackg(0xFFffb300,0xFFed7710));
+		}
+		else if (avance < 50){
+			gridView.setBackgroundDrawable(getBackg(0xFFffd900,0xFFffa400));
+		}
+		else if (avance < 60){
+			gridView.setBackgroundDrawable(getBackg(0xFFfff300,0xFFffd400));
+		}
+		else if (avance < 70){
+			gridView.setBackgroundDrawable(getBackg(0xFFd4de1b,0xFFb5bf07));
+		}
+		else if (avance < 80){
+			gridView.setBackgroundDrawable(getBackg(0xFF9cc925,0xFF7ba60d));
+		}
+		else if (avance < 90){
+			gridView.setBackgroundDrawable(getBackg(0xFF5ba825,0xFF377d00));
+		}
+		else{
+			gridView.setBackgroundDrawable(getBackg(0xFF49b700,0xFF378900));
+		}
+	}
+
  
 	@Override
 	public int getCount() {

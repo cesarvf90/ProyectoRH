@@ -30,6 +30,8 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 	
 	public ReporteObjetivosBSCObjetivos(){
 		
+		
+		
 	}
 	
 	@Override
