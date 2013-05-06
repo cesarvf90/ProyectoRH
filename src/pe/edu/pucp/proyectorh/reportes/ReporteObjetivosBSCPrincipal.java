@@ -8,14 +8,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
-import pe.edu.pucp.proyectorh.OpcionDetailFragment;
+import pe.edu.pucp.proyectorh.DetalleFragment;
 import pe.edu.pucp.proyectorh.R;
+<<<<<<< HEAD
 import pe.edu.pucp.proyectorh.LoginActivity.LoginUsuario;
 import pe.edu.pucp.proyectorh.LoginActivity.RespuestaLogin;
 import pe.edu.pucp.proyectorh.administracion.RendirEvaluacionesFragment;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
+=======
+import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
+>>>>>>> 240f26c12478f437554d5c9dbf4e136987938720
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;

@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:id="@+id/equipo_trabajo_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equipo_trabajo_title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/Title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/equipo_trabajo_detalleContacto_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/Title"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/equipo_trabajo_contactos_list"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/equipo_trabajo_title_layout" >
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/equipo_trabajo_cabecera_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_below="@+id/equipo_trabajo_title_layout"
+        android:layout_toRightOf="@+id/equipo_trabajo_contactos_list"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equipo_trabajo_nombre_completo"
+            android:textColor="@android:color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equipo_trabajo_cargo_persona_seleccionada"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/equipo_trabajo_detalle_contacto_part"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/equipo_trabajo_cabecera_layout"
+        android:layout_toRightOf="@+id/equipo_trabajo_contactos_list"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="114dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_area"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_puesto"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_anexo"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_email"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="455dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_area_value"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_puesto_value"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_anexo_value"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/equipo_trabajo_email_value"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
