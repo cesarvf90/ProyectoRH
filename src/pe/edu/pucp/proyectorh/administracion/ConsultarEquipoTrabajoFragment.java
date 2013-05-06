@@ -1,8 +1,11 @@
 package pe.edu.pucp.proyectorh.administracion;
 
+import java.util.ArrayList;
+
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.InfoColaborador;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.os.Bundle;
@@ -10,14 +13,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 public class ConsultarEquipoTrabajoFragment extends Fragment {
-	// public FragmentActivity activity;
-	public View rootView;
-	
+
+	private View rootView;
+	private ExpandableListView exv;
+	private ArrayList<String> groups;
+	private ArrayList<ArrayList<ArrayList<String>>> childs;
+
 	public ConsultarEquipoTrabajoFragment() {
 
 	}
@@ -37,29 +44,28 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
+		exv = (ExpandableListView) this.rootView
+				.findViewById(R.id.equipo_trabajo_contactos_list);
+		// exv.setAdapter(new
+		// AdapterEquipoTrabajo(this.getActivity().getApplicationContext()));
 
-		System.out.println("el usuario es: " + LoginActivity.idUsuario);
-		//llamarServicioInfoColaborador(LoginActivity.idUsuario);
-		//XD();
+		loadData();
+		MyExpandableAdapter adapter = new MyExpandableAdapter(this
+				.getActivity().getApplicationContext(), groups, childs);
+		exv.setAdapter(adapter);
+
+		// llamarServicioConsultarEquipoTrabajo(LoginActivity.idUsuario);
+		// probarDeserializacionGSON();
 		return rootView;
 	}
 
-	private void llamarServicioInfoColaborador(String usuario) {
+	private void llamarServicioConsultarEquipoTrabajo(String usuario) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.InformacionPersonalService + "?username="
 					+ usuario;
-			System.out.println("pagina: " +request);
+			System.out.println("pagina: " + request);
 			new InformacionPersonalColaborador().execute(request);
-		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			/*
-			 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			 * builder.setTitle("Error de conexción"); builder.setMessage(
-			 * "No se pudo conectar con el servidor. Revise su conexión a Internet."
-			 * ); builder.setCancelable(false); builder.setPositiveButton("Ok",
-			 * null); builder.create(); builder.show();
-			 */
 		}
 	}
 
@@ -77,89 +83,97 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		}
 	}
 
-	public class InfoColaborador {
-		private String nombres;
-		private String apellidos;
-		private String area;
-		private String puesto;
-		private String email;
-		private String anexo;
-		private String fecha_ingreso;
+	public void procesarInformacion(InfoColaborador infoColaborador) {
+		TextView nombres = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_nombres);
+		nombres.setText(infoColaborador.getNombres());
 
-		public InfoColaborador() {
-		}
+		TextView apellidos = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_apellidos);
+		apellidos.setText(infoColaborador.getApellidos());
 
-		public String getNombres() {
-			return nombres;
-		}
+		TextView area = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_area);
+		area.setText(infoColaborador.getArea());
 
-		public void setNombres(String nombres) {
-			this.nombres = nombres;
-		}
+		TextView puesto = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_puesto);
+		puesto.setText(infoColaborador.getPuesto());
 
-		public String getApellidos() {
-			return apellidos;
-		}
+		TextView email = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_email);
+		email.setText(infoColaborador.getEmail());
 
-		public void setApellidos(String apellidos) {
-			this.apellidos = apellidos;
-		}
+		TextView anexo = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_telefono);
+		anexo.setText(infoColaborador.getAnexo());
 
-		public String getArea() {
-			return area;
-		}
-
-		public void setArea(String area) {
-			this.area = area;
-		}
-
-		public String getPuesto() {
-			return puesto;
-		}
-
-		public void setPuesto(String puesto) {
-			this.puesto = puesto;
-		}
-
-		public String getEmail() {
-			return email;
-		}
-
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
-		public String getAnexo() {
-			return anexo;
-		}
-
-		public void setAnexo(String anexo) {
-			this.anexo = anexo;
-		}
-
-		public String getFecha_ingreso() {
-			return fecha_ingreso;
-		}
-
-		public void setFecha_ingreso(String fecha_ingreso) {
-			this.fecha_ingreso = fecha_ingreso;
-		}
-				
+		TextView fecha_ingreso = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_fechaingreso);
+		fecha_ingreso.setText(infoColaborador.getFecha_ingreso());
 	}
 
-	/*
-	 * lo que tienes que hacer es obtienes el elemento (ejemplo: textview1)
-	 * textView1.setText(colaborador.getNombre()); esa es la idea todo al crear
-	 * la actividad en onCreate uno de esos métodos que inicializa el fragment
-	 */
+	public void probarDeserializacionGSON() {
+		/*
+		 * private String nombres; private String apellidos; private String
+		 * area; private String puesto; private String email; private String
+		 * anexo; private String fecha_ingreso;
+		 */
+		String result = "{\"nombres\":\"Fortino Mario Alonso\",\"apellidos\":\"Moreno Reyes\",\"area\":\"Marketing\",\"puesto\":\"Analista de Productos\",\"email\":\"m.reyes@rhpp.com\",\"anexo\":\"3302\",\"fecha_ingreso\":\"05/01/2011\"}";
+		System.out.println("Recibido: " + result.toString());
+		final Gson gson = new Gson();
+		final InfoColaborador infoColaborador = gson.fromJson(result,
+				InfoColaborador.class);
 
-	public void procesarInformacion(InfoColaborador infoColaborador) {		
-		TextView text = (TextView) this.rootView.findViewById(R.id.mi_info_input_nombres);		
-		text.setText(infoColaborador.getNombres());
+		TextView nombres = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_nombres);
+		nombres.setText(infoColaborador.getNombres());
+
+		TextView apellidos = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_apellidos);
+		apellidos.setText(infoColaborador.getApellidos());
+
+		TextView area = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_area);
+		area.setText(infoColaborador.getArea());
+
+		TextView puesto = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_puesto);
+		puesto.setText(infoColaborador.getPuesto());
+
+		TextView email = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_email);
+		email.setText(infoColaborador.getEmail());
+
+		TextView anexo = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_telefono);
+		anexo.setText(infoColaborador.getAnexo());
+
+		TextView fecha_ingreso = (TextView) this.rootView
+				.findViewById(R.id.mi_info_input_fechaingreso);
+		fecha_ingreso.setText(infoColaborador.getFecha_ingreso());
 	}
-	
-	public void XD() {		
-		TextView text = (TextView) this.rootView.findViewById(R.id.mi_info_input_nombres);		
-		text.setText("xD");
+
+	private void loadData() {
+		groups = new ArrayList<String>();
+		childs = new ArrayList<ArrayList<ArrayList<String>>>();
+
+		groups.add("Carla Sanchez");
+		groups.add("Mateo Soto");
+		groups.add("Diego Bernal");
+
+		childs.add(new ArrayList<ArrayList<String>>());
+		childs.get(0).add(new ArrayList<String>());
+		childs.get(0).get(0).add("practicante 1A");
+		childs.get(0).add(new ArrayList<String>());
+		childs.get(0).get(1).add("practicante 1B");
+
+		childs.add(new ArrayList<ArrayList<String>>());
+		childs.get(1).add(new ArrayList<String>());
+		childs.get(1).get(0).add("practicante 2B");
+
+		childs.add(new ArrayList<ArrayList<String>>());
+		
 	}
+
 }
