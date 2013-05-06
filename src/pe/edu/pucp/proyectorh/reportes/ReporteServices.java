@@ -2,6 +2,8 @@ package pe.edu.pucp.proyectorh.reportes;
 
 public class ReporteServices {
 	
-	public final static String obtenerPeriodos = "http://localhost:2642/WSLogin/Login?username=admin&password=admin";
+	public final static String obtenerPeriodos = "http://dp2kendo.apphb.com/ObjetivosEmpresa/ListarPeriodos";
+	
+	public final static String obtenerObjetivos = "http://dp2kendo.apphb.com/ObjetivosEmpresa/ListarObjetivos?idperiodo=1";
 
 }
