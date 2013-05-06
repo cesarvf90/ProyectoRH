@@ -71,7 +71,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		
 		//System.out.println("entre a obtainlista");
 		
-		//obtenerlistaPeriodos();
+		obtenerlistaPeriodos();
 		
 		List<String> lista = new ArrayList<String>();
 		
@@ -119,7 +119,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
 					Toast.LENGTH_SHORT).show();
 			*/    
-				  obtenerlistaPeriodos();
+				 // obtenerlistaPeriodos();
 
 			      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
 			      
@@ -165,18 +165,18 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	}
 	
 	public class getPeriodos extends AsyncCall {
-		
+		/*
 		@Override
 		protected void onPreExecute(){
 			pbarra.setVisibility(View.VISIBLE);
 		}
-		
+		*/
 		@Override
 		protected void onPostExecute(String result) {
 
 			System.out.println("Recibido: " + result.toString());
+			
 			/*
-
 			Gson gson = new Gson();
 			List<PeriodoDTO> periodos = gson.fromJson(result,
 					new TypeToken<List<PeriodoDTO>>(){}.getType());
@@ -263,5 +263,10 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 
 
 	}
+	
+	
+	
+	
+	
 
 }

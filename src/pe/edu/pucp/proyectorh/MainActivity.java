@@ -180,9 +180,12 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	@Override
+	/**amontoya: no modificar esta funcion
+	Override
 	public void onBackPressed() {
 	}
+	
+	*/
 
 	protected void cerrarSesion() {
 		NAVEGACION = 1;
