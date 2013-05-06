@@ -16,9 +16,7 @@
             <script>
             
                 function createChart() {
-					var jsonString = Android.getData();
-        			var arrAvance = JSON.parse(jsonString);
-        			
+
                 
                     $("#chart").kendoChart({
                     	theme:"metro",
@@ -34,7 +32,7 @@
                         },
                         series: [{
                             name: "Avance",
-                            data: arrAvance.avance
+                            data: [3.907, 7.943, 7.848, 9.284]
                         }],
                         valueAxis: {
                             labels: {
@@ -46,7 +44,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: arrAvance.meses,
+                            categories: ['Juan', 'Pedro', 'Paco', 'Gustavo'],
                             line: {
                                 visible: false
                             }
