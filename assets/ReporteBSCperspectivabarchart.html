@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="styles/kendo.default.min.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+</head>
+<body>
+    
+        <div id="example" class="k-content">
+            <div class="chart-wrapper">
+                <div id="chart" style="background-color:transparent;"></div>
+            </div>
+            <script>
+                function createChart() {
+                    $("#chart").kendoChart({
+                        title: {
+                            visible: false
+                        },
+                        legend: {
+                         	visible: false
+                            //position: "top"
+                        },
+                        seriesDefaults: {
+                            type: "column"
+                        },
+                        series: [{
+                            name: "India",
+                            data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
+                        }],
+                        valueAxis: {
+                            labels: {
+                                format: "{0}%"
+                            },
+                            line: {
+                                visible: false
+                            },
+                            axisCrossingValue: 0
+                        },
+                        categoryAxis: {
+                            categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+                            line: {
+                                visible: false
+                            }
+                        },
+                        tooltip: {
+                            visible: true,
+                            format: "{0}%",
+                            template: "#= series.name #: #= value #"
+                        }
+                    });
+                }
+
+                $(document).ready(function() {
+                    setTimeout(function() {
+                        // Initialize the chart with a delay to make sure
+                        // the initial animation is visible
+                        createChart();
+
+                        $("#example").bind("kendo:skinChange", function(e) {
+                            createChart();
+                        });
+                    }, 400);
+                });
+            </script>
+        </div>
+
+
+</body>
+</html>
