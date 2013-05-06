@@ -12,6 +12,11 @@ public class Constante {
 	 */
 	public final static String CADENA_VACIA = "";
 	/**
+	 * Texto de espacio en blanco
+	 */
+	public final static String ESPACIO_VACIO = " ";
+
+	/**
 	 * Texto validacion campos obligatorios
 	 */
 	public final static String CAMPOS_OBLIGATORIOS = "Debes ingresar todos los campos obligatorios para poder realizar el registro";

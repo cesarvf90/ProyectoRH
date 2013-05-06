@@ -12,8 +12,10 @@
         android:orientation="horizontal" >
 
         <TextView
+            android:id="@+id/contactos_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:text="@string/contactos_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
@@ -23,83 +25,86 @@
             android:id="@+id/detalleContacto_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
     </LinearLayout>
-
+
     <ListView
-        android:id="@+id/mi_info_contactos_list"
-        android:layout_width="550px"
+        android:id="@+id/mi_info_lista_contactos"
+        android:layout_width="350px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/mi_info_contactos_title_layout" >
+
     </ListView>
 
     <LinearLayout
         android:id="@+id/mi_info_detalle_contacto_part"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/mi_info_contactos_title_layout"
-        android:layout_toRightOf="@+id/mi_info_contactos_list"
+        android:layout_toRightOf="@+id/mi_info_lista_contactos"
         android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="250px"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:orientation="vertical" >
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombres:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Apellidos:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Área:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Puesto:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fecha de nacimiento:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fecha ingreso:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Correo electrónico:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Teléfono:"
                 android:textColor="@android:color/black"
@@ -107,63 +112,64 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="300px"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             android:orientation="vertical" >
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_nombre"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombres:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_apellidos"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apellidos:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_area"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Área:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_puesto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Puesto:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_fecnacimiento"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha de nacimiento:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_fecingreso"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha ingreso:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_correo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Correo electrónico:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:layout_width="160dp"
+                android:id="@+id/miinfo_contactos_telefono"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teléfono:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
         </LinearLayout>
