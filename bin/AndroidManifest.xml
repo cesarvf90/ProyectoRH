@@ -18,18 +18,22 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_opcion_list" >
+            android:label="@string/title_opcion_list" 
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".DetalleActivity"
-            android:label="@string/title_opcion_detail" >
+            android:label="@string/title_opcion_detail" 
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".OpcionListActivity" />
+                android:value=".OpcionListActivity" 
+                android:screenOrientation="landscape"/>
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login" 
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

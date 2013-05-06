@@ -30,13 +30,14 @@
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
     </LinearLayout>
-
+
     <ListView
-        android:id="@+id/mi_info_contactos_list"
+        android:id="@+id/mi_info_lista_contactos"
         android:layout_width="350px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/mi_info_contactos_title_layout" >
+
     </ListView>
 
     <LinearLayout
@@ -44,7 +45,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/mi_info_contactos_title_layout"
-        android:layout_toRightOf="@+id/mi_info_contactos_list"
+        android:layout_toRightOf="@+id/mi_info_lista_contactos"
         android:orientation="horizontal" >
 
         <LinearLayout

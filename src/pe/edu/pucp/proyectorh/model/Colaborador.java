@@ -22,6 +22,18 @@ public class Colaborador {
 	private String telefono;
 	private String cenrtoEstudios;
 
+	public Colaborador() {
+	}
+
+	public Colaborador(String nombres, String apellidos, String area,
+			String puesto) {
+		super();
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.area = area;
+		this.puesto = puesto;
+	}
+
 	public String getCenrtoEstudios() {
 		return cenrtoEstudios;
 	}
@@ -52,18 +64,6 @@ public class Colaborador {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-
-	public Colaborador() {
-	}
-
-	public Colaborador(String nombres, String apellidos, String area,
-			String puesto) {
-		super();
-		this.nombres = nombres;
-		this.apellidos = apellidos;
-		this.area = area;
-		this.puesto = puesto;
 	}
 
 	public String getNombres() {

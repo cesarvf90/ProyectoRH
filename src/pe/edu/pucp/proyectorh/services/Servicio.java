@@ -10,9 +10,7 @@ public class Servicio {
 	/**
 	 * Servicio de consulta de informacion personal del usuario
 	 */
-	// public final static String InformacionPersonalService =
-	// "http://dp2kendo.apphb.com/Evaluacion360/WSCompetencias/test?nombre=cesar";
-	public final static String InformacionPersonalService = "http://10.0.2.2:2642/Organizacion/Colaboradores/InformacionColaborador";
+	public final static String InformacionPersonalService = "http://dp2kendo.apphb.com/WSColaborador/getColaborador";
 	/**
 	 * Servicio que devuelve los contactos del usuario loggeado
 	 */

@@ -45,7 +45,7 @@ public class ContactosFragment extends Fragment {
 	private void mostrarContactos() {
 		// TODO cvasquez: pinta los contactos en los controles correspondientes
 		ListView listaContactos = (ListView) rootView
-				.findViewById(R.id.mi_info_contactos_list);
+				.findViewById(R.id.mi_info_lista_contactos);
 		final ArrayList<Colaborador> contactos = new ArrayList<Colaborador>();
 		Colaborador colaborador1 = new Colaborador("César", "Vásquez Flores",
 				"Tecnología", "Gerente");
