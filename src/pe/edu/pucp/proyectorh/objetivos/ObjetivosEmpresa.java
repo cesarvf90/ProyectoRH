@@ -65,6 +65,8 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnDescCambios;
 	private Button btnGuardarCambios;
 	
+	ArrayList<Periodo> listaPeriodos;
+	
 	int periodoSelec;
 	String titulo;
 	
@@ -81,17 +83,15 @@ public class ObjetivosEmpresa extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
+			listaPeriodos = new ArrayList<Periodo>();
 			// deserializando el json parte por parte
 			try {
 				JSONArray arregloPeriodos = new JSONArray(result);
 				for(int i=0;i<arregloPeriodos.length();i++){
 					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
 					System.out.println("Arreglo Nº"+i+"="+periodoJSON);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"), 
-							periodoJSON.getString("FechaInicio"),
-							periodoJSON.getString("FechaFin"), 
-							periodoJSON.getInt("BSCID"),
-							periodoJSON.getInt("id"));
+					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
+					listaPeriodos.add(per);
 				}
 			} catch (Exception e){
 				System.out.println("Error="+e.toString());
@@ -99,11 +99,23 @@ public class ObjetivosEmpresa extends Fragment {
 		}
 	}
 	
-	public void listarPeriodos(){
+	public int obtenerBSCID(int indice){
+		System.out.println("obtiene bscid");
+		return listaPeriodos.get(indice).BSCID;
+	}
+	
+	public ArrayList<String> listadoPeriodos(){
+		System.out.println("entra a listarPeriodos");
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.ListarPeriodos;
 			new ListarPeriodos().execute(request);
+			System.out.println("listarPedidos pasa execute");
+			ArrayList<String> lista = new ArrayList<String>();
+			for(int i=0; i<listaPeriodos.size(); i++){
+				lista.add(listaPeriodos.get(i).Nombre);	
+			}
+			return lista;
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
@@ -113,6 +125,7 @@ public class ObjetivosEmpresa extends Fragment {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
+			return null;
 		}
 	}
 	
@@ -130,36 +143,23 @@ public class ObjetivosEmpresa extends Fragment {
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
 			List<String> lista = new ArrayList<String>();
-			listarPeriodos();
-			lista.add("01/01/2013 al 31/12/2013");
-			lista.add("01/01/2012 al 31/12/2012");
-			lista.add("01/01/2011 al 31/12/2011");
-			lista.add("01/01/2010 al 31/12/2010");
-			
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listadoPeriodos());
+			System.out.println("pasa adapter");
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinnerPeriodo.setAdapter(dataAdapter);
 			
 			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				
 				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					/*
-					Toast.makeText(parent.getContext(), 
-						"seleccionado : " + parent.getItemAtPosition(pos).toString(),
-						Toast.LENGTH_SHORT).show();
-					*/
-					periodoSelec = 1; //aqui idobjetivo selec
-					titulo = parent.getItemAtPosition(pos).toString();
-
-				  }
-				
+					periodoSelec = obtenerBSCID(pos);
+					System.out.println("seleccionado="+periodoSelec);
+				}
 			
 				@Override
 				  public void onNothingSelected(AdapterView<?> arg0) {
 					// TODO Auto-generated method stub
 				  }
-				
 			});
+			
 			
 			/*
 			 * CODIGO PARA MANEJO DE PERSPECTIVA (TABS)

@@ -10,7 +10,7 @@
         android:layout_height="100px"
         android:layout_alignParentTop="true"
         android:orientation="horizontal" >
-
+        
         <TextView
             android:id="@+id/contactos_title"
             android:layout_width="wrap_content"
@@ -29,8 +29,9 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
+        
     </LinearLayout>
-
+    
     <ListView
         android:id="@+id/mi_info_lista_contactos"
         android:layout_width="350px"

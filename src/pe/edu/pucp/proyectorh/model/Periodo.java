@@ -12,17 +12,9 @@ public class Periodo {
     public int BSCID;
     public int id;
 
-    public Periodo(String nombre, String FechaInicio, String FechaFin, int BSCID, int id) {
-    	this.Nombre = nombre;
-    	try {
-			this.FechaInicio = new SimpleDateFormat("MMMM d, yyyy").parse(FechaInicio);
-	    	this.FechaFin = new SimpleDateFormat("MMMM d, yyyy").parse(FechaFin);
-    	}catch (ParseException e) {
-			// TODO Auto-generated catch block
-			System.out.println("error-periodo="+e.toString());
-		}
+    public Periodo(String nombre,int BSCID) {
+    	this.Nombre = nombre;    	
     	this.BSCID = BSCID;
-    	this.id = id;
     	System.out.println("CREADO OK");
     }
 
