@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 
 public class MenuOfertasLaboralesTerceraFase extends Fragment {
@@ -140,6 +142,8 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		OfertasAdapter adapter = new OfertasAdapter(this.getActivity()
 				.getApplicationContext(), ofertas, postulantes);
 		listaOfertas.setAdapter(adapter);
+		
+		// Se muestra la informacion de la oferta
 		listaOfertas.setOnGroupClickListener(new OnGroupClickListener() {
 			public boolean onGroupClick(ExpandableListView parent, View v,
 					int groupPosition, long id) {
@@ -149,6 +153,61 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 				return false;
 			}
 		});
+
+		// Se muestra la informacion de el postulante
+		listaOfertas.setOnChildClickListener(new OnChildClickListener() {
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				mostrarPostulanteSeleccionado(ofertasList.get(groupPosition)
+						.getPostulantes().get(childPosition));
+				return false;
+			}
+		});
+
+		// Se dirige a la evaluacion del postulante
+		listaOfertas.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
+				getActivity().getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
+				return false;
+			}
+		});
+	}
+
+	protected void mostrarPostulanteSeleccionado(Postulante postulante) {
+		// SimpleDateFormat formatoFecha = new SimpleDateFormat();
+		// formatoFecha.applyPattern("dd/MM/yyyy");
+		//
+		// TextView tituloOfertaText = (TextView) rootView
+		// .findViewById(R.id.detalleofertas_title);
+		// tituloOfertaText.setText(oferta.toString());
+		// TextView puestoText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_puesto);
+		// puestoText.setText(oferta.getPuesto().getNombre());
+		// TextView areaText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_area);
+		// areaText.setText(oferta.getPuesto().getArea().getNombre());
+		// TextView solicitanteText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_solicitante);
+		// solicitanteText.setText(oferta.getSolicitante());
+		// TextView fechaSolicitudText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_fechasolicitud);
+		// fechaSolicitudText.setText(formatoFecha.format(oferta
+		// .getFechaRequerimiento()));
+		// TextView faseActualText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_faseactual);
+		// faseActualText.setText(oferta.getFaseActual());
+		// TextView numeroPostulantesText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_numeropostulantes);
+		// numeroPostulantesText.setText(String.valueOf(oferta.getPostulantes()
+		// .size()));
+		// TextView fechaUltimaEntrevistaText = (TextView) rootView
+		// .findViewById(R.id.rec_ofertas_fecultentrevista);
+		// fechaUltimaEntrevistaText.setText(formatoFecha.format(oferta
+		// .getFechaUltimaEntrevista()));
 	}
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {

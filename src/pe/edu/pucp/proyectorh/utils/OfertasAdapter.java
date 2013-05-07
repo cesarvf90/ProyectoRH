@@ -52,7 +52,8 @@ public class OfertasAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(
-					R.layout.expandablelistview_child, null);
+//					R.layout.expandablelistview_child, null);
+					R.layout.expandable_ofertas_child, null);
 		}
 
 		TextView childtxt = (TextView) convertView
@@ -93,7 +94,8 @@ public class OfertasAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(
-					R.layout.expandablelistview_group, null);
+			// R.layout.expandablelistview_group, null);
+					R.layout.expandable_ofertas_group, null);
 		}
 
 		TextView grouptxt = (TextView) convertView

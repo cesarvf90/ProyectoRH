@@ -4,7 +4,6 @@ import pe.edu.pucp.proyectorh.administracion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
@@ -80,10 +79,6 @@ public class MainActivity extends FragmentActivity implements
 
 			} else if ((Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO)
 					&& ("4".equals(id))) {
-//				EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
-//				getSupportFragmentManager().beginTransaction()
-//						.replace(R.id.opcion_detail_container, fragment)
-//						.commit();
 				MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
 				getSupportFragmentManager().beginTransaction()
 				.replace(R.id.opcion_detail_container, fragment)

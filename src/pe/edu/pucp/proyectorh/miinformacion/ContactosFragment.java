@@ -8,6 +8,9 @@ import java.util.GregorianCalendar;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -124,6 +127,16 @@ public class ContactosFragment extends Fragment {
 		TextView correoElectronicoText = (TextView) rootView
 				.findViewById(R.id.miinfo_contactos_correo);
 		correoElectronicoText.setText(colaborador.getCorreoElectronico());
+	}
+
+	private void llamarContacto(String telefono) {
+		try {
+			Intent callIntent = new Intent(Intent.ACTION_CALL);
+			callIntent.setData(Uri.parse("tel:" + telefono));
+			startActivity(callIntent);
+		} catch (ActivityNotFoundException e) {
+			System.out.println("Falló la llamada " + e.toString());
+		}
 	}
 
 }
