@@ -80,35 +80,6 @@ public final class R {
         public static final int help=0x7f09005e;
         public static final int linearLayout1=0x7f090002;
         public static final int loginButton=0x7f090007;
-<<<<<<< HEAD
-        public static final int menu_settings=0x7f090060;
-        public static final int mi_info_contactos_title_layout=0x7f09001b;
-        public static final int mi_info_detalle_contacto_part=0x7f09001f;
-        public static final int mi_info_input_apellidos=0x7f090050;
-        public static final int mi_info_input_area=0x7f090053;
-        public static final int mi_info_input_email=0x7f090059;
-        public static final int mi_info_input_fechaingreso=0x7f09005f;
-        public static final int mi_info_input_nombres=0x7f09004d;
-        public static final int mi_info_input_puesto=0x7f090056;
-        public static final int mi_info_input_telefono=0x7f09005c;
-        public static final int mi_info_lbl_apellidos=0x7f09004f;
-        public static final int mi_info_lbl_area=0x7f090052;
-        public static final int mi_info_lbl_email=0x7f090058;
-        public static final int mi_info_lbl_fechaingreso=0x7f09005e;
-        public static final int mi_info_lbl_nombres=0x7f09004c;
-        public static final int mi_info_lbl_puesto=0x7f090055;
-        public static final int mi_info_lbl_telefono=0x7f09005b;
-        public static final int mi_info_lista_contactos=0x7f09001e;
-        public static final int mi_info_tableLayout1=0x7f09004a;
-        public static final int mi_info_tableRow1=0x7f09004b;
-        public static final int mi_info_tableRow10=0x7f090057;
-        public static final int mi_info_tableRow11=0x7f090051;
-        public static final int mi_info_tableRow12=0x7f090054;
-        public static final int mi_info_tableRow13=0x7f09005d;
-        public static final int mi_info_tableRow2=0x7f09004e;
-        public static final int mi_info_tableRow9=0x7f09005a;
-        public static final int mi_info_title_layout=0x7f090049;
-=======
         public static final int menu_settings=0x7f09005c;
         public static final int mi_info_contactos_title_layout=0x7f09001b;
         public static final int mi_info_detalle_contacto_part=0x7f09001f;
@@ -136,7 +107,6 @@ public final class R {
         public static final int mi_info_tableRow2=0x7f09004a;
         public static final int mi_info_tableRow9=0x7f090056;
         public static final int mi_info_title_layout=0x7f090045;
->>>>>>> b10c88dea6d3b152d6ee4fb256f12b175ae083ff
         public static final int miinfo_contactos_apellidos=0x7f090021;
         public static final int miinfo_contactos_area=0x7f090022;
         public static final int miinfo_contactos_correo=0x7f090026;

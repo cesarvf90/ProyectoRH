@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
@@ -56,9 +57,32 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		txtVJefe = (TextView) this.rootView
 				.findViewById(R.id.equipo_trabajo_cabecera_jefe);
 
-		loadData();
-		// llamarServicioConsultarEquipoTrabajo(LoginActivity.idUsuario);
-		probarDeserializacionGSON();
+		// loadData();
+
+		if ((LoginActivity.usuario.getPadres() == null)
+				&& (LoginActivity.usuario.getHijos() == null)
+				&& (LoginActivity.usuario.getJefe() == null)) {
+			System.out.println("Primera vez");
+			probarDeserializacionGSON();
+			// llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
+			LoginActivity.usuario.setJefe(this.jefe);
+			LoginActivity.usuario.setHijos(this.hijos);
+			LoginActivity.usuario.setPadres(this.padres);
+			this.padres = LoginActivity.usuario.getPadres();
+			this.hijos = LoginActivity.usuario.getHijos();
+			this.jefe = LoginActivity.usuario.getJefe();
+		} else {
+			System.out.println("Ya en memoria");
+			this.padres = LoginActivity.usuario.getPadres();
+			this.hijos = LoginActivity.usuario.getHijos();
+			this.jefe = LoginActivity.usuario.getJefe();
+		}
+
+		if (this.jefe != null) {
+			TextView txtCabeceraJefe = (TextView) rootView
+					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
+			txtCabeceraJefe.setText("Supervisor: " + jefe.getNombreCompleto());
+		}
 		/*
 		 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
 		 * .getActivity().getApplicationContext(), groups, childs);
@@ -91,8 +115,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 
 		txtVJefe.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {				
-				pintarLadoDerecho(jefe);	
+			public void onClick(View v) {
+				pintarLadoDerecho(jefe);
 			}
 		});
 
@@ -146,12 +170,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 							jefeObject.getString("anexo"),
 							jefeObject.getString("email"),
 							jefeObject.getInt("cantidadSubordinados"));
-					System.out.println(jefe.toString());		
-					
-					TextView txtCabeceraJefe = (TextView) rootView
-							.findViewById(R.id.equipo_trabajo_cabecera_jefe);
-					txtCabeceraJefe.setText("Supervisor: "+jefe.getNombreCompleto());
-					
+					System.out.println(jefe.toString());
+
 					// Obtenemos la lista de subordinados del jefe de todos
 					// --NIVEL
 					// 1
@@ -255,7 +275,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	}
 
 	public void probarDeserializacionGSON() {
-		//String result = "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"CHRISTIAN MENDEZ\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
+		// String result =
+		// "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"CHRISTIAN MENDEZ\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
 		String result = "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"Juan Perez\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto1\",\"anexo\":\"Anexo1\",\"email\":\"Email1\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto2\",\"anexo\":\"Anexo2\",\"email\":\"Email2\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto3\",\"anexo\":\"Amexo3\",\"email\":\"Email3\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto4\",\"anexo\":\"Amexo4\",\"email\":\"Email4\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto5\",\"anexo\":\"Amexo5\",\"email\":\"Email5\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto6\",\"anexo\":\"Amexo6\",\"email\":\"Email6\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
 		// System.out.println("Recibido: " + result.toString());
 		// deserializando el json parte por parte
@@ -274,11 +295,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 						jefeObject.getString("anexo"),
 						jefeObject.getString("email"),
 						jefeObject.getInt("cantidadSubordinados"));
-				
-				TextView txtCabeceraJefe = (TextView) rootView
-						.findViewById(R.id.equipo_trabajo_cabecera_jefe);
-				txtCabeceraJefe.setText("Supervisor: "+jefe.getNombreCompleto());
-				
+
 				System.out.println(jefe.toString());
 				// Obtenemos la lista de subordinados del jefe de todos --NIVEL
 				// 1
