@@ -31,9 +31,9 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	
 	public class DataObject {
 		String[] meses = new String[] { 
-				"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"};
+				"Juan", "Pedro", "Gustavo", "Gabriel"};
 		
-		int[] avance = new int[] { 10, 15, 18, 25, 30, 33 };
+		int[] avance = new int[] { 10, 15, 18, 25 };
 		
 
 	}
@@ -59,7 +59,7 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	    	// convert java object to JSON format,
 	    	// and returned as JSON formatted string
 	    	String json = gson.toJson(obj);
-	    
+	    	System.out.println(json);
 	    	return json;
 	    }
 

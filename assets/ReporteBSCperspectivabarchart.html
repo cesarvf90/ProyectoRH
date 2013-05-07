@@ -14,8 +14,14 @@
                 <div id="chart" style="background-color:transparent;"></div>
             </div>
             <script>
+            
                 function createChart() {
+					var jsonString = Android.getData();
+        			var arrAvance = JSON.parse(jsonString);
+        			
+                
                     $("#chart").kendoChart({
+                    	theme:"metro",
                         title: {
                             visible: false
                         },
@@ -27,8 +33,8 @@
                             type: "column"
                         },
                         series: [{
-                            name: "India",
-                            data: [3.907, 7.943, 7.848, 9.284, 9.263, 9.801, 3.890, 8.238, 9.552, 6.855]
+                            name: "Avance",
+                            data: arrAvance.avance
                         }],
                         valueAxis: {
                             labels: {
@@ -40,7 +46,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+                            categories: arrAvance.meses,
                             line: {
                                 visible: false
                             }
@@ -65,6 +71,11 @@
                     }, 400);
                 });
             </script>
+            <style type="text/css">
+		        #chart {
+		            background-color:rgb(11, 100, 23);
+		        }
+		    </style>
         </div>
 
 

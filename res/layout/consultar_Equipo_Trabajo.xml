@@ -74,6 +74,7 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/equipo_trabajo_nombreCompleto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/equipo_trabajo_nombre_completo"
@@ -82,11 +83,13 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/equipo_trabajo_cargo_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/equipo_trabajo_cargo_persona_seleccionada"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -137,6 +140,7 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/equipo_trabajo_area_value"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="@string/equipo_trabajo_area_value"
@@ -144,6 +148,7 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/equipo_trabajo_puesto_value"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="@string/equipo_trabajo_puesto_value"
@@ -151,6 +156,7 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/equipo_trabajo_anexo"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="@string/equipo_trabajo_anexo_value"
@@ -158,11 +164,13 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/equipo_trabajo_email"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="@string/equipo_trabajo_email_value"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
+
         </LinearLayout>
     </LinearLayout>
 
