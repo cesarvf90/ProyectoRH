@@ -65,7 +65,7 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnDescCambios;
 	private Button btnGuardarCambios;
 	
-	ArrayList<Periodo> listaPeriodos;
+	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
 	
 	int periodoSelec;
 	String titulo;
@@ -113,8 +113,10 @@ public class ObjetivosEmpresa extends Fragment {
 			System.out.println("listarPedidos pasa execute");
 			ArrayList<String> lista = new ArrayList<String>();
 			for(int i=0; i<listaPeriodos.size(); i++){
+				System.out.println("Entra con i="+i+" y con nombre="+listaPeriodos.get(i).Nombre);
 				lista.add(listaPeriodos.get(i).Nombre);	
 			}
+			System.out.println("pasa adds");
 			return lista;
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
@@ -129,6 +131,75 @@ public class ObjetivosEmpresa extends Fragment {
 		}
 	}
 	
+	public TableRow agregaCabezera(Context contexto){
+		TableRow cabecera = new TableRow(contexto);
+		cabecera.setLayoutParams(new TableLayout.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+
+		TextView columna1 = new TextView(contexto);
+	    columna1.setLayoutParams(new TableRow.LayoutParams(450, LayoutParams.WRAP_CONTENT));
+	    columna1.setText("Descripción del Objetivo:");
+	    cabecera.addView(columna1);
+	    
+	    TextView columna2 = new TextView(contexto);
+	    columna2.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
+	    columna2.setText("Peso:");
+	    cabecera.addView(columna2);
+	    
+	    TextView columna3 = new TextView(contexto);
+	    columna3.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
+	    columna3.setText("Creador:");
+	    cabecera.addView(columna3);
+	    
+	    return cabecera;
+	}
+	
+	public TableRow agregaSeparadorCabezera(Context contexto){
+	    TableRow separador_cabecera = new TableRow(contexto);
+	    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	    
+	    FrameLayout linea_cabecera = new FrameLayout(contexto);
+	    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, 2);
+	    linea_cabecera_params.span = 6;
+	    linea_cabecera.setBackgroundColor(Color.parseColor("#CC2266"));
+	    separador_cabecera.addView(linea_cabecera, linea_cabecera_params);
+	    
+	    return separador_cabecera;
+	}
+	
+	public TableRow agregaFila(Context contexto,int flagUltimo){
+			TableRow fila = new TableRow(contexto);
+		    fila.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+		    EditText descripObj = new EditText(contexto);
+		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
+		    descripObj.setLayoutParams(new TableRow.LayoutParams(450, LayoutParams.WRAP_CONTENT));
+		    fila.addView(descripObj);
+			
+		    EditText peso = new EditText(contexto);
+		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
+		    peso.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
+		    fila.addView(peso);
+		    
+		    EditText creador = new EditText(contexto);
+		    creador.setInputType(InputType.TYPE_CLASS_TEXT);
+		    creador.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
+		    fila.addView(creador);
+		    
+		    Button eliminarObj = new Button(contexto);
+		    eliminarObj.setText("X");
+		    fila.addView(eliminarObj);	
+		    
+		    if(flagUltimo==1){
+			    Button aumentarObj = new Button(contexto);
+			    aumentarObj.setText("+");
+			    fila.addView(aumentarObj);	
+		    }
+		    
+		return fila;
+	}
+	
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,8 +213,8 @@ public class ObjetivosEmpresa extends Fragment {
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
-			List<String> lista = new ArrayList<String>();
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listadoPeriodos());
+			List<String> lista = listadoPeriodos();
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,lista);
 			System.out.println("pasa adapter");
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinnerPeriodo.setAdapter(dataAdapter);
@@ -205,39 +276,15 @@ public class ObjetivosEmpresa extends Fragment {
 			 		
 			TableLayout layoutTab1 = (TableLayout) rootView.findViewById(R.id.objEmpTab1);
 			//CABECERA
-			
-			TableRow cabecera = new TableRow(contexto);
-			cabecera.setLayoutParams(new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			TableRow cabecera = agregaCabezera(contexto);
 			layoutTab1.addView(cabecera);
 			
-			//columna.setTextColor(Color.parseColor("#005500")); //columna.setGravity(Gravity.CENTER_HORIZONTAL);//columna.setPadding(5, 5, 5, 5);
-
-			TextView columna1 = new TextView(contexto);
-		    columna1.setLayoutParams(new TableRow.LayoutParams(450, LayoutParams.WRAP_CONTENT));
-		    columna1.setText("Descripción del Objetivo:");
-		    cabecera.addView(columna1);
-		    
-		    TextView columna2 = new TextView(contexto);
-		    columna2.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
-		    columna2.setText("Peso:");
-		    cabecera.addView(columna2);
-		    
-		    TextView columna3 = new TextView(contexto);
-		    columna3.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
-		    columna3.setText("Creador:");
-		    cabecera.addView(columna3);
-		    
-		    // Línea que separa la cabecera de los datos
-		    TableRow separador_cabecera = new TableRow(contexto);
-		    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		    FrameLayout linea_cabecera = new FrameLayout(contexto);
-		    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, 2);
-		    linea_cabecera_params.span = 6;
-		    linea_cabecera.setBackgroundColor(Color.parseColor("#CC2266"));
-		    separador_cabecera.addView(linea_cabecera, linea_cabecera_params);
-		    layoutTab1.addView(separador_cabecera);
-		    
+			TableRow separador_cabecera = agregaSeparadorCabezera(contexto);
+			layoutTab1.addView(separador_cabecera);
+			
+			TableRow fila = agregaFila(contexto,1);
+			layoutTab1.addView(fila);
+			
 		    /*
 			    // Línea que separa los datos de la fila de totales
 			    TableRow separador_totales = new TableRow(this);
@@ -284,17 +331,7 @@ public class ObjetivosEmpresa extends Fragment {
 			    // Añadimos la tabla a la actividad
 			    setContentView(tabla);
 		     */
-		    EditText descripObj = new EditText(contexto);
-		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-		    layoutTab1.addView(descripObj);
-			
-		    EditText peso = new EditText(contexto);
-		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
-		    layoutTab1.addView(peso);
-		    
-		    Button aumentarObj = new Button(contexto);
-		    aumentarObj.setText("+");
-		    layoutTab1.addView(aumentarObj);	
+		   
 		    
 			/*
 			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
