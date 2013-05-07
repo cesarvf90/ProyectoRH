@@ -2,7 +2,6 @@ package pe.edu.pucp.proyectorh.model;
 
 public class ColaboradorEquipoTrabajo {
 	private String nombreCompleto;
-	private String cargo;
 	private String area;
 	private String puesto;
 	private String anexo;
@@ -10,13 +9,12 @@ public class ColaboradorEquipoTrabajo {
 	private int cantidadSubordinados;
 	private ColaboradorEquipoTrabajo[] listaSubordinados;	
 
-	public ColaboradorEquipoTrabajo(String nombreCompleto, String cargo,
+	public ColaboradorEquipoTrabajo(String nombreCompleto, 
 			String area, String puesto, String anexo, String email,
 			int cantidadSubordinados,
 			ColaboradorEquipoTrabajo[] listaSubordinados) {
 		super();
 		this.nombreCompleto = nombreCompleto;
-		this.cargo = cargo;
 		this.area = area;
 		this.puesto = puesto;
 		this.anexo = anexo;
@@ -26,12 +24,11 @@ public class ColaboradorEquipoTrabajo {
 	}
 	
 	
-	public ColaboradorEquipoTrabajo(String nombreCompleto, String cargo,
+	public ColaboradorEquipoTrabajo(String nombreCompleto, 
 			String area, String puesto, String anexo, String email,
 			int cantidadSubordinados) {
 		super();
 		this.nombreCompleto = nombreCompleto;
-		this.cargo = cargo;
 		this.area = area;
 		this.puesto = puesto;
 		this.anexo = anexo;
@@ -45,7 +42,7 @@ public class ColaboradorEquipoTrabajo {
 	@Override
 	public String toString() {
 		return "ColaboradorEquipoTrabajo [nombreCompleto=" + nombreCompleto
-				+ ", cargo=" + cargo + ", area=" + area + ", puesto=" + puesto
+				+ ", area=" + area + ", puesto=" + puesto
 				+ ", anexo=" + anexo + ", email=" + email
 				+ ", cantidadSubordinados=" + cantidadSubordinados + "]";
 	}
@@ -57,14 +54,6 @@ public class ColaboradorEquipoTrabajo {
 
 	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
-	}
-
-	public String getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
 	}
 
 	public String getArea() {
