@@ -5,7 +5,7 @@
     <string name="title_opcion_list">Opciones</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">RH++</string>
     <string name="Login">Ingresar</string>
     <string name="password">Contraseña</string>
     <string name="user">Usuario</string>
@@ -41,6 +41,7 @@
 	<string name="equipo_trabajo_anexo_value">33221</string>
 	<string name="equipo_trabajo_jefe">Juan Perez</string>
 	<string name="equipo_trabajo_jefe_cargo">Jefe de Área</string>
+	<string name="menuofertas_title">Ofertas laborales</string>
     
     
 </resources>

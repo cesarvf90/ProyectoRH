@@ -2,8 +2,9 @@ package pe.edu.pucp.proyectorh.model;
 
 /**
  * Clase puesto mapeada contra PuestoDTO
+ * 
  * @author Cesar
- *
+ * 
  */
 public class Puesto {
 
@@ -12,6 +13,11 @@ public class Puesto {
 	private String nombre;
 	private String descripcion;
 	private int puestoSuperiorID;
+
+	public Puesto(Area area, String nombre) {
+		this.area = area;
+		this.nombre = nombre;
+	}
 
 	public int getAreaID() {
 		return areaID;
@@ -51,6 +57,11 @@ public class Puesto {
 
 	public void setPuestoSuperiorID(int puestoSuperiorID) {
 		this.puestoSuperiorID = puestoSuperiorID;
+	}
+
+	@Override
+	public String toString() {
+		return area.toString() + " - " + nombre;
 	}
 
 }
