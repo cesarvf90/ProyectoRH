@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class EvaluarMenuFragment extends Fragment {
+public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
-	public EvaluarMenuFragment() {
+	public MenuOfertasLaboralesTerceraFase() {
 	}
 
 	@Override

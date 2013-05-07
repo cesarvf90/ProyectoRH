@@ -1,5 +1,7 @@
 package pe.edu.pucp.proyectorh.model;
 
+import java.util.Date;
+
 import pe.edu.pucp.proyectorh.utils.Constante;
 
 /**
@@ -14,13 +16,12 @@ public class Colaborador {
 	private String apellidos;
 	private String area;
 	private String puesto;
-	private String email;
 	private String anexo;
-	private String fechaIngreso;
-	private String fechaNacimiento;
+	private Date fechaIngreso;
+	private Date fechaNacimiento;
 	private String correoElectronico;
 	private String telefono;
-	private String cenrtoEstudios;
+	private String centroEstudios;
 
 	public Colaborador() {
 	}
@@ -34,20 +35,18 @@ public class Colaborador {
 		this.puesto = puesto;
 	}
 
-	public String getCenrtoEstudios() {
-		return cenrtoEstudios;
-	}
-
-	public void setCenrtoEstudios(String cenrtoEstudios) {
-		this.cenrtoEstudios = cenrtoEstudios;
-	}
-
-	public String getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public Colaborador(String nombres, String apellidos, String area,
+			String puesto, Date fechaIngreso, Date fechaNacimiento,
+			String correoElectronico, String telefono) {
+		super();
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.area = area;
+		this.puesto = puesto;
+		this.fechaIngreso = fechaIngreso;
 		this.fechaNacimiento = fechaNacimiento;
+		this.correoElectronico = correoElectronico;
+		this.telefono = telefono;
 	}
 
 	public String getCorreoElectronico() {
@@ -98,14 +97,6 @@ public class Colaborador {
 		this.puesto = puesto;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getAnexo() {
 		return anexo;
 	}
@@ -114,12 +105,28 @@ public class Colaborador {
 		this.anexo = anexo;
 	}
 
-	public String getFechaIngreso() {
+	public Date getFechaIngreso() {
 		return fechaIngreso;
 	}
 
-	public void setFechaIngreso(String fechaIngreso) {
+	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getCentroEstudios() {
+		return centroEstudios;
+	}
+
+	public void setCentroEstudios(String centroEstudios) {
+		this.centroEstudios = centroEstudios;
 	}
 
 	@Override
