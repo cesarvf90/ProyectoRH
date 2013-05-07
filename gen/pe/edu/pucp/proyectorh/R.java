@@ -66,13 +66,13 @@ public final class R {
         public static final int detalleContacto_title=0x7f09001d;
         public static final int equipo_trabajo_anexo=0x7f090013;
         public static final int equipo_trabajo_area_value=0x7f090011;
-        public static final int equipo_trabajo_cabecera_layout=0x7f09000d;
-        public static final int equipo_trabajo_cargo_value=0x7f090010;
-        public static final int equipo_trabajo_contactos_list=0x7f09000c;
-        public static final int equipo_trabajo_detalleContacto_title=0x7f09000b;
-        public static final int equipo_trabajo_detalle_contacto_part=0x7f09000e;
+        public static final int equipo_trabajo_cabecera_jefe=0x7f09000b;
+        public static final int equipo_trabajo_cabecera_layout=0x7f09000e;
+        public static final int equipo_trabajo_contactos_list=0x7f09000d;
+        public static final int equipo_trabajo_detalleContacto_title=0x7f09000c;
+        public static final int equipo_trabajo_detalle_contacto_part=0x7f09000f;
         public static final int equipo_trabajo_email=0x7f090014;
-        public static final int equipo_trabajo_nombreCompleto=0x7f09000f;
+        public static final int equipo_trabajo_nombreCompleto=0x7f090010;
         public static final int equipo_trabajo_puesto_value=0x7f090012;
         public static final int equipo_trabajo_title_layout=0x7f09000a;
         public static final int expandable_view=0x7f090017;
@@ -192,7 +192,6 @@ public final class R {
         public static final int equipo_trabajo_email=0x7f060023;
         public static final int equipo_trabajo_email_value=0x7f060024;
         public static final int equipo_trabajo_jefe=0x7f060027;
-        public static final int equipo_trabajo_jefe_cargo=0x7f060028;
         public static final int equipo_trabajo_nombre_completo=0x7f06001d;
         public static final int equipo_trabajo_puesto=0x7f060021;
         public static final int equipo_trabajo_puesto_value=0x7f060022;

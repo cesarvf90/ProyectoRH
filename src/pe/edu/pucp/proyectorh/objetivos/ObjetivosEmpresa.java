@@ -1,13 +1,25 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import pe.edu.pucp.proyectorh.DetalleFragment;
+import pe.edu.pucp.proyectorh.MainActivity;
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.LoginActivity.LoginUsuario;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.Periodo;
+import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +27,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -44,6 +57,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Date;
 
 public class ObjetivosEmpresa extends Fragment {
 	
@@ -63,6 +77,45 @@ public class ObjetivosEmpresa extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 	
+	public class ListarPeriodos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+			// deserializando el json parte por parte
+			try {
+				JSONArray arregloPeriodos = new JSONArray(result);
+				for(int i=0;i<arregloPeriodos.length();i++){
+					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
+					System.out.println("Arreglo Nº"+i+"="+periodoJSON);
+					Periodo per = new Periodo(periodoJSON.getString("Nombre"), 
+							periodoJSON.getString("FechaInicio"),
+							periodoJSON.getString("FechaFin"), 
+							periodoJSON.getInt("BSCID"),
+							periodoJSON.getInt("id"));
+				}
+			} catch (Exception e){
+				System.out.println("Error="+e.toString());
+			}
+		}
+	}
+	
+	public void listarPeriodos(){
+		if (ConnectionManager.connect(this.getActivity())) {
+			// construir llamada al servicio
+			String request = Servicio.ListarPeriodos;
+			new ListarPeriodos().execute(request);
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+			builder.setTitle("Error de conexión");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +130,7 @@ public class ObjetivosEmpresa extends Fragment {
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
 			List<String> lista = new ArrayList<String>();
-			
+			listarPeriodos();
 			lista.add("01/01/2013 al 31/12/2013");
 			lista.add("01/01/2012 al 31/12/2012");
 			lista.add("01/01/2011 al 31/12/2011");
