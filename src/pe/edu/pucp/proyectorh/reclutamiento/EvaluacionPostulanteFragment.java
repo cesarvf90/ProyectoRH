@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 public class EvaluacionPostulanteFragment extends Fragment {
 
+	View rootView;
+
 	public EvaluacionPostulanteFragment() {
 	}
 
@@ -20,8 +22,8 @@ public class EvaluacionPostulanteFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.rendir_evaluaciones,
-				container, false);
+		rootView = inflater.inflate(R.layout.rendir_evaluaciones, container,
+				false);
 		return rootView;
 	}
 

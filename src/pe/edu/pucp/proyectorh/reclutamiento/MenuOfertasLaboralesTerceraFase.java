@@ -10,12 +10,17 @@ import pe.edu.pucp.proyectorh.model.OfertaLaboral;
 import pe.edu.pucp.proyectorh.model.Postulante;
 import pe.edu.pucp.proyectorh.model.Puesto;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -142,7 +147,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		OfertasAdapter adapter = new OfertasAdapter(this.getActivity()
 				.getApplicationContext(), ofertas, postulantes);
 		listaOfertas.setAdapter(adapter);
-		
+		listaOfertas.setLongClickable(true);
 		// Se muestra la informacion de la oferta
 		listaOfertas.setOnGroupClickListener(new OnGroupClickListener() {
 			public boolean onGroupClick(ExpandableListView parent, View v,
@@ -165,13 +170,30 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		});
 
 		// Se dirige a la evaluacion del postulante
-		listaOfertas.setOnLongClickListener(new OnLongClickListener() {
+		listaOfertas.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
-				EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
-				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.opcion_detail_container, fragment)
-						.commit();
+			public boolean onItemLongClick(AdapterView<?> arg0, View view,
+					int position, long id) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setTitle("Evaluar postulante");
+				builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
+								getActivity()
+										.getSupportFragmentManager()
+										.beginTransaction()
+										.replace(R.id.opcion_detail_container,
+												fragment).commit();
+							}
+						});
+				builder.create();
+				builder.show();
 				return false;
 			}
 		});
