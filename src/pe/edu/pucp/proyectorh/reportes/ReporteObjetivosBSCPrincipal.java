@@ -1,10 +1,12 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 
@@ -13,6 +15,7 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -47,14 +50,17 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	String titulo;
 	
 	List<PeriodoDTO> listaPeriodos;
+	List<String> lista ;
+	
 	
 	public ReporteObjetivosBSCPrincipal(){
-		
+	
 	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -68,45 +74,9 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 
 		
 		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.reportebscspinner);
-		
-		//System.out.println("entre a obtainlista");
-		
+		lista = new ArrayList<String>();
 		obtenerlistaPeriodos();
-		
-		List<String> lista = new ArrayList<String>();
-		
-		lista.add("2013-1");
-		lista.add("2012-3");
-		lista.add("2012-2");
-		lista.add("2012-1");
-		//lista.add(listaPeriodos.get(0).getNombre());
-		
-		
-		
-		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerPeriodo.setAdapter(dataAdapter);
-		spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-			
-			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-				/*
-				Toast.makeText(parent.getContext(), 
-					"seleccionado : " + parent.getItemAtPosition(pos).toString(),
-					Toast.LENGTH_SHORT).show();
-				*/
-				periodoSelec = 1; //aqui idobjetivo selec
-				titulo = parent.getItemAtPosition(pos).toString();
 
-			  }
-			
-		
-			@Override
-			  public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-			  }
-			
-		});
-			
 		btnSubmit = (Button) rootView.findViewById(R.id.reportebscbtnConsultar);
 		
 		btnSubmit.setOnClickListener(new OnClickListener() {
@@ -144,8 +114,8 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			//String request = ReporteServices.obtenerPeriodos;
-			String request = Servicio.LoginService;
+			String request = ReporteServices.obtenerPeriodos;
+			//String request = Servicio.LoginService;
 
 			new getPeriodos().execute(request);
 			
@@ -175,15 +145,46 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		protected void onPostExecute(String result) {
 
 			System.out.println("Recibido: " + result.toString());
-			
-			/*
-			Gson gson = new Gson();
+
+			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
 			List<PeriodoDTO> periodos = gson.fromJson(result,
 					new TypeToken<List<PeriodoDTO>>(){}.getType());
-			System.out.println("retorno WS: " + periodos.get(0).getNombre());
+			
 			
 			listaPeriodos = periodos;
-			*/
+			//lista = new ArrayList<String>();
+			for(int i =0; i<listaPeriodos.size();i++){
+				
+				//System.out.println(listaPeriodos.get(i).getFechaInicio().toString());
+				//lista.add("Periodo " + sdf.format(listaPeriodos.get(i).getFechaInicio()) + " - " + sdf.format(listaPeriodos.get(i).getFechaFin()));
+				lista.add(listaPeriodos.get(i).getNombre());
+			}
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					/*
+					Toast.makeText(parent.getContext(), 
+						"seleccionado : " + parent.getItemAtPosition(pos).toString(),
+						Toast.LENGTH_SHORT).show();
+					*/
+					periodoSelec = 1; //aqui idobjetivo selec
+					titulo = parent.getItemAtPosition(pos).toString();
+
+				  }
+				
+			
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			});
+			
+			
 		}
 	}
 
@@ -263,6 +264,8 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 
 
 	}
+	
+	
 	
 	
 	

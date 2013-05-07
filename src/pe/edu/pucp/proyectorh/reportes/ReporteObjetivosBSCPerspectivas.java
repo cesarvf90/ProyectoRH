@@ -43,7 +43,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		
 		String titulo = getArguments().getString("PeriodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
-		textView.setText("Periodo " + titulo);
+		textView.setText(titulo);
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
 		gridView.setAdapter(new PerspectivaAdapter(rootView.getContext(), perspectivas));
