@@ -16,6 +16,7 @@ import pe.edu.pucp.proyectorh.LoginActivity.LoginUsuario;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.Usuario;
+import pe.edu.pucp.proyectorh.model.objetivosBSC;
 import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
@@ -66,6 +67,11 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
+	
+	TableLayout layoutTab1;
+	TableLayout layoutTab2;
+	TableLayout layoutTab3;
+	TableLayout layoutTab4;
 	
 	int periodoSelec;
 	String titulo;
@@ -137,7 +143,7 @@ public class ObjetivosEmpresa extends Fragment {
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(450, LayoutParams.WRAP_CONTENT));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(430, LayoutParams.WRAP_CONTENT));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
@@ -167,13 +173,13 @@ public class ObjetivosEmpresa extends Fragment {
 	    return separador_cabecera;
 	}
 	
-	public TableRow agregaFila(Context contexto,int flagUltimo){
-			TableRow fila = new TableRow(contexto);
+	public TableRow agregaFila(final Context contexto, final int numLayout,objetivosBSC objBSC, int flagUltimo){
+			final TableRow fila = new TableRow(contexto);
 		    fila.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
 		    EditText descripObj = new EditText(contexto);
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-		    descripObj.setLayoutParams(new TableRow.LayoutParams(450, LayoutParams.WRAP_CONTENT));
+		    descripObj.setLayoutParams(new TableRow.LayoutParams(430, LayoutParams.WRAP_CONTENT));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
@@ -181,22 +187,88 @@ public class ObjetivosEmpresa extends Fragment {
 		    peso.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
 		    fila.addView(peso);
 		    
-		    EditText creador = new EditText(contexto);
-		    creador.setInputType(InputType.TYPE_CLASS_TEXT);
+		    TextView creador = new TextView(contexto);
+		    creador.setText("Ever Mitta");
 		    creador.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
 		    fila.addView(creador);
-		    
+		    		    
 		    Button eliminarObj = new Button(contexto);
 		    eliminarObj.setText("X");
+		    eliminarObj.setOnClickListener(new OnClickListener() {
+				  @Override
+				  public void onClick(View v) {
+					  if (numLayout==1){
+						  layoutTab1.removeView(fila);
+					  }else if(numLayout==2){
+						  layoutTab2.removeView(fila);
+					  }else if(numLayout==3){
+						  layoutTab3.removeView(fila);
+					  }else if(numLayout==4){
+						  layoutTab4.removeView(fila);
+					  }
+				  }
+			});
 		    fila.addView(eliminarObj);	
 		    
 		    if(flagUltimo==1){
-			    Button aumentarObj = new Button(contexto);
+			    final Button aumentarObj = new Button(contexto);
 			    aumentarObj.setText("+");
+			    aumentarObj.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {	
+						  fila.removeView(aumentarObj); //elimina el boton
+						  TableRow filaUlt=agregaFila(contexto,numLayout,null, 1);
+						  if (numLayout==1){
+							  layoutTab1.addView(filaUlt);
+						  }else if(numLayout==2){
+							  layoutTab2.addView(filaUlt);
+						  }else if(numLayout==3){
+							  layoutTab3.addView(filaUlt);
+						  }else if(numLayout==4){
+							  layoutTab4.addView(filaUlt);
+						  }						 
+					  }
+				});
 			    fila.addView(aumentarObj);	
 		    }
-		    
 		return fila;
+	}
+	
+	public  ArrayList<objetivosBSC> addObjetivos(int tipoBSC){
+		ArrayList<objetivosBSC> listObjs = new ArrayList<objetivosBSC>();
+		
+		return listObjs;
+	}
+	public TableLayout AgregaDatosTab(Context contexto, TableLayout lay, int tipoBSC){
+		//CABECERA
+		TableRow cabecera = agregaCabezera(contexto);
+		lay.addView(cabecera);
+		
+		//SEPARADOR DE CABECERA
+		TableRow separador_cabecera = agregaSeparadorCabezera(contexto);
+		lay.addView(separador_cabecera);
+		
+		ArrayList<objetivosBSC> listObjetivosBSC = addObjetivos(tipoBSC); 
+		
+		//FILAS
+		int cantidadObjetivosBSC = listObjetivosBSC.size();
+		cantidadObjetivosBSC = 2; //para pruebas
+		for(int i=0;i<cantidadObjetivosBSC;i++){
+			int flagUltimo = 0;
+			objetivosBSC objBSC = new objetivosBSC(); //= listObjetivosBSC.get(i);
+			
+			if ((i+1) == cantidadObjetivosBSC){
+				flagUltimo=1;
+			}
+			
+			TableRow fila = agregaFila(contexto,tipoBSC,objBSC,flagUltimo);
+			lay.addView(fila);
+		}
+		//SEPARADOR DE TOTAL
+		//TableRow separador_total = agregaSeparadorCabezera(contexto);
+		//lay.addView(separador_total);
+		
+		return lay;		
 	}
 	
 	
@@ -272,67 +344,18 @@ public class ObjetivosEmpresa extends Fragment {
 			    }
 			});
 			
-			/**AGREGA UN TEXTBOX**/
 			 		
-			TableLayout layoutTab1 = (TableLayout) rootView.findViewById(R.id.objEmpTab1);
-			//CABECERA
-			TableRow cabecera = agregaCabezera(contexto);
-			layoutTab1.addView(cabecera);
+			layoutTab1 = (TableLayout) rootView.findViewById(R.id.objEmpTab1);
+			layoutTab2 = (TableLayout) rootView.findViewById(R.id.objEmpTab2);
+			layoutTab3 = (TableLayout) rootView.findViewById(R.id.objEmpTab3);
+			layoutTab4 = (TableLayout) rootView.findViewById(R.id.objEmpTab4);
 			
-			TableRow separador_cabecera = agregaSeparadorCabezera(contexto);
-			layoutTab1.addView(separador_cabecera);
+			layoutTab1=AgregaDatosTab(contexto,layoutTab1,1);
+			layoutTab2=AgregaDatosTab(contexto,layoutTab2,2);
+			layoutTab3=AgregaDatosTab(contexto,layoutTab3,3);
+			layoutTab4=AgregaDatosTab(contexto,layoutTab4,4);
 			
-			TableRow fila = agregaFila(contexto,1);
-			layoutTab1.addView(fila);
 			
-		    /*
-			    // Línea que separa los datos de la fila de totales
-			    TableRow separador_totales = new TableRow(this);
-			    separador_totales.setLayoutParams(new TableLayout.LayoutParams(
-			       LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			    FrameLayout linea_totales = new FrameLayout(this);
-			    TableRow.LayoutParams linea_totales_params =
-			       new TableRow.LayoutParams(LayoutParams.FILL_PARENT, 2);
-			    linea_totales_params.span = 6;
-			    linea_totales.setBackgroundColor(Color.parseColor("#FFFFFF"));
-			    separador_totales.addView(linea_totales, linea_totales_params);
-			    tabla.addView(separador_totales);
-			 
-			    // Fila de totales
-			    TableRow totales = new TableRow(this);
-			    totales.setLayoutParams(new TableLayout.LayoutParams(
-			       LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			 
-			    TextView texto_total = new TextView(this);
-			    TableRow.LayoutParams texto_total_params =
-			       new TableRow.LayoutParams(
-			          LayoutParams.WRAP_CONTENT,
-			          LayoutParams.WRAP_CONTENT);
-			    texto_total_params.span = 2;
-			    texto_total.setText("Total");
-			    texto_total.setTextColor(Color.parseColor("#0000CC"));
-			    texto_total.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-			    texto_total.setGravity(Gravity.RIGHT);
-			    totales.addView(texto_total, texto_total_params);
-			 
-			    for (int i = 0; i < 3; i++)
-			    {
-			       TextView columna = new TextView(this);
-			       columna.setLayoutParams(new TableRow.LayoutParams(
-			          LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-			       columna.setText(String.valueOf(valores_totales[i]));
-			       columna.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-			       columna.setGravity(Gravity.CENTER);
-			       totales.addView(columna);
-			    }
-			 
-			    tabla.addView(totales);
-			 
-			    // Añadimos la tabla a la actividad
-			    setContentView(tabla);
-		     */
-		   
-		    
 			/*
 			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
 			 */				
