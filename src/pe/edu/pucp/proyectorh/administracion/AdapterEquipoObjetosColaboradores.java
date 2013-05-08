@@ -45,8 +45,8 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
-		ColaboradorEquipoTrabajo child = (ColaboradorEquipoTrabajo) ((ArrayList<ColaboradorEquipoTrabajo>) getChild(groupPosition,
-				childPosition)).get(0);
+		ColaboradorEquipoTrabajo child = getChild(groupPosition,
+				childPosition).get(0);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context
@@ -87,7 +87,7 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 
-		ColaboradorEquipoTrabajo group = (ColaboradorEquipoTrabajo) getGroup(groupPosition);
+		ColaboradorEquipoTrabajo group = getGroup(groupPosition);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context

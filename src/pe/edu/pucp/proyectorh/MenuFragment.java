@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -116,6 +117,7 @@ public class MenuFragment extends ExpandableListFragment {
 		super.onViewCreated(view, savedInstanceState);
 		elv = getExpandableListView();
 		elv.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
 			public boolean onGroupClick(ExpandableListView parent, View v,
 					int groupPosition, long id) {
 				System.out.println("Grupo " + (groupPosition + 1));
@@ -198,8 +200,8 @@ public class MenuFragment extends ExpandableListFragment {
 
 	public void setActivateOnItemClick(boolean activateOnItemClick) {
 		getListView().setChoiceMode(
-				activateOnItemClick ? ListView.CHOICE_MODE_SINGLE
-						: ListView.CHOICE_MODE_NONE);
+				activateOnItemClick ? AbsListView.CHOICE_MODE_SINGLE
+						: AbsListView.CHOICE_MODE_NONE);
 	}
 
 	@Override

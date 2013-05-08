@@ -1,8 +1,5 @@
 package pe.edu.pucp.proyectorh.reportes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.Gson;
 
 import pe.edu.pucp.proyectorh.R;
@@ -14,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ReporteObjetivosBSCGrafico extends Fragment{
 	

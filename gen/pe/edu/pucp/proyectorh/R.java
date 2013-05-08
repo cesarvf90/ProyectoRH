@@ -170,43 +170,25 @@ public final class R {
         public static final int consultar_equipo_trabajo=0x7f030005;
         public static final int custom_simple_expandable_list_item_1=0x7f030006;
         public static final int custom_simple_expandable_list_item_2=0x7f030007;
-<<<<<<< HEAD
-        public static final int expandable_view=0x7f030008;
-        public static final int expandablelistview_child=0x7f030009;
-        public static final int expandablelistview_group=0x7f03000a;
-        public static final int fragment_opcion_detail=0x7f03000b;
-        public static final int layout_vacio_para_errores=0x7f03000c;
-        public static final int mi_info_contactos=0x7f03000d;
-        public static final int objetivosbsc=0x7f03000e;
-        public static final int reclutamiento_evaluarpostulantemenu=0x7f03000f;
-        public static final int rendir_evaluaciones=0x7f030010;
-        public static final int reportebsc1principal=0x7f030011;
-        public static final int reportebsc2perspectivas=0x7f030012;
-        public static final int reportebsc3objetivos=0x7f030013;
-        public static final int reportebsc4grafico=0x7f030014;
-        public static final int reportebscobjetivo=0x7f030015;
-        public static final int reportebscperspectiva=0x7f030016;
-        public static final int visualizar_info_colaborador=0x7f030017;
-=======
         public static final int expandable_ofertas_child=0x7f030008;
         public static final int expandable_ofertas_group=0x7f030009;
         public static final int expandable_view=0x7f03000a;
         public static final int expandablelistview_child=0x7f03000b;
         public static final int expandablelistview_group=0x7f03000c;
         public static final int fragment_opcion_detail=0x7f03000d;
-        public static final int menu_ofertas_tercera_fase=0x7f03000e;
-        public static final int mi_info_contactos=0x7f03000f;
-        public static final int objetivosbsc=0x7f030010;
-        public static final int reclutamiento_evaluarpostulantemenu=0x7f030011;
-        public static final int rendir_evaluaciones=0x7f030012;
-        public static final int reportebsc1principal=0x7f030013;
-        public static final int reportebsc2perspectivas=0x7f030014;
-        public static final int reportebsc3objetivos=0x7f030015;
-        public static final int reportebsc4grafico=0x7f030016;
-        public static final int reportebscobjetivo=0x7f030017;
-        public static final int reportebscperspectiva=0x7f030018;
-        public static final int visualizar_info_colaborador=0x7f030019;
->>>>>>> cb77dac678899cbb31cc4023011a3493ff514ca0
+        public static final int layout_vacio_para_errores=0x7f03000e;
+        public static final int menu_ofertas_tercera_fase=0x7f03000f;
+        public static final int mi_info_contactos=0x7f030010;
+        public static final int objetivosbsc=0x7f030011;
+        public static final int reclutamiento_evaluarpostulantemenu=0x7f030012;
+        public static final int rendir_evaluaciones=0x7f030013;
+        public static final int reportebsc1principal=0x7f030014;
+        public static final int reportebsc2perspectivas=0x7f030015;
+        public static final int reportebsc3objetivos=0x7f030016;
+        public static final int reportebsc4grafico=0x7f030017;
+        public static final int reportebscobjetivo=0x7f030018;
+        public static final int reportebscperspectiva=0x7f030019;
+        public static final int visualizar_info_colaborador=0x7f03001a;
     }
     public static final class menu {
         public static final int activity_login=0x7f080000;

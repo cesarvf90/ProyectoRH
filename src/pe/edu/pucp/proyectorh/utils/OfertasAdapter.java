@@ -45,8 +45,8 @@ public class OfertasAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
-		Postulante child = (Postulante) ((ArrayList<Postulante>) getChild(
-				groupPosition, childPosition)).get(0);
+		Postulante child = getChild(
+				groupPosition, childPosition).get(0);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context
@@ -88,7 +88,7 @@ public class OfertasAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 
-		OfertaLaboral group = (OfertaLaboral) getGroup(groupPosition);
+		OfertaLaboral group = getGroup(groupPosition);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context

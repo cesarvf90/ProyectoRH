@@ -12,12 +12,10 @@ import pe.edu.pucp.proyectorh.model.Puesto;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView;
@@ -150,6 +148,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		listaOfertas.setLongClickable(true);
 		// Se muestra la informacion de la oferta
 		listaOfertas.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
 			public boolean onGroupClick(ExpandableListView parent, View v,
 					int groupPosition, long id) {
 				System.out.println("Grupo " + (groupPosition));
@@ -161,6 +160,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 		// Se muestra la informacion de el postulante
 		listaOfertas.setOnChildClickListener(new OnChildClickListener() {
+			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				mostrarPostulanteSeleccionado(ofertasList.get(groupPosition)

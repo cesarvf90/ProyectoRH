@@ -1,42 +1,26 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import pe.edu.pucp.proyectorh.DetalleFragment;
-import pe.edu.pucp.proyectorh.MainActivity;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.LoginActivity.LoginUsuario;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.Periodo;
-import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.model.objetivosBSC;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,18 +31,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
-import java.util.Date;
 
 public class ObjetivosEmpresa extends Fragment {
 	
@@ -140,20 +119,21 @@ public class ObjetivosEmpresa extends Fragment {
 	public TableRow agregaCabezera(Context contexto){
 		TableRow cabecera = new TableRow(contexto);
 		cabecera.setLayoutParams(new TableLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(430, LayoutParams.WRAP_CONTENT));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,70));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
+	    
 	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
+	    columna2.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,10));
 	    columna2.setText("Peso:");
 	    cabecera.addView(columna2);
 	    
 	    TextView columna3 = new TextView(contexto);
-	    columna3.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
+	    columna3.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,20));
 	    columna3.setText("Creador:");
 	    cabecera.addView(columna3);
 	    
@@ -162,10 +142,10 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public TableRow agregaSeparadorCabezera(Context contexto){
 	    TableRow separador_cabecera = new TableRow(contexto);
-	    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 	    
 	    FrameLayout linea_cabecera = new FrameLayout(contexto);
-	    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, 2);
+	    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, 3);
 	    linea_cabecera_params.span = 6;
 	    linea_cabecera.setBackgroundColor(Color.parseColor("#CC2266"));
 	    separador_cabecera.addView(linea_cabecera, linea_cabecera_params);
@@ -175,21 +155,21 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public TableRow agregaFila(final Context contexto, final int numLayout,objetivosBSC objBSC, int flagUltimo){
 			final TableRow fila = new TableRow(contexto);
-		    fila.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		    fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 
 		    EditText descripObj = new EditText(contexto);
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-		    descripObj.setLayoutParams(new TableRow.LayoutParams(430, LayoutParams.WRAP_CONTENT));
+		    descripObj.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,70));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
 		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
-		    peso.setLayoutParams(new TableRow.LayoutParams(50, LayoutParams.WRAP_CONTENT));
+		    peso.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,10));
 		    fila.addView(peso);
 		    
 		    TextView creador = new TextView(contexto);
 		    creador.setText("Ever Mitta");
-		    creador.setLayoutParams(new TableRow.LayoutParams(150, LayoutParams.WRAP_CONTENT));
+		    creador.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,20));
 		    fila.addView(creador);
 		    		    
 		    Button eliminarObj = new Button(contexto);
@@ -292,6 +272,7 @@ public class ObjetivosEmpresa extends Fragment {
 			spinnerPeriodo.setAdapter(dataAdapter);
 			
 			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 					periodoSelec = obtenerBSCID(pos);
 					System.out.println("seleccionado="+periodoSelec);
@@ -313,25 +294,25 @@ public class ObjetivosEmpresa extends Fragment {
 			TabHost.TabSpec spec=tabs.newTabSpec("Cliente");
 			spec.setContent(R.id.objEmpTab1);
 			spec.setIndicator("Cliente",
-			    res.getDrawable(android.R.drawable.ic_btn_speak_now));
+			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			 
 			spec=tabs.newTabSpec("Aprendizaje y Crecimiento");
 			spec.setContent(R.id.objEmpTab2);
 			spec.setIndicator("Aprendizaje y Crecimiento",
-			    res.getDrawable(android.R.drawable.ic_dialog_map));
+			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			
 			spec=tabs.newTabSpec("Financiero");
 			spec.setContent(R.id.objEmpTab3);
 			spec.setIndicator("Financiero",
-			    res.getDrawable(android.R.drawable.ic_dialog_map));
+			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			
 			spec=tabs.newTabSpec("Procesos Internos");
 			spec.setContent(R.id.objEmpTab4);
 			spec.setIndicator("Procesos Internos",
-			    res.getDrawable(android.R.drawable.ic_dialog_map));
+			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			 
 			tabs.setCurrentTab(0);

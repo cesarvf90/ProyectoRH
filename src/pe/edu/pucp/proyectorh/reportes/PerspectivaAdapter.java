@@ -22,6 +22,7 @@ public class PerspectivaAdapter extends BaseAdapter {
 		this.arrPerspectivas = mobileValues;
 	}
  
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
  
 		
@@ -52,7 +53,7 @@ public class PerspectivaAdapter extends BaseAdapter {
 
  
 		} else {
-			gridView = (View) convertView;
+			gridView = convertView;
 		}
  
 		return gridView;

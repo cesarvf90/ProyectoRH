@@ -44,8 +44,8 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
-		String child = (String) ((ArrayList<String>) getChild(groupPosition,
-				childPosition)).get(0);
+		String child = getChild(groupPosition,
+				childPosition).get(0);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context
@@ -86,7 +86,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 
-		String group = (String) getGroup(groupPosition);
+		String group = getGroup(groupPosition);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context

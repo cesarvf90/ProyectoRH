@@ -29,7 +29,7 @@ public class ReporteObjetivoDAO {
 	  public int createComment(String comment) {
 		    ContentValues values = new ContentValues();
 		    //values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
-		    long insertId = database.insert(dbHelper.TABLA_REPORTE_OBJS, null,
+		    long insertId = database.insert(Handler_sqlite.TABLA_REPORTE_OBJS, null,
 		        values);
 		    return (int)insertId;
 		  }

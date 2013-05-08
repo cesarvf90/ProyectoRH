@@ -100,6 +100,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			exv.setAdapter(adapter);
 
 			exv.setOnGroupClickListener(new OnGroupClickListener() {
+				@Override
 				public boolean onGroupClick(ExpandableListView parent, View v,
 						int groupPosition, long id) {
 					System.out.println("Grupo " + (groupPosition));
@@ -110,6 +111,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			});
 
 			exv.setOnChildClickListener(new OnChildClickListener() {
+				@Override
 				public boolean onChildClick(ExpandableListView parent, View v,
 						int groupPosition, int childPosition, long id) {
 					System.out.println("Grupo " + (groupPosition) + "Hijo "
@@ -230,7 +232,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 				padres = new ArrayList<ColaboradorEquipoTrabajo>();
 				hijos = new ArrayList<ArrayList<ArrayList<ColaboradorEquipoTrabajo>>>();
 				for (int i = 0; i < listaSubordinadosNivel1.length(); i++) {
-					subordinadoNivel1Object = (JSONObject) listaSubordinadosNivel1
+					subordinadoNivel1Object = listaSubordinadosNivel1
 							.getJSONObject(i);
 
 					subordinadoNivel1 = new ColaboradorEquipoTrabajo(

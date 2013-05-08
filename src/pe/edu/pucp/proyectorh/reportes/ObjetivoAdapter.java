@@ -21,6 +21,7 @@ public class ObjetivoAdapter extends BaseAdapter {
 		this.objetivos = objetivos;
 	}
  
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
  
 		
@@ -55,7 +56,7 @@ public class ObjetivoAdapter extends BaseAdapter {
 			
  
 		} else {
-			gridView = (View) convertView;
+			gridView = convertView;
 		}
  
 		return gridView;

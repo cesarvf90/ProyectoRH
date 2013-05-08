@@ -35,12 +35,14 @@ public class ExpandableListFragment extends Fragment implements
 	final private Handler mHandler = new Handler();
 
 	final private Runnable mRequestFocus = new Runnable() {
+		@Override
 		public void run() {
 			mExpandableList.focusableViewAvailable(mExpandableList);
 		}
 	};
 
 	final private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position,
 				long id) {
 			onListItemClick((ExpandableListView) parent, v, position, id);
@@ -407,6 +409,7 @@ public class ExpandableListFragment extends Fragment implements
 	 * <p>
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean onChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
 		return false;
@@ -415,12 +418,14 @@ public class ExpandableListFragment extends Fragment implements
 	/**
 	 * Override this for receiving callbacks when a group has been collapsed.
 	 */
+	@Override
 	public void onGroupCollapse(int groupPosition) {
 	}
 
 	/**
 	 * Override this for receiving callbacks when a group has been expanded.
 	 */
+	@Override
 	public void onGroupExpand(int groupPosition) {
 	}
 

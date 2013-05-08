@@ -2,7 +2,6 @@ package pe.edu.pucp.proyectorh.reportes;
 
 
 import pe.edu.pucp.proyectorh.R;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	
@@ -51,6 +49,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			
 			
+			@Override
 			public void onItemClick (AdapterView<?> parent, View v,
 					int position, long id) {
 				/*

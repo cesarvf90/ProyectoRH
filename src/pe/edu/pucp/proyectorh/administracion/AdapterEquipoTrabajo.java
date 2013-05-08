@@ -1,8 +1,6 @@
 package pe.edu.pucp.proyectorh.administracion;
 
-import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;

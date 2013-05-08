@@ -10,20 +10,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 
-import pe.edu.pucp.proyectorh.DetalleFragment;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,10 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
-import android.app.AlertDialog;
-import android.database.sqlite.*;
 
 public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
@@ -165,6 +154,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			spinnerPeriodo.setAdapter(dataAdapter);
 			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
 				
+				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 					/*
 					Toast.makeText(parent.getContext(), 

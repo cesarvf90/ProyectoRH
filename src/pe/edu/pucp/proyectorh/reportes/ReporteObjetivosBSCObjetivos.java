@@ -3,7 +3,6 @@ package pe.edu.pucp.proyectorh.reportes;
 
 
 import pe.edu.pucp.proyectorh.R;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -61,6 +60,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		textView.setText(titulo);
 		
 		gridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 				int position, long id) {
 				
@@ -92,6 +92,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		
 		gridView.setOnItemLongClickListener(new OnItemLongClickListener() {
 					
+					@Override
 					public boolean onItemLongClick(AdapterView<?> parent, View v,
 						int position, long id) {
 		

@@ -4,15 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import pe.edu.pucp.proyectorh.DetalleFragment;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +18,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class MisEvaluaciones extends Fragment {
@@ -65,6 +59,7 @@ public class MisEvaluaciones extends Fragment {
 		
 		spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
 			
+			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 				Toast.makeText(parent.getContext(), 
 					"seleccionado : " + parent.getItemAtPosition(pos).toString(),
