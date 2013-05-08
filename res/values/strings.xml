@@ -5,7 +5,7 @@
     <string name="title_opcion_list">Opciones</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">RH++</string>
     <string name="Login">Ingresar</string>
     <string name="password">Contraseña</string>
     <string name="user">Usuario</string>
@@ -14,6 +14,7 @@
     <string name="seleccione_periodo_">"Seleccione Periodo: "</string>
     <string name="contactos_title">Contactos</string>
     <string name="equipo_trabajo_title">Consultar Mi Equipo</string>
+<<<<<<< HEAD
 	<string name="mi_info_nombres">Nombres</string>
 	<string name="mi_info_apellidos">Apellidos:</string>
 	<string name="mi_info_area">Área:</string>
@@ -42,4 +43,35 @@
 	<string name="equipo_trabajo_jefe">Superior: Juan Perez</string>
     
     
+=======
+    <string name="mi_info_nombres">Nombres</string>
+    <string name="mi_info_apellidos">Apellidos:</string>
+    <string name="mi_info_area">Área:</string>
+    <string name="mi_info_puesto">Puesto:</string>
+    <string name="mi_info_email">Email:</string>
+    <string name="mi_info_anexo">Anexo:</string>
+    <string name="mi_info_fecha_ingreso">Fecha Ingreso:</string>
+    <string name="mi_info_value_nombres">Christian Mendez</string>
+    <string name="mi_info_value_apellidos">Mendez Anchante</string>
+    <string name="mi_info_value_area">Sistemas</string>
+    <string name="mi_info_value_cargo">Analista</string>
+    <string name="mi_info_value_email">c.mendez@pucp.pe</string>
+    <string name="mi_info_value_anexo">3321</string>
+    <string name="mi_info_value_fecha_ingreso">05/01/2012</string>
+    <string name="mi_info_title">Visualizar Mi Información</string>
+    <string name="equipo_trabajo_nombre_completo">Mateo Julián Soto Rivera</string>
+    <string name="equipo_trabajo_cargo_persona_seleccionada">Analista Funcional</string>
+    <string name="equipo_trabajo_area">Área:</string>
+    <string name="equipo_trabajo_area_value">Logística y Operaciones</string>
+    <string name="equipo_trabajo_puesto">Puesto:</string>
+    <string name="equipo_trabajo_puesto_value">Análisis de Operaciones de Campo</string>
+    <string name="equipo_trabajo_email">Email:</string>
+    <string name="equipo_trabajo_email_value">m.soto@rhplus.com</string>
+    <string name="equipo_trabajo_anexo">Anexo:</string>
+    <string name="equipo_trabajo_anexo_value">33221</string>
+    <string name="equipo_trabajo_jefe_cargo">Jefe de Área</string>
+    <string name="menuofertas_title">Ofertas laborales</string>
+    <string name="equipo_trabajo_jefe">Supervisor: Juan Perez</string>
+
+>>>>>>> cb77dac678899cbb31cc4023011a3493ff514ca0
 </resources>

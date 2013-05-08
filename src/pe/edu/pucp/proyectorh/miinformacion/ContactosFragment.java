@@ -8,8 +8,12 @@ import java.util.GregorianCalendar;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +127,34 @@ public class ContactosFragment extends Fragment {
 		TextView correoElectronicoText = (TextView) rootView
 				.findViewById(R.id.miinfo_contactos_correo);
 		correoElectronicoText.setText(colaborador.getCorreoElectronico());
+	}
+
+	private void llamarContacto(String telefono) {
+		try {
+			Intent callIntent = new Intent(Intent.ACTION_CALL);
+			callIntent.setData(Uri.parse("tel:" + telefono));
+			startActivity(callIntent);
+		} catch (ActivityNotFoundException e) {
+			System.out.println("Falló la llamada " + e.toString());
+		}
+	}
+
+	private void enviarEmail(String email) {
+		/* Create the Intent */
+		final Intent emailIntent = new Intent(
+				android.content.Intent.ACTION_SEND);
+
+		/* Fill it with Data */
+		emailIntent.setType("plain/text");
+		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
+				new String[] { "to@email.com" });
+		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
+		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
+
+		/* Send it off to the Activity-Chooser */
+		getActivity().startActivity(
+				Intent.createChooser(emailIntent, "Send mail..."));
+
 	}
 
 }

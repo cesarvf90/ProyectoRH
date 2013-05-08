@@ -5,13 +5,12 @@
 
     <TextView
         android:id="@+id/TextViewChild01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_marginLeft="30px"
-        android:layout_marginTop="6dip"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_vertical"
         android:textColor="#ff000000"
-        android:textSize="20sp" >
+        android:textSize="21sp" >
     </TextView>
 
 </LinearLayout>

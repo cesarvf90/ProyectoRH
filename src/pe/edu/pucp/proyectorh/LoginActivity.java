@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class LoginActivity extends Activity {
 	public static final String USUARIO_INVALIDO = "0";
 	public static String idUsuario;
 	public static Usuario usuario;
+	public int DEBUG_NO_LOGIN=0; //COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR LOGIN
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,18 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 				String usuario = ((EditText) findViewById(R.id.usuarioText))
 						.getText().toString();
-				idUsuario = usuario; // guardamos el ID de la persona que se
-										// logeo
-				System.out.println("el usuario login es: " + idUsuario);
+				idUsuario = usuario;
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
-				validaUsuario(usuario, contrasena);
+				
+				if(DEBUG_NO_LOGIN==1){
+					Intent loginIntent = new Intent(getApplicationContext(),
+							MainActivity.class);
+					startActivity(loginIntent);
+				}else{
+					validaUsuario(usuario, contrasena);
+				}
+
 			}
 		});
 		ActionBar bar = getActionBar();
@@ -86,7 +94,7 @@ public class LoginActivity extends Activity {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Error de conexión");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setMessage(ConstanteServicio.MENSAJE_PROBLEMA_CONEXION);
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();
@@ -116,9 +124,11 @@ public class LoginActivity extends Activity {
 			// deserializando el json parte por parte
 			try {
 				JSONObject jsonObject = new JSONObject(result);
-				String respuesta = jsonObject.getString("respuesta");
+				String respuesta = jsonObject.getString("success");
 				if (procesaRespuesta(respuesta)) {
-					JSONObject usuarioObject = (JSONObject) jsonObject
+					JSONObject datosObject = (JSONObject) jsonObject
+							.get("data");
+					JSONObject usuarioObject = (JSONObject) datosObject
 							.get("usuario");
 					usuario = new Usuario(usuarioObject.getString("ID"),
 							usuarioObject.getString("Username"),
@@ -136,9 +146,9 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
-		if (USUARIO_VALIDO.equals(respuestaServidor)) {
+		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
 			return true;
-		} else if (USUARIO_INVALIDO.equals(respuestaServidor)) {
+		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
 			// Se muestra mensaje de usuario invalido
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Login inválido");
@@ -172,7 +182,7 @@ public class LoginActivity extends Activity {
 	private void mostrarErrorComunicacion(String excepcion) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Error de servicio");
-		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
+		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
 				+ excepcion.toString());
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);

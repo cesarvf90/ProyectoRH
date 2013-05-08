@@ -1,52 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center" >
 
     <LinearLayout
-        android:id="@+id/mi_info_contactos_title_layout"
+        android:id="@+id/menu_tercera_fase_title_layout"
         android:layout_width="fill_parent"
         android:layout_height="100px"
         android:layout_alignParentTop="true"
         android:orientation="horizontal" >
-        
+
         <TextView
-            android:id="@+id/contactos_title"
+            android:id="@+id/menuofertas_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/contactos_title"
+            android:text="@string/menuofertas_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/detalleContacto_title"
+            android:id="@+id/detalleofertas_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
-        
     </LinearLayout>
-    
-    <ListView
-        android:id="@+id/mi_info_lista_contactos"
+
+    <ExpandableListView
+        android:id="@+id/evaluar_lista_ofertas"
         android:layout_width="350px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/mi_info_contactos_title_layout" >
-
-    </ListView>
+        android:layout_below="@+id/menu_tercera_fase_title_layout" >
+    </ExpandableListView>
 
     <LinearLayout
-        android:id="@+id/mi_info_detalle_contacto_part"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/mi_info_contactos_title_layout"
-        android:layout_toRightOf="@+id/mi_info_lista_contactos"
+        android:layout_below="@+id/menu_tercera_fase_title_layout"
+        android:layout_toRightOf="@+id/evaluar_lista_ofertas"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -58,14 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombres:"
-                android:textColor="@android:color/black"
-                android:textSize="24sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Apellidos:"
+                android:text="Puesto laboral:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -79,35 +69,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Puesto:"
+                android:text="Solicitante:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha de nacimiento:"
+                android:text="Fecha solicitud:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha ingreso:"
+                android:text="Fase actual:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Correo electrónico:"
+                android:text="Número postulantes:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teléfono:"
+                android:text="Última entrevista:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -119,56 +109,49 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/miinfo_contactos_nombre"
+                android:id="@+id/rec_ofertas_puesto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/miinfo_contactos_apellidos"
+                android:id="@+id/rec_ofertas_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/miinfo_contactos_area"
+                android:id="@+id/rec_ofertas_solicitante"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/miinfo_contactos_puesto"
+                android:id="@+id/rec_ofertas_fechasolicitud"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/miinfo_contactos_fecnacimiento"
+                android:id="@+id/rec_ofertas_faseactual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/rec_ofertas_numeropostulantes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/miinfo_contactos_fecingreso"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/miinfo_contactos_correo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/miinfo_contactos_telefono"
+                android:id="@+id/rec_ofertas_fecultentrevista"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"

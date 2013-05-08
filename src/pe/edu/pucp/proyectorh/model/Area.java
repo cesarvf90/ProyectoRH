@@ -6,6 +6,10 @@ public class Area {
 	private String descripcion;
 	private int areaSuperiorID;
 
+	public Area(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -28,6 +32,11 @@ public class Area {
 
 	public void setAreaSuperiorID(int areaSuperiorID) {
 		this.areaSuperiorID = areaSuperiorID;
+	}
+
+	@Override
+	public String toString() {
+		return nombre;
 	}
 
 }
