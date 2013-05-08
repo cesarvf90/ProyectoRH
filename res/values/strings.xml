@@ -39,7 +39,7 @@
 	<string name="equipo_trabajo_email_value">m.soto@rhplus.com</string>
 	<string name="equipo_trabajo_anexo">Anexo:</string>
 	<string name="equipo_trabajo_anexo_value">33221</string>
-	<string name="equipo_trabajo_jefe">Supervisor: Juan Perez</string>
+	<string name="equipo_trabajo_jefe">Superior: Juan Perez</string>
     
     
 </resources>

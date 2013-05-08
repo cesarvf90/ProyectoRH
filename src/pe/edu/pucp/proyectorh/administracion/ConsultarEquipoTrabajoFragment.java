@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh.administracion;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +28,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	private static final String OPERACION_VALIDA = "1";
 	private static final String OPERACION_INVALIDA = "0";
 	private View rootView;
+	private View layoutVacio;
 	private ExpandableListView exv;
 	private ArrayList<String> groups;
 	private ArrayList<ArrayList<ArrayList<String>>> childs;
@@ -60,10 +62,10 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		// loadData();
 
 		if ((LoginActivity.usuario.getPadres() == null)
-				&& (LoginActivity.usuario.getHijos() == null)
-				&& (LoginActivity.usuario.getJefe() == null)) {
-			System.out.println("Primera vez");
-			probarDeserializacionGSON();
+				|| (LoginActivity.usuario.getHijos() == null)
+				|| (LoginActivity.usuario.getJefe() == null)) {
+			System.out.println("Primera vez: llamamos al WS");
+			probarDeserializacionGSON("");
 			// llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
 			LoginActivity.usuario.setJefe(this.jefe);
 			LoginActivity.usuario.setHijos(this.hijos);
@@ -78,49 +80,58 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			this.jefe = LoginActivity.usuario.getJefe();
 		}
 
-		if (this.jefe != null) {
+		// Si todo salió bien y logramos poblar todos los elementos, levantamos
+		// la vista
+		if ((this.jefe != null) && (this.padres != null)
+				&& (this.hijos != null)) {
 			TextView txtCabeceraJefe = (TextView) rootView
 					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
-			txtCabeceraJefe.setText("Supervisor: " + jefe.getNombreCompleto());
+			txtCabeceraJefe.setText("Jefe de Equipo: "
+					+ jefe.getNombreCompleto());
+
+			/*
+			 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
+			 * .getActivity().getApplicationContext(), groups, childs);
+			 * exv.setAdapter(adapter);
+			 */
+
+			AdapterEquipoObjetosColaboradores adapter = new AdapterEquipoObjetosColaboradores(
+					this.getActivity().getApplicationContext(), padres, hijos);
+			exv.setAdapter(adapter);
+
+			exv.setOnGroupClickListener(new OnGroupClickListener() {
+				public boolean onGroupClick(ExpandableListView parent, View v,
+						int groupPosition, long id) {
+					System.out.println("Grupo " + (groupPosition));
+
+					mostrarDatosPadre(groupPosition);
+					return false;
+				}
+			});
+
+			exv.setOnChildClickListener(new OnChildClickListener() {
+				public boolean onChildClick(ExpandableListView parent, View v,
+						int groupPosition, int childPosition, long id) {
+					System.out.println("Grupo " + (groupPosition) + "Hijo "
+							+ childPosition);
+					mostrarDatosHijo(groupPosition, childPosition);
+					return false;
+				}
+			});
+
+			txtVJefe.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					pintarLadoDerecho(jefe);
+				}
+			});
+			return rootView;
+		} else {
+			// Caso contrario, mostramos una vista vacía
+			this.layoutVacio = inflater.inflate(
+					R.layout.layout_vacio_para_errores, container, false);
+			return layoutVacio;
 		}
-		/*
-		 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
-		 * .getActivity().getApplicationContext(), groups, childs);
-		 * exv.setAdapter(adapter);
-		 */
-
-		AdapterEquipoObjetosColaboradores adapter = new AdapterEquipoObjetosColaboradores(
-				this.getActivity().getApplicationContext(), padres, hijos);
-		exv.setAdapter(adapter);
-
-		exv.setOnGroupClickListener(new OnGroupClickListener() {
-			public boolean onGroupClick(ExpandableListView parent, View v,
-					int groupPosition, long id) {
-				System.out.println("Grupo " + (groupPosition));
-
-				mostrarDatosPadre(groupPosition);
-				return false;
-			}
-		});
-
-		exv.setOnChildClickListener(new OnChildClickListener() {
-			public boolean onChildClick(ExpandableListView parent, View v,
-					int groupPosition, int childPosition, long id) {
-				System.out.println("Grupo " + (groupPosition) + "Hijo "
-						+ childPosition);
-				mostrarDatosHijo(groupPosition, childPosition);
-				return false;
-			}
-		});
-
-		txtVJefe.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				pintarLadoDerecho(jefe);
-			}
-		});
-
-		return rootView;
 	}
 
 	protected void mostrarDatosPadre(int groupPosition) {
@@ -137,11 +148,11 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
 	}
 
-	private void llamarServicioConsultarEquipoTrabajo(String usuario) {
+	private void llamarServicioConsultarEquipoTrabajo(int idUsuario) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.InformacionPersonalService + "?username="
-					+ usuario;
+					+ idUsuario;
 			System.out.println("pagina: " + request);
 			new deserializarJSON().execute(request);
 		}
@@ -151,104 +162,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			// MISMA LOGICA QUE probarDeserializacionGSON
-			// String result =
-			// "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"Juan Perez\",\"cargo\":\"Jefe de Área\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"cargo\":\"xxxxx\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"cargo\":\"xxxxx\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"cargo\":\"xxxxx\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",\"cargo\":\"xxxxx\",	\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"cargo\":\"xxxxx\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"cargo\":\"xxxxx\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
-			// System.out.println("Recibido: " + result.toString());
-			// deserializando el json parte por parte
-			try {
-				JSONObject jsonObject = new JSONObject(result);
-				String respuesta = jsonObject.getString("respuesta");
-				if (procesaRespuesta(respuesta)) {
-					System.out.println("procesa respuesta");
-					// Obtenemos el jefe de todos --NIVEL 0
-					JSONObject jefeObject = (JSONObject) jsonObject
-							.get("jefeEquipo");
-					jefe = new ColaboradorEquipoTrabajo(
-							jefeObject.getString("nombreCompleto"),
-							jefeObject.getString("area"),
-							jefeObject.getString("puesto"),
-							jefeObject.getString("anexo"),
-							jefeObject.getString("email"),
-							jefeObject.getInt("cantidadSubordinados"));
-					System.out.println(jefe.toString());
-
-					// Obtenemos la lista de subordinados del jefe de todos
-					// --NIVEL
-					// 1
-					JSONObject listaSubordinadosNivel1 = (JSONObject) jefeObject
-							.get("listaSubordinados");
-
-					// Para cada uno de los subordinados del jefe de todos
-					JSONObject subordinadoNivel1Object;
-					padres = new ArrayList<ColaboradorEquipoTrabajo>();
-					hijos = new ArrayList<ArrayList<ArrayList<ColaboradorEquipoTrabajo>>>();
-					for (int i = 1; i <= jefe.getCantidadSubordinados(); i++) {
-						subordinadoNivel1Object = (JSONObject) listaSubordinadosNivel1
-								.get("colaborador" + String.valueOf(i));
-
-						subordinadoNivel1 = new ColaboradorEquipoTrabajo(
-								subordinadoNivel1Object
-										.getString("nombreCompleto"),
-								subordinadoNivel1Object.getString("area"),
-								subordinadoNivel1Object.getString("puesto"),
-								subordinadoNivel1Object.getString("anexo"),
-								subordinadoNivel1Object.getString("email"),
-								subordinadoNivel1Object
-										.getInt("cantidadSubordinados"));
-
-						padres.add(subordinadoNivel1);
-						System.out.println(subordinadoNivel1.toString());
-						JSONObject listaSubordinadosNivel2 = (JSONObject) subordinadoNivel1Object
-								.get("listaSubordinados");
-
-						JSONObject subordinadoNivel2Object;
-						hijos.add(new ArrayList<ArrayList<ColaboradorEquipoTrabajo>>());
-						// childs.add(new ArrayList<ArrayList<String>>());
-						for (int j = 1; j <= subordinadoNivel1
-								.getCantidadSubordinados(); j++) {
-							subordinadoNivel2Object = (JSONObject) listaSubordinadosNivel2
-									.get("subcolaborador" + String.valueOf(j));
-
-							subordinadoNivel2 = new ColaboradorEquipoTrabajo(
-									subordinadoNivel2Object
-											.getString("nombreCompleto"),
-									subordinadoNivel2Object.getString("area"),
-									subordinadoNivel2Object.getString("puesto"),
-									subordinadoNivel2Object.getString("anexo"),
-									subordinadoNivel2Object.getString("email"),
-									subordinadoNivel2Object
-											.getInt("cantidadSubordinados"));
-
-							hijos.get(i - 1).add(
-									new ArrayList<ColaboradorEquipoTrabajo>());
-							hijos.get(i - 1).get(j - 1).add(subordinadoNivel2);
-							/*
-							 * 
-							 * childs.get(0).add(new ArrayList<String>());
-							 * childs.get(0).get(0).add("practicante 1A");
-							 * childs.get(0).add(new ArrayList<String>());
-							 * childs.get(0).get(1).add("practicante 1B");
-							 * 
-							 * childs.add(new ArrayList<ArrayList<String>>());
-							 * childs.get(1).add(new ArrayList<String>());
-							 * childs.get(1).get(0).add("practicante 2B");
-							 * 
-							 * childs.add(new ArrayList<ArrayList<String>>());
-							 */
-
-							System.out.println(subordinadoNivel2.toString());
-						}
-					}
-				}
-			} catch (JSONException e) {
-				System.out.println("entre al catch1");
-				System.out.println(e.toString());
-				mostrarErrorComunicacion(e.toString());
-			} catch (NullPointerException ex) {
-				System.out.println("entre al catch2");
-				System.out.println(ex.toString());
-				mostrarErrorComunicacion(ex.toString());
-			}
+			probarDeserializacionGSON(result);
 		}
 	}
 
@@ -274,17 +188,21 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		puesto.setText(colaborador.getPuesto());
 	}
 
-	public void probarDeserializacionGSON() {
-		// String result =
+	public void probarDeserializacionGSON(String str) {
+		String result;
 		// "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"CHRISTIAN MENDEZ\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
-		String result = "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"Juan Perez\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto1\",\"anexo\":\"Anexo1\",\"email\":\"Email1\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto2\",\"anexo\":\"Anexo2\",\"email\":\"Email2\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto3\",\"anexo\":\"Amexo3\",\"email\":\"Email3\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto4\",\"anexo\":\"Amexo4\",\"email\":\"Email4\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto5\",\"anexo\":\"Amexo5\",\"email\":\"Email5\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Puesto6\",\"anexo\":\"Amexo6\",\"email\":\"Email6\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
+		if (str != "")
+			result = str;
+		else
+			result = "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"big boss\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"2\",	\"listaSubordinados\":[{\"nombreCompleto\":\"nombre1\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":[{\"nombreCompleto\":\"nombre2\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\"},{\"nombreCompleto\":\"nombre3\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\"}]},{\"nombreCompleto\":\"nombre4\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":[]}]}}";
 		// System.out.println("Recibido: " + result.toString());
 		// deserializando el json parte por parte
 		try {
 			JSONObject jsonObject = new JSONObject(result);
+			System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("respuesta");
 			if (procesaRespuesta(respuesta)) {
-				System.out.println("procesa respuesta");
+				// System.out.println("respuesta: "+respuesta);
 				// Obtenemos el jefe de todos --NIVEL 0
 				JSONObject jefeObject = (JSONObject) jsonObject
 						.get("jefeEquipo");
@@ -299,16 +217,21 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 				System.out.println(jefe.toString());
 				// Obtenemos la lista de subordinados del jefe de todos --NIVEL
 				// 1
-				JSONObject listaSubordinadosNivel1 = (JSONObject) jefeObject
+				JSONArray listaSubordinadosNivel1 = (JSONArray) jefeObject
 						.get("listaSubordinados");
+
+				int m = listaSubordinadosNivel1.length();
+				System.out.println("size: " + String.valueOf(m));
+				System.out.println("listaSubordinadosNivel1: "
+						+ listaSubordinadosNivel1.toString());
 
 				// Para cada uno de los subordinados del jefe de todos
 				JSONObject subordinadoNivel1Object;
 				padres = new ArrayList<ColaboradorEquipoTrabajo>();
 				hijos = new ArrayList<ArrayList<ArrayList<ColaboradorEquipoTrabajo>>>();
-				for (int i = 1; i <= jefe.getCantidadSubordinados(); i++) {
+				for (int i = 0; i < listaSubordinadosNivel1.length(); i++) {
 					subordinadoNivel1Object = (JSONObject) listaSubordinadosNivel1
-							.get("colaborador" + String.valueOf(i));
+							.getJSONObject(i);
 
 					subordinadoNivel1 = new ColaboradorEquipoTrabajo(
 							subordinadoNivel1Object.getString("nombreCompleto"),
@@ -321,16 +244,18 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 
 					padres.add(subordinadoNivel1);
 					System.out.println(subordinadoNivel1.toString());
-					JSONObject listaSubordinadosNivel2 = (JSONObject) subordinadoNivel1Object
+					JSONArray listaSubordinadosNivel2 = (JSONArray) subordinadoNivel1Object
 							.get("listaSubordinados");
+
+					m = listaSubordinadosNivel2.length();
+					System.out.println("size2: " + String.valueOf(m));
 
 					JSONObject subordinadoNivel2Object;
 					hijos.add(new ArrayList<ArrayList<ColaboradorEquipoTrabajo>>());
-					// childs.add(new ArrayList<ArrayList<String>>());
-					for (int j = 1; j <= subordinadoNivel1
-							.getCantidadSubordinados(); j++) {
+
+					for (int j = 0; j < listaSubordinadosNivel2.length(); j++) {
 						subordinadoNivel2Object = (JSONObject) listaSubordinadosNivel2
-								.get("subcolaborador" + String.valueOf(j));
+								.get(j);
 
 						subordinadoNivel2 = new ColaboradorEquipoTrabajo(
 								subordinadoNivel2Object
@@ -342,36 +267,33 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 								subordinadoNivel2Object
 										.getInt("cantidadSubordinados"));
 
-						hijos.get(i - 1).add(
+						hijos.get(i).add(
 								new ArrayList<ColaboradorEquipoTrabajo>());
-						hijos.get(i - 1).get(j - 1).add(subordinadoNivel2);
-						/*
-						 * 
-						 * childs.get(0).add(new ArrayList<String>());
-						 * childs.get(0).get(0).add("practicante 1A");
-						 * childs.get(0).add(new ArrayList<String>());
-						 * childs.get(0).get(1).add("practicante 1B");
-						 * 
-						 * childs.add(new ArrayList<ArrayList<String>>());
-						 * childs.get(1).add(new ArrayList<String>());
-						 * childs.get(1).get(0).add("practicante 2B");
-						 * 
-						 * childs.add(new ArrayList<ArrayList<String>>());
-						 */
+						hijos.get(i).get(j).add(subordinadoNivel2);
 
 						System.out.println(subordinadoNivel2.toString());
+
 					}
 				}
-
+				System.out
+						.println("***********************************************************************");
+				System.out.println(padres.toString());
+				System.out.println(hijos.toString());
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());
 			mostrarErrorComunicacion(e.toString());
+			padres = null;
+			hijos = null;
+			jefe = null;
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
 			System.out.println(ex.toString());
 			mostrarErrorComunicacion(ex.toString());
+			padres = null;
+			hijos = null;
+			jefe = null;
 		}
 	}
 
