@@ -22,4 +22,12 @@ public class Servicio {
 
 	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 
+	/**
+	 * Servicio que devuelve la lista de solicitudes de oferta laboral pendientes de aprobar
+	 */
+	public final static String AprobarSolicitudOfertaLaboral = "";
+	/**
+	 * Servicio que android da como respuesta a la aprobación o rechazo de una oferta laboral (android devuelve 1 o 0 al WS) 
+	 */
+	public final static String RespuestaAprobarSolicitudOfertaLaboral = "";
 }

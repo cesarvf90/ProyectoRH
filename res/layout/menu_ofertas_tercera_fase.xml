@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
-
+
             <TextView
                 android:id="@+id/rec_ofertas_numeropostulantes"
                 android:layout_width="match_parent"

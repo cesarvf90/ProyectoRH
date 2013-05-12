@@ -1,4 +1,4 @@
-package pe.edu.pucp.proyectorh.administracion;
+package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 
@@ -65,7 +65,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 				|| (LoginActivity.usuario.getHijos() == null)
 				|| (LoginActivity.usuario.getJefe() == null)) {
 			System.out.println("Primera vez: llamamos al WS");
-			probarDeserializacionGSON("");
+			probarDeserializacionJSON("");
 			// llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
 			LoginActivity.usuario.setJefe(this.jefe);
 			LoginActivity.usuario.setHijos(this.hijos);
@@ -164,7 +164,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			// MISMA LOGICA QUE probarDeserializacionGSON
-			probarDeserializacionGSON(result);
+			probarDeserializacionJSON(result);
 		}
 	}
 
@@ -190,7 +190,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		puesto.setText(colaborador.getPuesto());
 	}
 
-	public void probarDeserializacionGSON(String str) {
+	public void probarDeserializacionJSON(String str) {
 		String result;
 		// "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"CHRISTIAN MENDEZ\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
 		if (str != "")

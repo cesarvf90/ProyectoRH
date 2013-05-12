@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
-     android:background="#666666" >
+     android:background="#0B6417" >
 
     <TextView
         android:id="@+id/TextViewGroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_marginLeft="50px"
         android:gravity="center_vertical" 
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="22sp">
     </TextView>
+    
 
 </LinearLayout>

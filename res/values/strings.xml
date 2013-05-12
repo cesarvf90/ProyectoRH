@@ -42,4 +42,5 @@
     <string name="equipo_trabajo_jefe_cargo">Jefe de Área</string>
     <string name="menuofertas_title">Ofertas laborales</string>
     <string name="equipo_trabajo_jefe">Supervisor: Juan Perez</string>
+    <string name="reclut_validar_solic_of_lab_title">Validar Solicitud de Oferta Laboral</string>
 </resources>

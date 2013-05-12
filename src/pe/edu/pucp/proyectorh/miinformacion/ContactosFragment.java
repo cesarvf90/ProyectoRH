@@ -78,7 +78,7 @@ public class ContactosFragment extends Fragment {
 			contactos.add(colaborador2);
 			contactos.add(colaborador3);
 		}
-		ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
+		final ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
 				this.getActivity(), android.R.layout.simple_list_item_1,
 				contactos);
 		listaContactos.setAdapter(colaboradoresAdapter);
@@ -90,6 +90,8 @@ public class ContactosFragment extends Fragment {
 							View childView, int position, long id) {
 						// position tiene la posicion de la vista en el adapter
 						mostrarContactoSeleccionado(contactos.get(position));
+						contactos.remove(position);
+						colaboradoresAdapter.notifyDataSetChanged();
 					}
 
 					// TODO cvasquez: implementar llamada o envio de correo
@@ -108,7 +110,7 @@ public class ContactosFragment extends Fragment {
 				.findViewById(R.id.miinfo_contactos_nombre);
 		nombreText.setText(colaborador.getNombres());
 		TextView apellidosText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_apellidos);
+				.findViewById(R.id.reclut_area_input);
 		apellidosText.setText(colaborador.getApellidos());
 		TextView areaText = (TextView) rootView
 				.findViewById(R.id.miinfo_contactos_area);

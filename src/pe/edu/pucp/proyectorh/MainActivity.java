@@ -1,9 +1,10 @@
 package pe.edu.pucp.proyectorh;
 
-import pe.edu.pucp.proyectorh.administracion.ConsultarEquipoTrabajoFragment;
-import pe.edu.pucp.proyectorh.administracion.VisualizarInfoColaboradoFragment;
+import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
+import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
@@ -53,13 +54,11 @@ public class MainActivity extends FragmentActivity implements
 	public void onItemSelected(String id) {
 		if (dosPaneles) {
 			if (Modulo.MODULO_ACTUAL == Constante.MI_INFORMACION) {
-
 				if (id.equals("1")) { // Información personal
 					VisualizarInfoColaboradoFragment fragment = new VisualizarInfoColaboradoFragment();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
-
 				}
 				if (id.equals("2")) {// Mi equipo de trabajo
 					ConsultarEquipoTrabajoFragment fragment = new ConsultarEquipoTrabajoFragment();
@@ -76,16 +75,30 @@ public class MainActivity extends FragmentActivity implements
 				if (id.equals("4")) {// Mi agenda
 
 				}
+			} else if (Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO) {
+				if (id.equals("1")) { // Aprobar Postulante
 
-			} else if ((Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO)
-					&& ("4".equals(id))) {
-				MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
-				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.opcion_detail_container, fragment)
-				.commit();
-			}
+				}
+				if (id.equals("2")) {// Aprobar Solicitudes Oferta Laboral
+					AprobarSolicitudOfertaLaboral fragment = new AprobarSolicitudOfertaLaboral();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+				if (id.equals("3")) {// Aprobar Solicitudes Promoción
 
-			else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
+				}
+				if (id.equals("4")) {// Evaluar Postulante
+					MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+				if (id.equals("5")) {// Postular a Convocatoria
+
+				}
+
+			} else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
 					&& ("4".equals(id))) {
 				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
 				getSupportFragmentManager().beginTransaction()
@@ -182,12 +195,10 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	/**amontoya: no modificar esta funcion
-	Override
-	public void onBackPressed() {
-	}
-	
-	*/
+	/**
+	 * amontoya: no modificar esta funcion Override public void onBackPressed()
+	 * { }
+	 */
 
 	protected void cerrarSesion() {
 		NAVEGACION = 1;

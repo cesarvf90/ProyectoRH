@@ -1,4 +1,4 @@
-package pe.edu.pucp.proyectorh.administracion;
+package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 

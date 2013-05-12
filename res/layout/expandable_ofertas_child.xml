@@ -10,6 +10,7 @@
         android:layout_marginLeft="30px"
         android:gravity="center_vertical"
         android:textColor="#ff000000"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="21sp" >
     </TextView>
 
