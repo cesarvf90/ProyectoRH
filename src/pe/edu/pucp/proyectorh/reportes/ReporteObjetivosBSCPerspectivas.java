@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	
+	
+	int idPeriodo;
 	GridView gridView;
 	 
 	static final String[] perspectivas = new String[] { 
@@ -39,7 +41,8 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		View rootView = inflater.inflate(R.layout.reportebsc2perspectivas,
 				container, false);
 		
-		String titulo = getArguments().getString("PeriodoSelec");
+		String titulo = getArguments().getString("titulo");
+		idPeriodo = getArguments().getInt("periodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
 		textView.setText(titulo);
 		
@@ -62,7 +65,13 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				  Bundle b = new Bundle();
 				  b.putInt("nivel",0);
 				  b.putString("objetivopadre", "Perspectiva " + ((TextView) v.findViewById(R.id.reportebscPerspectivalabel)).getText());
+				  
+				  b.putInt("idPeriodo", idPeriodo);
+				  b.putInt("idPerspectiva", 1);
+				  b.putInt("idPadre",0);
+				  
 				  fragment.setArguments(b);
+				  
 			      
 				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
 				  ft.replace(R.id.opcion_detail_container, fragment);
