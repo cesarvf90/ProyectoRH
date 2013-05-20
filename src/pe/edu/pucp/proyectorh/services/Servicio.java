@@ -15,10 +15,11 @@ public class Servicio {
 	 * Servicio de consulta de informacion personal del usuario
 	 */
 	public final static String InformacionPersonalService = "http://dp2kendo.apphb.com/WSColaborador/getColaborador";
+	
 	/**
 	 * Servicio que devuelve los contactos del usuario loggeado
 	 */
-	public final static String MisContactosService = "http://dp2kendo.apphb.com/Organizacion/Colaboradores/ColaboradoresToList";
+	public final static String MisContactosService = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
 
 	public final static String ListarPeriodos = "http://dp2kendo.apphb.com/WSPeriodos/ListarPeriodos";
 
