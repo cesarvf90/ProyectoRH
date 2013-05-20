@@ -200,36 +200,25 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	protected void mostrarPostulanteSeleccionado(Postulante postulante) {
-		// SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		// formatoFecha.applyPattern("dd/MM/yyyy");
-		//
-		// TextView tituloOfertaText = (TextView) rootView
-		// .findViewById(R.id.detalleofertas_title);
-		// tituloOfertaText.setText(oferta.toString());
-		// TextView puestoText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_puesto);
-		// puestoText.setText(oferta.getPuesto().getNombre());
-		// TextView areaText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_area);
-		// areaText.setText(oferta.getPuesto().getArea().getNombre());
-		// TextView solicitanteText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_solicitante);
-		// solicitanteText.setText(oferta.getSolicitante());
-		// TextView fechaSolicitudText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_fechasolicitud);
-		// fechaSolicitudText.setText(formatoFecha.format(oferta
-		// .getFechaRequerimiento()));
-		// TextView faseActualText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_faseactual);
-		// faseActualText.setText(oferta.getFaseActual());
-		// TextView numeroPostulantesText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_numeropostulantes);
-		// numeroPostulantesText.setText(String.valueOf(oferta.getPostulantes()
-		// .size()));
-		// TextView fechaUltimaEntrevistaText = (TextView) rootView
-		// .findViewById(R.id.rec_ofertas_fecultentrevista);
-		// fechaUltimaEntrevistaText.setText(formatoFecha.format(oferta
-		// .getFechaUltimaEntrevista()));
+		TextView tituloOfertaText = (TextView) rootView
+				.findViewById(R.id.infopostulante_title);
+		tituloOfertaText.setText(postulante.toString());
+		TextView nombreText = (TextView) rootView
+				.findViewById(R.id.rec_postulante_nombre);
+		nombreText.setText(postulante.getNombres());
+		TextView apellidosText = (TextView) rootView
+				.findViewById(R.id.rec_postulante_apellidos);
+		apellidosText.setText(postulante.getApellidos());
+		TextView documentoIdentidadText = (TextView) rootView
+				.findViewById(R.id.rec_postulante_docidentidad);
+		documentoIdentidadText.setText(postulante.getTipoDocumento()
+				+ postulante.getNumeroDocumento());
+		TextView centroEstudiosText = (TextView) rootView
+				.findViewById(R.id.rec_postulante_centroestudios);
+		centroEstudiosText.setText(postulante.getCentroEstudios());
+		TextView gradoAcademicoText = (TextView) rootView
+				.findViewById(R.id.rec_postulante_gradoacademico);
+		gradoAcademicoText.setText(postulante.getGradoAcademico());
 	}
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {

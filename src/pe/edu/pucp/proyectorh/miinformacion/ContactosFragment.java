@@ -3,6 +3,8 @@ package pe.edu.pucp.proyectorh.miinformacion;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -78,6 +80,15 @@ public class ContactosFragment extends Fragment {
 			contactos.add(colaborador2);
 			contactos.add(colaborador3);
 		}
+		Collections.sort(contactos, new Comparator<Colaborador>() {
+
+			@Override
+			public int compare(Colaborador lhs, Colaborador rhs) {
+				// here getTitle() method return app name...
+				return lhs.toString().compareTo(rhs.toString());
+
+			}
+		});
 		final ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
 				this.getActivity(), android.R.layout.simple_list_item_1,
 				contactos);
@@ -90,7 +101,7 @@ public class ContactosFragment extends Fragment {
 							View childView, int position, long id) {
 						// position tiene la posicion de la vista en el adapter
 						mostrarContactoSeleccionado(contactos.get(position));
-						contactos.remove(position);
+//						contactos.remove(position);
 						colaboradoresAdapter.notifyDataSetChanged();
 					}
 
@@ -110,7 +121,7 @@ public class ContactosFragment extends Fragment {
 				.findViewById(R.id.miinfo_contactos_nombre);
 		nombreText.setText(colaborador.getNombres());
 		TextView apellidosText = (TextView) rootView
-				.findViewById(R.id.reclut_area_input);
+				.findViewById(R.id.miinfo_contactos_apellidos);
 		apellidosText.setText(colaborador.getApellidos());
 		TextView areaText = (TextView) rootView
 				.findViewById(R.id.miinfo_contactos_area);

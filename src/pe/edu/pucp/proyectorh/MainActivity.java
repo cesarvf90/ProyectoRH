@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
@@ -46,7 +47,9 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar bar = getActionBar();
 		// bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23)));
 		// //color web original verde olivo
-		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 100, 23)));
+//		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 100, 23)));
+		bar.setBackgroundDrawable(new ColorDrawable(Color
+				.rgb(29, 148, 59)));
 		bar.setTitle("RH++");
 	}
 
@@ -73,7 +76,10 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("4")) {// Mi agenda
-
+					AgendaFragment fragment = new AgendaFragment();
+					getSupportFragmentManager().beginTransaction()
+					.replace(R.id.opcion_detail_container, fragment)
+					.commit();
 				}
 			} else if (Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO) {
 				if (id.equals("1")) { // Aprobar Postulante
