@@ -4,6 +4,11 @@ public class Postulante {
 
 	private String nombres;
 	private String apellidos;
+	private String tipoDocumento;
+	private String numeroDocumento;
+	private String curriculumVitae;
+	private String centroEstudios;
+	private String gradoAcademico;
 
 	public Postulante(String nombres, String apellidos) {
 		this.nombres = nombres;
@@ -24,6 +29,46 @@ public class Postulante {
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+
+	public String getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+	}
+
+	public String getCurriculumVitae() {
+		return curriculumVitae;
+	}
+
+	public void setCurriculumVitae(String curriculumVitae) {
+		this.curriculumVitae = curriculumVitae;
+	}
+
+	public String getCentroEstudios() {
+		return centroEstudios;
+	}
+
+	public void setCentroEstudios(String centroEstudios) {
+		this.centroEstudios = centroEstudios;
+	}
+
+	public String getGradoAcademico() {
+		return gradoAcademico;
+	}
+
+	public void setGradoAcademico(String gradoAcademico) {
+		this.gradoAcademico = gradoAcademico;
 	}
 
 	@Override
