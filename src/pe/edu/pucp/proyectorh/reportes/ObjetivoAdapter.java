@@ -1,5 +1,7 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.util.ArrayList;
+
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
 import android.graphics.Color;
@@ -14,9 +16,9 @@ import android.widget.TextView;
 public class ObjetivoAdapter extends BaseAdapter {
 	
 	private Context context;
-	private final String[] objetivos;
+	private final ArrayList<ObjetivoDTO> objetivos;
  
-	public ObjetivoAdapter(Context context, String[] objetivos) {
+	public ObjetivoAdapter(Context context, ArrayList<ObjetivoDTO> objetivos) {
 		this.context = context;
 		this.objetivos = objetivos;
 	}
@@ -42,15 +44,17 @@ public class ObjetivoAdapter extends BaseAdapter {
 			// set value into textview
 			TextView textView = (TextView) gridView
 					.findViewById(R.id.reportebscObjetivolabel);
-			textView.setText(objetivos[position]);
+			textView.setText(objetivos.get(position).getDescripcion());
 			
 			TextView textAvance = (TextView) gridView
 					.findViewById(R.id.reportebscObjetivoAvance);
 			
-			int avance = (position*10);
+			int avance = (objetivos.get(position).getAvance());
 			textAvance.setText(avance + "%");
  
-
+			TextView textNumPer = (TextView) gridView
+					.findViewById(R.id.reportebscObjetivoNumPersonas);
+			textNumPer.setText(objetivos.get(position).getNumPersonas());
 			
 			setColor(avance, gridView );
 			
@@ -108,7 +112,7 @@ public class ObjetivoAdapter extends BaseAdapter {
  
 	@Override
 	public int getCount() {
-		return objetivos.length;
+		return objetivos.size();
 	}
  
 	@Override
