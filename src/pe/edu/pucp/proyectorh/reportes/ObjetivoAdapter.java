@@ -54,7 +54,7 @@ public class ObjetivoAdapter extends BaseAdapter {
  
 			TextView textNumPer = (TextView) gridView
 					.findViewById(R.id.reportebscObjetivoNumPersonas);
-			textNumPer.setText(objetivos.get(position).getNumPersonas());
+			textNumPer.setText(objetivos.get(position).getNumPersonas() + " personas");
 			
 			setColor(avance, gridView );
 			
