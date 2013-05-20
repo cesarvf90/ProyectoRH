@@ -233,6 +233,8 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			}
 			*/
 			
+			
+			
 			gridView.setAdapter(new ObjetivoAdapter(getActivity(),listaObjetivos));
 			
 			
