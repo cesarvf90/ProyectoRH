@@ -45,4 +45,5 @@
     <string name="reclut_validar_solic_of_lab_title">Validar Solicitud de Oferta Laboral</string>
     <color name="text_color">#31D1F1</color>
 	<color name="white">#ffffff</color>
+	<string name="agenda_title">Agenda</string>
 </resources>

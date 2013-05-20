@@ -38,8 +38,6 @@ public class AgendaFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// rootView = inflater.inflate(R.layout.mi_info_agenda,
-		// container, false);
 		rootView = inflater.inflate(R.layout.calendar, container, false);
 		month = Calendar.getInstance();
 		onNewIntent(getActivity().getIntent());
@@ -56,6 +54,7 @@ public class AgendaFragment extends Fragment {
 		TextView title = (TextView) rootView.findViewById(R.id.title);
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
 
+		// Mes anterior
 		TextView previous = (TextView) rootView.findViewById(R.id.previous);
 		previous.setOnClickListener(new OnClickListener() {
 
@@ -72,6 +71,7 @@ public class AgendaFragment extends Fragment {
 			}
 		});
 
+		// Mes siguiente
 		TextView next = (TextView) rootView.findViewById(R.id.next);
 		next.setOnClickListener(new OnClickListener() {
 
@@ -89,6 +89,7 @@ public class AgendaFragment extends Fragment {
 			}
 		});
 
+		
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
@@ -101,13 +102,13 @@ public class AgendaFragment extends Fragment {
 						day = "0" + day;
 					}
 					// return chosen date as string format
-					intent.putExtra(
-							"date",
-							android.text.format.DateFormat.format("yyyy-MM",
-									month) + "-" + day);
-//					getActivity().setResult(RESULT_OK, intent);
-					getActivity().setResult(0, intent);
-					getActivity().finish();
+//					intent.putExtra(
+//							"date",
+//							android.text.format.DateFormat.format("yyyy-MM",
+//									month) + "-" + day);
+////					getActivity().setResult(RESULT_OK, intent);
+//					getActivity().setResult(0, intent);
+//					getActivity().finish();
 				}
 
 			}

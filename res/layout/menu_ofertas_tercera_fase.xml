@@ -67,6 +67,7 @@
 					android:paddingLeft="20px"
                     android:text="Puesto laboral:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -75,6 +76,7 @@
 					android:paddingLeft="20px"
                     android:text="Área:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -83,6 +85,7 @@
 					android:paddingLeft="20px"
                     android:text="Solicitante:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -91,6 +94,7 @@
 					android:paddingLeft="20px"
                     android:text="Fecha solicitud:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -99,6 +103,7 @@
 					android:paddingLeft="20px"    
                     android:text="Fase actual:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -107,6 +112,7 @@
 					android:paddingLeft="20px"
                     android:text="Número postulantes:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -115,6 +121,7 @@
 					android:paddingLeft="20px"
                     android:text="Última entrevista:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -129,6 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -136,6 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -143,6 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -150,6 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -157,6 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -164,6 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -171,6 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
@@ -203,6 +217,7 @@
 					android:paddingLeft="20px"
                     android:text="Nombre:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -211,6 +226,7 @@
 					android:paddingLeft="20px"
                     android:text="Apellidos"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -219,6 +235,7 @@
 					android:paddingLeft="20px"
                     android:text="Documento de identidad:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -227,6 +244,7 @@
 					android:paddingLeft="20px"
                     android:text="Centro de estudios:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -235,6 +253,7 @@
 					android:paddingLeft="20px"
 					android:text="Grado académico:"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -249,6 +268,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -256,6 +276,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -263,6 +284,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -270,6 +292,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
@@ -277,6 +300,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
                     android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
