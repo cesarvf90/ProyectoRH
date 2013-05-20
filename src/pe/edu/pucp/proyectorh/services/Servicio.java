@@ -1,5 +1,9 @@
 package pe.edu.pucp.proyectorh.services;
 
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import android.app.Activity;
+import android.app.AlertDialog;
+
 public class Servicio {
 
 	/**
@@ -30,4 +34,18 @@ public class Servicio {
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una oferta laboral (android devuelve 1 o 0 al WS) 
 	 */
 	public final static String RespuestaAprobarSolicitudOfertaLaboral = "";
+	
+	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,String request){
+		if (ConnectionManager.connect(miActividad)) {			
+			miClase.execute(request);
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(miActividad);
+			builder.setTitle("Error de conexión");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+	}
 }

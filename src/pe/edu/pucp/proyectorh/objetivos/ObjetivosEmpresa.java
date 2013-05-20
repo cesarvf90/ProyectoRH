@@ -15,6 +15,7 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -46,6 +47,7 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
+	List<String> listaNombrePer;
 	
 	TableLayout layoutTab1;
 	TableLayout layoutTab2;
@@ -64,58 +66,50 @@ public class ObjetivosEmpresa extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 	
-	public class ListarPeriodos extends AsyncCall {
+	public void actualizaTabs(){
+		
+	}
+	
+	public class ListadoPeriodos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
 			listaPeriodos = new ArrayList<Periodo>();
-			// deserializando el json parte por parte
 			try {
 				JSONArray arregloPeriodos = new JSONArray(result);
 				for(int i=0;i<arregloPeriodos.length();i++){
 					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					System.out.println("Arreglo Nº"+i+"="+periodoJSON);
 					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
 					listaPeriodos.add(per);
 				}
+				for(int i=0; i<listaPeriodos.size(); i++){
+					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+				}
+				
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerPeriodo.setAdapter(dataAdapter);
+				
+				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						periodoSelec = listaPeriodos.get(pos).BSCID;
+						System.out.println("seleccionado="+periodoSelec);
+						actualizaTabs();
+					}
+				
+					@Override
+					  public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+					  }
+				});
 			} catch (Exception e){
 				System.out.println("Error="+e.toString());
 			}
 		}
 	}
 	
-	public int obtenerBSCID(int indice){
-		System.out.println("obtiene bscid");
-		return listaPeriodos.get(indice).BSCID;
-	}
-	
-	public ArrayList<String> listadoPeriodos(){
-		System.out.println("entra a listarPeriodos");
-		if (ConnectionManager.connect(this.getActivity())) {
-			// construir llamada al servicio
-			String request = Servicio.ListarPeriodos;
-			new ListarPeriodos().execute(request);
-			System.out.println("listarPedidos pasa execute");
-			ArrayList<String> lista = new ArrayList<String>();
-			for(int i=0; i<listaPeriodos.size(); i++){
-				System.out.println("Entra con i="+i+" y con nombre="+listaPeriodos.get(i).Nombre);
-				lista.add(listaPeriodos.get(i).Nombre);	
-			}
-			System.out.println("pasa adds");
-			return lista;
-		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-			builder.setTitle("Error de conexión");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return null;
-		}
-	}
-	
+
 	public TableRow agregaCabezera(Context contexto){
 		TableRow cabecera = new TableRow(contexto);
 		cabecera.setLayoutParams(new TableLayout.LayoutParams(
@@ -219,6 +213,7 @@ public class ObjetivosEmpresa extends Fragment {
 		
 		return listObjs;
 	}
+	
 	public TableLayout AgregaDatosTab(Context contexto, TableLayout lay, int tipoBSC){
 		//CABECERA
 		TableRow cabecera = agregaCabezera(contexto);
@@ -251,7 +246,6 @@ public class ObjetivosEmpresa extends Fragment {
 		return lay;		
 	}
 	
-	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -265,26 +259,10 @@ public class ObjetivosEmpresa extends Fragment {
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
-			List<String> lista = listadoPeriodos();
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,lista);
-			System.out.println("pasa adapter");
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-			
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoSelec = obtenerBSCID(pos);
-					System.out.println("seleccionado="+periodoSelec);
-				}
-			
-				@Override
-				  public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-				  }
-			});
-			
-			
+			listaNombrePer = new ArrayList<String>();
+			ListadoPeriodos lp = new ListadoPeriodos();
+			Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
+
 			/*
 			 * CODIGO PARA MANEJO DE PERSPECTIVA (TABS)
 			 */				
@@ -336,66 +314,7 @@ public class ObjetivosEmpresa extends Fragment {
 			layoutTab3=AgregaDatosTab(contexto,layoutTab3,3);
 			layoutTab4=AgregaDatosTab(contexto,layoutTab4,4);
 			
-			
-			/*
-			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
-			 */				
-	/*
-			btnDescCambios = (Button) rootView.findViewById(R.id.ObjEmpDescCambios);
-			btnDescCambios.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {
-					  
-			 
-				    Toast.makeText(v.getContext(),
-					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-						Toast.LENGTH_SHORT).show();
-					  
-				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-				      
-				      Bundle argumentos = new Bundle();
-				      argumentos.putString("PeriodoSelec", titulo);
-				      fragment.setArguments(argumentos);
-				      
-					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					  ft.replace(R.id.opcion_detail_container, fragment);
-					  ft.addToBackStack(null);
-					  ft.commit();
-					  
-				  }
-			 
-			});
-			*/
-			
-			/*
-			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
-			 */		
-			/*
-			btnGuardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);			
-			btnGuardarCambios.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {
-					  
-			 
-				    Toast.makeText(v.getContext(),
-					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-						Toast.LENGTH_SHORT).show();
-					  
-				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-				      
-				      Bundle argumentos = new Bundle();
-				      argumentos.putString("PeriodoSelec", titulo);
-				      fragment.setArguments(argumentos);
-				      
-					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					  ft.replace(R.id.opcion_detail_container, fragment);
-					  ft.addToBackStack(null);
-					  ft.commit();
-					  
-				  }
-			 
-			});
-		*/
+
 		return rootView;
 	}
 
