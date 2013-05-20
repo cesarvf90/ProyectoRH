@@ -219,19 +219,20 @@ public final class R {
         public static final int expandablelistview_group=0x7f03000f;
         public static final int fragment_opcion_detail=0x7f030010;
         public static final int layout_vacio_para_errores=0x7f030011;
-        public static final int menu_ofertas_tercera_fase=0x7f030012;
-        public static final int mi_info_agenda=0x7f030013;
-        public static final int mi_info_contactos=0x7f030014;
-        public static final int objetivosbsc=0x7f030015;
-        public static final int reclutamiento_evaluarpostulantemenu=0x7f030016;
-        public static final int rendir_evaluaciones=0x7f030017;
-        public static final int reportebsc1principal=0x7f030018;
-        public static final int reportebsc2perspectivas=0x7f030019;
-        public static final int reportebsc3objetivos=0x7f03001a;
-        public static final int reportebsc4grafico=0x7f03001b;
-        public static final int reportebscobjetivo=0x7f03001c;
-        public static final int reportebscperspectiva=0x7f03001d;
-        public static final int visualizar_info_colaborador=0x7f03001e;
+        public static final int listar_objetivos=0x7f030012;
+        public static final int menu_ofertas_tercera_fase=0x7f030013;
+        public static final int mi_info_agenda=0x7f030014;
+        public static final int mi_info_contactos=0x7f030015;
+        public static final int objetivosbsc=0x7f030016;
+        public static final int reclutamiento_evaluarpostulantemenu=0x7f030017;
+        public static final int rendir_evaluaciones=0x7f030018;
+        public static final int reportebsc1principal=0x7f030019;
+        public static final int reportebsc2perspectivas=0x7f03001a;
+        public static final int reportebsc3objetivos=0x7f03001b;
+        public static final int reportebsc4grafico=0x7f03001c;
+        public static final int reportebscobjetivo=0x7f03001d;
+        public static final int reportebscperspectiva=0x7f03001e;
+        public static final int visualizar_info_colaborador=0x7f03001f;
     }
     public static final class menu {
         public static final int activity_login=0x7f090000;
