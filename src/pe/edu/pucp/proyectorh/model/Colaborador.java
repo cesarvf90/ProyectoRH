@@ -12,16 +12,27 @@ import pe.edu.pucp.proyectorh.utils.Constante;
  */
 public class Colaborador {
 
+	private String id;
 	private String nombres;
 	private String apellidos;
+	private String areaID;
 	private String area;
 	private String puesto;
+	private String puestoID;
 	private String anexo;
 	private Date fechaIngreso;
 	private Date fechaNacimiento;
 	private String correoElectronico;
 	private String telefono;
 	private String centroEstudios;
+	private String direccion;
+	private String paisID;
+	private String tipoDocumentoID;
+	private String numeroDocumento;
+	private String imagenColaborador;
+	private String Sueldo;
+	private String resumenEjecutivo;
+	private String estadoColaboradorID;
 
 	public Colaborador() {
 	}
@@ -127,6 +138,94 @@ public class Colaborador {
 
 	public void setCentroEstudios(String centroEstudios) {
 		this.centroEstudios = centroEstudios;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getAreaID() {
+		return areaID;
+	}
+
+	public void setAreaID(String areaID) {
+		this.areaID = areaID;
+	}
+
+	public String getPuestoID() {
+		return puestoID;
+	}
+
+	public void setPuestoID(String puestoID) {
+		this.puestoID = puestoID;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getPaisID() {
+		return paisID;
+	}
+
+	public void setPaisID(String paisID) {
+		this.paisID = paisID;
+	}
+
+	public String getTipoDocumentoID() {
+		return tipoDocumentoID;
+	}
+
+	public void setTipoDocumentoID(String tipoDocumentoID) {
+		this.tipoDocumentoID = tipoDocumentoID;
+	}
+
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+	}
+
+	public String getImagenColaborador() {
+		return imagenColaborador;
+	}
+
+	public void setImagenColaborador(String imagenColaborador) {
+		this.imagenColaborador = imagenColaborador;
+	}
+
+	public String getSueldo() {
+		return Sueldo;
+	}
+
+	public void setSueldo(String sueldo) {
+		Sueldo = sueldo;
+	}
+
+	public String getResumenEjecutivo() {
+		return resumenEjecutivo;
+	}
+
+	public void setResumenEjecutivo(String resumenEjecutivo) {
+		this.resumenEjecutivo = resumenEjecutivo;
+	}
+
+	public String getEstadoColaboradorID() {
+		return estadoColaboradorID;
+	}
+
+	public void setEstadoColaboradorID(String estadoColaboradorID) {
+		this.estadoColaboradorID = estadoColaboradorID;
 	}
 
 	@Override
