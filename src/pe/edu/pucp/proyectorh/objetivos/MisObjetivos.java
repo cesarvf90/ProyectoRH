@@ -41,6 +41,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ArrayAdapter;
@@ -66,9 +67,117 @@ public class MisObjetivos extends Fragment {
 	List<String> listaNombrePer;
 	int periodoBSCActual;
 	
+	
+	
+	private ArrayList<String> groups;
+	private ArrayList<ArrayList<ArrayList<String>>> childs;
+	
+	
+	
 	public MisObjetivos(){
 		
 	}
+	
+	
+	 public class myExpandableAdapter extends BaseExpandableListAdapter {
+		 
+	    	private ArrayList<String> groups;
+	 
+	        private ArrayList<ArrayList<ArrayList<String>>> children;
+	 
+	    	private Context context;
+	 
+	    	public myExpandableAdapter(Context context, ArrayList<String> groups, ArrayList<ArrayList<ArrayList<String>>> children) {
+	            this.context = context;
+	            this.groups = groups;
+	            this.children = childs;
+	        }
+	 
+	 
+	    	@Override
+	        public boolean areAllItemsEnabled()
+	        {
+	            return true;
+	        }
+	 
+	 
+	        @Override
+	        public ArrayList<String> getChild(int groupPosition, int childPosition) {
+	            return children.get(groupPosition).get(childPosition);
+	        }
+	 
+	        @Override
+	        public long getChildId(int groupPosition, int childPosition) {
+	            return childPosition;
+	        }
+	 
+	 
+	        @Override
+	        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
+	 
+	        	String child = (String) ((ArrayList<String>)getChild(groupPosition, childPosition)).get(0);
+	 
+	            if (convertView == null) {
+	                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	                convertView = infalInflater.inflate(R.layout.expandablelistview_child, null);
+	            }
+	 
+	            TextView childtxt = (TextView) convertView.findViewById(R.id.TextViewChild01);
+	 
+	            childtxt.setText(child);
+	 
+	            return convertView;
+	        }
+	 
+	        @Override
+	        public int getChildrenCount(int groupPosition) {
+	            return children.get(groupPosition).size();
+	        }
+	 
+	        @Override
+	        public String getGroup(int groupPosition) {
+	            return groups.get(groupPosition);
+	        }
+	 
+	        @Override
+	        public int getGroupCount() {
+	            return groups.size();
+	        }
+	 
+	        @Override
+	        public long getGroupId(int groupPosition) {
+	            return groupPosition;
+	        }
+	 
+	        @Override
+	        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+	 
+	        	String group = (String) getGroup(groupPosition);
+	 
+	        	if (convertView == null) {
+	                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	                convertView = infalInflater.inflate(R.layout.expandablelistview_group, null);
+	            }
+	 
+	            TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
+	 
+	            grouptxt.setText(group);
+	 
+	            return convertView;
+	        }
+	 
+	        @Override
+	        public boolean hasStableIds() {
+	            return true;
+	        }
+	 
+	        @Override
+	        public boolean isChildSelectable(int arg0, int arg1) {
+	            return true;
+	        }
+	 
+	    }
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,6 +208,14 @@ public class MisObjetivos extends Fragment {
 		//	OfertasAdapter adapter = new OfertasAdapter(this.getActivity().getApplicationContext(), ofertas, postulantes);*/
 		//	listaObjs.setAdapter(adapter);
 			listaObjs.setLongClickable(true);
+			
+			
+			loadData();
+			 
+	        myExpandableAdapter adapter = new myExpandableAdapter(contexto, groups, childs);
+	        listaObjs.setAdapter(adapter);
+			
+			
 
 			// Se muestra la informacion de la oferta
 			listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
@@ -187,6 +304,40 @@ public class MisObjetivos extends Fragment {
 		objsPadre = new ArrayList<ObjetivosBSC>();
 		objsHijos = new ArrayList<ObjetivosBSC>();
 	}
+	
+
+    private void loadData(){
+    	groups= new ArrayList<String>();
+    	childs= new ArrayList<ArrayList<ArrayList<String>>>();
+ 
+    	groups.add("OBJETIVO BSC 1");
+        groups.add("OBJETIVO BSC 2");
+        groups.add("OBJETIVO BSC 3");
+ 
+        childs.add(new ArrayList<ArrayList<String>>());
+        childs.get(0).add(new ArrayList<String>());
+        childs.get(0).get(0).add("obetivo gg 1");
+        childs.get(0).add(new ArrayList<String>());
+        childs.get(0).get(1).add("obetivo gg 2");
+        childs.get(0).add(new ArrayList<String>());
+        childs.get(0).get(2).add("obetivo gg 3");
+ 
+        childs.add(new ArrayList<ArrayList<String>>());
+        childs.get(1).add(new ArrayList<String>());
+        childs.get(1).get(0).add("obetivo gg 4");
+        childs.get(1).add(new ArrayList<String>());
+        childs.get(1).get(1).add("obetivo gg 5");
+        childs.get(1).add(new ArrayList<String>());
+        childs.get(1).get(2).add("obetivo gg 6");
+ 
+        childs.add(new ArrayList<ArrayList<String>>());
+        childs.get(2).add(new ArrayList<String>());
+        childs.get(2).get(0).add("obetivo gg 7");
+        childs.get(2).add(new ArrayList<String>());
+        childs.get(2).get(1).add("obetivo gg 8");
+        childs.get(2).add(new ArrayList<String>());
+        childs.get(2).get(2).add("obetivo gg 9");
+    }
 	
 	public  void listarObjetivos(){
 		ListadoObjetivos lo = new ListadoObjetivos();
