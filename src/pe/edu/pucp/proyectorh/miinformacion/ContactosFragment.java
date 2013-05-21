@@ -19,6 +19,7 @@ import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
+import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
@@ -58,7 +59,6 @@ public class ContactosFragment extends Fragment {
 	}
 
 	private void llamarServicioContactos() {
-		// llama al servicio que devuelve los contactos del usuario
 		obtenerContactos(LoginActivity.getUsuario());
 	}
 
@@ -74,14 +74,7 @@ public class ContactosFragment extends Fragment {
 					+ usuario.getID();
 			new ObtencionContactos().execute(request);
 		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Error de conexión");
-			builder.setMessage(ConstanteServicio.MENSAJE_PROBLEMA_CONEXION);
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
@@ -251,9 +244,11 @@ public class ContactosFragment extends Fragment {
 					mostrarContactos();
 				}
 			} catch (JSONException e) {
-				mostrarErrorComunicacion(e.toString());
+				ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
+//				mostrarErrorComunicacion(e.toString());
 			} catch (NullPointerException ex) {
-				mostrarErrorComunicacion(ex.toString());
+				ErrorServicio.mostrarErrorComunicacion(ex.toString(), getActivity());
+//				mostrarErrorComunicacion(ex.toString());
 			}
 		}
 	}
@@ -282,17 +277,6 @@ public class ContactosFragment extends Fragment {
 			builder.show();
 			return false;
 		}
-	}
-
-	private void mostrarErrorComunicacion(String excepcion) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Error de servicio");
-		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
-				+ excepcion.toString());
-		builder.setCancelable(false);
-		builder.setPositiveButton("Ok", null);
-		builder.create();
-		builder.show();
 	}
 
 	private void mostrarContactos() {
