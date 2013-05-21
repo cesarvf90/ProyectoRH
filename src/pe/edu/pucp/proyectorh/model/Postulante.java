@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh.model;
 
 public class Postulante {
 
+	private String ID;
 	private String nombres;
 	private String apellidos;
 	private String tipoDocumento;
@@ -9,10 +10,22 @@ public class Postulante {
 	private String curriculumVitae;
 	private String centroEstudios;
 	private String gradoAcademico;
+	private String correoElectronico;
+
+	public Postulante() {
+	}
 
 	public Postulante(String nombres, String apellidos) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
 	}
 
 	public String getNombres() {
@@ -69,6 +82,14 @@ public class Postulante {
 
 	public void setGradoAcademico(String gradoAcademico) {
 		this.gradoAcademico = gradoAcademico;
+	}
+
+	public String getCorreoElectronico() {
+		return correoElectronico;
+	}
+
+	public void setCorreoElectronico(String correoElectronico) {
+		this.correoElectronico = correoElectronico;
 	}
 
 	@Override

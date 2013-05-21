@@ -1,28 +1,41 @@
 package pe.edu.pucp.proyectorh.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class OfertaLaboral {
 
+	private String ID;
 	private int puestoID;
 	private Puesto puesto;
 	private int estado;
 	private ArrayList<Postulante> postulantes;
 	private String solicitante;
-	private Date fechaRequerimiento;
-	private Date fechaUltimaEntrevista;
+	private String fechaRequerimiento;
+	private String fechaUltimaEntrevista;
 	private String faseActual;
+	private int numeroPostulantes;
+
+	public OfertaLaboral() {
+		super();
+	}
 
 	public OfertaLaboral(Puesto puesto, ArrayList<Postulante> postulantes,
-			String solicitante, Date fechaRequerimiento,
-			Date fechaUltimaEntrevista, String faseActual) {
+			String solicitante, String fechaRequerimiento,
+			String fechaUltimaEntrevista, String faseActual) {
 		this.puesto = puesto;
 		this.postulantes = postulantes;
 		this.solicitante = solicitante;
 		this.fechaRequerimiento = fechaRequerimiento;
 		this.fechaUltimaEntrevista = fechaUltimaEntrevista;
 		this.faseActual = faseActual;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
 	}
 
 	public String getFaseActual() {
@@ -33,19 +46,19 @@ public class OfertaLaboral {
 		this.faseActual = faseActual;
 	}
 
-	public Date getFechaUltimaEntrevista() {
+	public String getFechaUltimaEntrevista() {
 		return fechaUltimaEntrevista;
 	}
 
-	public void setFechaUltimaEntrevista(Date fechaUltimaEntrevista) {
+	public void setFechaUltimaEntrevista(String fechaUltimaEntrevista) {
 		this.fechaUltimaEntrevista = fechaUltimaEntrevista;
 	}
 
-	public Date getFechaRequerimiento() {
+	public String getFechaRequerimiento() {
 		return fechaRequerimiento;
 	}
 
-	public void setFechaRequerimiento(Date fechaRequerimiento) {
+	public void setFechaRequerimiento(String fechaRequerimiento) {
 		this.fechaRequerimiento = fechaRequerimiento;
 	}
 
@@ -87,6 +100,14 @@ public class OfertaLaboral {
 
 	public void setPostulantes(ArrayList<Postulante> postulantes) {
 		this.postulantes = postulantes;
+	}
+
+	public int getNumeroPostulantes() {
+		return numeroPostulantes;
+	}
+
+	public void setNumeroPostulantes(int numeroPostulantes) {
+		this.numeroPostulantes = numeroPostulantes;
 	}
 
 	@Override

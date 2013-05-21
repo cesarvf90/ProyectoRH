@@ -25,19 +25,19 @@ public class Servicio {
 	 * Servicio que devuelve las ofertas laborales en tercera fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
 	 */
-	public final static String ofertasLaboralesTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
+	public final static String OfertasLaboralesTerceraFase = "http://dp2kendo.apphb.com//WSOfertaLaboral/getOfertasLaborales";
 
 	/**
 	 * Servicio que retorna las preguntas de la evaluacion a rendir por el
 	 * postulante de tercera fase seleccionado
 	 */
-	public final static String obtenerEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
+	public final static String ObtenerEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
 
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
 	 * entrevista de tercera fase
 	 */
-	public final static String registrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
+	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
 
 	public final static String ListarPeriodos = "http://dp2kendo.apphb.com/WSPeriodos/ListarPeriodos";
 
