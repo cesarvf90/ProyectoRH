@@ -130,7 +130,10 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("2")) {// Mis Objetivos
-
+					MisObjetivos fragment = new MisObjetivos();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 				if (id.equals("3")) {// Objetivos Subordinados
 
