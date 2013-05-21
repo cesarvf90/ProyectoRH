@@ -58,16 +58,14 @@ public class ContactosFragment extends Fragment {
 	}
 
 	private void llamarServicioContactos() {
-		// TODO cvasquez: llamar al servicio que devuelve los contactos del
-		// usuario
+		// llama al servicio que devuelve los contactos del usuario
 		obtenerContactos(LoginActivity.getUsuario());
 	}
 
 	/**
-	 * Llama al ws de validacion de usuario
+	 * Llama al servicio que obtiene los contactos del usuario
 	 * 
 	 * @param usuario
-	 * @param contrasena
 	 */
 	private void obtenerContactos(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
@@ -217,8 +215,7 @@ public class ContactosFragment extends Fragment {
 								.getJSONObject(i);
 						Colaborador contacto = new Colaborador();
 						contacto.setId(contactoObject.getString("ID"));
-						contacto.setNombres(contactoObject
-								.getString("Nombre"));
+						contacto.setNombres(contactoObject.getString("Nombre"));
 						contacto.setApellidos(contactoObject
 								.getString("ApellidoPaterno")
 								+ Constante.CADENA_VACIA
@@ -226,19 +223,20 @@ public class ContactosFragment extends Fragment {
 						contacto.setArea(contactoObject.getString("Area"));
 						contacto.setAreaID(contactoObject.getString("AreaID"));
 						contacto.setPuesto(contactoObject.getString("Puesto"));
-						contacto.setPuestoID(contactoObject.getString("PuestoID"));
+						contacto.setPuestoID(contactoObject
+								.getString("PuestoID"));
 						contacto.setTelefono(contactoObject
 								.getString("Telefono"));
 						contacto.setDireccion(contactoObject
 								.getString("Direccion"));
 						contacto.setPaisID(contactoObject.getString("PaisID"));
 						// TODO cvasquez: parsear de string a date
-//						contacto.setFechaNacimiento(contactoObject.getString("FechaNacimiento"));
+						// contacto.setFechaNacimiento(contactoObject.getString("FechaNacimiento"));
 						contacto.setFechaNacimiento(new Date(2012, 3, 7));
-//						contacto.setFechaIngreso(contactoObject
-//									.getString("FechaIngreso"));
+						// contacto.setFechaIngreso(contactoObject
+						// .getString("FechaIngreso"));
 						contacto.setFechaIngreso(new Date(2012, 3, 7));
-						 contacto.setTipoDocumentoID(contactoObject
+						contacto.setTipoDocumentoID(contactoObject
 								.getString("TipoDocumentoID"));
 						contacto.setCentroEstudios(contactoObject
 								.getString("CentroEstudios"));
@@ -246,7 +244,7 @@ public class ContactosFragment extends Fragment {
 								.getString("NumeroDocumento"));
 						contacto.setCorreoElectronico(contactoObject
 								.getString("CorreoElectronico"));
-						
+
 						contactos.add(contacto);
 					}
 
@@ -303,8 +301,10 @@ public class ContactosFragment extends Fragment {
 		Collections.sort(contactos, new Comparator<Colaborador>() {
 
 			@Override
-			public int compare(Colaborador colaborador1, Colaborador colaborador2) {
-				return colaborador1.toString().compareTo(colaborador2.toString());
+			public int compare(Colaborador colaborador1,
+					Colaborador colaborador2) {
+				return colaborador1.toString().compareTo(
+						colaborador2.toString());
 
 			}
 		});

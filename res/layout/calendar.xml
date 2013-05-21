@@ -3,14 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:paddingTop="5dp"
         android:paddingBottom="10dp"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
         android:text="@string/agenda_title"
         android:textColor="@android:color/black"
         android:textSize="@dimen/Title"
@@ -95,6 +95,19 @@
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:paddingLeft="5dp"
+            android:text="Domingo"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:paddingLeft="5dp"
             android:text="Lunes"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -161,19 +174,6 @@
             android:padding="5dp"
             android:paddingLeft="5dp"
             android:text="Sábado"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:paddingLeft="5dp"
-            android:text="Domingo"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />

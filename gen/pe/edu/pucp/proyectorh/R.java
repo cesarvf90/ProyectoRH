@@ -70,8 +70,9 @@ public final class R {
         public static final int ObjEmpPeriodo=0x7f0a004f;
         public static final int TextViewChild01=0x7f0a002c;
         public static final int TextViewGroup=0x7f0a002d;
-        public static final int about=0x7f0a0084;
+        public static final int about=0x7f0a009a;
         public static final int accordion_list=0x7f0a0000;
+        public static final int button1=0x7f0a0092;
         public static final int calendarView1=0x7f0a0041;
         public static final int contactos_title=0x7f0a0043;
         public static final int contrasenaText=0x7f0a0006;
@@ -95,11 +96,13 @@ public final class R {
         public static final int finalizar=0x7f0a005d;
         public static final int gridview=0x7f0a001c;
         public static final int header=0x7f0a0018;
-        public static final int help=0x7f0a0085;
+        public static final int help=0x7f0a009b;
         public static final int infopostulante_title=0x7f0a003b;
         public static final int linearLayout1=0x7f0a0002;
+        public static final int linearLayout2=0x7f0a008c;
+        public static final int linearLayout3=0x7f0a0090;
         public static final int loginButton=0x7f0a0007;
-        public static final int menu_settings=0x7f0a0083;
+        public static final int menu_settings=0x7f0a0099;
         public static final int menu_tercera_fase_title_layout=0x7f0a0030;
         public static final int menuofertas_title=0x7f0a0031;
         public static final int mi_info_contactos_title_layout=0x7f0a0042;
@@ -177,6 +180,17 @@ public final class R {
         public static final int reclut_modo_input=0x7f0a0014;
         public static final int reclut_observacion_input=0x7f0a0017;
         public static final int reclut_responsable_input=0x7f0a0015;
+        public static final int relativeLayout1=0x7f0a0083;
+        public static final int relativeLayout10=0x7f0a0098;
+        public static final int relativeLayout2=0x7f0a008d;
+        public static final int relativeLayout242=0x7f0a008b;
+        public static final int relativeLayout3=0x7f0a008f;
+        public static final int relativeLayout4=0x7f0a0091;
+        public static final int relativeLayout5=0x7f0a0093;
+        public static final int relativeLayout6=0x7f0a0094;
+        public static final int relativeLayout7=0x7f0a0095;
+        public static final int relativeLayout8=0x7f0a0096;
+        public static final int relativeLayout9=0x7f0a0097;
         public static final int reportebscObjetivoAvance=0x7f0a0069;
         public static final int reportebscObjetivoNumPersonas=0x7f0a0068;
         public static final int reportebscObjetivolabel=0x7f0a0067;
@@ -191,12 +205,20 @@ public final class R {
         public static final int reportebscgridPerspectivas=0x7f0a0062;
         public static final int reportebscprogressbar=0x7f0a0060;
         public static final int reportebscspinner=0x7f0a005e;
+        public static final int scrollView1=0x7f0a008a;
         public static final int spinnerObjEmpPeriodo=0x7f0a0050;
         public static final int text1=0x7f0a002a;
         public static final int text2=0x7f0a002b;
         public static final int textView1=0x7f0a0003;
+        public static final int textView10=0x7f0a008e;
         public static final int textView2=0x7f0a0005;
         public static final int textView3=0x7f0a0001;
+        public static final int textView4=0x7f0a0084;
+        public static final int textView5=0x7f0a0085;
+        public static final int textView6=0x7f0a0086;
+        public static final int textView7=0x7f0a0087;
+        public static final int textView8=0x7f0a0088;
+        public static final int textView9=0x7f0a0089;
         public static final int title=0x7f0a001a;
         public static final int usuarioText=0x7f0a0004;
     }
@@ -232,6 +254,7 @@ public final class R {
         public static final int reportebscobjetivo=0x7f03001c;
         public static final int reportebscperspectiva=0x7f03001d;
         public static final int visualizar_info_colaborador=0x7f03001e;
+        public static final int weekly_calendar=0x7f03001f;
     }
     public static final class menu {
         public static final int activity_login=0x7f090000;
