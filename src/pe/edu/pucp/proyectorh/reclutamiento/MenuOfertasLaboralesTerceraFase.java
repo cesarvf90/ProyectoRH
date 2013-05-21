@@ -4,11 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.Area;
 import pe.edu.pucp.proyectorh.model.OfertaLaboral;
 import pe.edu.pucp.proyectorh.model.Postulante;
 import pe.edu.pucp.proyectorh.model.Puesto;
+import pe.edu.pucp.proyectorh.model.Usuario;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ConstanteServicio;
+import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -49,6 +58,49 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	private void llamarServicioOfertasLaboralesTerceraFase() {
+		// TODO cvasquez: coordinar formato del servicio e implementar su
+		// llamada
+		obtenerOfertasPendientes(LoginActivity.getUsuario());
+	}
+
+	private void obtenerOfertasPendientes(Usuario usuario) {
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			String request = Servicio.MisContactosService + "?id="
+					+ usuario.getID();
+			new ObtencionContactos().execute(request);
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexión");
+			builder.setMessage(ConstanteServicio.MENSAJE_PROBLEMA_CONEXION);
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+	}
+
+	public class ObtencionContactos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+			// deserializando el json parte por parte
+			try {
+				JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (procesaRespuesta(respuesta)) {
+					mostrarOfertas();
+				}
+			} catch (JSONException e) {
+				mostrarErrorComunicacion(e.toString());
+			} catch (NullPointerException ex) {
+				mostrarErrorComunicacion(ex.toString());
+			}
+		}
+	}
+
+	private void llamarServicioOfertasLaboralesTerceraFaseMock() {
 		// TODO cvasquez: llamar al servicio que devuelve las ofertas laborales
 		// que se encuentran en tercera fase
 
@@ -126,6 +178,11 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		postulantes.get(3).add(new ArrayList<Postulante>());
 		postulantes.get(3).get(2).add(new Postulante("Angelica", "Goyzueta"));
 		mostrarOfertasLaborales(ofertas, postulantes);
+	}
+
+	public void mostrarOfertas() {
+		// TODO cvasquez: implementar similar a mostrarOfertasLaborales
+
 	}
 
 	private void mostrarOfertasLaborales(ArrayList<OfertaLaboral> ofertas,
@@ -252,5 +309,42 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 				.findViewById(R.id.rec_ofertas_fecultentrevista);
 		fechaUltimaEntrevistaText.setText(formatoFecha.format(oferta
 				.getFechaUltimaEntrevista()));
+	}
+
+	public boolean procesaRespuesta(String respuestaServidor) {
+		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
+			return true;
+		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
+			// Se muestra mensaje de servicio no disponible
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Servicio no disponible");
+			builder.setMessage("No se pueden obtener los contactos. Intente nuevamente");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		} else {
+			// Se muestra mensaje de la respuesta invalida del servidor
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Problema en el servidor");
+			builder.setMessage("Hay un problema en el servidor.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		}
+	}
+
+	private void mostrarErrorComunicacion(String excepcion) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("Error de servicio");
+		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
+				+ excepcion.toString());
+		builder.setCancelable(false);
+		builder.setPositiveButton("Ok", null);
+		builder.create();
+		builder.show();
 	}
 }

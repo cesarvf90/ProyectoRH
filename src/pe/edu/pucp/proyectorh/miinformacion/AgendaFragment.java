@@ -5,10 +5,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -144,7 +141,7 @@ public class AgendaFragment extends Fragment {
 	}
 
 	public void onNewIntent(Intent intent) {
-		intent.putExtra("date", "2013-5-20");
+		intent.putExtra("date", "2013-4-21");
 		String date = intent.getStringExtra("date");
 		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
 		month.set(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),

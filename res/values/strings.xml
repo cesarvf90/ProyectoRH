@@ -45,5 +45,16 @@
     <string name="reclut_validar_solic_of_lab_title">Validar Solicitud de Oferta Laboral</string>
     <color name="text_color">#31D1F1</color>
 	<color name="white">#ffffff</color>
+	<color name="celeste">#27a9e3</color>
+	<color name="morado">#852b99</color>
+	<color name="naranja">#ffb848</color>
+	<color name="verde_bajo">#28b779</color>
 	<string name="agenda_title">Agenda</string>
+	<string name="domingo">Domingo</string>
+	<string name="lunes">Lunes</string>
+	<string name="martes">Martes</string>
+	<string name="miercoles">Miércoles</string>
+	<string name="thursday">Jueves</string>
+	<string name="friday">Viernes</string>
+	<string name="saturday">Sábado</string>
 </resources>
