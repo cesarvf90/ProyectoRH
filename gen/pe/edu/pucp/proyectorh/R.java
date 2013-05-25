@@ -64,9 +64,11 @@ public final class R {
         public static final int tab_unselected_focused_rhactionbar=0x7f020024;
         public static final int tab_unselected_pressed_rhactionbar=0x7f020025;
         public static final int tab_unselected_rhactionbar=0x7f020026;
-        public static final int tema_verde=0x7f020027;
-        public static final int textview_back=0x7f020028;
-        public static final int textview_backred=0x7f020029;
+        public static final int tabla_tag=0x7f020027;
+        public static final int tabla_value=0x7f020028;
+        public static final int tema_verde=0x7f020029;
+        public static final int textview_back=0x7f02002a;
+        public static final int textview_backred=0x7f02002b;
     }
     public static final class id {
         public static final int ObjEmpDescCambios=0x7f0a0057;
