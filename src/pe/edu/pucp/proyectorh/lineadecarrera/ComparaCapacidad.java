@@ -1,0 +1,191 @@
+package pe.edu.pucp.proyectorh.lineadecarrera;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+
+import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas;
+import pe.edu.pucp.proyectorh.reportes.ReporteServices;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getPeriodos;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
+import pe.edu.pucp.proyectorh.LoginActivity;
+
+public class ComparaCapacidad extends Fragment{
+
+	private Spinner spinnerConvocatoria;
+	private Button btnSubmit;
+	private ProgressBar pbarra;
+	private String usuario;
+	
+	int ConvSelec;
+	String titulo;
+	
+	List<ConvocatoriaDTO> listaConv;
+	List<String> lista ;
+	
+	public ComparaCapacidad(){
+		
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+	}
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		View rootView = inflater.inflate(R.layout.comparacap1principal,
+				container, false);
+		pbarra = (ProgressBar) rootView.findViewById(R.id.comparacapprogressbar);
+		
+		spinnerConvocatoria = (Spinner) rootView.findViewById(R.id.comparacapspinner);
+		lista = new ArrayList<String>();
+		obtenerlistaConvocatorias();
+		usuario = LoginActivity.usuario.getID();
+		btnSubmit = (Button) rootView.findViewById(R.id.comparacapbtnConsultar);
+		
+		btnSubmit.setOnClickListener(new OnClickListener() {
+			 
+			  @Override
+			  public void onClick(View v) {
+				  
+		 /*
+			    Toast.makeText(v.getContext(),
+				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
+					Toast.LENGTH_SHORT).show();
+			*/    
+				 // obtenerlistaConvocatorias();
+
+			      ComparaCapacidadPersonal fragment = new ComparaCapacidadPersonal();
+			      
+			      Bundle argumentos = new Bundle();
+			      argumentos.putInt("ConvSelec", ConvSelec);
+			      argumentos.putString("titulo", titulo);
+			      argumentos.putString("IdUsuario", usuario);
+			      //argumentos.putString("idUsuario", idUsuario);
+			      fragment.setArguments(argumentos);
+			      
+				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+				  ft.replace(R.id.opcion_detail_container, fragment);
+				  ft.addToBackStack(null);
+				  ft.commit();
+				  
+			  }
+		 
+			});
+		
+		return rootView;
+	}
+	
+	protected void obtenerlistaConvocatorias(){
+		
+		if (ConnectionManager.connect(getActivity())) {
+		// construir llamada al servicio
+		//String request = LineaCarServices.obtenerConvocatorias;
+		//new getConvocatorias().execute(request);
+		}else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexción");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+	}
+	
+	public class getConvocatorias extends AsyncCall {
+		//webservice
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			System.out.println("Recibido: " + result.toString());
+			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+			List<ConvocatoriaDTO> Convocatorias = gson.fromJson(result,
+					new TypeToken<List<ConvocatoriaDTO>>(){}.getType());
+			
+			listaConv = Convocatorias;
+			
+			for(int i =0; i<listaConv.size();i++){
+				lista.add(listaConv.get(i).getNombre());
+			}
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerConvocatoria.setAdapter(dataAdapter);
+			spinnerConvocatoria.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					
+				/*	Toast.makeText(parent.getContext(), 
+						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+						Toast.LENGTH_SHORT).show(); */
+					
+					ConvSelec = listaConv.get(pos).getID(); //aqui idobjetivo selec
+					titulo = parent.getItemAtPosition(pos).toString();
+
+				  }
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+			});
+		}
+	}
+	
+	public class ConvocatoriaDTO {
+		
+		private int ID ;
+		private String Nombre ;
+		
+		public ConvocatoriaDTO() {
+		}
+		
+		public int getID() {
+			return ID;
+		}
+
+
+		public void setID(int iD) {
+			ID = iD;
+		}
+		
+		public String getNombre() {
+			return Nombre;
+		}
+
+
+		public void setNombre(String nombre) {
+			Nombre = nombre;
+		}
+	}
+}

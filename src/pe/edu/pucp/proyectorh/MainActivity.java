@@ -1,14 +1,16 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.objetivos.MisObjetivos;
+import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
-import pe.edu.pucp.proyectorh.reportes.*;
-import pe.edu.pucp.proyectorh.objetivos.*;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -122,7 +124,21 @@ public class MainActivity extends FragmentActivity implements
 				if (id.equals("3")) {// Mis subordinados
 
 				}
-			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
+			} 
+			
+			else if (Modulo.MODULO_ACTUAL == Constante.LINEA_DE_CARRERA) {
+				if (id.equals("1")) { // Comparar capacidades
+					ComparaCapacidad fragment = new ComparaCapacidad();	
+					getSupportFragmentManager().beginTransaction()
+					.replace(R.id.opcion_detail_container, fragment)
+					.commit();
+				}
+				if (id.equals("2")) {// Candidatos por puesto
+
+				}
+				
+			}
+			else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
 				if (id.equals("1")) { // Objetivos Empresa
 					ObjetivosEmpresa fragment = new ObjetivosEmpresa();
 					getSupportFragmentManager().beginTransaction()

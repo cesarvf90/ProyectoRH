@@ -9,7 +9,6 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
-import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -134,8 +134,8 @@ public class LoginActivity extends Activity {
 					usuario = new Usuario(usuarioObject.getString("ID"),
 							usuarioObject.getString("Username"),
 							usuarioObject.getString("Password"));
-					Intent loginIntent = new Intent(getApplicationContext(),
-							MainActivity.class);
+					Intent loginIntent = new Intent(LoginActivity.this,
+							pe.edu.pucp.proyectorh.MainActivity.class);
 					startActivity(loginIntent);
 				}
 			} catch (JSONException e) {

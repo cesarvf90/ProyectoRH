@@ -5,6 +5,8 @@
     android:background="@drawable/gradiente_verde_green2"
     android:baselineAligned="false"
     android:gravity="center"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
 	android:orientation="vertical" >
 
     
