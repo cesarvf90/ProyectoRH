@@ -4,58 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.google.gson.Gson;
 
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.model.Area;
-import pe.edu.pucp.proyectorh.model.OfertaLaboral;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
-import pe.edu.pucp.proyectorh.model.Postulante;
-import pe.edu.pucp.proyectorh.model.Puesto;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.ListadoObjetivos;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.ListadoPeriodos;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
-import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 public class MisObjetivos extends Fragment {
 	
@@ -242,20 +213,8 @@ public class MisObjetivos extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			try {
-				JSONArray array = new JSONArray(result);
-				ArrayList<ObjetivosBSC> listObjetivosBSC = new ArrayList<ObjetivosBSC>();
-				for(int i = 0; i < array.length(); i++) {
-					final Gson gson = new Gson();
-					final ObjetivosBSC oBSC = gson.fromJson(array.getString(i),ObjetivosBSC.class);
-					listObjetivosBSC.add(oBSC);
-				}
-				System.out.println("entro gg");
-				//FILAS
-					loadData(listObjetivosBSC);
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
-			}
+			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);
+			loadData(listObjetivosBSC);
 		}
 	}
 	
@@ -263,36 +222,31 @@ public class MisObjetivos extends Fragment {
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			listaPeriodos = new ArrayList<Periodo>();
-			try {			
-				listaPeriodos = Periodo.getPeriodosByResult(result);
-				for(int i=0; i<listaPeriodos.size(); i++){
-					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+			System.out.println("Recibido: " + result.toString());			
+			listaPeriodos = Periodo.getPeriodosByResult(result);
+			for(int i=0; i<listaPeriodos.size(); i++){
+				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+			}
+				
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+				
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					periodoBSCActual = listaPeriodos.get(pos).BSCID;
+					System.out.println("periodo seleccionado="+periodoBSCActual);
+					listarObjetivos();
+						 
+					//EMF-//actualizaTabs();
 				}
 				
-				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spinnerPeriodo.setAdapter(dataAdapter);
-				
-				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-					@Override
-					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-						periodoBSCActual = listaPeriodos.get(pos).BSCID;
-						System.out.println("periodo seleccionado="+periodoBSCActual);
-						listarObjetivos();
-						 
-						//EMF-//actualizaTabs();
-					}
-				
-					@Override
-					  public void onNothingSelected(AdapterView<?> arg0) {
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
 						// TODO Auto-generated method stub
-					  }
-				});
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
-			}
+				}
+			});
 		}
 	}
 

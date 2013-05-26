@@ -3,28 +3,16 @@ package pe.edu.pucp.proyectorh.reclutamiento;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pe.edu.pucp.proyectorh.MainActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment.deserializarJSON;
-import pe.edu.pucp.proyectorh.model.Colaborador;
-import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import pe.edu.pucp.proyectorh.model.SolicitudOfertaLaboral;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,7 +45,7 @@ public class SemanaFragment extends Fragment {
 		Button eventoButton = new Button(rootView.getContext());
 		
         LinearLayout.LayoutParams layoutParametros = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
         layoutParametros.topMargin = 40;
         layoutParametros.height = 60;
         eventoButton.setText("Evento nuevo");

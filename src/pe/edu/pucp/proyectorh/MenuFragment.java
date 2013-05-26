@@ -18,7 +18,6 @@ import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 
 /**
