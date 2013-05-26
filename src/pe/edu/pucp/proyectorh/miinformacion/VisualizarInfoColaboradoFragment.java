@@ -110,10 +110,6 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 				infoColaborador.setFecha_ingreso(colaborador
 						.getString("FechaIngreso") == "null" ? " * no disponible"
 								: colaborador.getString("FechaIngreso"));				
-				System.out.println(colaborador.toString());
-				System.out.println(colaborador
-						.getString("CorreoElectronico") == "null" ? " * no disponible"
-								: colaborador.getString("CorreoElectronico"));
 
 				//DECIRLE A MANOLIN QUE EL WS NO DEVUELVA LA IMAGEN PORQUE EL JSON ES INESTABLE Y SE CAE 
 				

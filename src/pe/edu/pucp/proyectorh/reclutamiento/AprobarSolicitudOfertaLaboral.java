@@ -91,6 +91,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 							// adapter
 							mostrarSolicitudSeleccionada(solicitudes
 									.get(position));
+							//obtenemos el id de la solicitud seleccionada IDSolicitudSeleccionada = solicitudes.get(position).getSolicitudID();
+							
 							IDSolicitudSeleccionada = solicitudes.get(position)
 									.getSolicitudID();
 							posicionLista = position;
