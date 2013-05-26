@@ -67,116 +67,18 @@ public class MisObjetivos extends Fragment {
 	List<String> listaNombrePer;
 	int periodoBSCActual;
 	
+	ExpandableListView listaObjs;
 	
+	Context contexto;
 	
 	private ArrayList<String> groups;
-	private ArrayList<ArrayList<ArrayList<String>>> childs;
+	private ArrayList<ArrayList<String>> childs;
 	
 	
 	
 	public MisObjetivos(){
 		
 	}
-	
-	
-	 public class myExpandableAdapter extends BaseExpandableListAdapter {
-		 
-	    	private ArrayList<String> groups;
-	 
-	        private ArrayList<ArrayList<ArrayList<String>>> children;
-	 
-	    	private Context context;
-	 
-	    	public myExpandableAdapter(Context context, ArrayList<String> groups, ArrayList<ArrayList<ArrayList<String>>> children) {
-	            this.context = context;
-	            this.groups = groups;
-	            this.children = childs;
-	        }
-	 
-	 
-	    	@Override
-	        public boolean areAllItemsEnabled()
-	        {
-	            return true;
-	        }
-	 
-	 
-	        @Override
-	        public ArrayList<String> getChild(int groupPosition, int childPosition) {
-	            return children.get(groupPosition).get(childPosition);
-	        }
-	 
-	        @Override
-	        public long getChildId(int groupPosition, int childPosition) {
-	            return childPosition;
-	        }
-	 
-	 
-	        @Override
-	        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
-	 
-	        	String child = (String) ((ArrayList<String>)getChild(groupPosition, childPosition)).get(0);
-	 
-	            if (convertView == null) {
-	                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	                convertView = infalInflater.inflate(R.layout.expandablelistview_child, null);
-	            }
-	 
-	            TextView childtxt = (TextView) convertView.findViewById(R.id.TextViewChild01);
-	 
-	            childtxt.setText(child);
-	 
-	            return convertView;
-	        }
-	 
-	        @Override
-	        public int getChildrenCount(int groupPosition) {
-	            return children.get(groupPosition).size();
-	        }
-	 
-	        @Override
-	        public String getGroup(int groupPosition) {
-	            return groups.get(groupPosition);
-	        }
-	 
-	        @Override
-	        public int getGroupCount() {
-	            return groups.size();
-	        }
-	 
-	        @Override
-	        public long getGroupId(int groupPosition) {
-	            return groupPosition;
-	        }
-	 
-	        @Override
-	        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-	 
-	        	String group = (String) getGroup(groupPosition);
-	 
-	        	if (convertView == null) {
-	                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	                convertView = infalInflater.inflate(R.layout.expandablelistview_group, null);
-	            }
-	 
-	            TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
-	 
-	            grouptxt.setText(group);
-	 
-	            return convertView;
-	        }
-	 
-	        @Override
-	        public boolean hasStableIds() {
-	            return true;
-	        }
-	 
-	        @Override
-	        public boolean isChildSelectable(int arg0, int arg1) {
-	            return true;
-	        }
-	 
-	    }
 	
 	
 	@Override
@@ -189,7 +91,7 @@ public class MisObjetivos extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView  = inflater.inflate(R.layout.listar_objetivos,container, false);
-			Context contexto = rootView.getContext();
+			contexto = rootView.getContext();
 			rootView.findViewById(R.layout.listar_objetivos);
 			
 			Resources res = getResources();
@@ -204,19 +106,13 @@ public class MisObjetivos extends Fragment {
 			Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
 
 			
-			ExpandableListView listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
-		//	OfertasAdapter adapter = new OfertasAdapter(this.getActivity().getApplicationContext(), ofertas, postulantes);*/
-		//	listaObjs.setAdapter(adapter);
+			listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
+			System.out.println("setea a cero");
+	    	groups= new ArrayList<String>();
+	    	childs= new ArrayList<ArrayList<String>>();
 			listaObjs.setLongClickable(true);
-			
-			
-			loadData();
-			 
-	        myExpandableAdapter adapter = new myExpandableAdapter(contexto, groups, childs);
-	        listaObjs.setAdapter(adapter);
-			
-			
 
+	        
 			// Se muestra la informacion de la oferta
 			listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
 				@Override
@@ -306,53 +202,40 @@ public class MisObjetivos extends Fragment {
 	}
 	
 
-    private void loadData(){
-    	groups= new ArrayList<String>();
-    	childs= new ArrayList<ArrayList<ArrayList<String>>>();
- 
-    	groups.add("OBJETIVO BSC 1");
-        groups.add("OBJETIVO BSC 2");
-        groups.add("OBJETIVO BSC 3");
- 
-        childs.add(new ArrayList<ArrayList<String>>());
-        childs.get(0).add(new ArrayList<String>());
-        childs.get(0).get(0).add("obetivo gg 1");
-        childs.get(0).add(new ArrayList<String>());
-        childs.get(0).get(1).add("obetivo gg 2");
-        childs.get(0).add(new ArrayList<String>());
-        childs.get(0).get(2).add("obetivo gg 3");
- 
-        childs.add(new ArrayList<ArrayList<String>>());
-        childs.get(1).add(new ArrayList<String>());
-        childs.get(1).get(0).add("obetivo gg 4");
-        childs.get(1).add(new ArrayList<String>());
-        childs.get(1).get(1).add("obetivo gg 5");
-        childs.get(1).add(new ArrayList<String>());
-        childs.get(1).get(2).add("obetivo gg 6");
- 
-        childs.add(new ArrayList<ArrayList<String>>());
-        childs.get(2).add(new ArrayList<String>());
-        childs.get(2).get(0).add("obetivo gg 7");
-        childs.get(2).add(new ArrayList<String>());
-        childs.get(2).get(1).add("obetivo gg 8");
-        childs.get(2).add(new ArrayList<String>());
-        childs.get(2).get(2).add("obetivo gg 9");
+    private void loadData(ArrayList<ObjetivosBSC> listObjetivosBSC){
+    	for(int i=0;i<listObjetivosBSC.size();i++){
+    		System.out.println("agrega obj="+listObjetivosBSC.get(i).Nombre);
+    		groups.add(listObjetivosBSC.get(i).Nombre);
+
+    		childs.add(new ArrayList<String>());
+        	for(int j=0; j<3;j++){
+        	    childs.get(i).add("obetivo gg "+j);
+        	}
+    	}
+
+    	System.out.println("new adapter");
+    	ObjetivosExpandableAdapter adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
+    	listaObjs.setAdapter(adapter);
     }
 	
 	public  void listarObjetivos(){
-		ListadoObjetivos lo = new ListadoObjetivos();
+		System.out.println("lista objs");
+		ListadoObjetivos lo1 = new ListadoObjetivos();
+		ListadoObjetivos lo2 = new ListadoObjetivos();
+		ListadoObjetivos lo3 = new ListadoObjetivos();
+		ListadoObjetivos lo4 = new ListadoObjetivos();
+		
+    	groups= new ArrayList<String>();
+    	childs= new ArrayList<ArrayList<String>>();
+    	
 		String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta1="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo1,rutaLlamada);
 		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta2="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo2,rutaLlamada);
 		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta3="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo3,rutaLlamada);
 		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta4="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo4,rutaLlamada);
 	}
 	
 	public class ListadoObjetivos extends AsyncCall {
@@ -367,32 +250,23 @@ public class MisObjetivos extends Fragment {
 					final ObjetivosBSC oBSC = gson.fromJson(array.getString(i),ObjetivosBSC.class);
 					listObjetivosBSC.add(oBSC);
 				}
-				
+				System.out.println("entro gg");
 				//FILAS
-				for(int i=0;i<listObjetivosBSC.size();i++){
-
-					
-				}
+					loadData(listObjetivosBSC);
 			} catch (Exception e){
 				System.out.println("Error="+e.toString());
 			}
 		}
 	}
 	
-
 	
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
 			listaPeriodos = new ArrayList<Periodo>();
-			try {
-				JSONArray arregloPeriodos = new JSONArray(result);
-				for(int i=0;i<arregloPeriodos.length();i++){
-					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
-					listaPeriodos.add(per);
-				}
+			try {			
+				listaPeriodos = Periodo.getPeriodosByResult(result);
 				for(int i=0; i<listaPeriodos.size(); i++){
 					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
 				}
@@ -406,6 +280,8 @@ public class MisObjetivos extends Fragment {
 					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 						periodoBSCActual = listaPeriodos.get(pos).BSCID;
 						System.out.println("periodo seleccionado="+periodoBSCActual);
+						listarObjetivos();
+						 
 						//EMF-//actualizaTabs();
 					}
 				
