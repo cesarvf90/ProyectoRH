@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 @cvasquez
-Codigo utilizado para implementar la vista expandible en el fragment izquierdo
+Codigo utilizado para implementar la vista expandible en el fragment izquierdo
+
 -->
 
 <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +19,8 @@ Codigo utilizado para implementar la vista expandible en el fragment izquierdo
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
+
     <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
@@ -26,5 +28,5 @@ Codigo utilizado para implementar la vista expandible en el fragment izquierdo
         android:layout_alignLeft="@id/text1"
         android:layout_below="@id/text1"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+    
 </TwoLineListItem>

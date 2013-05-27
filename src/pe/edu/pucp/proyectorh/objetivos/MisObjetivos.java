@@ -3,10 +3,7 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import com.google.gson.Gson;
-
-
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
@@ -177,10 +174,10 @@ public class MisObjetivos extends Fragment {
     	for(int i=0;i<listObjetivosBSC.size();i++){
     		System.out.println("agrega obj="+listObjetivosBSC.get(i).Nombre);
     		groups.add(listObjetivosBSC.get(i).Nombre);
-
+    		
     		childs.add(new ArrayList<String>());
         	for(int j=0; j<3;j++){
-        	    childs.get(i).add("obetivo gg "+j);
+        	    childs.get(groups.size()-1).add("obetivo gg "+j);
         	}
     	}
 
@@ -188,25 +185,35 @@ public class MisObjetivos extends Fragment {
     	ObjetivosExpandableAdapter adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
     	listaObjs.setAdapter(adapter);
     }
+    
+    public boolean isAdmin(){
+    	return true;
+    }
 	
 	public  void listarObjetivos(){
-		System.out.println("lista objs");
-		ListadoObjetivos lo1 = new ListadoObjetivos();
-		ListadoObjetivos lo2 = new ListadoObjetivos();
-		ListadoObjetivos lo3 = new ListadoObjetivos();
-		ListadoObjetivos lo4 = new ListadoObjetivos();
-		
     	groups= new ArrayList<String>();
     	childs= new ArrayList<ArrayList<String>>();
-    	
-		String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
-		Servicio.llamadaServicio(this.getActivity(), lo1,rutaLlamada);
-		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
-		Servicio.llamadaServicio(this.getActivity(), lo2,rutaLlamada);
-		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
-		Servicio.llamadaServicio(this.getActivity(), lo3,rutaLlamada);
-		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
-		Servicio.llamadaServicio(this.getActivity(), lo4,rutaLlamada);
+
+		if (isAdmin()){
+			ListadoObjetivos lo1 = new ListadoObjetivos();
+			ListadoObjetivos lo2 = new ListadoObjetivos();
+			ListadoObjetivos lo3 = new ListadoObjetivos();
+			ListadoObjetivos lo4 = new ListadoObjetivos();
+			
+			String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
+			Servicio.llamadaServicio(this.getActivity(), lo1,rutaLlamada);
+			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
+			Servicio.llamadaServicio(this.getActivity(), lo2,rutaLlamada);
+			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
+			Servicio.llamadaServicio(this.getActivity(), lo3,rutaLlamada);
+			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
+			Servicio.llamadaServicio(this.getActivity(), lo4,rutaLlamada);
+			
+		}else{
+			ListadoObjetivos lo = new ListadoObjetivos();
+			String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual; //CAMBIAR
+			Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
+		}
 	}
 	
 	public class ListadoObjetivos extends AsyncCall {
@@ -221,8 +228,7 @@ public class MisObjetivos extends Fragment {
 	
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
-		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());			
+		protected void onPostExecute(String result) {		
 			listaPeriodos = Periodo.getPeriodosByResult(result);
 			for(int i=0; i<listaPeriodos.size(); i++){
 				listaNombrePer.add(listaPeriodos.get(i).Nombre);	

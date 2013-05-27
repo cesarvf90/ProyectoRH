@@ -1,14 +1,6 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
-
-
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
@@ -25,7 +17,6 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
 
 
