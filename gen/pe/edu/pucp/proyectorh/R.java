@@ -275,8 +275,9 @@ public final class R {
         public static final int reportebsc4grafico=0x7f03001d;
         public static final int reportebscobjetivo=0x7f03001e;
         public static final int reportebscperspectiva=0x7f03001f;
-        public static final int visualizar_info_colaborador=0x7f030020;
-        public static final int weekly_calendar=0x7f030021;
+        public static final int reportecubrimiento=0x7f030020;
+        public static final int visualizar_info_colaborador=0x7f030021;
+        public static final int weekly_calendar=0x7f030022;
     }
     public static final class menu {
         public static final int activity_login=0x7f090000;

@@ -1,12 +1,8 @@
 package pe.edu.pucp.proyectorh.model;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.google.gson.Gson;
 
 public class Periodo {

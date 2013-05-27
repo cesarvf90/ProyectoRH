@@ -1,14 +1,6 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
-
-
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
@@ -25,7 +17,6 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
 
 
@@ -38,7 +29,7 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
-	List<String> listaNombrePer;
+	ArrayList<String> listaNombrePer = new ArrayList<String>();
 	
 	TableLayout layoutTab1;
 	TableLayout layoutTab2;
@@ -92,6 +83,7 @@ public class ObjetivosEmpresa extends Fragment {
 					layoutTab1.addView(fila);
 				}else if(auxPerspectiva==2){
 					layoutTab2.addView(fila);
+					
 				}else if(auxPerspectiva==3){
 					layoutTab3.addView(fila);
 				}else if(auxPerspectiva==4){
