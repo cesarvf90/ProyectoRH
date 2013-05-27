@@ -31,7 +31,7 @@ public class Servicio {
 	 * Servicio que retorna las preguntas de la evaluacion a rendir por el
 	 * postulante de tercera fase seleccionado
 	 */
-	public final static String ObtenerEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
+	public final static String ObtenerEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getFunciones";
 
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la

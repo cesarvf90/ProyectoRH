@@ -211,7 +211,7 @@ public class ContactosFragment extends Fragment {
 						contacto.setNombres(contactoObject.getString("Nombre"));
 						contacto.setApellidos(contactoObject
 								.getString("ApellidoPaterno")
-								+ Constante.CADENA_VACIA
+								+ Constante.ESPACIO_VACIO
 								+ contactoObject.getString("ApellidoMaterno"));
 						contacto.setArea(contactoObject.getString("Area"));
 						contacto.setAreaID(contactoObject.getString("AreaID"));

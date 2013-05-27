@@ -193,7 +193,6 @@
             android:id="@+id/infopostulante_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="César Vásquez"
             android:paddingLeft="10px"
 			android:background="#1d943b"
             android:textColor="@android:color/white"

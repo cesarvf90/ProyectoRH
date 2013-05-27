@@ -1,14 +1,6 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
-
-
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
@@ -25,7 +17,6 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
 
 
@@ -38,7 +29,7 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
-	List<String> listaNombrePer;
+	ArrayList<String> listaNombrePer = new ArrayList<String>();
 	
 	TableLayout layoutTab1;
 	TableLayout layoutTab2;
@@ -77,36 +68,27 @@ public class ObjetivosEmpresa extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			try {
-				JSONArray array = new JSONArray(result);
-				ArrayList<ObjetivosBSC> listObjetivosBSC = new ArrayList<ObjetivosBSC>();
-				for(int i = 0; i < array.length(); i++) {
-					final Gson gson = new Gson();
-					final ObjetivosBSC oBSC = gson.fromJson(array.getString(i),ObjetivosBSC.class);
-					listObjetivosBSC.add(oBSC);
-				}
+			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);
 				
-				//FILAS
-				for(int i=0;i<listObjetivosBSC.size();i++){
-					int flagUltimo = 0;
-					ObjetivosBSC objBSC = listObjetivosBSC.get(i);
-					if ((i+1) == listObjetivosBSC.size()){
-						flagUltimo=1;
-					}
-					System.out.println("EMF-Ingresa fila i="+i+" para perspectiva="+auxPerspectiva);
-					TableFila fila = agregaFila(auxPerspectiva,objBSC,flagUltimo);
-					if (auxPerspectiva==1){
-						layoutTab1.addView(fila);
-					}else if(auxPerspectiva==2){
-						layoutTab2.addView(fila);
-					}else if(auxPerspectiva==3){
-						layoutTab3.addView(fila);
-					}else if(auxPerspectiva==4){
-						layoutTab4.addView(fila);
-					}
+			//FILAS
+			for(int i=0;i<listObjetivosBSC.size();i++){
+				int flagUltimo = 0;
+				ObjetivosBSC objBSC = listObjetivosBSC.get(i);
+				if ((i+1) == listObjetivosBSC.size()){
+					flagUltimo=1;
 				}
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
+				System.out.println("EMF-Ingresa fila i="+i+" para perspectiva="+auxPerspectiva);
+				TableFila fila = agregaFila(auxPerspectiva,objBSC,flagUltimo);
+				if (auxPerspectiva==1){
+					layoutTab1.addView(fila);
+				}else if(auxPerspectiva==2){
+					layoutTab2.addView(fila);
+					
+				}else if(auxPerspectiva==3){
+					layoutTab3.addView(fila);
+				}else if(auxPerspectiva==4){
+					layoutTab4.addView(fila);
+				}
 			}
 		}
 	}
@@ -116,38 +98,28 @@ public class ObjetivosEmpresa extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			listaPeriodos = new ArrayList<Periodo>();
-			try {
-				JSONArray arregloPeriodos = new JSONArray(result);
-				for(int i=0;i<arregloPeriodos.length();i++){
-					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
-					listaPeriodos.add(per);
-				}
-				for(int i=0; i<listaPeriodos.size(); i++){
-					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
-				}
-				
-				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spinnerPeriodo.setAdapter(dataAdapter);
-				
-				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-					@Override
-					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-						periodoBSCActual = listaPeriodos.get(pos).BSCID;
-						System.out.println("periodo seleccionado="+periodoBSCActual);
-						actualizaTabs();
-					}
-				
-					@Override
-					  public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-					  }
-				});
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
+			listaPeriodos=Periodo.getPeriodosByResult(result);
+			for(int i=0; i<listaPeriodos.size(); i++){
+				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
 			}
+				
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+				
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					periodoBSCActual = listaPeriodos.get(pos).BSCID;
+					System.out.println("periodo seleccionado="+periodoBSCActual);
+					actualizaTabs();
+				}
+				
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+			    	// TODO Auto-generated method stub
+				  }
+			});
 		}
 	}
 	
@@ -166,18 +138,18 @@ public class ObjetivosEmpresa extends Fragment {
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,70));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
 	    
 	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,10));
+	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
 	    columna2.setText("Peso:");
 	    cabecera.addView(columna2);
 	    
 	    TextView columna3 = new TextView(contexto);
-	    columna3.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,20));
+	    columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 	    columna3.setText("Creador:");
 	    cabecera.addView(columna3);
 	    
@@ -186,10 +158,10 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public TableRow agregaSeparadorCabezera(){
 	    TableRow separador_cabecera = new TableRow(contexto);
-	    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+	    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 	    
 	    FrameLayout linea_cabecera = new FrameLayout(contexto);
-	    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, 3);
+	    TableRow.LayoutParams linea_cabecera_params = new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, 3);
 	    linea_cabecera_params.span = 6;
 	    linea_cabecera.setBackgroundColor(Color.parseColor("#CC2266"));
 	    separador_cabecera.addView(linea_cabecera, linea_cabecera_params);
@@ -216,18 +188,18 @@ public class ObjetivosEmpresa extends Fragment {
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
 		  
 		    descripObj.setText(szNombre);
-		    descripObj.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,70));
+		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
 		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
 		    peso.setText(szPeso);
-		    peso.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,10));
+		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
 		    fila.addView(peso);
 		    
 		    TextView creador = new TextView(contexto);
 		    creador.setText(szCreador);
-		    creador.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,20));
+		    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 		    fila.addView(creador);
 		    		    
 		    Button eliminarObj = new Button(contexto);

@@ -18,7 +18,6 @@ import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 
 /**
@@ -99,7 +98,7 @@ public class MenuFragment extends ExpandableListFragment {
 			}
 			childData.add(children);
 		}
-
+		
 		mAdapter = new SimpleExpandableListAdapter(getActivity()
 				.getApplicationContext(), groupData,
 				R.layout.custom_simple_expandable_list_item_1, new String[] {

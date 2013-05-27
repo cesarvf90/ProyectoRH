@@ -13,9 +13,9 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="center" >
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="" />
-
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="0dp"
@@ -47,7 +47,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/lunes" />
-
+
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="0dp"
@@ -55,7 +55,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/martes" />
-
+
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="0dp"
@@ -63,7 +63,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="@string/miercoles" />
-
+
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="0dp"
@@ -95,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="0dp"
-        android:scrollbars="none" >
+        android:scrollbars="none" >
 
         <RelativeLayout
             android:id="@+id/relativeLayout242"
@@ -390,13 +390,13 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="940dp"
                 android:background="#777" />
-
+
             <LinearLayout
                 android:id="@+id/semanaContenidoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="0dp" >
-
+
                 <RelativeLayout
                     android:id="@+id/horasLayout"
                     android:layout_width="0dp"
@@ -602,14 +602,14 @@
                         android:gravity="center|top"
                         android:text="11pm" />
                 </RelativeLayout>
-
+
                 <RelativeLayout
                     android:id="@+id/diasLayout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="14"
                     android:padding="0dp" >
-
+
                     <LinearLayout
                         android:id="@+id/diasLinearLayout"
                         android:layout_width="match_parent"
@@ -618,7 +618,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:padding="0dp" >
-
+
                         <RelativeLayout
                             android:id="@+id/domingoLayout"
                             android:layout_width="0dp"
@@ -636,10 +636,10 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="180dp"
                                 android:layout_marginTop="180dp"
-                                android:textColor="@android:color/white"
-                                android:text="Evento Personal" />
+                                android:text="Evento Personal"
+                                android:textColor="@android:color/white" />
                         </RelativeLayout>
-
+
                         <RelativeLayout
                             android:id="@+id/lunesLayout"
                             android:layout_width="0dp"
@@ -657,10 +657,10 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="180dp"
                                 android:layout_marginTop="280dp"
-                                android:textColor="@android:color/white"
-                                android:text="Evento de la Empresa" />
+                                android:text="Evento de la Empresa"
+                                android:textColor="@android:color/white" />
                         </RelativeLayout>
-
+
                         <RelativeLayout
                             android:id="@+id/martesLayout"
                             android:layout_width="0dp"
@@ -680,7 +680,7 @@
                                 android:layout_marginTop="40dp"
                                 android:text="Evento Personal" />
                         </RelativeLayout>
-
+
                         <RelativeLayout
                             android:id="@+id/miercolesLayout"
                             android:layout_width="0dp"
@@ -711,10 +711,10 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="120dp"
                                 android:layout_marginTop="340dp"
-                                android:textColor="@android:color/white"
-                                android:text="Evento de la Empresa" />
+                                android:text="Evento de la Empresa"
+                                android:textColor="@android:color/white" />
                         </RelativeLayout>
-
+
                         <RelativeLayout
                             android:id="@+id/juevesLayout"
                             android:layout_width="0dp"
@@ -732,10 +732,10 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="180dp"
                                 android:layout_marginTop="380dp"
-                                android:textColor="@android:color/white"
-                                android:text="Evento de la Empresa" />
+                                android:text="Evento de la Empresa"
+                                android:textColor="@android:color/white" />
                         </RelativeLayout>
-
+
                         <RelativeLayout
                             android:id="@+id/viernesLayout"
                             android:layout_width="0dp"
@@ -755,7 +755,7 @@
                                 android:layout_marginTop="480dp"
                                 android:text="Evento Personal" />
                         </RelativeLayout>
-
+
                         <RelativeLayout
                             android:id="@+id/sabadoLayout"
                             android:layout_width="0dp"

@@ -43,6 +43,7 @@ public class CalendarView extends Activity {
 	public Handler handler;
 	public ArrayList<String> items; // container to store some random calendar items
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.calendar);
@@ -91,7 +92,8 @@ public class CalendarView extends Activity {
 		});
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-		    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+		    @Override
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		    	TextView date = (TextView)v.findViewById(R.id.date);
 		        if(date instanceof TextView && !date.getText().equals("")) {
 
@@ -121,6 +123,7 @@ public class CalendarView extends Activity {
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
 	}
 
+	@Override
 	public void onNewIntent(Intent intent) {
 		String date = intent.getStringExtra("date");
 		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
