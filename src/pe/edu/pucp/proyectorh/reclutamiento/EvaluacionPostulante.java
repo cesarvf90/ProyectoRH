@@ -117,28 +117,28 @@ public class EvaluacionPostulante extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setTitle("Finalizar evaluación");
-				builder.setMessage("¿Desea finalizar la evaluación con los resultados registrados?");
-				builder.setCancelable(false);
-				builder.setNegativeButton("Cancelar",
-						new DialogInterface.OnClickListener() {
+				guardarRespuestas();
+				if (seCompletoEvaluacion()) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Finalizar evaluación");
+					builder.setMessage("¿Desea finalizar la evaluación con los resultados registrados?");
+					builder.setCancelable(false);
+					builder.setNegativeButton("Cancelar",
+							new DialogInterface.OnClickListener() {
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.cancel();
-							}
-						});
-				builder.setPositiveButton("Aceptar",
-						new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.cancel();
+								}
+							});
+					builder.setPositiveButton("Aceptar",
+							new DialogInterface.OnClickListener() {
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								guardarRespuestas();
-								if (seCompletoEvaluacion()) {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
@@ -152,12 +152,15 @@ public class EvaluacionPostulante extends Fragment {
 											fragment, "detailFragment")
 											.commit();
 								}
-								dialog.cancel();
-							}
-						});
-				builder.create();
-				builder.show();
-
+							});
+					builder.create();
+					builder.show();
+				} else {
+					Toast.makeText(
+							getActivity(),
+							"Debe completar todas las preguntas de la evaluación para finalizar",
+							Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 	}
@@ -268,6 +271,10 @@ public class EvaluacionPostulante extends Fragment {
 		return true;
 	}
 
+	private boolean seEvaluo(int puntaje) {
+		return puntaje > 1 ? true : false;
+	}
+
 	private void obtenerEvaluacionPostulante() {
 		if (ConnectionManager.connect(getActivity())) {
 			String request = Servicio.ObtenerEvaluacionTerceraFase
@@ -358,10 +365,6 @@ public class EvaluacionPostulante extends Fragment {
 		evaluacion.setFechaInicio(formatoFecha.format(actual));
 
 		totalPaginas = funciones.size() / PREGUNTAS_X_PAGINA;
-	}
-
-	private boolean seEvaluo(int puntaje) {
-		return puntaje > 0 ? false : true;
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
