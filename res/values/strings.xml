@@ -60,5 +60,8 @@
     <string name="friday">Viernes</string>
     <string name="saturday">Sábado</string>
     <string name="reclut_aprobar_pase_lab_title">Aprobar Pase de Postulantes a Siguiente Fase</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="observaciones">Observaciones</string>
+    <string name="registrar_evaluacion">Registrar evaluación</string>
 
 </resources>

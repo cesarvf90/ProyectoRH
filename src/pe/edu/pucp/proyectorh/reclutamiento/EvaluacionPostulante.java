@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint({ "ValidFragment", "ValidFragment" })
 public class EvaluacionPostulante extends Fragment {
@@ -79,6 +81,10 @@ public class EvaluacionPostulante extends Fragment {
 					guardarRespuestas();
 					numPagina++;
 					refreshLayout();
+				} else {
+					Toast.makeText(getActivity(),
+							"Estas son las últimas preguntas de la evaluación",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -95,6 +101,11 @@ public class EvaluacionPostulante extends Fragment {
 					guardarRespuestas();
 					numPagina--;
 					refreshLayout();
+				} else {
+					Toast.makeText(
+							getActivity(),
+							"Estas son las primeras preguntas de la evaluación",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -126,10 +137,23 @@ public class EvaluacionPostulante extends Fragment {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								recogerResultados();
+								guardarRespuestas();
+								if (seCompletoEvaluacion()) {
+									FragmentTransaction ft = getActivity()
+											.getSupportFragmentManager()
+											.beginTransaction();
+									ConfirmacionEvaluacion fragment = new ConfirmacionEvaluacion(
+											oferta, postulante, funciones,
+											respuestas, evaluacion);
+									ft.setCustomAnimations(
+											android.R.anim.slide_in_left,
+											android.R.anim.slide_out_right);
+									ft.replace(R.id.opcion_detail_container,
+											fragment, "detailFragment")
+											.commit();
+								}
 								dialog.cancel();
 							}
-
 						});
 				builder.create();
 				builder.show();
@@ -141,23 +165,35 @@ public class EvaluacionPostulante extends Fragment {
 	protected void refreshLayout() {
 		TextView pregunta1Text = (TextView) rootView
 				.findViewById(R.id.pregunta1);
-		pregunta1Text.setText("1) "
+		pregunta1Text.setText(numPagina
+				* PREGUNTAS_X_PAGINA
+				+ 1
+				+ ") "
 				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
 						.getDescripcion());
 		TextView pregunta2Text = (TextView) rootView
 				.findViewById(R.id.pregunta2);
-		pregunta2Text.setText("2) "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
+		pregunta2Text.setText(numPagina
+				* PREGUNTAS_X_PAGINA
+				+ 2
+				+ ") "
+				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 1)
 						.getDescripcion());
 		TextView pregunta3Text = (TextView) rootView
 				.findViewById(R.id.pregunta3);
-		pregunta3Text.setText("3) "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
+		pregunta3Text.setText(numPagina
+				* PREGUNTAS_X_PAGINA
+				+ 3
+				+ ") "
+				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 2)
 						.getDescripcion());
 		TextView pregunta4Text = (TextView) rootView
 				.findViewById(R.id.pregunta4);
-		pregunta4Text.setText("4) "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
+		pregunta4Text.setText(numPagina
+				* PREGUNTAS_X_PAGINA
+				+ 4
+				+ ") "
+				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 3)
 						.getDescripcion());
 
 		RatingBar ratingPregunta1 = (RatingBar) rootView
@@ -223,17 +259,13 @@ public class EvaluacionPostulante extends Fragment {
 		pregunta4Text.setText("4) " + funciones.get(4).getDescripcion());
 	}
 
-	private void recogerResultados() {
-		RatingBar ratingPregunta1 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta1);
-		RatingBar ratingPregunta2 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta2);
-		RatingBar ratingPregunta3 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta3);
-		if (seEvaluo(ratingPregunta1) && seEvaluo(ratingPregunta2)
-				&& seEvaluo(ratingPregunta3)) {
-
+	private boolean seCompletoEvaluacion() {
+		for (Respuesta respuesta : respuestas) {
+			if (!seEvaluo(respuesta.getPuntaje())) {
+				return false;
+			}
 		}
+		return true;
 	}
 
 	private void obtenerEvaluacionPostulante() {
@@ -328,8 +360,8 @@ public class EvaluacionPostulante extends Fragment {
 		totalPaginas = funciones.size() / PREGUNTAS_X_PAGINA;
 	}
 
-	private boolean seEvaluo(RatingBar ratingBar) {
-		return ratingBar.getRating() > 0 ? false : true;
+	private boolean seEvaluo(int puntaje) {
+		return puntaje > 0 ? false : true;
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {

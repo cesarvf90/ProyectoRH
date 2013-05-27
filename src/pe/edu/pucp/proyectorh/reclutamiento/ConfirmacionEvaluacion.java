@@ -2,7 +2,6 @@ package pe.edu.pucp.proyectorh.reclutamiento;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,11 +17,16 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class ConfirmacionEvaluacion extends Fragment {
 
@@ -51,13 +55,65 @@ public class ConfirmacionEvaluacion extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.rendir_evaluaciones, container,
-				false);
-		llamarServicioEnviarRespuestas();
+		rootView = inflater.inflate(R.layout.evaluacion_confirmacion,
+				container, false);
+		activarBotonRegistrarEvaluacion();
 		return rootView;
 	}
 
+	private void activarBotonRegistrarEvaluacion() {
+		TextView tituloPuestoText = (TextView) rootView
+				.findViewById(R.id.puesto_title);
+		tituloPuestoText.setText("Puesto: " + oferta.getPuesto().getNombre());
+		TextView tituloPostulanteText = (TextView) rootView
+				.findViewById(R.id.postulante_title);
+		tituloPostulanteText.setText("Postulante: " + postulante.toString());
+
+		Button botonRegistrarEvaluacion = (Button) rootView
+				.findViewById(R.id.finalizarEvaluacion);
+		botonRegistrarEvaluacion.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setTitle("Registrar evaluación");
+				builder.setMessage("¿Desea registrar la evaluación?");
+				builder.setCancelable(false);
+				builder.setNegativeButton("Cancelar",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.cancel();
+							}
+						});
+				builder.setPositiveButton("Aceptar",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								llamarServicioEnviarRespuestas();
+								dialog.cancel();
+							}
+
+						});
+				builder.create();
+				builder.show();
+
+			}
+		});
+	}
+
 	private void llamarServicioEnviarRespuestas() {
+		EditText comentariosText = (EditText) rootView
+				.findViewById(R.id.editTextComentarios);
+		evaluacion.setComentarios(comentariosText.getText().toString());
+		EditText observacionesText = (EditText) rootView
+				.findViewById(R.id.editTextObservaciones);
+		evaluacion.setObservaciones(observacionesText.getText().toString());
 		if (ConnectionManager.connect(getActivity())) {
 			String request = Servicio.RegistrarRespuestasEvaluacionTerceraFase;
 			new RegistroEvalaucion().execute(request);
