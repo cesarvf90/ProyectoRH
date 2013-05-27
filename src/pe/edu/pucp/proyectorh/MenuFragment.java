@@ -98,7 +98,7 @@ public class MenuFragment extends ExpandableListFragment {
 			}
 			childData.add(children);
 		}
-
+		
 		mAdapter = new SimpleExpandableListAdapter(getActivity()
 				.getApplicationContext(), groupData,
 				R.layout.custom_simple_expandable_list_item_1, new String[] {

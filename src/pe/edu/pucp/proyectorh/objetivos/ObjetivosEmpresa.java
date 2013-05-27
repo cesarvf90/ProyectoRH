@@ -38,7 +38,7 @@ public class ObjetivosEmpresa extends Fragment {
 	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
-	List<String> listaNombrePer;
+	ArrayList<String> listaNombrePer = new ArrayList<String>();
 	
 	TableLayout layoutTab1;
 	TableLayout layoutTab2;
@@ -92,6 +92,7 @@ public class ObjetivosEmpresa extends Fragment {
 					layoutTab1.addView(fila);
 				}else if(auxPerspectiva==2){
 					layoutTab2.addView(fila);
+					
 				}else if(auxPerspectiva==3){
 					layoutTab3.addView(fila);
 				}else if(auxPerspectiva==4){

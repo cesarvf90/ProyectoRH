@@ -29,7 +29,7 @@ public class LoginActivity extends Activity {
 	public static final String USUARIO_INVALIDO = "0";
 	public static String idUsuario;
 	public static Usuario usuario;
-	public int DEBUG_NO_LOGIN = 0; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
+	public int DEBUG_NO_LOGIN = 1; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
 									// LOGIN
 
 	@Override
