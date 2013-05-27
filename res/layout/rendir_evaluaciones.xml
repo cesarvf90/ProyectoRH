@@ -4,22 +4,30 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiente_verde_green2"
     android:gravity="center" >
-
+
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/puesto_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/evaluar_postulante"
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
-
+
     <TextView
-        android:id="@+id/pregunta1"
+        android:id="@+id/postulante_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="47dp"
+        android:layout_below="@+id/puesto_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/descripcion_evaluacion"
+        android:layout_below="@+id/postulante_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Entrevista final: Se evalúan las funciones según el puesto de trabajo"
         android:textColor="@android:color/white"
         android:textStyle="normal" />
@@ -39,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1) Desarrollar proyecciones de variables por campaña y anual."
+            android:paddingTop="30dp"
             android:textColor="@android:color/white" />
 
         <RatingBar

@@ -62,10 +62,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	private void llamarServicioOfertasLaboralesTerceraFase() {
-		// TODO cvasquez: coordinar formato del servicio e implementar su
-		// llamada
 		obtenerOfertasPendientes(LoginActivity.getUsuario());
-		// llamarServicioOfertasLaboralesTerceraFaseMock();
 	}
 
 	private void obtenerOfertasPendientes(Usuario usuario) {
@@ -134,7 +131,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 									.getString("Nombres"));
 							postulante.setApellidos(postulanteObject
 									.getString("ApellidoPaterno")
-									+ Constante.CADENA_VACIA
+									+ Constante.ESPACIO_VACIO
 									+ postulanteObject
 											.getString("ApellidoMaterno"));
 							postulante.setID(postulanteObject.getString("ID"));
@@ -189,91 +186,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	/**
-	 * Genera data mock y la muestra
-	 */
-	/*
-	 * private void llamarServicioOfertasLaboralesTerceraFaseMock() { // genera
-	 * fechas Date fecha1 = new Date(2012, 3, 7); Date fecha2 = new Date(1990,
-	 * 11, 18); Date fecha3 = new Date(1986, 5, 17); Date fecha4 = new
-	 * Date(2011, 10, 25); Date fecha5 = new Date(1982, 7, 11); Date fecha6 =
-	 * new Date(2013, 3, 4);
-	 * 
-	 * ArrayList<Postulante> postulantes1 = new ArrayList<Postulante>();
-	 * Postulante postulante1 = new Postulante("José", "Castillo"); Postulante
-	 * postulante2 = new Postulante("Bruce", "Dallas"); Postulante postulante3 =
-	 * new Postulante("Esteban", "Juarez"); postulantes1.add(postulante1);
-	 * postulantes1.add(postulante2); postulantes1.add(postulante3);
-	 * 
-	 * ArrayList<Postulante> postulantes2 = new ArrayList<Postulante>();
-	 * postulante1 = new Postulante("Karina", "Olivos"); postulante2 = new
-	 * Postulante("Verónica", "Lasalle"); postulante3 = new Postulante("Arturo",
-	 * "Díaz"); postulantes2.add(postulante1); postulantes2.add(postulante2);
-	 * postulantes2.add(postulante3);
-	 * 
-	 * ArrayList<Postulante> postulantes3 = new ArrayList<Postulante>();
-	 * postulante1 = new Postulante("Renzo", "Piaggio"); postulante2 = new
-	 * Postulante("Carla", "Solorzano"); postulante3 = new
-	 * Postulante("Angelica", "Goyzueta"); postulantes3.add(postulante1);
-	 * postulantes3.add(postulante2); postulantes3.add(postulante3);
-	 * 
-	 * ArrayList<Postulante> postulantes4 = new ArrayList<Postulante>();
-	 * postulante1 = new Postulante("José", "Feliciano"); postulante2 = new
-	 * Postulante("Elena", "Rodríguez"); postulante3 = new Postulante("Alberto",
-	 * "Alva"); postulantes4.add(postulante1); postulantes4.add(postulante2);
-	 * postulantes4.add(postulante3);
-	 * 
-	 * // genera ofertas ofertas = new ArrayList<OfertaLaboral>(); Puesto
-	 * puesto1 = new Puesto(new Area("Tecnología"), "Ingeniero de Software");
-	 * Puesto puesto2 = new Puesto(new Area("Ventas"), "Ejecutivo"); Puesto
-	 * puesto3 = new Puesto(new Area("Marketing"), "Analista de tendencias");
-	 * Puesto puesto4 = new Puesto(new Area("RRHH"), "Practicante");
-	 * OfertaLaboral oferta1 = new OfertaLaboral(puesto1, postulantes1,
-	 * "César Legario", fecha1, fecha6, "Entrevista con jefe"); OfertaLaboral
-	 * oferta2 = new OfertaLaboral(puesto2, postulantes2, "Gustavo López",
-	 * fecha2, fecha3, "Entrevista con jefe"); OfertaLaboral oferta3 = new
-	 * OfertaLaboral(puesto3, postulantes3, "Margarita Reyes", fecha5, fecha3,
-	 * "Entrevista con jefe"); OfertaLaboral oferta4 = new
-	 * OfertaLaboral(puesto4, postulantes4, "Stephano Dalma", fecha4, fecha5,
-	 * "Entrevista con jefe"); ofertas.add(oferta1); ofertas.add(oferta2);
-	 * ofertas.add(oferta3); ofertas.add(oferta4);
-	 * 
-	 * // genera postulantes postulantes = new
-	 * ArrayList<ArrayList<ArrayList<Postulante>>>(); postulantes.add(new
-	 * ArrayList<ArrayList<Postulante>>()); postulantes.get(0).add(new
-	 * ArrayList<Postulante>());
-	 * postulantes.get(0).get(0).add(postulantes1.get(0));
-	 * postulantes.get(0).add(new ArrayList<Postulante>());
-	 * postulantes.get(0).get(1).add(postulantes1.get(1));
-	 * postulantes.get(0).add(new ArrayList<Postulante>());
-	 * postulantes.get(0).get(2).add(postulantes1.get(2));
-	 * 
-	 * postulantes.add(new ArrayList<ArrayList<Postulante>>());
-	 * postulantes.get(1).add(new ArrayList<Postulante>());
-	 * postulantes.get(1).get(0).add(postulantes2.get(0));
-	 * postulantes.get(1).add(new ArrayList<Postulante>());
-	 * postulantes.get(1).get(1).add(postulantes2.get(1));
-	 * postulantes.get(1).add(new ArrayList<Postulante>());
-	 * postulantes.get(1).get(2).add(postulantes2.get(2));
-	 * 
-	 * postulantes.add(new ArrayList<ArrayList<Postulante>>());
-	 * postulantes.get(2).add(new ArrayList<Postulante>());
-	 * postulantes.get(2).get(0).add(postulantes3.get(0));
-	 * postulantes.get(2).add(new ArrayList<Postulante>());
-	 * postulantes.get(2).get(1).add(postulantes3.get(1));
-	 * postulantes.get(2).add(new ArrayList<Postulante>());
-	 * postulantes.get(2).get(2).add(postulantes3.get(2));
-	 * 
-	 * postulantes.add(new ArrayList<ArrayList<Postulante>>());
-	 * postulantes.get(3).add(new ArrayList<Postulante>());
-	 * postulantes.get(3).get(0).add(postulantes4.get(0));
-	 * postulantes.get(3).add(new ArrayList<Postulante>());
-	 * postulantes.get(3).get(1).add(postulantes4.get(1));
-	 * postulantes.get(3).add(new ArrayList<Postulante>());
-	 * postulantes.get(3).get(2).add(postulantes4.get(2));
-	 * mostrarOfertasLaborales(ofertas, postulantes); }
-	 */
-
-	/**
 	 * Muestra las ofertas y postulantes obtenidos por el servicio
 	 */
 	public void mostrarOfertas() {
@@ -315,10 +227,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 							.get(childPosition));
 					postulanteSeleccionadoPosicion = childPosition;
 					ofertaSeleccionadaPosicion = groupPosition;
-				} else if (/*
-							 * (childPosition !=
-							 * postulanteSeleccionadoPosicion)&&
-							 */(groupPosition == ofertaSeleccionadaPosicion)) {
+				} else if (groupPosition == ofertaSeleccionadaPosicion) {
 					// Si se selecciono un postulante de la misma oferta que se
 					// esta mostrando solo se refresca el detalle del postulante
 					mostrarPostulanteSeleccionado(ofertasList
@@ -333,142 +242,58 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		// Se dirige a la evaluacion del postulante
 		listaOfertas.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View view,
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setTitle("Evaluar postulante");
-				builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
-				builder.setCancelable(false);
-				builder.setCancelable(false);
-				builder.setNegativeButton("Cancelar",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.cancel();
-							}
-						});
-				builder.setPositiveButton("Evaluar",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
-								getActivity()
-										.getSupportFragmentManager()
-										.beginTransaction()
-										.replace(R.id.opcion_detail_container,
-												fragment).commit();
-							}
-						});
-				builder.create();
-				builder.show();
-				return false;
-			}
-		});
-
-	}
-
-	private void mostrarOfertasLaborales(ArrayList<OfertaLaboral> ofertas,
-			ArrayList<ArrayList<ArrayList<Postulante>>> postulantes) {
-		// TODO cvasquez: pinta las ofertas en los controles correspondientes
-		// for (int i = 0; i < ofertas.size(); i++) {
-		// ofertas.add(oferta);
-		// postulantes.add(new ArrayList<ArrayList<Postulante>>());
-		// for (int j = 0; j < oferta.getPostulantes().size(); ++j) {
-		// postulantes.get(i).add(new ArrayList<Postulante>());
-		// postulantes.get(i).get(j).add(oferta.getPostulantes().get(j));
-		// }
-		// }
-		final ArrayList<OfertaLaboral> ofertasList = ofertas;
-		ExpandableListView listaOfertas = (ExpandableListView) rootView
-				.findViewById(R.id.evaluar_lista_ofertas);
-		OfertasAdapter adapter = new OfertasAdapter(this.getActivity()
-				.getApplicationContext(), ofertas, postulantes);
-		listaOfertas.setAdapter(adapter);
-		listaOfertas.setLongClickable(true);
-
-		// Se muestra la informacion de la oferta
-		listaOfertas.setOnGroupClickListener(new OnGroupClickListener() {
-			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v,
-					int groupPosition, long id) {
-				System.out.println("Grupo " + (groupPosition));
-				if (groupPosition != ofertaSeleccionadaPosicion) {
-					mostrarOfertaSeleccionada(ofertasList.get(groupPosition));
-					mostrarPostulanteVacio();
-					ofertaSeleccionadaPosicion = groupPosition;
+				int tipoItem = ExpandableListView.getPackedPositionType(id);
+				if (tipoItem == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+					final int childPosition = ExpandableListView
+							.getPackedPositionChild(id);
+					final int groupPosition = ExpandableListView
+							.getPackedPositionGroup(id);
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Evaluar postulante");
+					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
+					builder.setCancelable(false);
+					builder.setCancelable(false);
+					builder.setNegativeButton("Cancelar",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.cancel();
+								}
+							});
+					builder.setPositiveButton("Evaluar",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Postulante postulante = ofertasList
+											.get(groupPosition)
+											.getPostulantes()
+											.get(childPosition);
+									OfertaLaboral oferta = ofertasList
+											.get(groupPosition);
+									EvaluacionPostulante fragment = new EvaluacionPostulante(
+											oferta, postulante);
+									getActivity()
+											.getSupportFragmentManager()
+											.beginTransaction()
+											.replace(
+													R.id.opcion_detail_container,
+													fragment).commit();
+								}
+							});
+					builder.create();
+					builder.show();
+					return false;
+				} else {
+					return false;
 				}
-				return false;
 			}
 		});
 
-		// Se muestra la informacion de el postulante
-		listaOfertas.setOnChildClickListener(new OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v,
-					int groupPosition, int childPosition, long id) {
-				if (groupPosition != ofertaSeleccionadaPosicion) {
-					// Si se selecciono un postulante de una oferta distinta a
-					// la que se esta mostrando se refresca tambien el detalle
-					// de la oferta
-					mostrarOfertaSeleccionada(ofertasList.get(groupPosition));
-					mostrarPostulanteSeleccionado(ofertasList
-							.get(groupPosition).getPostulantes()
-							.get(childPosition));
-					postulanteSeleccionadoPosicion = childPosition;
-					ofertaSeleccionadaPosicion = groupPosition;
-				} else if ((childPosition != postulanteSeleccionadoPosicion)
-						&& (groupPosition == ofertaSeleccionadaPosicion)) {
-					// Si se selecciono un postulante de la misma oferta que se
-					// esta mostrando solo se refresca el detalle del postulante
-					mostrarPostulanteSeleccionado(ofertasList
-							.get(groupPosition).getPostulantes()
-							.get(childPosition));
-					postulanteSeleccionadoPosicion = childPosition;
-				}
-				return false;
-			}
-		});
-
-		// Se dirige a la evaluacion del postulante
-		listaOfertas.setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View view,
-					int position, long id) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setTitle("Evaluar postulante");
-				builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
-				builder.setCancelable(false);
-				builder.setCancelable(false);
-				builder.setNegativeButton("Cancelar",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.cancel();
-							}
-						});
-				builder.setPositiveButton("Evaluar",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
-								getActivity()
-										.getSupportFragmentManager()
-										.beginTransaction()
-										.replace(R.id.opcion_detail_container,
-												fragment).commit();
-							}
-						});
-				builder.create();
-				builder.show();
-				return false;
-			}
-		});
 	}
 
 	protected void mostrarPostulanteSeleccionado(Postulante postulante) {
@@ -530,8 +355,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 	/**
 	 * Se muestra en blanco todos los campos del postulante
-	 * 
-	 * @param postulante
 	 */
 	protected void mostrarPostulanteVacio() {
 		TextView tituloPostulanteText = (TextView) rootView
