@@ -114,7 +114,10 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("3")) {// Objetivos Subordinados
-
+					MisSubordinados fragment = new MisSubordinados();
+					getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
 				}
 				if (id.equals("4")) {// Registrar Avance
 

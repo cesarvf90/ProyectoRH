@@ -6,6 +6,30 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.InputType;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Spinner;
+import android.widget.TabHost;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.TabHost.OnTabChangeListener;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
@@ -13,39 +37,14 @@ import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.objetivosBSC;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
-import android.support.v4.app.Fragment;
-import android.text.InputType;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-public class ObjetivosEmpresa extends Fragment {
-	
+public class MisSubordinados extends Fragment {
+
 	private Spinner spinnerPeriodo;
 	private Button btnDescCambios;
 	private Button btnGuardarCambios;
 	
-	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
+	ArrayList<Periodo> listarPeriodos = new ArrayList<Periodo>();
 	
 	TableLayout layoutTab1;
 	TableLayout layoutTab2;
@@ -55,59 +54,58 @@ public class ObjetivosEmpresa extends Fragment {
 	int periodoSelec;
 	String titulo;
 	
-	public ObjetivosEmpresa(){
+	public MisSubordinados() {
+		
 		
 	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 	}
 	
 	public class ListarPeriodos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			listaPeriodos = new ArrayList<Periodo>();
-			// deserializando el json parte por parte
+			listarPeriodos = new ArrayList<Periodo>();
+			
 			try {
 				JSONArray arregloPeriodos = new JSONArray(result);
-				for(int i=0;i<arregloPeriodos.length();i++){
+				for (int i = 0; i < arregloPeriodos.length(); i++) {
 					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					System.out.println("Arreglo Nº"+i+"="+periodoJSON);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
-					listaPeriodos.add(per);
+					System.out.println("Arreglo N° " + i + " = " + periodoJSON);
+					Periodo per = new Periodo(periodoJSON.getString("Nombre"), periodoJSON.getInt("BSCID"));
+					listarPeriodos.add(per);
 				}
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
+			} catch (Exception e) {
+				System.out.println("Error = " + e.toString());
 			}
 		}
 	}
 	
-	public int obtenerBSCID(int indice){
+	public int obtenerBSCID(int indice) {
 		System.out.println("obtiene bscid");
-		return listaPeriodos.get(indice).BSCID;
+		return listarPeriodos.get(indice).BSCID;
 	}
 	
-	public ArrayList<String> listadoPeriodos(){
+	public ArrayList<String> listadoPeriodos() {
 		System.out.println("entra a listarPeriodos");
 		if (ConnectionManager.connect(this.getActivity())) {
-			// construir llamada al servicio
 			String request = Servicio.ListarPeriodos;
 			new ListarPeriodos().execute(request);
 			System.out.println("listarPedidos pasa execute");
 			ArrayList<String> lista = new ArrayList<String>();
-			for(int i=0; i<listaPeriodos.size(); i++){
-				System.out.println("Entra con i="+i+" y con nombre="+listaPeriodos.get(i).Nombre);
-				lista.add(listaPeriodos.get(i).Nombre);	
+			for (int i = 0; i < listarPeriodos.size(); i++) {
+				System.out.println("Entra con i = " + i + " y con nombre = " + listarPeriodos.get(i).Nombre);
+				lista.add(listarPeriodos.get(i).Nombre);
 			}
 			System.out.println("pasa adds");
-			return lista;
+			return lista;			
 		} else {
-			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 			builder.setTitle("Error de conexión");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();
@@ -116,28 +114,27 @@ public class ObjetivosEmpresa extends Fragment {
 		}
 	}
 	
-	public TableRow agregaCabezera(Context contexto){
+	public TableRow agregaCabecera(Context contexto) {
 		TableRow cabecera = new TableRow(contexto);
 		cabecera.setLayoutParams(new TableLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
-
+		
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
-	    columna1.setText("Descripción del Objetivo:");
-	    cabecera.addView(columna1);
-	    
-	    
-	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
-	    columna2.setText("Peso:");
-	    cabecera.addView(columna2);
-	    
-	    TextView columna3 = new TextView(contexto);
-	    columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
-	    columna3.setText("Creador:");
-	    cabecera.addView(columna3);
-	    
-	    return cabecera;
+		columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 70));
+		columna1.setText("Descripción del Objetivo:");
+		cabecera.addView(columna1);
+		
+		TextView columna2 = new TextView(contexto);
+		columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 10));
+		columna1.setText("Peso:");
+		cabecera.addView(columna2);		
+		
+		TextView columna3 = new TextView(contexto);
+		columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 20));
+		columna3.setText("Creador:");
+		cabecera.addView(columna3);		
+		
+		return cabecera;
 	}
 	
 	public TableRow agregaSeparadorCabezera(Context contexto){
@@ -156,7 +153,7 @@ public class ObjetivosEmpresa extends Fragment {
 	public TableRow agregaFila(final Context contexto, final int numLayout,objetivosBSC objBSC, int flagUltimo){
 			final TableRow fila = new TableRow(contexto);
 		    fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-
+	
 		    EditText descripObj = new EditText(contexto);
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
 		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
@@ -212,16 +209,17 @@ public class ObjetivosEmpresa extends Fragment {
 			    fila.addView(aumentarObj);	
 		    }
 		return fila;
-	}
+	}	
 	
 	public  ArrayList<objetivosBSC> addObjetivos(int tipoBSC){
 		ArrayList<objetivosBSC> listObjs = new ArrayList<objetivosBSC>();
 		
 		return listObjs;
 	}
+	
 	public TableLayout AgregaDatosTab(Context contexto, TableLayout lay, int tipoBSC){
 		//CABECERA
-		TableRow cabecera = agregaCabezera(contexto);
+		TableRow cabecera = agregaCabecera(contexto);
 		lay.addView(cabecera);
 		
 		//SEPARADOR DE CABECERA
@@ -251,9 +249,7 @@ public class ObjetivosEmpresa extends Fragment {
 		return lay;		
 	}
 	
-	
 	@SuppressWarnings("rawtypes")
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
 			Context contexto = rootView.getContext();
@@ -334,69 +330,7 @@ public class ObjetivosEmpresa extends Fragment {
 			layoutTab1=AgregaDatosTab(contexto,layoutTab1,1);
 			layoutTab2=AgregaDatosTab(contexto,layoutTab2,2);
 			layoutTab3=AgregaDatosTab(contexto,layoutTab3,3);
-			layoutTab4=AgregaDatosTab(contexto,layoutTab4,4);
-			
-			
-			/*
-			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
-			 */				
-	/*
-			btnDescCambios = (Button) rootView.findViewById(R.id.ObjEmpDescCambios);
-			btnDescCambios.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {
-					  
-			 
-				    Toast.makeText(v.getContext(),
-					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-						Toast.LENGTH_SHORT).show();
-					  
-				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-				      
-				      Bundle argumentos = new Bundle();
-				      argumentos.putString("PeriodoSelec", titulo);
-				      fragment.setArguments(argumentos);
-				      
-					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					  ft.replace(R.id.opcion_detail_container, fragment);
-					  ft.addToBackStack(null);
-					  ft.commit();
-					  
-				  }
-			 
-			});
-			*/
-			
-			/*
-			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
-			 */		
-			/*
-			btnGuardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);			
-			btnGuardarCambios.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {
-					  
-			 
-				    Toast.makeText(v.getContext(),
-					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-						Toast.LENGTH_SHORT).show();
-					  
-				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-				      
-				      Bundle argumentos = new Bundle();
-				      argumentos.putString("PeriodoSelec", titulo);
-				      fragment.setArguments(argumentos);
-				      
-					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					  ft.replace(R.id.opcion_detail_container, fragment);
-					  ft.addToBackStack(null);
-					  ft.commit();
-					  
-				  }
-			 
-			});
-		*/
-		return rootView;
-	}
-
+			layoutTab4=AgregaDatosTab(contexto,layoutTab4,4);	
+			return rootView;
+		}			
 }
