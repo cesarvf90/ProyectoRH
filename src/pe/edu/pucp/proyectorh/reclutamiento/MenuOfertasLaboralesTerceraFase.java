@@ -76,18 +76,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		}
 	}
 
-	private void obtenerEvaluacionPostulante(String ofertaID,
-			String postulanteID) {
-		if (ConnectionManager.connect(getActivity())) {
-			// construir llamada al servicio
-			String request = Servicio.ObtenerEvaluacionTerceraFase
-					+ "?ofertaId=" + ofertaID + ",postulanteID=" + postulanteID;
-			new ObtencionEvaluacion().execute(request);
-		} else {
-			ErrorServicio.mostrarErrorConexion(getActivity());
-		}
-	}
-
 	public class ObtencionOfertas extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
@@ -153,26 +141,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 						oferta.setPostulantes(listaPostulantes);
 						ofertas.add(oferta);
 					}
-					mostrarOfertas();
-				}
-			} catch (JSONException e) {
-				ErrorServicio.mostrarErrorComunicacion(e.toString(),
-						getActivity());
-			} catch (NullPointerException ex) {
-				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
-						getActivity());
-			}
-		}
-	}
-
-	public class ObtencionEvaluacion extends AsyncCall {
-		@Override
-		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			try {
-				JSONObject jsonObject = new JSONObject(result);
-				String respuesta = jsonObject.getString("success");
-				if (procesaRespuesta(respuesta)) {
 					mostrarOfertas();
 				}
 			} catch (JSONException e) {

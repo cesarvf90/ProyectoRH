@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiente_verde_green2"
     android:gravity="center" >
-
+
     <TextView
         android:id="@+id/puesto_title"
         android:layout_width="wrap_content"
@@ -13,7 +13,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
-
+
     <TextView
         android:id="@+id/postulante_title"
         android:layout_width="wrap_content"
@@ -22,13 +22,13 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
-
+
     <TextView
         android:id="@+id/descripcion_evaluacion"
-        android:layout_below="@+id/postulante_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Entrevista final: Se evalúan las funciones según el puesto de trabajo"
+        android:layout_below="@+id/postulante_title"
+        android:text="Se evalúan las funciones para el puesto de trabajo. Se debe otorgar un puntaje entre 1 y 5 para cada una."
         android:textColor="@android:color/white"
         android:textStyle="normal" />
 
@@ -46,9 +46,9 @@
             android:id="@+id/pregunta1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1) Desarrollar proyecciones de variables por campaña y anual."
             android:paddingTop="30dp"
             android:textColor="@android:color/white" />
+<!-- android:text="1) Desarrollar proyecciones de variables por campaña y anual." -->
 
         <RatingBar
             android:id="@+id/ratingPregunta1"
@@ -60,9 +60,9 @@
             android:id="@+id/pregunta2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2) Desarrollar informes y presentaciones requeridos por la corporación, para talleres y eventos."
             android:textColor="@android:color/white" />
-
+<!--             android:text="2) Desarrollar informes y presentaciones requeridos por la corporación, para talleres y eventos." -->
+        
         <RatingBar
             android:id="@+id/ratingPregunta2"
             android:layout_width="wrap_content"
@@ -73,8 +73,8 @@
             android:id="@+id/pregunta3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3) Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores."
             android:textColor="@android:color/white" />
+<!--             android:text="3) Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores." -->
 
         <RatingBar
             android:id="@+id/ratingPregunta3"
