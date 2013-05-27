@@ -24,11 +24,11 @@
 	    </TextView>
 	    
 	    <TextView
+	        android:id="@+id/reportebscObjetivoNumPersonas"
 	        android:layout_width="wrap_content"
 	        android:layout_height="40dp"
-	        android:textSize="10sp"
+	        android:textSize="15sp"
 	        android:gravity="center_vertical"
-	        android:text="1 persona"
 	         >
 	    </TextView>
     

@@ -14,21 +14,21 @@
     <string name="seleccione_periodo_">"Seleccione Periodo: "</string>
     <string name="contactos_title">Contactos</string>
     <string name="equipo_trabajo_title">Consultar Mi Equipo</string>
-	<string name="mi_info_nombres">Nombres</string>
-    <string name="mi_info_apellidos">Apellidos:</string>
-    <string name="mi_info_area">Área:</string>
-    <string name="mi_info_puesto">Puesto:</string>
-    <string name="mi_info_email">Email:</string>
-    <string name="mi_info_anexo">Anexo:</string>
-    <string name="mi_info_fecha_ingreso">Fecha Ingreso:</string>
-    <string name="mi_info_value_nombres">Christian Mendez</string>
-    <string name="mi_info_value_apellidos">Mendez Anchante</string>
-    <string name="mi_info_value_area">Sistemas</string>
-    <string name="mi_info_value_cargo">Analista</string>
-    <string name="mi_info_value_email">c.mendez@pucp.pe</string>
-    <string name="mi_info_value_anexo">3321</string>
-    <string name="mi_info_value_fecha_ingreso">05/01/2012</string>
-    <string name="mi_info_title">Visualizar Mi Información</string>
+    <string name="mi_info_nombres">Nombres</string>
+    <string name="mi_info_apellidos">Apellidos</string>
+    <string name="mi_info_area">Área</string>
+    <string name="mi_info_puesto">Puesto</string>
+    <string name="mi_info_email">Email</string>
+    <string name="mi_info_anexo">Anexo</string>
+    <string name="mi_info_fecha_ingreso">Fecha Ingreso</string>
+    <string name="mi_info_value_nombres">-</string>
+    <string name="mi_info_value_apellidos">-</string>
+    <string name="mi_info_value_area">-</string>
+    <string name="mi_info_value_cargo">-</string>
+    <string name="mi_info_value_email">-</string>
+    <string name="mi_info_value_anexo">-</string>
+    <string name="mi_info_value_fecha_ingreso">-</string>
+    <string name="mi_info_title">Mi Información Personal</string>
     <string name="equipo_trabajo_nombre_completo">Mateo Julián Soto Rivera</string>
     <string name="equipo_trabajo_cargo_persona_seleccionada">Analista Funcional</string>
     <string name="equipo_trabajo_area">Área:</string>
@@ -42,4 +42,23 @@
     <string name="equipo_trabajo_jefe_cargo">Jefe de Área</string>
     <string name="menuofertas_title">Ofertas laborales</string>
     <string name="equipo_trabajo_jefe">Supervisor: Juan Perez</string>
+    <string name="reclut_validar_solic_of_lab_title">Validar Solicitud de Oferta Laboral</string>
+
+    <color name="text_color">#31D1F1</color>
+    <color name="white">#ffffff</color>
+    <color name="celeste">#27a9e3</color>
+    <color name="morado">#852b99</color>
+    <color name="naranja">#ffb848</color>
+    <color name="verde_bajo">#28b779</color>
+
+    <string name="agenda_title">Agenda</string>
+    <string name="domingo">Domingo</string>
+    <string name="lunes">Lunes</string>
+    <string name="martes">Martes</string>
+    <string name="miercoles">Miércoles</string>
+    <string name="thursday">Jueves</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="reclut_aprobar_pase_lab_title">Aprobar Pase de Postulantes a Siguiente Fase</string>
+
 </resources>

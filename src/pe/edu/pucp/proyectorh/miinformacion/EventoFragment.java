@@ -1,4 +1,4 @@
-package pe.edu.pucp.proyectorh.reclutamiento;
+package pe.edu.pucp.proyectorh.miinformacion;
 
 import pe.edu.pucp.proyectorh.R;
 import android.os.Bundle;
@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class EvaluacionPostulanteFragment extends Fragment {
+public class EventoFragment extends Fragment {
 
-	View rootView;
+	private View rootView;
 
-	public EvaluacionPostulanteFragment() {
+	public EventoFragment() {
 	}
 
 	@Override
@@ -22,9 +22,8 @@ public class EvaluacionPostulanteFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.rendir_evaluaciones, container,
-				false);
+		rootView = inflater.inflate(R.layout.weekly_calendar, container, false);
 		return rootView;
 	}
-
+	
 }

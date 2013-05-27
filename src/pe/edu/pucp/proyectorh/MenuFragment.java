@@ -98,7 +98,7 @@ public class MenuFragment extends ExpandableListFragment {
 			}
 			childData.add(children);
 		}
-
+		
 		mAdapter = new SimpleExpandableListAdapter(getActivity()
 				.getApplicationContext(), groupData,
 				R.layout.custom_simple_expandable_list_item_1, new String[] {
@@ -138,7 +138,7 @@ public class MenuFragment extends ExpandableListFragment {
 				// bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58,
 				// 23))); //color web original verde olivo
 				v.setBackgroundDrawable(new ColorDrawable(Color
-						.rgb(11, 100, 23)));
+						.rgb(29, 148, 59)));
 				Modulo.MODULO_ACTUAL = groupPosition + 1;
 				Modulo.MODULOS_MOSTRADOS_ACTUAL = obtenerSubModulosSegunId(groupPosition);
 				mCallbacks.onItemSelected(String.valueOf(childPosition + 1));

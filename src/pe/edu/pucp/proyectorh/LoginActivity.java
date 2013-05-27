@@ -29,7 +29,8 @@ public class LoginActivity extends Activity {
 	public static final String USUARIO_INVALIDO = "0";
 	public static String idUsuario;
 	public static Usuario usuario;
-	public int DEBUG_NO_LOGIN=0; //COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR LOGIN
+	public int DEBUG_NO_LOGIN = 1; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
+									// LOGIN
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,12 +47,12 @@ public class LoginActivity extends Activity {
 				idUsuario = usuario;
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
-				
-				if(DEBUG_NO_LOGIN==1){
+
+				if (DEBUG_NO_LOGIN == 1) {
 					Intent loginIntent = new Intent(getApplicationContext(),
 							MainActivity.class);
 					startActivity(loginIntent);
-				}else{
+				} else {
 					validaUsuario(usuario, contrasena);
 				}
 

@@ -83,7 +83,8 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
 			      
 			      Bundle argumentos = new Bundle();
-			      argumentos.putString("PeriodoSelec", titulo);
+			      argumentos.putInt("PeriodoSelec", periodoSelec);
+			      argumentos.putString("titulo", titulo);
 			      fragment.setArguments(argumentos);
 			      
 				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
@@ -147,6 +148,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				//System.out.println(listaPeriodos.get(i).getFechaInicio().toString());
 				//lista.add("Periodo " + sdf.format(listaPeriodos.get(i).getFechaInicio()) + " - " + sdf.format(listaPeriodos.get(i).getFechaFin()));
 				lista.add(listaPeriodos.get(i).getNombre());
+				
 			}
 			
 			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
@@ -156,12 +158,12 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					/*
-					Toast.makeText(parent.getContext(), 
-						"seleccionado : " + parent.getItemAtPosition(pos).toString(),
-						Toast.LENGTH_SHORT).show();
-					*/
-					periodoSelec = 1; //aqui idobjetivo selec
+					
+				/*	Toast.makeText(parent.getContext(), 
+						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+						Toast.LENGTH_SHORT).show(); */
+					
+					periodoSelec = listaPeriodos.get(pos).getID(); //aqui idobjetivo selec
 					titulo = parent.getItemAtPosition(pos).toString();
 
 				  }

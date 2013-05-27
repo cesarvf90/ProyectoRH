@@ -1,5 +1,7 @@
 package pe.edu.pucp.proyectorh.model;
 
+import android.graphics.Bitmap;
+
 public class InfoColaborador {
 	private String nombres;
 	private String apellidos;
@@ -8,6 +10,7 @@ public class InfoColaborador {
 	private String email;
 	private String anexo;
 	private String fecha_ingreso;
+	private Bitmap imagen;
 
 	public InfoColaborador() {
 	}
@@ -67,5 +70,14 @@ public class InfoColaborador {
 	public void setFecha_ingreso(String fecha_ingreso) {
 		this.fecha_ingreso = fecha_ingreso;
 	}
+
+	public Bitmap getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Bitmap imagen) {
+		this.imagen = imagen;
+	}
 			
+	
 }

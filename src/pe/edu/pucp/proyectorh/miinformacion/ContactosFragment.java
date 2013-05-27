@@ -3,11 +3,26 @@ package pe.edu.pucp.proyectorh.miinformacion;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.Colaborador;
+import pe.edu.pucp.proyectorh.model.Usuario;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ConstanteServicio;
+import pe.edu.pucp.proyectorh.services.ErrorServicio;
+import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.Constante;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,6 +39,7 @@ import android.widget.TextView;
 public class ContactosFragment extends Fragment {
 
 	private View rootView;
+	private ArrayList<Colaborador> contactos;
 
 	public ContactosFragment() {
 	}
@@ -43,19 +59,29 @@ public class ContactosFragment extends Fragment {
 	}
 
 	private void llamarServicioContactos() {
-		// TODO cvasquez: llamar al servicio que devuelve los contactos del
-		// usuario
-
-		mostrarContactos();
+		obtenerContactos(LoginActivity.getUsuario());
 	}
 
-	private void mostrarContactos() {
-		// TODO cvasquez: pinta los contactos en los controles correspondientes
+	/**
+	 * Llama al servicio que obtiene los contactos del usuario
+	 * 
+	 * @param usuario
+	 */
+	private void obtenerContactos(Usuario usuario) {
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			String request = Servicio.MisContactosService + "?id="
+					+ usuario.getID();
+			new ObtencionContactos().execute(request);
+		} else {
+			ErrorServicio.mostrarErrorConexion(getActivity());
+		}
+	}
+
+	private void mostrarContactosMock() {
 		ListView listaContactos = (ListView) rootView
 				.findViewById(R.id.mi_info_lista_contactos);
 		final ArrayList<Colaborador> contactos = new ArrayList<Colaborador>();
-		// Colaborador colaborador1 = new Colaborador("César", "Vásquez Flores",
-		// "Tecnología", "Gerente");
 		Date fecha1 = new Date(2012, 3, 7);
 		Date fecha2 = new Date(1990, 11, 18);
 		Date fecha3 = new Date(1986, 5, 17);
@@ -78,7 +104,14 @@ public class ContactosFragment extends Fragment {
 			contactos.add(colaborador2);
 			contactos.add(colaborador3);
 		}
-		ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
+		Collections.sort(contactos, new Comparator<Colaborador>() {
+
+			@Override
+			public int compare(Colaborador lhs, Colaborador rhs) {
+				return lhs.toString().compareTo(rhs.toString());
+			}
+		});
+		final ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
 				this.getActivity(), android.R.layout.simple_list_item_1,
 				contactos);
 		listaContactos.setAdapter(colaboradoresAdapter);
@@ -90,10 +123,9 @@ public class ContactosFragment extends Fragment {
 							View childView, int position, long id) {
 						// position tiene la posicion de la vista en el adapter
 						mostrarContactoSeleccionado(contactos.get(position));
+						// contactos.remove(position);
+						colaboradoresAdapter.notifyDataSetChanged();
 					}
-
-					// TODO cvasquez: implementar llamada o envio de correo
-					// onItemLongClick
 				});
 	}
 
@@ -155,6 +187,129 @@ public class ContactosFragment extends Fragment {
 		getActivity().startActivity(
 				Intent.createChooser(emailIntent, "Send mail..."));
 
+	}
+
+	public class ObtencionContactos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+			// deserializando el json parte por parte
+			try {
+				JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (procesaRespuesta(respuesta)) {
+					JSONObject datosObject = (JSONObject) jsonObject
+							.get("data");
+					JSONArray contactosListObject = (JSONArray) datosObject
+							.get("contactos");
+					contactos = new ArrayList<Colaborador>();
+					for (int i = 0; i < contactosListObject.length(); ++i) {
+						JSONObject contactoObject = contactosListObject
+								.getJSONObject(i);
+						Colaborador contacto = new Colaborador();
+						contacto.setId(contactoObject.getString("ID"));
+						contacto.setNombres(contactoObject.getString("Nombre"));
+						contacto.setApellidos(contactoObject
+								.getString("ApellidoPaterno")
+								+ Constante.ESPACIO_VACIO
+								+ contactoObject.getString("ApellidoMaterno"));
+						contacto.setArea(contactoObject.getString("Area"));
+						contacto.setAreaID(contactoObject.getString("AreaID"));
+						contacto.setPuesto(contactoObject.getString("Puesto"));
+						contacto.setPuestoID(contactoObject
+								.getString("PuestoID"));
+						contacto.setTelefono(contactoObject
+								.getString("Telefono"));
+						contacto.setDireccion(contactoObject
+								.getString("Direccion"));
+						contacto.setPaisID(contactoObject.getString("PaisID"));
+						// TODO cvasquez: parsear de string a date
+						// contacto.setFechaNacimiento(contactoObject.getString("FechaNacimiento"));
+						contacto.setFechaNacimiento(new Date(2012, 3, 7));
+						// contacto.setFechaIngreso(contactoObject
+						// .getString("FechaIngreso"));
+						contacto.setFechaIngreso(new Date(2012, 3, 7));
+						contacto.setTipoDocumentoID(contactoObject
+								.getString("TipoDocumentoID"));
+						contacto.setCentroEstudios(contactoObject
+								.getString("CentroEstudios"));
+						contacto.setNumeroDocumento(contactoObject
+								.getString("NumeroDocumento"));
+						contacto.setCorreoElectronico(contactoObject
+								.getString("CorreoElectronico"));
+
+						contactos.add(contacto);
+					}
+
+					mostrarContactos();
+				}
+			} catch (JSONException e) {
+				ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
+//				mostrarErrorComunicacion(e.toString());
+			} catch (NullPointerException ex) {
+				ErrorServicio.mostrarErrorComunicacion(ex.toString(), getActivity());
+//				mostrarErrorComunicacion(ex.toString());
+			}
+		}
+	}
+
+	public boolean procesaRespuesta(String respuestaServidor) {
+		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
+			return true;
+		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
+			// Se muestra mensaje de servicio no disponible
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Servicio no disponible");
+			builder.setMessage("No se pueden obtener los contactos. Intente nuevamente");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		} else {
+			// Se muestra mensaje de la respuesta invalida del servidor
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Problema en el servidor");
+			builder.setMessage("Hay un problema en el servidor.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		}
+	}
+
+	private void mostrarContactos() {
+		ListView listaContactos = (ListView) rootView
+				.findViewById(R.id.mi_info_lista_contactos);
+		Collections.sort(contactos, new Comparator<Colaborador>() {
+
+			@Override
+			public int compare(Colaborador colaborador1,
+					Colaborador colaborador2) {
+				return colaborador1.toString().compareTo(
+						colaborador2.toString());
+
+			}
+		});
+		final ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
+				this.getActivity(), android.R.layout.simple_list_item_1,
+				contactos);
+		listaContactos.setAdapter(colaboradoresAdapter);
+		listaContactos
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent,
+							View childView, int position, long id) {
+						// position tiene la posicion de la vista en el adapter
+						mostrarContactoSeleccionado(contactos.get(position));
+						colaboradoresAdapter.notifyDataSetChanged();
+					}
+
+					// TODO cvasquez: implementar llamada o envio de correo
+					// onItemLongClick
+				});
 	}
 
 }

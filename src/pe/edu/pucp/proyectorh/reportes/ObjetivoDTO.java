@@ -2,91 +2,47 @@ package pe.edu.pucp.proyectorh.reportes;
 
 public class ObjetivoDTO {
 	
+	private int idObjetivo;
+	private String descripcion;
+	private int numPersonas;
+	private int avance;
 	
-    public int ID ;
-
-    public String Nombre ;
-    public int Peso ;
-    public int AvanceFinal ;
-    public boolean IsAsignadoAPersona ;
-    public int CreadorID ;
-    public int TipoObjetivoBSCID ;
-    public int ObjetivoPadreID ;
-    public int BSCID ;
-
-    public ObjetivoDTO() { }
-
-	public int getID() {
-		return ID;
+	public ObjetivoDTO(){
+		
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public int getIdObjetivo() {
+		return idObjetivo;
 	}
 
-	public String getNombre() {
-		return Nombre;
+	public void setIdObjetivo(int idObjetivo) {
+		this.idObjetivo = idObjetivo;
 	}
 
-	public void setNombre(String nombre) {
-		Nombre = nombre;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public int getPeso() {
-		return Peso;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public void setPeso(int peso) {
-		Peso = peso;
+	public int getNumPersonas() {
+		return numPersonas;
 	}
 
-	public int getAvanceFinal() {
-		return AvanceFinal;
+	public void setNumPersonas(int numPersonas) {
+		this.numPersonas = numPersonas;
 	}
 
-	public void setAvanceFinal(int avanceFinal) {
-		AvanceFinal = avanceFinal;
+	public int getAvance() {
+		return avance;
 	}
 
-	public boolean isIsAsignadoAPersona() {
-		return IsAsignadoAPersona;
+	public void setAvance(int avance) {
+		this.avance = avance;
 	}
-
-	public void setIsAsignadoAPersona(boolean isAsignadoAPersona) {
-		IsAsignadoAPersona = isAsignadoAPersona;
-	}
-
-	public int getCreadorID() {
-		return CreadorID;
-	}
-
-	public void setCreadorID(int creadorID) {
-		CreadorID = creadorID;
-	}
-
-	public int getTipoObjetivoBSCID() {
-		return TipoObjetivoBSCID;
-	}
-
-	public void setTipoObjetivoBSCID(int tipoObjetivoBSCID) {
-		TipoObjetivoBSCID = tipoObjetivoBSCID;
-	}
-
-	public int getObjetivoPadreID() {
-		return ObjetivoPadreID;
-	}
-
-	public void setObjetivoPadreID(int objetivoPadreID) {
-		ObjetivoPadreID = objetivoPadreID;
-	}
-
-	public int getBSCID() {
-		return BSCID;
-	}
-
-	public void setBSCID(int bSCID) {
-		BSCID = bSCID;
-	}
+	
     
     
 

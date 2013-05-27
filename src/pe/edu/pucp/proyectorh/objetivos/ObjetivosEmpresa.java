@@ -1,59 +1,45 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.model.Periodo;
-import pe.edu.pucp.proyectorh.model.objetivosBSC;
+import pe.edu.pucp.proyectorh.model.*;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+
 
 public class ObjetivosEmpresa extends Fragment {
+	View rootView;
+	Context contexto;
 	
 	private Spinner spinnerPeriodo;
 	private Button btnDescCambios;
 	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
+	ArrayList<String> listaNombrePer = new ArrayList<String>();
 	
 	TableLayout layoutTab1;
 	TableLayout layoutTab2;
 	TableLayout layoutTab3;
 	TableLayout layoutTab4;
 	
-	int periodoSelec;
+	int periodoBSCActual;
 	String titulo;
+	
+	int perspectivaActual;
 	
 	public ObjetivosEmpresa(){
 		
@@ -64,59 +50,89 @@ public class ObjetivosEmpresa extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 	
-	public class ListarPeriodos extends AsyncCall {
+	public void actualizaTabs(){
+		layoutTab1.removeAllViews();
+		layoutTab2.removeAllViews();
+		layoutTab3.removeAllViews();
+		layoutTab4.removeAllViews();
+		
+		AgregaDatosTab(1);
+		AgregaDatosTab(2);
+		AgregaDatosTab(3);
+		AgregaDatosTab(4);
+	}
+	
+	
+	public class ListadoObjetivos extends AsyncCall {
+		int auxPerspectiva = perspectivaActual;
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			listaPeriodos = new ArrayList<Periodo>();
-			// deserializando el json parte por parte
-			try {
-				JSONArray arregloPeriodos = new JSONArray(result);
-				for(int i=0;i<arregloPeriodos.length();i++){
-					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					System.out.println("Arreglo Nº"+i+"="+periodoJSON);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
-					listaPeriodos.add(per);
+			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);
+				
+			//FILAS
+			for(int i=0;i<listObjetivosBSC.size();i++){
+				int flagUltimo = 0;
+				ObjetivosBSC objBSC = listObjetivosBSC.get(i);
+				if ((i+1) == listObjetivosBSC.size()){
+					flagUltimo=1;
 				}
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
+				System.out.println("EMF-Ingresa fila i="+i+" para perspectiva="+auxPerspectiva);
+				TableFila fila = agregaFila(auxPerspectiva,objBSC,flagUltimo);
+				if (auxPerspectiva==1){
+					layoutTab1.addView(fila);
+				}else if(auxPerspectiva==2){
+					layoutTab2.addView(fila);
+					
+				}else if(auxPerspectiva==3){
+					layoutTab3.addView(fila);
+				}else if(auxPerspectiva==4){
+					layoutTab4.addView(fila);
+				}
 			}
 		}
 	}
 	
-	public int obtenerBSCID(int indice){
-		System.out.println("obtiene bscid");
-		return listaPeriodos.get(indice).BSCID;
-	}
 	
-	public ArrayList<String> listadoPeriodos(){
-		System.out.println("entra a listarPeriodos");
-		if (ConnectionManager.connect(this.getActivity())) {
-			// construir llamada al servicio
-			String request = Servicio.ListarPeriodos;
-			new ListarPeriodos().execute(request);
-			System.out.println("listarPedidos pasa execute");
-			ArrayList<String> lista = new ArrayList<String>();
+	public class ListadoPeriodos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+			listaPeriodos=Periodo.getPeriodosByResult(result);
 			for(int i=0; i<listaPeriodos.size(); i++){
-				System.out.println("Entra con i="+i+" y con nombre="+listaPeriodos.get(i).Nombre);
-				lista.add(listaPeriodos.get(i).Nombre);	
+				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
 			}
-			System.out.println("pasa adds");
-			return lista;
-		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-			builder.setTitle("Error de conexión");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return null;
+				
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+				
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					periodoBSCActual = listaPeriodos.get(pos).BSCID;
+					System.out.println("periodo seleccionado="+periodoBSCActual);
+					actualizaTabs();
+				}
+				
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+			    	// TODO Auto-generated method stub
+				  }
+			});
 		}
 	}
 	
-	public TableRow agregaCabezera(Context contexto){
+	class TableFila extends TableRow {
+		int flagUlt = 0;
+		
+		public TableFila(Context context) {
+			super(context);
+			// TODO Auto-generated constructor stub
+		}		
+	}
+
+	public TableRow agregaCabezera(){
 		TableRow cabecera = new TableRow(contexto);
 		cabecera.setLayoutParams(new TableLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
@@ -140,7 +156,7 @@ public class ObjetivosEmpresa extends Fragment {
 	    return cabecera;
 	}
 	
-	public TableRow agregaSeparadorCabezera(Context contexto){
+	public TableRow agregaSeparadorCabezera(){
 	    TableRow separador_cabecera = new TableRow(contexto);
 	    separador_cabecera.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 	    
@@ -153,22 +169,38 @@ public class ObjetivosEmpresa extends Fragment {
 	    return separador_cabecera;
 	}
 	
-	public TableRow agregaFila(final Context contexto, final int numLayout,objetivosBSC objBSC, int flagUltimo){
-			final TableRow fila = new TableRow(contexto);
-		    fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+	public TableFila agregaFila(final int numLayout,ObjetivosBSC objBSC, final int flagUltimo){
+			final TableFila fila = new TableFila(contexto);
+			fila.flagUlt=flagUltimo;
+			String szNombre ="";
+			String szPeso ="";
+			String szCreador=LoginActivity.getUsuario().getUsername();
+			
+			if(objBSC != null){
+				szNombre=objBSC.Nombre;
+				szPeso = Integer.toString(objBSC.Peso);
+				szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
+			}
+			
+			fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 
 		    EditText descripObj = new EditText(contexto);
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
+
+		    descripObj.setText(szNombre);
 		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
 		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+		    peso.setText(szPeso);
 		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
 		    fila.addView(peso);
 		    
 		    TextView creador = new TextView(contexto);
-		    creador.setText("Ever Mitta");
+
+		    creador.setText(szCreador);
 		    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 		    fila.addView(creador);
 		    		    
@@ -186,18 +218,34 @@ public class ObjetivosEmpresa extends Fragment {
 					  }else if(numLayout==4){
 						  layoutTab4.removeView(fila);
 					  }
+					  
+					  if(fila.flagUlt==1){
+						  TableFila filaUlt=agregaFila(numLayout,null, 1);
+						  if (numLayout==1){
+							  layoutTab1.addView(filaUlt);
+						  }else if(numLayout==2){
+							  layoutTab2.addView(filaUlt);
+						  }else if(numLayout==3){
+							  layoutTab3.addView(filaUlt);
+						  }else if(numLayout==4){
+							  layoutTab4.addView(filaUlt);
+						  }			
+					  }
+					  
+					  
 				  }
 			});
 		    fila.addView(eliminarObj);	
 		    
-		    if(flagUltimo==1){
+		    if(fila.flagUlt==1){
 			    final Button aumentarObj = new Button(contexto);
 			    aumentarObj.setText("+");
 			    aumentarObj.setOnClickListener(new OnClickListener() {
 					  @Override
 					  public void onClick(View v) {	
 						  fila.removeView(aumentarObj); //elimina el boton
-						  TableRow filaUlt=agregaFila(contexto,numLayout,null, 1);
+						  fila.flagUlt=0;
+						  TableFila filaUlt=agregaFila(numLayout,null, 1);
 						  if (numLayout==1){
 							  layoutTab1.addView(filaUlt);
 						  }else if(numLayout==2){
@@ -211,52 +259,52 @@ public class ObjetivosEmpresa extends Fragment {
 				});
 			    fila.addView(aumentarObj);	
 		    }
+		    System.out.println("retorna fila");
 		return fila;
 	}
 	
-	public  ArrayList<objetivosBSC> addObjetivos(int tipoBSC){
-		ArrayList<objetivosBSC> listObjs = new ArrayList<objetivosBSC>();
-		
-		return listObjs;
+	public  void listarObjetivos(){
+		ListadoObjetivos lo = new ListadoObjetivos();
+		String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
+		System.out.println("EMF-ruta="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
 	}
-	public TableLayout AgregaDatosTab(Context contexto, TableLayout lay, int tipoBSC){
+	
+	public void AgregaDatosTab(int tipoBSC){
+		perspectivaActual = tipoBSC;
+		
 		//CABECERA
-		TableRow cabecera = agregaCabezera(contexto);
-		lay.addView(cabecera);
-		
+		TableRow cabecera = agregaCabezera();
+			
 		//SEPARADOR DE CABECERA
-		TableRow separador_cabecera = agregaSeparadorCabezera(contexto);
-		lay.addView(separador_cabecera);
+		TableRow separador_cabecera = agregaSeparadorCabezera();
 		
-		ArrayList<objetivosBSC> listObjetivosBSC = addObjetivos(tipoBSC); 
+		  if (perspectivaActual==1){
+			  layoutTab1.addView(cabecera);
+			  layoutTab1.addView(separador_cabecera);
+		  }else if(perspectivaActual==2){
+			  layoutTab2.addView(cabecera);
+			  layoutTab2.addView(separador_cabecera);
+		  }else if(perspectivaActual==3){
+			  layoutTab3.addView(cabecera);
+			  layoutTab3.addView(separador_cabecera);
+		  }else if(perspectivaActual==4){
+			  layoutTab4.addView(cabecera);
+			  layoutTab4.addView(separador_cabecera);
+		  }
 		
-		//FILAS
-		int cantidadObjetivosBSC = listObjetivosBSC.size();
-		cantidadObjetivosBSC = 2; //para pruebas
-		for(int i=0;i<cantidadObjetivosBSC;i++){
-			int flagUltimo = 0;
-			objetivosBSC objBSC = new objetivosBSC(); //= listObjetivosBSC.get(i);
-			
-			if ((i+1) == cantidadObjetivosBSC){
-				flagUltimo=1;
-			}
-			
-			TableRow fila = agregaFila(contexto,tipoBSC,objBSC,flagUltimo);
-			lay.addView(fila);
-		}
+		listarObjetivos(); 
+		
+		System.out.println("gg fin ");
 		//SEPARADOR DE TOTAL
-		//TableRow separador_total = agregaSeparadorCabezera(contexto);
+		//TableRow separador_total = agregaSeparadorCabezera();
 		//lay.addView(separador_total);
-		
-		return lay;		
 	}
 	
-	
-	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
-			Context contexto = rootView.getContext();
+			rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
+			contexto = rootView.getContext();
 			rootView.findViewById(R.layout.objetivosbsc);
 			
 			Resources res = getResources();
@@ -265,35 +313,19 @@ public class ObjetivosEmpresa extends Fragment {
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
-			List<String> lista = listadoPeriodos();
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,lista);
-			System.out.println("pasa adapter");
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-			
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoSelec = obtenerBSCID(pos);
-					System.out.println("seleccionado="+periodoSelec);
-				}
-			
-				@Override
-				  public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-				  }
-			});
-			
-			
+			listaNombrePer = new ArrayList<String>();
+			ListadoPeriodos lp = new ListadoPeriodos();
+			Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
+
 			/*
 			 * CODIGO PARA MANEJO DE PERSPECTIVA (TABS)
 			 */				
 			TabHost tabs=(TabHost)rootView.findViewById(android.R.id.tabhost);
 			tabs.setup();
 			 
-			TabHost.TabSpec spec=tabs.newTabSpec("Cliente");
+			TabHost.TabSpec spec=tabs.newTabSpec("Financiero");
 			spec.setContent(R.id.objEmpTab1);
-			spec.setIndicator("Cliente",
+			spec.setIndicator("Financiero",
 			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			 
@@ -303,9 +335,9 @@ public class ObjetivosEmpresa extends Fragment {
 			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			
-			spec=tabs.newTabSpec("Financiero");
+			spec=tabs.newTabSpec("Cliente");
 			spec.setContent(R.id.objEmpTab3);
-			spec.setIndicator("Financiero",
+			spec.setIndicator("Cliente",
 			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
 			tabs.addTab(spec);
 			
@@ -324,78 +356,21 @@ public class ObjetivosEmpresa extends Fragment {
 			        Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
 			    }
 			});
-			
 			 		
 			layoutTab1 = (TableLayout) rootView.findViewById(R.id.objEmpTab1);
 			layoutTab2 = (TableLayout) rootView.findViewById(R.id.objEmpTab2);
 			layoutTab3 = (TableLayout) rootView.findViewById(R.id.objEmpTab3);
-			layoutTab4 = (TableLayout) rootView.findViewById(R.id.objEmpTab4);
-			
-			layoutTab1=AgregaDatosTab(contexto,layoutTab1,1);
-			layoutTab2=AgregaDatosTab(contexto,layoutTab2,2);
-			layoutTab3=AgregaDatosTab(contexto,layoutTab3,3);
-			layoutTab4=AgregaDatosTab(contexto,layoutTab4,4);
+			layoutTab4 = (TableLayout) rootView.findViewById(R.id.objEmpTab4);		
 			
 			
-			/*
-			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
-			 */				
-	/*
-			btnDescCambios = (Button) rootView.findViewById(R.id.ObjEmpDescCambios);
-			btnDescCambios.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {
-					  
-			 
-				    Toast.makeText(v.getContext(),
-					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-						Toast.LENGTH_SHORT).show();
-					  
-				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-				      
-				      Bundle argumentos = new Bundle();
-				      argumentos.putString("PeriodoSelec", titulo);
-				      fragment.setArguments(argumentos);
-				      
-					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					  ft.replace(R.id.opcion_detail_container, fragment);
-					  ft.addToBackStack(null);
-					  ft.commit();
-					  
-				  }
-			 
-			});
-			*/
-			
-			/*
-			 * CODIGO PARA BOTON DESCARTAR CAMBIOS
-			 */		
-			/*
-			btnGuardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);			
-			btnGuardarCambios.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {
-					  
-			 
-				    Toast.makeText(v.getContext(),
-					"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-						Toast.LENGTH_SHORT).show();
-					  
-				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-				      
-				      Bundle argumentos = new Bundle();
-				      argumentos.putString("PeriodoSelec", titulo);
-				      fragment.setArguments(argumentos);
-				      
-					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					  ft.replace(R.id.opcion_detail_container, fragment);
-					  ft.addToBackStack(null);
-					  ft.commit();
-					  
-				  }
-			 
-			});
-		*/
+			 Button descartarCambios = (Button) rootView.findViewById(R.id.ObjEmpDescCambios);
+			 descartarCambios.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						  System.out.println("descarta cambios");
+						  actualizaTabs();
+					  }
+				});
 		return rootView;
 	}
 

@@ -8,4 +8,5 @@ public abstract class AsyncCall extends AsyncTask<String, Integer, String> {
 	protected String doInBackground(String... urls) {
 		return ConnectionManager.downloadUrl(urls[0]);
 	}
+	
 }
