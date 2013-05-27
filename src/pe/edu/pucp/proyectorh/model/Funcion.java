@@ -2,15 +2,26 @@ package pe.edu.pucp.proyectorh.model;
 
 public class Funcion {
 
-	private String ID;
+	private int ID;
 	private String descripcion;
 	private String puestoID;
 
-	public String getID() {
+	public Funcion() {
+		super();
+	}
+
+	public Funcion(int iD, String descripcion, String puestoID) {
+		super();
+		ID = iD;
+		this.descripcion = descripcion;
+		this.puestoID = puestoID;
+	}
+
+	public int getID() {
 		return ID;
 	}
 
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 

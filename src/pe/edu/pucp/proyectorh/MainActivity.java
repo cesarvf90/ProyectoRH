@@ -45,9 +45,6 @@ public class MainActivity extends FragmentActivity implements
 					R.id.opcion_list)).setActivateOnItemClick(true);
 		}
 		ActionBar bar = getActionBar();
-		// bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 58, 23)));
-		// //color web original verde olivo
-//		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(11, 100, 23)));
 		bar.setBackgroundDrawable(new ColorDrawable(Color
 				.rgb(29, 148, 59)));
 		bar.setTitle("RH++");

@@ -102,14 +102,6 @@ public class AgendaFragment extends Fragment {
 					if (day.length() == 1) {
 						day = "0" + day;
 					}
-					// return chosen date as string format
-					// intent.putExtra(
-					// "date",
-					// android.text.format.DateFormat.format("yyyy-MM",
-					// month) + "-" + day);
-					// // getActivity().setResult(RESULT_OK, intent);
-					// getActivity().setResult(0, intent);
-					// getActivity().finish();
 				}
 
 			}
@@ -122,7 +114,7 @@ public class AgendaFragment extends Fragment {
 				SemanaFragment fragment = new SemanaFragment();
 				getActivity().getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
-						.commit();
+						.addToBackStack("tag").commit();
 				return false;
 			}
 		});
