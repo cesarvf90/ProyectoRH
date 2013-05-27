@@ -20,7 +20,8 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	GridView gridView;
 	 
 	static final String[] perspectivas = new String[] { 
-			"Financiera", "Clientes", "Interno", "Formacion"};
+			"Financiera", "Formación", "Cliente", "Interno"};
+	
 	
 	public ReporteObjetivosBSCPerspectivas(){
 		
@@ -67,7 +68,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				  b.putString("objetivopadre", "Perspectiva " + ((TextView) v.findViewById(R.id.reportebscPerspectivalabel)).getText());
 				  
 				  b.putInt("idPeriodo", idPeriodo);
-				  b.putInt("idPerspectiva", 1);
+				  b.putInt("idPerspectiva", (position +1));
 				  b.putInt("idPadre",0);
 				  
 				  fragment.setArguments(b);
