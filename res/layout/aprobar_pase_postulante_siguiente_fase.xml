@@ -16,13 +16,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/reclut_validar_solic_of_lab_title"
+            android:text="@string/reclut_aprobar_pase_lab_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/reclu_solicitudes_oferta_laboral_detalle_title"
+            android:id="@+id/reclu_aprobar_pase_detalle_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -32,7 +32,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/reclut_lista_solicit_of_laboral"
+        android:id="@+id/reclut_lista_aprobar_pase"
         android:layout_width="350px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -44,7 +44,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/reclut_title_layout"
-        android:layout_toRightOf="@+id/reclut_lista_solicit_of_laboral"
+        android:layout_toRightOf="@+id/reclut_lista_aprobar_pase"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -134,7 +134,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="  "	
                 android:textSize="24sp" />
 
             <TextView
@@ -142,7 +141,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="  "
                 android:textSize="24sp" />
 
             <TextView
@@ -150,7 +148,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="  "
                 android:textSize="24sp" />
 
             <TextView
@@ -158,7 +155,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="  "
                 android:textSize="24sp" />
 
             <TextView
@@ -166,7 +162,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="  "
                 android:textSize="24sp" />
 
             <TextView
@@ -174,7 +169,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
                 android:ems="10"
-                android:text="  "
                 android:textSize="24sp" >
             </TextView>
 

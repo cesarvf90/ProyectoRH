@@ -91,6 +91,7 @@ public class AgendaFragment extends Fragment {
 		});
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				TextView date = (TextView) v.findViewById(R.id.date);
