@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradiente_verde_green2"
+    android:paddingLeft="20dp" >
+
+    <TextView
+        android:id="@+id/nombre_evento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layout_evento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nombre_evento"
+        android:layout_marginLeft="20dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/datos_evento"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tipo_evento_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tipo_evento"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tipo_evento_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    android:id="@+id/fecha_inicio_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fecha_inicio"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fecha_inicio_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    android:id="@+id/fecha_fin_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fecha_fin_evento"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fecha_fin_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    android:id="@+id/creador_evento_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/creador_evento"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/creador_evento_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/Title"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_lista_invitados"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/title_invitados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/invitados_evento"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Title"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/lista_invitados_evento"
+                android:layout_width="200dp"
+                android:layout_height="match_parent" >
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

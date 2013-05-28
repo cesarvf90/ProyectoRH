@@ -5,11 +5,14 @@
     android:background="@drawable/gradiente_verde_green2"
     android:baselineAligned="false"
     android:gravity="center"
+<<<<<<< HEAD
     android:focusable="true"
     android:focusableInTouchMode="true"
 	android:orientation="vertical" >
+=======
+    android:orientation="vertical" >
+>>>>>>> 1fb22a813f6290d29693589aa32bfe1f1b16bbe9
 
-    
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
@@ -60,7 +63,10 @@
                     android:text="@string/user"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold" >
+
+                    <requestFocus />
+                </TextView>
 
                 <EditText
                     android:id="@+id/usuarioText"

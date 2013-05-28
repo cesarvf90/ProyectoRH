@@ -4,60 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
-
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.model.Area;
-import pe.edu.pucp.proyectorh.model.OfertaLaboral;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
-import pe.edu.pucp.proyectorh.model.Postulante;
-import pe.edu.pucp.proyectorh.model.Puesto;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.ListadoObjetivos;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.ListadoPeriodos;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteFragment;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
-import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 public class MisObjetivos extends Fragment {
+	
+	public int indicador=0;
+	
+	public static int IND_MISOBJS=1;
+	public static int IND_SUBORD=2;	
 	
 	ArrayList<ObjetivosBSC> objsPadre;
 	ArrayList<ObjetivosBSC> objsHijos;
@@ -67,116 +50,17 @@ public class MisObjetivos extends Fragment {
 	List<String> listaNombrePer;
 	int periodoBSCActual;
 	
+	ExpandableListView listaObjs;
 	
+	Context contexto;
 	
-	private ArrayList<String> groups;
-	private ArrayList<ArrayList<ArrayList<String>>> childs;
-	
+	private ArrayList<ObjetivosBSC> groups;
+	private ArrayList<ArrayList<ObjetivosBSC>> childs;
 	
 	
 	public MisObjetivos(){
 		
 	}
-	
-	
-	 public class myExpandableAdapter extends BaseExpandableListAdapter {
-		 
-	    	private ArrayList<String> groups;
-	 
-	        private ArrayList<ArrayList<ArrayList<String>>> children;
-	 
-	    	private Context context;
-	 
-	    	public myExpandableAdapter(Context context, ArrayList<String> groups, ArrayList<ArrayList<ArrayList<String>>> children) {
-	            this.context = context;
-	            this.groups = groups;
-	            this.children = childs;
-	        }
-	 
-	 
-	    	@Override
-	        public boolean areAllItemsEnabled()
-	        {
-	            return true;
-	        }
-	 
-	 
-	        @Override
-	        public ArrayList<String> getChild(int groupPosition, int childPosition) {
-	            return children.get(groupPosition).get(childPosition);
-	        }
-	 
-	        @Override
-	        public long getChildId(int groupPosition, int childPosition) {
-	            return childPosition;
-	        }
-	 
-	 
-	        @Override
-	        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
-	 
-	        	String child = (String) ((ArrayList<String>)getChild(groupPosition, childPosition)).get(0);
-	 
-	            if (convertView == null) {
-	                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	                convertView = infalInflater.inflate(R.layout.expandablelistview_child, null);
-	            }
-	 
-	            TextView childtxt = (TextView) convertView.findViewById(R.id.TextViewChild01);
-	 
-	            childtxt.setText(child);
-	 
-	            return convertView;
-	        }
-	 
-	        @Override
-	        public int getChildrenCount(int groupPosition) {
-	            return children.get(groupPosition).size();
-	        }
-	 
-	        @Override
-	        public String getGroup(int groupPosition) {
-	            return groups.get(groupPosition);
-	        }
-	 
-	        @Override
-	        public int getGroupCount() {
-	            return groups.size();
-	        }
-	 
-	        @Override
-	        public long getGroupId(int groupPosition) {
-	            return groupPosition;
-	        }
-	 
-	        @Override
-	        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-	 
-	        	String group = (String) getGroup(groupPosition);
-	 
-	        	if (convertView == null) {
-	                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	                convertView = infalInflater.inflate(R.layout.expandablelistview_group, null);
-	            }
-	 
-	            TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
-	 
-	            grouptxt.setText(group);
-	 
-	            return convertView;
-	        }
-	 
-	        @Override
-	        public boolean hasStableIds() {
-	            return true;
-	        }
-	 
-	        @Override
-	        public boolean isChildSelectable(int arg0, int arg1) {
-	            return true;
-	        }
-	 
-	    }
 	
 	
 	@Override
@@ -189,11 +73,10 @@ public class MisObjetivos extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View rootView  = inflater.inflate(R.layout.listar_objetivos,container, false);
-			Context contexto = rootView.getContext();
+			contexto = rootView.getContext();
 			rootView.findViewById(R.layout.listar_objetivos);
 			
 			Resources res = getResources();
-
 			
 			/*
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
@@ -204,19 +87,13 @@ public class MisObjetivos extends Fragment {
 			Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
 
 			
-			ExpandableListView listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
-		//	OfertasAdapter adapter = new OfertasAdapter(this.getActivity().getApplicationContext(), ofertas, postulantes);*/
-		//	listaObjs.setAdapter(adapter);
+			listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
+			System.out.println("setea a cero");
+	    	groups= new ArrayList<ObjetivosBSC>();
+	    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
 			listaObjs.setLongClickable(true);
-			
-			
-			loadData();
-			 
-	        myExpandableAdapter adapter = new myExpandableAdapter(contexto, groups, childs);
-	        listaObjs.setAdapter(adapter);
-			
-			
 
+	        
 			// Se muestra la informacion de la oferta
 			listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
 				@Override
@@ -306,52 +183,52 @@ public class MisObjetivos extends Fragment {
 	}
 	
 
-    private void loadData(){
-    	groups= new ArrayList<String>();
-    	childs= new ArrayList<ArrayList<ArrayList<String>>>();
- 
-    	groups.add("OBJETIVO BSC 1");
-        groups.add("OBJETIVO BSC 2");
-        groups.add("OBJETIVO BSC 3");
- 
-        childs.add(new ArrayList<ArrayList<String>>());
-        childs.get(0).add(new ArrayList<String>());
-        childs.get(0).get(0).add("obetivo gg 1");
-        childs.get(0).add(new ArrayList<String>());
-        childs.get(0).get(1).add("obetivo gg 2");
-        childs.get(0).add(new ArrayList<String>());
-        childs.get(0).get(2).add("obetivo gg 3");
- 
-        childs.add(new ArrayList<ArrayList<String>>());
-        childs.get(1).add(new ArrayList<String>());
-        childs.get(1).get(0).add("obetivo gg 4");
-        childs.get(1).add(new ArrayList<String>());
-        childs.get(1).get(1).add("obetivo gg 5");
-        childs.get(1).add(new ArrayList<String>());
-        childs.get(1).get(2).add("obetivo gg 6");
- 
-        childs.add(new ArrayList<ArrayList<String>>());
-        childs.get(2).add(new ArrayList<String>());
-        childs.get(2).get(0).add("obetivo gg 7");
-        childs.get(2).add(new ArrayList<String>());
-        childs.get(2).get(1).add("obetivo gg 8");
-        childs.get(2).add(new ArrayList<String>());
-        childs.get(2).get(2).add("obetivo gg 9");
+    private void loadData(ArrayList<ObjetivosBSC> listObjetivosBSC){
+    	for(int i=0;i<listObjetivosBSC.size();i++){
+    		System.out.println("agrega obj="+listObjetivosBSC.get(i).Nombre);
+    		groups.add(listObjetivosBSC.get(i));
+    		
+    		childs.add(new ArrayList<ObjetivosBSC>());
+    		//TableFila fila = agregaFila(auxPerspectiva,objBSC,flagUltimo);
+    		
+    		
+        	for(int j=0; j<3;j++){
+        	    childs.get(groups.size()-1).add(new ObjetivosBSC("prueba gg"+i));
+        	}
+    	}
+
+    	System.out.println("new adapter");
+    	ObjetivosExpandableAdapter adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
+    	listaObjs.setAdapter(adapter);
+    }
+    
+    public boolean isAdmin(){
+    	return true;
     }
 	
 	public  void listarObjetivos(){
-		ListadoObjetivos lo = new ListadoObjetivos();
-		String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta1="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
-		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta2="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
-		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta3="+rutaLlamada);
-		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
-		rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
-		System.out.println("EMF-ruta4="+rutaLlamada);
+    	groups= new ArrayList<ObjetivosBSC>();
+    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
+
+    	ListadoObjetivos lo = new ListadoObjetivos();
+    	String rutaLlamada ="";
+    	
+    	if(indicador==IND_MISOBJS){
+    		System.out.println("MIS OBJETIVOS");    		
+    		if (isAdmin()){
+    			System.out.println("ES ADMIN");
+    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
+    		}else{
+    			System.out.println("ES EMPLEADO NORMAL");
+    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?idPeriodo="+periodoBSCActual; //CAMBIAR a listar objetivos propuestos
+    		}
+    	    	
+    	}else if(indicador==IND_SUBORD){
+    		System.out.println("MIS SUBORDINADOS");
+			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; //CAMBIAR
+    	}
+    	
+    	System.out.println("Ruta="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
 	}
 	
@@ -359,65 +236,42 @@ public class MisObjetivos extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			try {
-				JSONArray array = new JSONArray(result);
-				ArrayList<ObjetivosBSC> listObjetivosBSC = new ArrayList<ObjetivosBSC>();
-				for(int i = 0; i < array.length(); i++) {
-					final Gson gson = new Gson();
-					final ObjetivosBSC oBSC = gson.fromJson(array.getString(i),ObjetivosBSC.class);
-					listObjetivosBSC.add(oBSC);
-				}
-				
-				//FILAS
-				for(int i=0;i<listObjetivosBSC.size();i++){
-
-					
-				}
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
-			}
+			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
+			loadData(listObjetivosBSC);
 		}
 	}
 	
-
 	
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
-		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			listaPeriodos = new ArrayList<Periodo>();
-			try {
-				JSONArray arregloPeriodos = new JSONArray(result);
-				for(int i=0;i<arregloPeriodos.length();i++){
-					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"),periodoJSON.getInt("BSCID"));
-					listaPeriodos.add(per);
-				}
-				for(int i=0; i<listaPeriodos.size(); i++){
-					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
-				}
-				
-				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spinnerPeriodo.setAdapter(dataAdapter);
-				
-				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-					@Override
-					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-						periodoBSCActual = listaPeriodos.get(pos).BSCID;
-						System.out.println("periodo seleccionado="+periodoBSCActual);
-						//EMF-//actualizaTabs();
-					}
-				
-					@Override
-					  public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-					  }
-				});
-			} catch (Exception e){
-				System.out.println("Error="+e.toString());
+		protected void onPostExecute(String result) {		
+			listaPeriodos = Periodo.getPeriodosByResult(result);
+			for(int i=0; i<listaPeriodos.size(); i++){
+				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
 			}
+				
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+				
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					periodoBSCActual = listaPeriodos.get(pos).BSCID;
+					System.out.println("periodo seleccionado="+periodoBSCActual);
+					listarObjetivos();
+						 
+					//EMF-//actualizaTabs();
+				}
+				
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+				}
+			});
 		}
 	}
+	
 
+	
 }

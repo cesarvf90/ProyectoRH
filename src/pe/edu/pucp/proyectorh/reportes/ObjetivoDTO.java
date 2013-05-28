@@ -6,7 +6,16 @@ public class ObjetivoDTO {
 	private String descripcion;
 	private int numPersonas;
 	private int avance;
+	private int hijos;
 	
+	public int getHijos() {
+		return hijos;
+	}
+
+	public void setHijos(int hijos) {
+		this.hijos = hijos;
+	}
+
 	public ObjetivoDTO(){
 		
 	}

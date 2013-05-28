@@ -57,19 +57,23 @@ public class CalendarAdapter extends BaseAdapter {
 		this.items = items;
 	}
 
+	@Override
 	public int getCount() {
 		return days.length;
 	}
 
+	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
 	// create a new view for each item referenced by the Adapter
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		TextView dayView;
@@ -126,7 +130,7 @@ public class CalendarAdapter extends BaseAdapter {
 		items.clear();
 
 		int lastDay = month.getActualMaximum(Calendar.DAY_OF_MONTH);
-		int firstDay = (int) month.get(Calendar.DAY_OF_WEEK);
+		int firstDay = month.get(Calendar.DAY_OF_WEEK);
 
 		// figure size of the array
 		if (firstDay == 1) {

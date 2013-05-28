@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.Evento;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ConstanteServicio;
+import pe.edu.pucp.proyectorh.services.ErrorServicio;
+import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +37,7 @@ public class AgendaFragment extends Fragment {
 	public CalendarAdapter adapter;
 	public Handler handler;
 	public ArrayList<String> items;
+	private ArrayList<Evento> eventos;
 	private View rootView;
 
 	public AgendaFragment() {
@@ -40,6 +52,9 @@ public class AgendaFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.calendar, container, false);
+
+//		llamarServicioEventos();
+
 		month = Calendar.getInstance();
 		onNewIntent(getActivity().getIntent());
 
@@ -91,26 +106,13 @@ public class AgendaFragment extends Fragment {
 		});
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				TextView date = (TextView) v.findViewById(R.id.date);
-				if (date instanceof TextView && !date.getText().equals("")) {
-
-					Intent intent = new Intent();
-					String day = date.getText().toString();
-					if (day.length() == 1) {
-						day = "0" + day;
-					}
-					// return chosen date as string format
-					// intent.putExtra(
-					// "date",
-					// android.text.format.DateFormat.format("yyyy-MM",
-					// month) + "-" + day);
-					// // getActivity().setResult(RESULT_OK, intent);
-					// getActivity().setResult(0, intent);
-					// getActivity().finish();
-				}
-
+				SemanaFragment fragment = new SemanaFragment(eventos);
+				getActivity().getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.addToBackStack("tag").commit();
 			}
 		});
 
@@ -118,15 +120,14 @@ public class AgendaFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View view,
 					int position, long id) {
-				SemanaFragment fragment = new SemanaFragment();
+				SemanaFragment fragment = new SemanaFragment(eventos);
 				getActivity().getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
-						.commit();
+						.addToBackStack("tag").commit();
 				return false;
 			}
 		});
 
-		llamarServicioEventos();
 		return rootView;
 	}
 
@@ -141,7 +142,7 @@ public class AgendaFragment extends Fragment {
 	}
 
 	public void onNewIntent(Intent intent) {
-		intent.putExtra("date", "2013-4-21");
+		intent.putExtra("date", "2013-4-28");
 		String date = intent.getStringExtra("date");
 		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
 		month.set(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
@@ -170,7 +171,60 @@ public class AgendaFragment extends Fragment {
 
 	private void llamarServicioEventos() {
 		// TODO cvasquez: llamar servicio para consultar eventos del usuario
+		if (ConnectionManager.connect(getActivity())) {
+			String request = Servicio.ObtenerEventos + "?id="
+					+ LoginActivity.getUsuario().getID();
+			new ObtencionEventos().execute(request);
+		} else {
+			ErrorServicio.mostrarErrorConexion(getActivity());
+		}
+	}
 
+	public class ObtencionEventos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+			try {
+				JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (procesaRespuesta(respuesta)) {
+					JSONObject datosObject = (JSONObject) jsonObject
+							.get("data");
+				}
+			} catch (JSONException e) {
+				ErrorServicio.mostrarErrorComunicacion(e.toString(),
+						getActivity());
+			} catch (NullPointerException ex) {
+				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
+						getActivity());
+			}
+		}
+	}
+
+	public boolean procesaRespuesta(String respuestaServidor) {
+		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
+			return true;
+		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
+			// Se muestra mensaje de servicio no disponible
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Servicio no disponible");
+			builder.setMessage("No se pudieron obtener los eventos de su agenda. Intente nuevamente");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		} else {
+			// Se muestra mensaje de la respuesta invalida del servidor
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Problema en el servidor");
+			builder.setMessage("Hay un problema en el servidor.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import pe.edu.pucp.proyectorh.utils.Constante;
@@ -34,6 +35,28 @@ public class Colaborador {
 	private String resumenEjecutivo;
 	private String estadoColaboradorID;
 
+	public static ArrayList<String> tomarPrestadoDataDePrueba() {
+		
+		String rchavez = "Chávez Alcántara, Rodrigo";
+		String crios = "Ríos Montesinos, Carmen";
+		String surteaga = "Urteaga Gonzáles, Sammantha";
+		String ccamino = "Camino Prades, Carla";
+		String abustamante = "Bustamante Ferda, Alejandra";
+		String areas = "Reas Fernández, Antonnella";
+		
+		ArrayList<String> losSupuestosSubordinados = new ArrayList<String>();
+		
+		losSupuestosSubordinados.add(rchavez);
+		losSupuestosSubordinados.add(crios);
+		losSupuestosSubordinados.add(surteaga);
+		losSupuestosSubordinados.add(ccamino);
+		losSupuestosSubordinados.add(abustamante);
+		losSupuestosSubordinados.add(areas);
+		
+		return losSupuestosSubordinados;
+		
+	}
+	
 	public Colaborador() {
 	}
 

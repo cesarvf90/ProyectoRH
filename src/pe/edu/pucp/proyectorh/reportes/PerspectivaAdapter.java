@@ -16,10 +16,12 @@ public class PerspectivaAdapter extends BaseAdapter {
 	
 	private Context context;
 	private final String[] arrPerspectivas;
+	private final int[] arrAvances;
  
-	public PerspectivaAdapter(Context context, String[] mobileValues) {
+	public PerspectivaAdapter(Context context, String[] mobileValues, int[] arrAvances) {
 		this.context = context;
 		this.arrPerspectivas = mobileValues;
+		this.arrAvances = arrAvances;
 	}
  
 	@Override
@@ -46,7 +48,7 @@ public class PerspectivaAdapter extends BaseAdapter {
 			
 			TextView textAvance = (TextView) gridView
 					.findViewById(R.id.reportebscPerspectivaAvance);
-			int avance = (position*20);
+			int avance = (arrAvances[position]);
 			textAvance.setText(avance + "%");
  
 			setColor(avance, gridView);

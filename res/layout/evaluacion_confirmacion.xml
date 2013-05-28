@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradiente_verde_green2"
+    android:paddingLeft="20dp" >
+
+    <TextView
+        android:id="@+id/puesto_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/postulante_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/puesto_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/evaluacion_feedback_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postulante_title"
+        android:layout_marginLeft="20dp"
+        android:baselineAligned="false"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comentarios"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textMultiLine" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:paddingTop="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/observaciones"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textMultiLine" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/finalizarEvaluacion"
+        android:paddingTop="20dp"
+        android:layout_below="@+id/evaluacion_feedback_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

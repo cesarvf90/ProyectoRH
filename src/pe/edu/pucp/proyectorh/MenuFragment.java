@@ -18,7 +18,6 @@ import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 
 /**
@@ -99,7 +98,7 @@ public class MenuFragment extends ExpandableListFragment {
 			}
 			childData.add(children);
 		}
-
+		
 		mAdapter = new SimpleExpandableListAdapter(getActivity()
 				.getApplicationContext(), groupData,
 				R.layout.custom_simple_expandable_list_item_1, new String[] {
@@ -132,7 +131,8 @@ public class MenuFragment extends ExpandableListFragment {
 						+ (childPosition + 1));
 				// cambiar color de hijo elegido
 				if (lastColored != null) {
-					lastColored.setBackgroundColor(Color.TRANSPARENT);
+					//lastColored.setBackgroundColor(Color.TRANSPARENT);
+					lastColored.setBackgroundColor(Color.parseColor("#848484"));
 					lastColored.invalidate();
 				}
 				lastColored = v;

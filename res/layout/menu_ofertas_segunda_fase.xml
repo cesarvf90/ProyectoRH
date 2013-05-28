@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:id="@+id/menu_segunda_fase_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="100px"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/menuofertas_title"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingLeft="10px"
+            android:text="Evaluaciones Pendientes - 2da Fase"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/Title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detalleofertas_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="left|center_vertical"
+            android:paddingTop="10px"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/Title"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/evaluar_lista_ofertas"
+        android:layout_width="350px"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/menu_segunda_fase_title_layout" >
+    </ExpandableListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/menu_segunda_fase_title_layout"
+        android:layout_toRightOf="@+id/evaluar_lista_ofertas"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+				android:paddingBottom="25px"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Puesto laboral:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Área:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Solicitante:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Fecha solicitud:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"    
+                    android:text="Fase actual:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Número postulantes:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Última entrevista:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/rec_ofertas_puesto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_ofertas_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_ofertas_solicitante"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_ofertas_fechasolicitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_ofertas_faseactual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_ofertas_numeropostulantes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_ofertas_fecultentrevista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/infopostulante_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10px"
+			android:background="#1d943b"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/Title"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Nombre:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Apellidos"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Documento de identidad:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+                    android:text="Centro de estudios:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+					android:paddingLeft="20px"
+					android:text="Grado académico:"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/rec_postulante_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_postulante_apellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_postulante_docidentidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_postulante_centroestudios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rec_postulante_gradoacademico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:paddingBottom="10px"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,6 +1,5 @@
 package pe.edu.pucp.proyectorh.miinformacion;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,17 +10,12 @@ import pe.edu.pucp.proyectorh.model.InfoColaborador;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.app.AlertDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 public class VisualizarInfoColaboradoFragment extends Fragment {
 	// public FragmentActivity activity;
@@ -90,10 +84,10 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 			String respuesta = jsonObject.getString("success");
 			if (procesaRespuesta(respuesta)) {
 				JSONObject data = (JSONObject) jsonObject.get("data");
-				JSONObject colaborador = (JSONObject) data
+				JSONObject colaborador = data
 						.getJSONObject("colaborador");
-				JSONObject puesto = (JSONObject) data.getJSONObject("puesto");
-				JSONObject area = (JSONObject) data.getJSONObject("area");
+				JSONObject puesto = data.getJSONObject("puesto");
+				JSONObject area = data.getJSONObject("area");
 
 				InfoColaborador infoColaborador = new InfoColaborador();
 				infoColaborador.setNombres(colaborador.getString("Nombre") == "null" ? " * no disponible" : colaborador.getString("Nombre"));
@@ -110,10 +104,6 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 				infoColaborador.setFecha_ingreso(colaborador
 						.getString("FechaIngreso") == "null" ? " * no disponible"
 								: colaborador.getString("FechaIngreso"));				
-				System.out.println(colaborador.toString());
-				System.out.println(colaborador
-						.getString("CorreoElectronico") == "null" ? " * no disponible"
-								: colaborador.getString("CorreoElectronico"));
 
 				//DECIRLE A MANOLIN QUE EL WS NO DEVUELVA LA IMAGEN PORQUE EL JSON ES INESTABLE Y SE CAE 
 				
@@ -196,10 +186,10 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 			String respuesta = jsonObject.getString("success");
 			if (procesaRespuesta(respuesta)) {
 				JSONObject data = (JSONObject) jsonObject.get("data");
-				JSONObject colaborador = (JSONObject) data
+				JSONObject colaborador = data
 						.getJSONObject("colaborador");
-				JSONObject puesto = (JSONObject) data.getJSONObject("puesto");
-				JSONObject area = (JSONObject) data.getJSONObject("area");
+				JSONObject puesto = data.getJSONObject("puesto");
+				JSONObject area = data.getJSONObject("area");
 
 				InfoColaborador infoColaborador = new InfoColaborador();
 				infoColaborador

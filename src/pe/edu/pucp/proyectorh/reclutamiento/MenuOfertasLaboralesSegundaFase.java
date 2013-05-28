@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 
-public class MenuOfertasLaboralesTerceraFase extends Fragment {
+public class MenuOfertasLaboralesSegundaFase extends Fragment {
 
 	private View rootView;
 	private ArrayList<OfertaLaboral> ofertas;
@@ -45,7 +45,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	private int ofertaSeleccionadaPosicion = -1;
 	private int postulanteSeleccionadoPosicion = -1;
 
-	public MenuOfertasLaboralesTerceraFase() {
+	public MenuOfertasLaboralesSegundaFase() {
 	}
 
 	@Override
@@ -56,13 +56,13 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.menu_ofertas_tercera_fase,
+		rootView = inflater.inflate(R.layout.menu_ofertas_segunda_fase,
 				container, false);
-		llamarServicioOfertasLaboralesTerceraFase();
+		llamarServicioOfertasLaboralesSegundaFase();
 		return rootView;
 	}
 
-	private void llamarServicioOfertasLaboralesTerceraFase() {
+	private void llamarServicioOfertasLaboralesSegundaFase() {
 		obtenerOfertasPendientes(LoginActivity.getUsuario());
 	}
 

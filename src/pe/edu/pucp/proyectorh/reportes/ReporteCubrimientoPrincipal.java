@@ -1,6 +1,5 @@
 package pe.edu.pucp.proyectorh.reportes;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,41 +8,39 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getPeriodos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class ReporteObjetivosBSCPrincipal extends Fragment {
+public class ReporteCubrimientoPrincipal extends Fragment {
 	
-	private Spinner spinnerPeriodo;
+	private Spinner spinnerPuesto;
 	private Button btnSubmit;
-	private ProgressBar pbarra; 
-	
-	int periodoSelec;
-	String titulo;
-	
-	List<PeriodoDTO> listaPeriodos;
 	List<String> lista ;
 	
+	int puestoSelec;
+	String titulo;
 	
-	public ReporteObjetivosBSCPrincipal(){
+	List<PuestoDTO> puestos;
 	
+	public ReporteCubrimientoPrincipal(){
+		
 	}
 	
 	@Override
@@ -57,33 +54,24 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.reportebsc1principal,
+		View rootView = inflater.inflate(R.layout.reportecubrimiento,
 				container, false);
-		pbarra = (ProgressBar) rootView.findViewById(R.id.reportebscprogressbar);
-
 		
-		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.reportebscspinner);
+		spinnerPuesto = (Spinner) rootView.findViewById(R.id.reportecubspinner);
 		lista = new ArrayList<String>();
-		obtenerlistaPeriodos();
+		titulo="Puesto X";
+		//obtenerlistaPuestos();
 
-		btnSubmit = (Button) rootView.findViewById(R.id.reportebscbtnConsultar);
+		btnSubmit = (Button) rootView.findViewById(R.id.reportecubbtnConsultar);
 		
 		btnSubmit.setOnClickListener(new OnClickListener() {
 			 
 			  @Override
 			  public void onClick(View v) {
 				  
-		 /*
-			    Toast.makeText(v.getContext(),
-				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-					Toast.LENGTH_SHORT).show();
-			*/    
-				 // obtenerlistaPeriodos();
-
-			      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-			      
-			      Bundle argumentos = new Bundle();
-			      argumentos.putInt("PeriodoSelec", periodoSelec);
+				  ReporteCubrimientoGrafico fragment = new ReporteCubrimientoGrafico();
+				  Bundle argumentos = new Bundle();
+			      argumentos.putInt("PuestoSelec", puestoSelec);
 			      argumentos.putString("titulo", titulo);
 			      fragment.setArguments(argumentos);
 			      
@@ -92,22 +80,22 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				  ft.addToBackStack(null);
 				  ft.commit();
 				  
+				  
+				  
 			  }
-		 
-			});
-
+		});
+		
+		
 		return rootView;
 	}
 	
-	
-	protected void obtenerlistaPeriodos(){
+	protected void obtenerlistaPuestos(){
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			String request = ReporteServices.obtenerPeriodos;
-			//String request = Servicio.LoginService;
+			String request = ReporteServices.obtenerPuestos;
 
-			new getPeriodos().execute(request);
+			new getPuestos().execute(request);
 			
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
@@ -120,11 +108,9 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			builder.show();
 		}
 
-		
-		
 	}
 	
-	public class getPeriodos extends AsyncCall {
+	public class getPuestos extends AsyncCall {
 		/*
 		@Override
 		protected void onPreExecute(){
@@ -137,24 +123,20 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			System.out.println("Recibido: " + result.toString());
 
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			List<PeriodoDTO> periodos = gson.fromJson(result,
-					new TypeToken<List<PeriodoDTO>>(){}.getType());
+			puestos = gson.fromJson(result,
+					new TypeToken<List<PuestoDTO>>(){}.getType());
 			
-			
-			listaPeriodos = periodos;
-			//lista = new ArrayList<String>();
-			for(int i =0; i<listaPeriodos.size();i++){
+
+			for(int i = 0; i<puestos.size();i++){
 				
-				//System.out.println(listaPeriodos.get(i).getFechaInicio().toString());
-				//lista.add("Periodo " + sdf.format(listaPeriodos.get(i).getFechaInicio()) + " - " + sdf.format(listaPeriodos.get(i).getFechaFin()));
-				lista.add(listaPeriodos.get(i).getNombre());
+				lista.add(puestos.get(i).getNombre());
 				
 			}
 			
 			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+			spinnerPuesto.setAdapter(dataAdapter);
+			spinnerPuesto.setOnItemSelectedListener(new OnItemSelectedListener(){
 				
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
@@ -163,7 +145,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
 						Toast.LENGTH_SHORT).show(); */
 					
-					periodoSelec = listaPeriodos.get(pos).getID(); //aqui idobjetivo selec
+					puestoSelec = puestos.get(pos).getID(); //aqui idobjetivo selec
 					titulo = parent.getItemAtPosition(pos).toString();
 
 				  }
@@ -179,84 +161,46 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			
 		}
 	}
-
-	public class PeriodoDTO {
-		private int ID ;
-		private String Nombre ;
-
-		private Date FechaInicio ;
-
-		private Date FechaFin ;
-		private String FechaFinDisplay ;
-		private int BSCID ;
-		
-        
-        public PeriodoDTO() {
-		}
-
-
-		public int getID() {
-			return ID;
-		}
-
-
-		public void setID(int iD) {
-			ID = iD;
-		}
-
-
-		public String getNombre() {
-			return Nombre;
-		}
-
-
-		public void setNombre(String nombre) {
-			Nombre = nombre;
-		}
-
-
-		public Date getFechaInicio() {
-			return FechaInicio;
-		}
-
-
-		public void setFechaInicio(Date fechaInicio) {
-			FechaInicio = fechaInicio;
-		}
-
-
-		public Date getFechaFin() {
-			return FechaFin;
-		}
-
-
-		public void setFechaFin(Date fechaFin) {
-			FechaFin = fechaFin;
-		}
-
-
-		public String getFechaFinDisplay() {
-			return FechaFinDisplay;
-		}
-
-
-		public void setFechaFinDisplay(String fechaFinDisplay) {
-			FechaFinDisplay = fechaFinDisplay;
-		}
-
-
-		public int getBSCID() {
-			return BSCID;
-		}
-
-
-		public void setBSCID(int bSCID) {
-			BSCID = bSCID;
-		}
-
-
-	}
 	
+	 public class PuestoDTO
+	    {
+
+	        public int ID;
+	        public String Nombre;
+	        public String Descripcion;       
+	        public int getID() {
+				return ID;
+			}
+			public void setID(int iD) {
+				ID = iD;
+			}
+			public String getNombre() {
+				return Nombre;
+			}
+			public void setNombre(String nombre) {
+				Nombre = nombre;
+			}
+			public String getDescripcion() {
+				return Descripcion;
+			}
+			public void setDescripcion(String descripcion) {
+				Descripcion = descripcion;
+			}
+			public int getAreaID() {
+				return AreaID;
+			}
+			public void setAreaID(int areaID) {
+				AreaID = areaID;
+			}
+			public int getPuestoSuperiorID() {
+				return PuestoSuperiorID;
+			}
+			public void setPuestoSuperiorID(int puestoSuperiorID) {
+				PuestoSuperiorID = puestoSuperiorID;
+			}
+			public int AreaID;
+	        public int PuestoSuperiorID;
+	}
 	
 	
 	

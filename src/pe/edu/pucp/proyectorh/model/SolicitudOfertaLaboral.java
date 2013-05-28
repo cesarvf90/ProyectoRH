@@ -2,8 +2,6 @@ package pe.edu.pucp.proyectorh.model;
 
 import java.util.Date;
 
-import pe.edu.pucp.proyectorh.utils.Constante;
-
 public class SolicitudOfertaLaboral {
 	private int solicitudID;
 	private String area;

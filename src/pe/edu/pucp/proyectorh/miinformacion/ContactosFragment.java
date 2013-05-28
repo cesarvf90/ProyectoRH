@@ -211,7 +211,7 @@ public class ContactosFragment extends Fragment {
 						contacto.setNombres(contactoObject.getString("Nombre"));
 						contacto.setApellidos(contactoObject
 								.getString("ApellidoPaterno")
-								+ Constante.CADENA_VACIA
+								+ Constante.ESPACIO_VACIO
 								+ contactoObject.getString("ApellidoMaterno"));
 						contacto.setArea(contactoObject.getString("Area"));
 						contacto.setAreaID(contactoObject.getString("AreaID"));
@@ -244,11 +244,11 @@ public class ContactosFragment extends Fragment {
 					mostrarContactos();
 				}
 			} catch (JSONException e) {
-				ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
-//				mostrarErrorComunicacion(e.toString());
+				ErrorServicio.mostrarErrorComunicacion(e.toString(),
+						getActivity());
 			} catch (NullPointerException ex) {
-				ErrorServicio.mostrarErrorComunicacion(ex.toString(), getActivity());
-//				mostrarErrorComunicacion(ex.toString());
+				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
+						getActivity());
 			}
 		}
 	}

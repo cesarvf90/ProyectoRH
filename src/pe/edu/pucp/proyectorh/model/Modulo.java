@@ -84,8 +84,9 @@ public class Modulo {
 		submodulos
 				.add(new ModuloItem("2", "Aceptar solicitudes de oferta laboral"));
 		submodulos.add(new ModuloItem("3", "Aceptar solicitudes de promoción"));
-		submodulos.add(new ModuloItem("4", "Evaluar postulante"));
-		submodulos.add(new ModuloItem("5", "Postular a convocatoria"));
+		submodulos.add(new ModuloItem("4", "Evaluar postulantes 2ra fase"));
+		submodulos.add(new ModuloItem("5", "Evaluar postulantes 3ra fase"));
+		submodulos.add(new ModuloItem("6", "Postular a convocatoria"));
 		return submodulos;
 	}
 
@@ -99,9 +100,9 @@ public class Modulo {
 
 	public static List<ModuloItem> obtenerFuncionalidadesObjetivos() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Objetivos Empresa"));
-		submodulos.add(new ModuloItem("2", "Mis objetivos"));
-		submodulos.add(new ModuloItem("3", "Objetivos subordinados"));
+		submodulos.add(new ModuloItem("1", "Objetivos Empresariales"));
+		submodulos.add(new ModuloItem("2", "Objetivos Propios"));
+		submodulos.add(new ModuloItem("3", "Objetivos para mi Equipo"));
 		submodulos.add(new ModuloItem("4", "Avance"));
 		submodulos.add(new ModuloItem("5", "Monitoreo"));
 		return submodulos;
@@ -119,7 +120,7 @@ public class Modulo {
 		submodulos.add(new ModuloItem("1", "Reporte de Evaluación 360"));
 		submodulos
 				.add(new ModuloItem("2", "Reporte de Evaluación de Objetivos"));
-		submodulos.add(new ModuloItem("3", "Reporte de Historial de Puestos"));
+		submodulos.add(new ModuloItem("3", "Reporte de Cubrimiento de Puestos"));
 		submodulos.add(new ModuloItem("4", "Reporte de Objetivos BSC"));
 		return submodulos;
 	}
