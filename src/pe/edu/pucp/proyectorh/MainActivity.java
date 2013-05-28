@@ -7,6 +7,7 @@ import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
+import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesSegundaFase;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
@@ -92,13 +93,19 @@ public class MainActivity extends FragmentActivity implements
 				if (id.equals("3")) {// Aprobar Solicitudes Promoción
 
 				}
-				if (id.equals("4")) {// Evaluar Postulante
+				if (id.equals("4")) {// Evaluar Postulante 2da fase
+					MenuOfertasLaboralesSegundaFase fragment = new MenuOfertasLaboralesSegundaFase();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+				if (id.equals("5")) {// Evaluar Postulante 3ra fase 
 					MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("5")) {// Postular a Convocatoria
+				if (id.equals("6")) {// Postular a Convocatoria
 
 				}
 
