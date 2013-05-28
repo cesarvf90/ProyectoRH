@@ -180,21 +180,22 @@ public class ObjetivosEmpresa extends Fragment {
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
 	    
 	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
+	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
 	    columna2.setText("Peso:");
 	    cabecera.addView(columna2);
 	    
+	    /*
 	    TextView columna3 = new TextView(contexto);
 	    columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 	    columna3.setText("Creador:");
 	    cabecera.addView(columna3);
-	    
+	    */
 	    return cabecera;
 	}
 	
@@ -216,12 +217,12 @@ public class ObjetivosEmpresa extends Fragment {
 			fila.flagUlt=flagUltimo;
 			String szNombre ="";
 			String szPeso ="";
-			String szCreador=LoginActivity.getUsuario().getUsername();
+			//String szCreador=LoginActivity.getUsuario().getUsername();
 			
 			if(objBSC != null){
 				szNombre=objBSC.Nombre;
 				szPeso = Integer.toString(objBSC.Peso);
-				szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
+				//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
 			}
 			
 			fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -230,22 +231,24 @@ public class ObjetivosEmpresa extends Fragment {
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
 
 		    descripObj.setText(szNombre);
-		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
+		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
 		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
 
 		    peso.setText(szPeso);
-		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
+		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
 		    fila.addView(peso);
 		    
+		    /*
 		    TextView creador = new TextView(contexto);
 
 		    creador.setText(szCreador);
 		    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 		    fila.addView(creador);
-		    		    
+		    */
+		    
 		    Button eliminarObj = new Button(contexto);
 		    eliminarObj.setText("X");
 		    eliminarObj.setOnClickListener(new OnClickListener() {

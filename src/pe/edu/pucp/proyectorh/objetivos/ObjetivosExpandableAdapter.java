@@ -7,6 +7,7 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +68,6 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
         TableLayout lay = (TableLayout) convertView.findViewById(R.id.objChild);
         TableFila fila = agregaFila(getChild(groupPosition, childPosition),0);
         
-        TextView childtxt = (TextView) convertView.findViewById(R.id.TextViewChild01);
-        childtxt.setText(child);
-        
         lay.addView(fila);
 
         return convertView;
@@ -103,6 +101,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
     	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.expandablelistview_group, null);
+            convertView.setBackgroundColor(Color.parseColor("#2EFE9A"));
         }
 
         TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
@@ -150,20 +149,22 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
 	  
 	    descripObj.setText(szNombre);
-	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
+	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
 	    fila.addView(descripObj);
 		
 	    EditText peso = new EditText(contexto);
 	    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
 	    peso.setText(szPeso);
-	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
+	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
 	    fila.addView(peso);
 	    
+	    /*
 	    TextView creador = new TextView(contexto);
 	    creador.setText(szCreador);
 	    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 	    fila.addView(creador);
-	    		    
+	    */
+	    
 	    Button eliminarObj = new Button(contexto);
 	    eliminarObj.setText("X");
 	    eliminarObj.setOnClickListener(new OnClickListener() {
