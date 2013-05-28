@@ -218,12 +218,12 @@ public class MisObjetivos extends Fragment {
     			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
     		}else{
     			System.out.println("ES EMPLEADO NORMAL");
-    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR a listar objetivos propuestos
+    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?idPeriodo="+periodoBSCActual; //CAMBIAR a listar objetivos propuestos
     		}
     	    	
     	}else if(indicador==IND_SUBORD){
     		System.out.println("MIS SUBORDINADOS");
-			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&BSCID="+periodoBSCActual; //CAMBIAR
+			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; //CAMBIAR
     	}
     	
     	System.out.println("Ruta="+rutaLlamada);
