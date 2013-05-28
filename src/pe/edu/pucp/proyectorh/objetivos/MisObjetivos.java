@@ -3,6 +3,8 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Periodo;
@@ -234,7 +236,7 @@ public class MisObjetivos extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);
+			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
 			loadData(listObjetivosBSC);
 		}
 	}

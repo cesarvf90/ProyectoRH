@@ -26,6 +26,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	 
     private ArrayList<ArrayList<ObjetivosBSC>> children;
 
+    TableLayout lay;
     
 	private Context contexto;
 
@@ -58,14 +59,13 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
 
     	System.out.println("vere gpos="+groupPosition+ " y cpos="+childPosition);
-    	String child = getChild(groupPosition, childPosition).Nombre;
-    		 
+    	    		 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.objetivos_expandablelist_child, null);
         }
         
-        TableLayout lay = (TableLayout) convertView.findViewById(R.id.objChild);
+        lay = (TableLayout) convertView.findViewById(R.id.objChild);
         TableFila fila = agregaFila(getChild(groupPosition, childPosition),0);
         
         lay.addView(fila);
@@ -135,12 +135,12 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		fila.flagUlt=flagUltimo;
 		String szNombre ="";
 		String szPeso ="";
-		String szCreador=LoginActivity.getUsuario().getUsername();
+		//String szCreador=LoginActivity.getUsuario().getUsername();
 		
 		if(objBSC != null){
 			szNombre=objBSC.Nombre;
 			szPeso = Integer.toString(objBSC.Peso);
-			szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
+			//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
 		}
 		
 		fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -170,22 +170,29 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	    eliminarObj.setOnClickListener(new OnClickListener() {
 			  @Override
 			  public void onClick(View v) {
-
+				  lay.removeView(fila);
 			  }
 		});
 	    fila.addView(eliminarObj);	
 	    
-	    if(fila.flagUlt==1){
-		    final Button aumentarObj = new Button(contexto);
-		    aumentarObj.setText("+");
-		    aumentarObj.setOnClickListener(new OnClickListener() {
-				  @Override
-				  public void onClick(View v) {	
-					 
-				  }
-			});
-		    fila.addView(aumentarObj);	
+	    /**BOTON AUMENTAR - INICIO**/
+	    final Button aumentarObj = new Button(contexto);
+	    aumentarObj.setText("+");
+	    aumentarObj.setOnClickListener(new OnClickListener() {
+			  @Override
+			  public void onClick(View v) {	
+				  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
+				  TableFila fila = agregaFila(null,1);
+				  lay.addView(fila);
+			  }
+		});
+	    fila.addView(aumentarObj);
+	    
+	    if(fila.flagUlt!=1){
+	    	aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton		    	
 	    }
+	    
+	    /**BORON AUMENTAR - FIN**/
 	    System.out.println("retorna fila");
 	return fila;
 }

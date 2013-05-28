@@ -276,39 +276,36 @@ public class ObjetivosEmpresa extends Fragment {
 							  layoutTab4.addView(filaUlt);
 						  }			
 					  }
-					  
-					  
 				  }
 			});
 		    fila.addView(eliminarObj);	
 		    
-		    if(fila.flagUlt==1){
-			    final Button aumentarObj = new Button(contexto);
-			    aumentarObj.setText("+");
-			    aumentarObj.setOnClickListener(new OnClickListener() {
-					  @Override
-					  public void onClick(View v) {	
-						  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
-						  fila.flagUlt=0;
-						  TableFila filaUlt=agregaFila(numLayout,null, 1);
-						  if (numLayout==1){
-							  layoutTab1.addView(filaUlt);
-						  }else if(numLayout==2){
-							  layoutTab2.addView(filaUlt);
-						  }else if(numLayout==3){
-							  layoutTab3.addView(filaUlt);
-						  }else if(numLayout==4){
-							  layoutTab4.addView(filaUlt);
-						  }						 
-					  }
-				});
-			    fila.addView(aumentarObj);	
-		    }else{
-		    	final Button aumentarObj = new Button(contexto);
-			    aumentarObj.setText("+");
-			    aumentarObj.setVisibility(View.INVISIBLE);
-			    fila.addView(aumentarObj);	
+		    /**BOTON AUMENTAR - INICIO**/
+		    final Button aumentarObj = new Button(contexto);
+		    aumentarObj.setText("+");
+		    aumentarObj.setOnClickListener(new OnClickListener() {
+				  @Override
+				  public void onClick(View v) {	
+					  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
+					  fila.flagUlt=0;
+					  TableFila filaUlt=agregaFila(numLayout,null, 1);
+					  if (numLayout==1){
+						  layoutTab1.addView(filaUlt);
+					  }else if(numLayout==2){
+						  layoutTab2.addView(filaUlt);
+					  }else if(numLayout==3){
+						  layoutTab3.addView(filaUlt);
+					  }else if(numLayout==4){
+						  layoutTab4.addView(filaUlt);
+					  }						 
+				  }
+			});
+		    fila.addView(aumentarObj); 
+		    
+		    if(fila.flagUlt!=1){
+		    	aumentarObj.setVisibility(View.INVISIBLE);	
 		    }
+		    /**BOTON AUMENTAR - FIN**/
 		    System.out.println("retorna fila");
 		return fila;
 	}

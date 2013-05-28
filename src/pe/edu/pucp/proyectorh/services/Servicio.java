@@ -50,13 +50,10 @@ public class Servicio {
 
 	public final static String ListarAllObjetivosBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/GetAllObjetivosEmpresa";
 	
-	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/GetAllMisObjetivos";
+	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivos";
 
 	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 
-	
-	
-	
 	
 	/**
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral
