@@ -1,6 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
-import pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados;
+import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
@@ -143,18 +143,11 @@ public class MainActivity extends FragmentActivity implements
 					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Objetivos Subordinados
+				if (id.equals("3")) {// Objetivos Subordinados (PARA CREAR OBJETIVOS PARA MIS SUBORDINADOS - EVER)
 					MisObjetivos fragment = new MisObjetivos();
 					fragment.indicador=MisObjetivos.IND_SUBORD;
 					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
 						.commit();
-
-					//MisObjetivos fragment = new MisObjetivos();
-					//fragment.indicador=MisObjetivos.IND_SUBORD;
-					//getSupportFragmentManager().beginTransaction()
-					//		.replace(R.id.opcion_detail_container, fragment)
-					//		.commit();
-
 				}
 				if (id.equals("4")) {// Registrar Avance
 
@@ -162,7 +155,10 @@ public class MainActivity extends FragmentActivity implements
 				if (id.equals("5")) {// Mis Avances
 
 				}
-				if (id.equals("6")) {// Monitoreo
+				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
+					MisSubordinados fragment = new MisSubordinados();
+					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
+						.commit();
 
 				}
 			} else {
