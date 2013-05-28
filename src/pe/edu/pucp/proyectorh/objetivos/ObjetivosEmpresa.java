@@ -41,6 +41,8 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	int perspectivaActual;
 	
+	ArrayList<Integer> objetivosIDS;
+	
 	public ObjetivosEmpresa(){
 		
 	}
@@ -51,6 +53,7 @@ public class ObjetivosEmpresa extends Fragment {
 	}
 	
 	public void actualizaTabs(){
+		objetivosIDS= new ArrayList<Integer>();
 		layoutTab1.removeAllViews();
 		layoutTab2.removeAllViews();
 		layoutTab3.removeAllViews();
@@ -60,6 +63,45 @@ public class ObjetivosEmpresa extends Fragment {
 		AgregaDatosTab(2);
 		AgregaDatosTab(3);
 		AgregaDatosTab(4);
+	}
+	
+	public void validaCambios(ObjetivosBSC obj){
+		for(int i=0;i<objetivosIDS.size();i++){
+			if(objetivosIDS.get(i)==(Integer)obj.ID){
+				creaObjetivo(obj);
+				break;
+			}else{
+				actualizaObjetivo(obj);
+			}
+		}
+	}
+	
+	public void creaObjetivo(ObjetivosBSC obj){
+		CreadoObjetivos co = new CreadoObjetivos();
+		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&CreadorID="+obj.CreadorID+"&TipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
+		System.out.println("EMF-rutaCrear="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
+	}
+	
+	public void actualizaObjetivo(ObjetivosBSC obj){
+		CreadoObjetivos co = new CreadoObjetivos();
+		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&CreadorID="+obj.CreadorID+"&TipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
+		System.out.println("EMF-rutaCrear="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
+	}
+	
+	public class ActualizadoObjetivos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+		}
+	}
+	
+	public class CreadoObjetivos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+		}
 	}
 	
 	
@@ -74,6 +116,7 @@ public class ObjetivosEmpresa extends Fragment {
 			for(int i=0;i<listObjetivosBSC.size();i++){
 				int flagUltimo = 0;
 				ObjetivosBSC objBSC = listObjetivosBSC.get(i);
+				objetivosIDS.add((Integer)objBSC.BSCID);
 				if ((i+1) == listObjetivosBSC.size()){
 					flagUltimo=1;
 				}
@@ -82,8 +125,7 @@ public class ObjetivosEmpresa extends Fragment {
 				if (auxPerspectiva==1){
 					layoutTab1.addView(fila);
 				}else if(auxPerspectiva==2){
-					layoutTab2.addView(fila);
-					
+					layoutTab2.addView(fila);					
 				}else if(auxPerspectiva==3){
 					layoutTab3.addView(fila);
 				}else if(auxPerspectiva==4){
@@ -138,21 +180,22 @@ public class ObjetivosEmpresa extends Fragment {
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,80));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
 	    
 	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
+	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 	    columna2.setText("Peso:");
 	    cabecera.addView(columna2);
 	    
+	    /*
 	    TextView columna3 = new TextView(contexto);
 	    columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 	    columna3.setText("Creador:");
 	    cabecera.addView(columna3);
-	    
+	    */
 	    return cabecera;
 	}
 	
@@ -174,34 +217,38 @@ public class ObjetivosEmpresa extends Fragment {
 			fila.flagUlt=flagUltimo;
 			String szNombre ="";
 			String szPeso ="";
-			String szCreador=LoginActivity.getUsuario().getUsername();
+			//String szCreador=LoginActivity.getUsuario().getUsername();
 			
 			if(objBSC != null){
 				szNombre=objBSC.Nombre;
 				szPeso = Integer.toString(objBSC.Peso);
-				szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
+				//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
 			}
 			
 			fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 
 		    EditText descripObj = new EditText(contexto);
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-		  
+
 		    descripObj.setText(szNombre);
-		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
+		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
 		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
+
 		    peso.setText(szPeso);
-		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
+		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
 		    fila.addView(peso);
 		    
+		    /*
 		    TextView creador = new TextView(contexto);
+
 		    creador.setText(szCreador);
 		    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 		    fila.addView(creador);
-		    		    
+		    */
+		    
 		    Button eliminarObj = new Button(contexto);
 		    eliminarObj.setText("X");
 		    eliminarObj.setOnClickListener(new OnClickListener() {
@@ -229,34 +276,36 @@ public class ObjetivosEmpresa extends Fragment {
 							  layoutTab4.addView(filaUlt);
 						  }			
 					  }
-					  
-					  
 				  }
 			});
 		    fila.addView(eliminarObj);	
 		    
-		    if(fila.flagUlt==1){
-			    final Button aumentarObj = new Button(contexto);
-			    aumentarObj.setText("+");
-			    aumentarObj.setOnClickListener(new OnClickListener() {
-					  @Override
-					  public void onClick(View v) {	
-						  fila.removeView(aumentarObj); //elimina el boton
-						  fila.flagUlt=0;
-						  TableFila filaUlt=agregaFila(numLayout,null, 1);
-						  if (numLayout==1){
-							  layoutTab1.addView(filaUlt);
-						  }else if(numLayout==2){
-							  layoutTab2.addView(filaUlt);
-						  }else if(numLayout==3){
-							  layoutTab3.addView(filaUlt);
-						  }else if(numLayout==4){
-							  layoutTab4.addView(filaUlt);
-						  }						 
-					  }
-				});
-			    fila.addView(aumentarObj);	
+		    /**BOTON AUMENTAR - INICIO**/
+		    final Button aumentarObj = new Button(contexto);
+		    aumentarObj.setText("+");
+		    aumentarObj.setOnClickListener(new OnClickListener() {
+				  @Override
+				  public void onClick(View v) {	
+					  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
+					  fila.flagUlt=0;
+					  TableFila filaUlt=agregaFila(numLayout,null, 1);
+					  if (numLayout==1){
+						  layoutTab1.addView(filaUlt);
+					  }else if(numLayout==2){
+						  layoutTab2.addView(filaUlt);
+					  }else if(numLayout==3){
+						  layoutTab3.addView(filaUlt);
+					  }else if(numLayout==4){
+						  layoutTab4.addView(filaUlt);
+					  }						 
+				  }
+			});
+		    fila.addView(aumentarObj); 
+		    
+		    if(fila.flagUlt!=1){
+		    	aumentarObj.setVisibility(View.INVISIBLE);	
 		    }
+		    /**BOTON AUMENTAR - FIN**/
 		    System.out.println("retorna fila");
 		return fila;
 	}
@@ -367,6 +416,17 @@ public class ObjetivosEmpresa extends Fragment {
 					  public void onClick(View v) {
 						  System.out.println("descarta cambios");
 						  actualizaTabs();
+					  }
+				});
+			 
+			 Button guardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);
+			 descartarCambios.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						  System.out.println("guarda cambios");
+						  //VALIDAR TODOS LOS OBJETIVOS
+						  ObjetivosBSC obj = new ObjetivosBSC();
+						  validaCambios(obj);
 					  }
 				});
 		return rootView;

@@ -100,9 +100,9 @@ public class Modulo {
 
 	public static List<ModuloItem> obtenerFuncionalidadesObjetivos() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Objetivos Empresa"));
-		submodulos.add(new ModuloItem("2", "Mis objetivos"));
-		submodulos.add(new ModuloItem("3", "Objetivos subordinados"));
+		submodulos.add(new ModuloItem("1", "Objetivos Empresariales"));
+		submodulos.add(new ModuloItem("2", "Objetivos Propios"));
+		submodulos.add(new ModuloItem("3", "Objetivos para mi Equipo"));
 		submodulos.add(new ModuloItem("4", "Avance"));
 		submodulos.add(new ModuloItem("5", "Monitoreo"));
 		return submodulos;

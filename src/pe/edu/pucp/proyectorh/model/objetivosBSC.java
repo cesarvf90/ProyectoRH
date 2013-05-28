@@ -18,6 +18,10 @@ public class ObjetivosBSC{
 	public int ObjetivoPadreID;
 	public int BSCID;	
 	
+	public ObjetivosBSC() {
+	
+	}
+	
 	public ObjetivosBSC(String nombre){
 		Nombre= nombre;
 	}
