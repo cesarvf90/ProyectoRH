@@ -34,10 +34,15 @@ public class Servicio {
 	public final static String ObtenerEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getFunciones";
 
 	/**
+	 * Servicio que retorna las eventos del usuario
+	 */
+	public final static String ObtenerEventos = "http://dp2kendo.apphb.com/WSOfertaLaboral/getFunciones";
+
+	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
 	 * entrevista de tercera fase
 	 */
-	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
+	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacion";
 
 	public final static String ListarPeriodos = "http://dp2kendo.apphb.com/WSPeriodos/ListarPeriodos";
 

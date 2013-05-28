@@ -5,9 +5,8 @@
     android:background="@drawable/gradiente_verde_green2"
     android:baselineAligned="false"
     android:gravity="center"
-	android:orientation="vertical" >
+    android:orientation="vertical" >
 
-    
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
@@ -58,7 +57,10 @@
                     android:text="@string/user"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold" >
+
+                    <requestFocus />
+                </TextView>
 
                 <EditText
                     android:id="@+id/usuarioText"

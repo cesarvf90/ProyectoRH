@@ -85,65 +85,6 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscObjetivopadre);
 		textView.setText(titulo);
 		
-		/*
-		gridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v,
-				int position, long id) {
-				
-				if (nivel==2){
-					
-					Toast.makeText(v.getContext(),
-							"Objetivo de último nivel", Toast.LENGTH_SHORT).show();
-				}
-				else{
-					
-					
-					Bundle b = new Bundle();
-					b.putInt("nivel",nivel + 1);
-					String cadena = "" + ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-					b.putString("objetivopadre", cadena);
-					
-					ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
-					fragment.setArguments(b);
-					
-					FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					ft.replace(R.id.opcion_detail_container, fragment);
-					ft.addToBackStack(null);
-					ft.commit();
-					
-				}
-			   
-			}
-		});
-		
-		gridView.setOnItemLongClickListener(new OnItemLongClickListener() {
-					
-					@Override
-					public boolean onItemLongClick(AdapterView<?> parent, View v,
-						int position, long id) {
-		
-						
-						Bundle b = new Bundle();
-						String cadena = "" +  ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-						b.putString("titulo", cadena);
-						
-						ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
-						fragment.setArguments(b);
-						
-						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-						ft.replace(R.id.opcion_detail_container, fragment);
-						ft.addToBackStack(null);
-						ft.commit();
-							
-						
-						return true;
-					   
-					}
-		
-				});
- */
-		
 		
 		return rootView;
 	}
@@ -210,28 +151,6 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
 			listaObjetivos = gson.fromJson(result,
 					new TypeToken<List<ObjetivoDTO>>(){}.getType());
-			
-			/*
-			listaPeriodos = periodos;
-			ObjetivoDTO obj = new ObjetivoDTO();
-			obj.setAvance(70);
-			obj.setDescripcion("prueba obj");
-			obj.setIdObjetivo(1);
-			obj.setNumPersonas(3);
-			
-			listaObjetivos=new ArrayList<ObjetivoDTO>();
-			listaObjetivos.add(obj);*/
-			
-			/*
-			objetivos = new String[listaObjetivos.size()] ;
-			
-			
-			for (int i=0;i<listaObjetivos.size(); i++){
-				objetivos[i] = listaObjetivos.get(i).getDescripcion();
-			}
-			*/
-			
-			
 			
 			gridView.setAdapter(new ObjetivoAdapter(getActivity(),listaObjetivos));
 			

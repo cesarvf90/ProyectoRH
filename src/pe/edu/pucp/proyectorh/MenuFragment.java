@@ -131,7 +131,8 @@ public class MenuFragment extends ExpandableListFragment {
 						+ (childPosition + 1));
 				// cambiar color de hijo elegido
 				if (lastColored != null) {
-					lastColored.setBackgroundColor(Color.TRANSPARENT);
+					//lastColored.setBackgroundColor(Color.TRANSPARENT);
+					lastColored.setBackgroundColor(Color.parseColor("#848484"));
 					lastColored.invalidate();
 				}
 				lastColored = v;

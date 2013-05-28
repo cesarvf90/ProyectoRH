@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradiente_verde_green2"
-    android:gravity="center" >
+    android:paddingLeft="20dp" >
 
     <TextView
         android:id="@+id/puesto_title"
@@ -32,87 +32,105 @@
         android:textColor="@android:color/white"
         android:textStyle="normal" />
 
+    <ScrollView
+        android:id="@+id/funcionesscroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/descripcion_evaluacion"
+            android:layout_marginLeft="0dp"
+            android:baselineAligned="false"
+            android:orientation="vertical"
+            android:paddingTop="100dp" >
+
+            <TextView
+                android:id="@+id/pregunta1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="30dp"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp" />
+
+            <TextView
+                android:id="@+id/pregunta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp" />
+
+            <TextView
+                android:id="@+id/pregunta3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingBottom="22dp" />
+
+            <TextView
+                android:id="@+id/pregunta4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingBottom="22dp" />
+        </LinearLayout>
+    </ScrollView>
+
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp"
+        android:id="@+id/botonesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/funcionesscroll"
+        android:layout_marginLeft="20dp"
         android:baselineAligned="false"
-        android:orientation="vertical"
-        android:paddingTop="100dp" >
+        android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/pregunta1"
+        <Button
+            android:id="@+id/atrasEvaluacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
-            android:textColor="@android:color/white" />
-<!-- android:text="1) Desarrollar proyecciones de variables por campaña y anual." -->
-
-        <RatingBar
-            android:id="@+id/ratingPregunta1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp" />
-
-        <TextView
-            android:id="@+id/pregunta2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
-<!--             android:text="2) Desarrollar informes y presentaciones requeridos por la corporación, para talleres y eventos." -->
-        
-        <RatingBar
-            android:id="@+id/ratingPregunta2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp" />
-
-        <TextView
-            android:id="@+id/pregunta3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
-<!--             android:text="3) Realizar el análisis continuo e integral del negocio de resultados de campañas, market share, consumidores, mercados, estrategia y planes de competidores." -->
-
-        <RatingBar
-            android:id="@+id/ratingPregunta3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:paddingBottom="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4) Desarrollar el informe de cobertura / rentabilidad de zonas por campaña."
-            android:textColor="@android:color/white" />
-
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:paddingBottom="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5) Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país."
-            android:textColor="@android:color/white" />
-
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:paddingBottom="30dp" />
+            android:text="Atrás" />
 
         <Button
             android:id="@+id/finalizar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="Finalizar evaluación" />
+
+        <Button
+            android:id="@+id/siguienteEvaluacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Siguiente" />
     </LinearLayout>
 
 </RelativeLayout>

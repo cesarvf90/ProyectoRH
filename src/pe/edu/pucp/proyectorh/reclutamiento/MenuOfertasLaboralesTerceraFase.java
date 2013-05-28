@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -243,14 +244,23 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 											.get(childPosition);
 									OfertaLaboral oferta = ofertasList
 											.get(groupPosition);
+									FragmentTransaction ft = getActivity()
+											.getSupportFragmentManager()
+											.beginTransaction();
 									EvaluacionPostulante fragment = new EvaluacionPostulante(
 											oferta, postulante);
-									getActivity()
-											.getSupportFragmentManager()
-											.beginTransaction()
-											.replace(
-													R.id.opcion_detail_container,
-													fragment).commit();
+									ft.setCustomAnimations(
+											android.R.anim.slide_in_left,
+											android.R.anim.slide_out_right);
+									ft.replace(R.id.opcion_detail_container,
+											fragment, "detailFragment")
+											.addToBackStack("tag").commit();
+									// getActivity()
+									// .getSupportFragmentManager()
+									// .beginTransaction()
+									// .replace(
+									// R.id.opcion_detail_container,
+									// fragment).commit();
 								}
 							});
 					builder.create();
