@@ -3,26 +3,35 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 import java.util.List;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
+import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class MisObjetivos extends Fragment {
 	
@@ -45,7 +54,6 @@ public class MisObjetivos extends Fragment {
 	
 	private ArrayList<ObjetivosBSC> groups;
 	private ArrayList<ArrayList<ObjetivosBSC>> childs;
-	
 	
 	
 	public MisObjetivos(){
@@ -179,6 +187,9 @@ public class MisObjetivos extends Fragment {
     		groups.add(listObjetivosBSC.get(i));
     		
     		childs.add(new ArrayList<ObjetivosBSC>());
+    		//TableFila fila = agregaFila(auxPerspectiva,objBSC,flagUltimo);
+    		
+    		
         	for(int j=0; j<3;j++){
         	    childs.get(groups.size()-1).add(new ObjetivosBSC("prueba gg"+i));
         	}
@@ -272,5 +283,7 @@ public class MisObjetivos extends Fragment {
 			});
 		}
 	}
+	
 
+	
 }
