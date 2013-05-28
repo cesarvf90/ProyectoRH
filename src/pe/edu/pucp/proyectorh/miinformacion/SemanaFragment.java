@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evento;
-import pe.edu.pucp.proyectorh.reclutamiento.ConfirmacionEvaluacion;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +17,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 public class SemanaFragment extends Fragment {
 

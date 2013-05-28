@@ -3,7 +3,6 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
@@ -26,6 +25,11 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 
 public class MisObjetivos extends Fragment {
+	
+	public int indicador=0;
+	
+	public static int IND_MISOBJS=1;
+	public static int IND_SUBORD=2;	
 	
 	ArrayList<ObjetivosBSC> objsPadre;
 	ArrayList<ObjetivosBSC> objsHijos;
@@ -63,7 +67,6 @@ public class MisObjetivos extends Fragment {
 			rootView.findViewById(R.layout.listar_objetivos);
 			
 			Resources res = getResources();
-
 			
 			/*
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
@@ -194,26 +197,40 @@ public class MisObjetivos extends Fragment {
     	groups= new ArrayList<String>();
     	childs= new ArrayList<ArrayList<String>>();
 
-		if (isAdmin()){
-			ListadoObjetivos lo1 = new ListadoObjetivos();
-			ListadoObjetivos lo2 = new ListadoObjetivos();
-			ListadoObjetivos lo3 = new ListadoObjetivos();
-			ListadoObjetivos lo4 = new ListadoObjetivos();
-			
-			String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
-			Servicio.llamadaServicio(this.getActivity(), lo1,rutaLlamada);
-			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
-			Servicio.llamadaServicio(this.getActivity(), lo2,rutaLlamada);
-			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
-			Servicio.llamadaServicio(this.getActivity(), lo3,rutaLlamada);
-			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
-			Servicio.llamadaServicio(this.getActivity(), lo4,rutaLlamada);
-			
-		}else{
-			ListadoObjetivos lo = new ListadoObjetivos();
-			String rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual; //CAMBIAR
-			Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
-		}
+    	ListadoObjetivos lo = new ListadoObjetivos();
+    	String rutaLlamada ="";
+    	
+    	if(indicador==IND_MISOBJS){
+    		System.out.println("MIS OBJETIVOS");    		
+    		if (isAdmin()){
+    			System.out.println("ES ADMIN");
+    			//rutaLlamada = Servicio.ListarObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
+    			
+    			ListadoObjetivos lo1 = new ListadoObjetivos();
+    			ListadoObjetivos lo2 = new ListadoObjetivos();
+    			ListadoObjetivos lo3 = new ListadoObjetivos();
+    			ListadoObjetivos lo4 = new ListadoObjetivos();
+    			
+    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
+    			Servicio.llamadaServicio(this.getActivity(), lo1,rutaLlamada);
+    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
+    			Servicio.llamadaServicio(this.getActivity(), lo2,rutaLlamada);
+    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
+    			Servicio.llamadaServicio(this.getActivity(), lo3,rutaLlamada);
+    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
+    			Servicio.llamadaServicio(this.getActivity(), lo4,rutaLlamada);
+    			
+    		}else{
+    			System.out.println("ES EMPLEADO NORMAL");
+    			//rutaLlamada = Servicio.ListarObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
+    		}
+    	    	
+    	}else if(indicador==IND_SUBORD){
+    		System.out.println("MIS SUBORDINADOS");
+			//rutaLlamada = Servicio.ListarObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
+    	}
+    	
+		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
 	}
 	
 	public class ListadoObjetivos extends AsyncCall {
