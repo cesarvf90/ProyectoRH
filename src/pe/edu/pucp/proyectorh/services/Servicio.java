@@ -48,9 +48,9 @@ public class Servicio {
 
 	public final static String ListarObjetivosBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/ListarObjetivosEmpresa";
 
-	public final static String ListarAllObjetivosBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/ListarObjetivosEmpresa";
-
-	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
+	public final static String ListarAllObjetivosBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/GetAllObjetivosEmpresa";
+	
+	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/GetAllMisObjetivos";
 
 	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 

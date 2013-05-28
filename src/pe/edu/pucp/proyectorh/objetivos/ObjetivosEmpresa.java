@@ -180,13 +180,13 @@ public class ObjetivosEmpresa extends Fragment {
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,80));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
 	    
 	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 	    columna2.setText("Peso:");
 	    cabecera.addView(columna2);
 	    
@@ -288,7 +288,7 @@ public class ObjetivosEmpresa extends Fragment {
 			    aumentarObj.setOnClickListener(new OnClickListener() {
 					  @Override
 					  public void onClick(View v) {	
-						  fila.removeView(aumentarObj); //elimina el boton
+						  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
 						  fila.flagUlt=0;
 						  TableFila filaUlt=agregaFila(numLayout,null, 1);
 						  if (numLayout==1){
@@ -302,6 +302,11 @@ public class ObjetivosEmpresa extends Fragment {
 						  }						 
 					  }
 				});
+			    fila.addView(aumentarObj);	
+		    }else{
+		    	final Button aumentarObj = new Button(contexto);
+			    aumentarObj.setText("+");
+			    aumentarObj.setVisibility(View.INVISIBLE);
 			    fila.addView(aumentarObj);	
 		    }
 		    System.out.println("retorna fila");

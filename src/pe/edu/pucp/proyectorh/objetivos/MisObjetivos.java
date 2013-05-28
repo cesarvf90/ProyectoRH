@@ -215,32 +215,18 @@ public class MisObjetivos extends Fragment {
     		System.out.println("MIS OBJETIVOS");    		
     		if (isAdmin()){
     			System.out.println("ES ADMIN");
-    			//rutaLlamada = Servicio.ListarObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
-    			
-    			ListadoObjetivos lo1 = new ListadoObjetivos();
-    			ListadoObjetivos lo2 = new ListadoObjetivos();
-    			ListadoObjetivos lo3 = new ListadoObjetivos();
-    			ListadoObjetivos lo4 = new ListadoObjetivos();
-    			
-    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=1&BSCID="+periodoBSCActual;
-    			Servicio.llamadaServicio(this.getActivity(), lo1,rutaLlamada);
-    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=2&BSCID="+periodoBSCActual;
-    			Servicio.llamadaServicio(this.getActivity(), lo2,rutaLlamada);
-    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=3&BSCID="+periodoBSCActual;
-    			Servicio.llamadaServicio(this.getActivity(), lo3,rutaLlamada);
-    			rutaLlamada = Servicio.ListarObjetivosBSC+"?tipoObjetivoBSCID=4&BSCID="+periodoBSCActual;
-    			Servicio.llamadaServicio(this.getActivity(), lo4,rutaLlamada);
-    			
+    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
     		}else{
     			System.out.println("ES EMPLEADO NORMAL");
-    			//rutaLlamada = Servicio.ListarObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
+    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR a listar objetivos propuestos
     		}
     	    	
     	}else if(indicador==IND_SUBORD){
     		System.out.println("MIS SUBORDINADOS");
-			//rutaLlamada = Servicio.ListarObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
+			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&BSCID="+periodoBSCActual; //CAMBIAR
     	}
     	
+    	System.out.println("Ruta="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
 	}
 	
