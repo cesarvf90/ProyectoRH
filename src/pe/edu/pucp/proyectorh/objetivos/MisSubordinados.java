@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -33,13 +34,21 @@ import android.widget.TabHost.OnTabChangeListener;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
+import pe.edu.pucp.proyectorh.model.Colaborador;
+import pe.edu.pucp.proyectorh.model.Objetivo;
 import pe.edu.pucp.proyectorh.model.Periodo;
-import pe.edu.pucp.proyectorh.model.objetivosBSC;
+import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.AdaptadorDeObjetivos;
 
 public class MisSubordinados extends Fragment {
 
+	private View rootView;
+	private ArrayList<Objetivo> objetivos;
+	private ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>> avances;
+	
 	private Spinner spinnerPeriodo;
 	private Button btnDescCambios;
 	private Button btnGuardarCambios;
@@ -71,13 +80,16 @@ public class MisSubordinados extends Fragment {
 			listarPeriodos = new ArrayList<Periodo>();
 			
 			try {
-				JSONArray arregloPeriodos = new JSONArray(result);
-				for (int i = 0; i < arregloPeriodos.length(); i++) {
-					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
-					System.out.println("Arreglo N° " + i + " = " + periodoJSON);
-					Periodo per = new Periodo(periodoJSON.getString("Nombre"), periodoJSON.getInt("BSCID"));
-					listarPeriodos.add(per);
-				}
+//				JSONArray arregloPeriodos = new JSONArray(result);
+//				for (int i = 0; i < arregloPeriodos.length(); i++) {
+//					JSONObject periodoJSON = arregloPeriodos.getJSONObject(i);
+//					System.out.println("Arreglo N° " + i + " = " + periodoJSON);
+////					Periodo per = new Periodo(periodoJSON.getString("Nombre"), periodoJSON.getInt("BSCID"));
+////					Periodo per = Periodo.getPeriodosByResult(result)
+//					listarPeriodos.add(per);
+//				}
+				
+				listarPeriodos = Periodo.getPeriodosByResult(result);
 			} catch (Exception e) {
 				System.out.println("Error = " + e.toString());
 			}
@@ -150,7 +162,7 @@ public class MisSubordinados extends Fragment {
 	    return separador_cabecera;
 	}
 	
-	public TableRow agregaFila(final Context contexto, final int numLayout,objetivosBSC objBSC, int flagUltimo){
+	public TableRow agregaFila(final Context contexto, final int numLayout,ObjetivosBSC objBSC, int flagUltimo){
 			final TableRow fila = new TableRow(contexto);
 		    fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 	
@@ -211,8 +223,8 @@ public class MisSubordinados extends Fragment {
 		return fila;
 	}	
 	
-	public  ArrayList<objetivosBSC> addObjetivos(int tipoBSC){
-		ArrayList<objetivosBSC> listObjs = new ArrayList<objetivosBSC>();
+	public  ArrayList<ObjetivosBSC> addObjetivos(int tipoBSC){
+		ArrayList<ObjetivosBSC> listObjs = new ArrayList<ObjetivosBSC>();
 		
 		return listObjs;
 	}
@@ -226,14 +238,14 @@ public class MisSubordinados extends Fragment {
 		TableRow separador_cabecera = agregaSeparadorCabezera(contexto);
 		lay.addView(separador_cabecera);
 		
-		ArrayList<objetivosBSC> listObjetivosBSC = addObjetivos(tipoBSC); 
+		ArrayList<ObjetivosBSC> listObjetivosBSC = addObjetivos(tipoBSC); 
 		
 		//FILAS
 		int cantidadObjetivosBSC = listObjetivosBSC.size();
 		cantidadObjetivosBSC = 2; //para pruebas
 		for(int i=0;i<cantidadObjetivosBSC;i++){
 			int flagUltimo = 0;
-			objetivosBSC objBSC = new objetivosBSC(); //= listObjetivosBSC.get(i);
+			ObjetivosBSC objBSC = new ObjetivosBSC(); //= listObjetivosBSC.get(i);
 			
 			if ((i+1) == cantidadObjetivosBSC){
 				flagUltimo=1;
@@ -251,86 +263,65 @@ public class MisSubordinados extends Fragment {
 	
 	@SuppressWarnings("rawtypes")
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
+			rootView  = inflater.inflate(R.layout.mis_subordinados,container, false);
 			Context contexto = rootView.getContext();
-			rootView.findViewById(R.layout.objetivosbsc);
+			rootView.findViewById(R.layout.mis_subordinados);
 			
 			Resources res = getResources();
 			
-			/*
-			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
-			 */
-			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerObjEmpPeriodo);
-			List<String> lista = listadoPeriodos();
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,lista);
-			System.out.println("pasa adapter");
+			final ArrayList<Objetivo> objetivosSubordinado = Objetivo.tomarPrestadoDataDePrueba();
+			final ArrayList<AvanceDeObjetivo> avancesDeObjetivos = AvanceDeObjetivo.tomarPrestadoDataDePrueba(); 
+			final ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>> avancesHastaHoy = new ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>>();
+			
+//			avancesHastaHoy.add(new ArrayList<ArrayList<AvanceDeObjetivo>>()); //El primer objetivo no presenta progreso
+//			avancesHastaHoy.add(new ArrayList<ArrayList<AvanceDeObjetivo>>()); //El segundo tampoco
+			
+			ArrayList<AvanceDeObjetivo> grupoDeUno = new ArrayList<AvanceDeObjetivo>();
+			
+			grupoDeUno.add(avancesDeObjetivos.get(2));
+			
+			ArrayList<AvanceDeObjetivo> otroGrupoDeUno = new ArrayList<AvanceDeObjetivo>();
+			
+			otroGrupoDeUno.add(avancesDeObjetivos.get(1));	
+			
+			ArrayList<ArrayList<AvanceDeObjetivo>> parDeAvancesTercerObjetivo = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+			
+			parDeAvancesTercerObjetivo.add(grupoDeUno);
+			parDeAvancesTercerObjetivo.add(otroGrupoDeUno);
+			
+			avancesHastaHoy.add(parDeAvancesTercerObjetivo);
+			
+			//El primer y segundo objetivo están sin comenzar
+			
+			ArrayList<AvanceDeObjetivo> elAvanceDelCeroPorCiento = new ArrayList<AvanceDeObjetivo>();
+			
+			elAvanceDelCeroPorCiento.add(avancesDeObjetivos.get(0));
+			
+			ArrayList<ArrayList<AvanceDeObjetivo>> elUnicoAvanceDelObjetivo = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+			
+			elUnicoAvanceDelObjetivo.add(elAvanceDelCeroPorCiento);
+			
+			avancesHastaHoy.add(0, elUnicoAvanceDelObjetivo);
+			avancesHastaHoy.add(0, elUnicoAvanceDelObjetivo);
+			
+			//Coloca la data en los cajones de la vista
+			
+			ExpandableListView listaDeObjetivos = (ExpandableListView) rootView.findViewById(R.id.AquiSupervisoSusObjetivos);
+			AdaptadorDeObjetivos adaptador = new AdaptadorDeObjetivos(this.getActivity().getApplicationContext(), objetivosSubordinado, avancesHastaHoy);
+			listaDeObjetivos.setAdapter(adaptador);
+			listaDeObjetivos.setLongClickable(true);
+			
+			//Esta parte responde: ¿De donde saca los subordinados?
+
+			ArrayList<String> listadoSubordinadosNombreYApellidos = Colaborador.tomarPrestadoDataDePrueba();
+			
+			Spinner elMenuDeSubordinados = (Spinner) rootView.findViewById(R.id.UnoDeEstosSubordinados);
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listadoSubordinadosNombreYApellidos);
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-			
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoSelec = obtenerBSCID(pos);
-					System.out.println("seleccionado="+periodoSelec);
-				}
-			
-				@Override
-				  public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-				  }
-			});
+			elMenuDeSubordinados.setAdapter(dataAdapter);
 			
 			
-			/*
-			 * CODIGO PARA MANEJO DE PERSPECTIVA (TABS)
-			 */				
-			TabHost tabs=(TabHost)rootView.findViewById(android.R.id.tabhost);
-			tabs.setup();
-			 
-			TabHost.TabSpec spec=tabs.newTabSpec("Cliente");
-			spec.setContent(R.id.objEmpTab1);
-			spec.setIndicator("Cliente",
-			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
-			tabs.addTab(spec);
-			 
-			spec=tabs.newTabSpec("Aprendizaje y Crecimiento");
-			spec.setContent(R.id.objEmpTab2);
-			spec.setIndicator("Aprendizaje y Crecimiento",
-			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
-			tabs.addTab(spec);
-			
-			spec=tabs.newTabSpec("Financiero");
-			spec.setContent(R.id.objEmpTab3);
-			spec.setIndicator("Financiero",
-			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
-			tabs.addTab(spec);
-			
-			spec=tabs.newTabSpec("Procesos Internos");
-			spec.setContent(R.id.objEmpTab4);
-			spec.setIndicator("Procesos Internos",
-			    res.getDrawable(android.R.drawable.ic_menu_myplaces));
-			tabs.addTab(spec);
-			 
-			tabs.setCurrentTab(0);
-			
-			tabs.setOnTabChangedListener(new OnTabChangeListener(){
-			    @Override
-			    public void onTabChanged(String tabId) {
-			    	
-			        Log.i("AndroidTabsDemo", "Pulsada pestaña: " + tabId);
-			    }
-			});
-			
-			 		
-			layoutTab1 = (TableLayout) rootView.findViewById(R.id.objEmpTab1);
-			layoutTab2 = (TableLayout) rootView.findViewById(R.id.objEmpTab2);
-			layoutTab3 = (TableLayout) rootView.findViewById(R.id.objEmpTab3);
-			layoutTab4 = (TableLayout) rootView.findViewById(R.id.objEmpTab4);
-			
-			layoutTab1=AgregaDatosTab(contexto,layoutTab1,1);
-			layoutTab2=AgregaDatosTab(contexto,layoutTab2,2);
-			layoutTab3=AgregaDatosTab(contexto,layoutTab3,3);
-			layoutTab4=AgregaDatosTab(contexto,layoutTab4,4);	
 			return rootView;
 		}			
 }
