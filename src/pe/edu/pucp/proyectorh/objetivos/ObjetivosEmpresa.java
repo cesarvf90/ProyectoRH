@@ -41,6 +41,8 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	int perspectivaActual;
 	
+	ArrayList<Integer> objetivosIDS;
+	
 	public ObjetivosEmpresa(){
 		
 	}
@@ -51,6 +53,7 @@ public class ObjetivosEmpresa extends Fragment {
 	}
 	
 	public void actualizaTabs(){
+		objetivosIDS= new ArrayList<Integer>();
 		layoutTab1.removeAllViews();
 		layoutTab2.removeAllViews();
 		layoutTab3.removeAllViews();
@@ -60,6 +63,45 @@ public class ObjetivosEmpresa extends Fragment {
 		AgregaDatosTab(2);
 		AgregaDatosTab(3);
 		AgregaDatosTab(4);
+	}
+	
+	public void validaCambios(ObjetivosBSC obj){
+		for(int i=0;i<objetivosIDS.size();i++){
+			if(objetivosIDS.get(i)==(Integer)obj.ID){
+				creaObjetivo(obj);
+				break;
+			}else{
+				actualizaObjetivo(obj);
+			}
+		}
+	}
+	
+	public void creaObjetivo(ObjetivosBSC obj){
+		CreadoObjetivos co = new CreadoObjetivos();
+		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&CreadorID="+obj.CreadorID+"&TipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
+		System.out.println("EMF-rutaCrear="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
+	}
+	
+	public void actualizaObjetivo(ObjetivosBSC obj){
+		CreadoObjetivos co = new CreadoObjetivos();
+		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&CreadorID="+obj.CreadorID+"&TipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
+		System.out.println("EMF-rutaCrear="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
+	}
+	
+	public class ActualizadoObjetivos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+		}
+	}
+	
+	public class CreadoObjetivos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+		}
 	}
 	
 	
@@ -74,6 +116,7 @@ public class ObjetivosEmpresa extends Fragment {
 			for(int i=0;i<listObjetivosBSC.size();i++){
 				int flagUltimo = 0;
 				ObjetivosBSC objBSC = listObjetivosBSC.get(i);
+				objetivosIDS.add((Integer)objBSC.BSCID);
 				if ((i+1) == listObjetivosBSC.size()){
 					flagUltimo=1;
 				}
@@ -82,8 +125,7 @@ public class ObjetivosEmpresa extends Fragment {
 				if (auxPerspectiva==1){
 					layoutTab1.addView(fila);
 				}else if(auxPerspectiva==2){
-					layoutTab2.addView(fila);
-					
+					layoutTab2.addView(fila);					
 				}else if(auxPerspectiva==3){
 					layoutTab3.addView(fila);
 				}else if(auxPerspectiva==4){
@@ -369,6 +411,17 @@ public class ObjetivosEmpresa extends Fragment {
 					  public void onClick(View v) {
 						  System.out.println("descarta cambios");
 						  actualizaTabs();
+					  }
+				});
+			 
+			 Button guardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);
+			 descartarCambios.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						  System.out.println("guarda cambios");
+						  //VALIDAR TODOS LOS OBJETIVOS
+						  ObjetivosBSC obj = new ObjetivosBSC();
+						  validaCambios(obj);
 					  }
 				});
 		return rootView;
