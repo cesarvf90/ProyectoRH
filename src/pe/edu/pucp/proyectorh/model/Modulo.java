@@ -101,9 +101,10 @@ public class Modulo {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Objetivos Empresariales"));
 		submodulos.add(new ModuloItem("2", "Objetivos Propios"));
-		submodulos.add(new ModuloItem("3", "Objetivos para mi Equipo"));
-		submodulos.add(new ModuloItem("4", "Avance"));
-		submodulos.add(new ModuloItem("5", "Monitoreo"));
+		submodulos.add(new ModuloItem("3", "Objetivos de mis subordinados"));
+//		submodulos.add(new ModuloItem("4", "Fantasma"));
+//		submodulos.add(new ModuloItem("5", "Avance invisible"));
+		submodulos.add(new ModuloItem("4", "Recorrido en mi Equipo de trabajo"));
 		return submodulos;
 	}
 

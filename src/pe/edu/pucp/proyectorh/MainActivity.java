@@ -149,13 +149,13 @@ public class MainActivity extends FragmentActivity implements
 					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
 						.commit();
 				}
-				if (id.equals("4")) {// Registrar Avance
-
-				}
-				if (id.equals("5")) {// Mis Avances
-
-				}
-				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
+//				if (id.equals("4")) {// Registrar Avance
+//
+//				}
+//				if (id.equals("5")) {// Mis Avances
+//
+//				}
+				if (id.equals("4")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
 					MisSubordinados fragment = new MisSubordinados();
 					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
 						.commit();
