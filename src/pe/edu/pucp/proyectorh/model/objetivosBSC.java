@@ -18,6 +18,10 @@ public class ObjetivosBSC{
 	public int ObjetivoPadreID;
 	public int BSCID;	
 	
+	public ObjetivosBSC(String nombre){
+		Nombre= nombre;
+	}
+	
     public static ArrayList<ObjetivosBSC> getObjetivosByResult(String result){
     	ArrayList<ObjetivosBSC> listaObjetivos = new ArrayList<ObjetivosBSC>();
 		try {

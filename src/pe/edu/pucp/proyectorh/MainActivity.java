@@ -101,12 +101,22 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 
-			} else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
-					&& ("4".equals(id))) {
-				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
-				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.opcion_detail_container, fragment)
-						.commit();
+			} else if (Modulo.MODULO_ACTUAL == Constante.REPORTES) {
+				
+					if ("3".equals(id)) {
+						ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
+						getSupportFragmentManager().beginTransaction()
+								.replace(R.id.opcion_detail_container, fragment)
+								.commit();
+					}
+				
+				
+					if ("4".equals(id)) {
+						ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
+						getSupportFragmentManager().beginTransaction()
+								.replace(R.id.opcion_detail_container, fragment)
+								.commit();
+					}
 			}
 
 			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) {
@@ -128,12 +138,17 @@ public class MainActivity extends FragmentActivity implements
 				}
 				if (id.equals("2")) {// Mis Objetivos
 					MisObjetivos fragment = new MisObjetivos();
+					fragment.indicador=MisObjetivos.IND_MISOBJS;
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
 				if (id.equals("3")) {// Objetivos Subordinados
-
+					MisObjetivos fragment = new MisObjetivos();
+					fragment.indicador=MisObjetivos.IND_SUBORD;
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 				if (id.equals("4")) {// Registrar Avance
 

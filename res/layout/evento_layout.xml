@@ -21,15 +21,12 @@
         android:layout_below="@+id/nombre_evento"
         android:layout_marginLeft="20dp"
         android:baselineAligned="false"
-        android:weightSum="2"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:id="@+id/datos_evento"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
             android:baselineAligned="false"
             android:orientation="vertical" >
 
@@ -44,6 +41,7 @@
                     android:id="@+id/tipo_evento_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/tipo_evento"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/Title"
                     android:textStyle="bold" />
@@ -68,6 +66,7 @@
                     android:id="@+id/fecha_inicio_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/fecha_inicio"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/Title"
                     android:textStyle="bold" />
@@ -92,6 +91,7 @@
                     android:id="@+id/fecha_fin_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/fecha_fin_evento"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/Title"
                     android:textStyle="bold" />
@@ -116,6 +116,7 @@
                     android:id="@+id/creador_evento_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/creador_evento"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/Title"
                     android:textStyle="bold" />
@@ -130,12 +131,28 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/lista_invitados_evento"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-        </ListView>
+        <LinearLayout
+            android:id="@+id/layout_lista_invitados"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/title_invitados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/invitados_evento"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Title"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/lista_invitados_evento"
+                android:layout_width="200dp"
+                android:layout_height="match_parent" >
+            </ListView>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

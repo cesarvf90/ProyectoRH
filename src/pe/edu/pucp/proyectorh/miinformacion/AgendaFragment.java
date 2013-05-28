@@ -53,7 +53,7 @@ public class AgendaFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.calendar, container, false);
 
-		llamarServicioEventos();
+//		llamarServicioEventos();
 
 		month = Calendar.getInstance();
 		onNewIntent(getActivity().getIntent());
@@ -128,7 +128,6 @@ public class AgendaFragment extends Fragment {
 			}
 		});
 
-		llamarServicioEventos();
 		return rootView;
 	}
 

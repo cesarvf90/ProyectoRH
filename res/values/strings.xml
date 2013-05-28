@@ -63,5 +63,10 @@
     <string name="comentarios">Comentarios</string>
     <string name="observaciones">Observaciones</string>
     <string name="registrar_evaluacion">Registrar evaluación</string>
+    <string name="tipo_evento">Tipo</string>
+    <string name="fecha_inicio">Fecha de inicio</string>
+    <string name="fecha_fin_evento">Fecha de fin</string>
+    <string name="creador_evento">Creador</string>
+    <string name="invitados_evento">Invitados</string>
 
 </resources>
