@@ -11,7 +11,8 @@ Codigo utilizado para implementar la vista expandible en el fragment izquierdo
     android:mode="twoLine"
     android:paddingBottom="2dip"
     android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-    android:paddingTop="2dip" >
+    android:paddingTop="2dip" 
+    android:background="#848484">
 
     <TextView
         android:id="@id/text1"

@@ -43,8 +43,8 @@ public class MisObjetivos extends Fragment {
 	
 	Context contexto;
 	
-	private ArrayList<String> groups;
-	private ArrayList<ArrayList<String>> childs;
+	private ArrayList<ObjetivosBSC> groups;
+	private ArrayList<ArrayList<ObjetivosBSC>> childs;
 	
 	
 	
@@ -79,8 +79,8 @@ public class MisObjetivos extends Fragment {
 			
 			listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
 			System.out.println("setea a cero");
-	    	groups= new ArrayList<String>();
-	    	childs= new ArrayList<ArrayList<String>>();
+	    	groups= new ArrayList<ObjetivosBSC>();
+	    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
 			listaObjs.setLongClickable(true);
 
 	        
@@ -176,11 +176,11 @@ public class MisObjetivos extends Fragment {
     private void loadData(ArrayList<ObjetivosBSC> listObjetivosBSC){
     	for(int i=0;i<listObjetivosBSC.size();i++){
     		System.out.println("agrega obj="+listObjetivosBSC.get(i).Nombre);
-    		groups.add(listObjetivosBSC.get(i).Nombre);
+    		groups.add(listObjetivosBSC.get(i));
     		
-    		childs.add(new ArrayList<String>());
+    		childs.add(new ArrayList<ObjetivosBSC>());
         	for(int j=0; j<3;j++){
-        	    childs.get(groups.size()-1).add("obetivo gg "+j);
+        	    childs.get(groups.size()-1).add(new ObjetivosBSC("prueba gg"+i));
         	}
     	}
 
@@ -194,8 +194,8 @@ public class MisObjetivos extends Fragment {
     }
 	
 	public  void listarObjetivos(){
-    	groups= new ArrayList<String>();
-    	childs= new ArrayList<ArrayList<String>>();
+    	groups= new ArrayList<ObjetivosBSC>();
+    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
 
     	ListadoObjetivos lo = new ListadoObjetivos();
     	String rutaLlamada ="";
