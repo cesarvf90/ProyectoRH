@@ -12,23 +12,23 @@
         android:text="Datos de Convocatoria"
         android:textSize="20sp" />
     
-    <TableRow>
+    
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:inputType="textMultiLine"
         android:id="@+id/CompCapConvSelec"
         android:textSize="15sp" />
-    </TableRow>
+    
 
 	<TableRow>
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:inputType="textMultiLine"
         android:text="Descripción del Puesto" />
         
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:inputType="textMultiLine"
         android:text="Requisitos" />
     </TableRow>   
@@ -54,7 +54,7 @@
         
         />
 	    
-	    <TextView
+	    <Spinner
         android:id="@+id/comp_puesto_requi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +75,10 @@
         android:textSize="15sp" />
     </TableRow>
     
-	<TableRow>
-		
-	</TableRow>
+	<WebView
+	    android:id="@+id/comparaCap1WebkitGLineal"
+	    android:layout_width="fill_parent"
+	    android:text="Nivel de Cumplimiento para el puesto"
+	    android:layout_height="348dp" />
+	
 </TableLayout>

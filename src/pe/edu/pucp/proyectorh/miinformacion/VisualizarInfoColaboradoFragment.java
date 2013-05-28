@@ -50,8 +50,8 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 				container, false);
 
 		System.out.println("el usuario es: " + LoginActivity.usuario.getID());
-		//llamarServicioInfoColaborador(LoginActivity.usuario.getID());
-		probarDeserializacionGSON();
+		llamarServicioInfoColaborador(LoginActivity.usuario.getID());
+		//probarDeserializacionGSON();
 		return rootView;
 	}
 
@@ -96,21 +96,24 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 				JSONObject area = (JSONObject) data.getJSONObject("area");
 
 				InfoColaborador infoColaborador = new InfoColaborador();
-				infoColaborador
-						.setNombres(colaborador.getString("Nombre") == null ? ""
-								: "");
-				infoColaborador.setApellidos(colaborador
-						.getString("ApellidoPaterno")
+				infoColaborador.setNombres(colaborador.getString("Nombre") == "null" ? " * no disponible" : colaborador.getString("Nombre"));
+				infoColaborador.setApellidos(colaborador.getString("ApellidoPaterno") == "null" ? " * no disponible" : colaborador.getString("ApellidoPaterno")
 						+ " "
-						+ colaborador.getString("ApellidoMaterno"));
-				infoColaborador.setArea(area.getString("Nombre"));
-				infoColaborador.setPuesto(puesto.getString("Nombre"));
+						+ colaborador.getString("ApellidoMaterno") == "null" ? " * no disponible" : colaborador.getString("ApellidoMaterno"));
+				infoColaborador.setArea(area.getString("Nombre") == "null" ? " * no disponible" : area.getString("Nombre"));
+				infoColaborador.setPuesto(puesto.getString("Nombre") == "null" ? " * no disponible" : puesto.getString("Nombre"));
 				infoColaborador.setEmail(colaborador
-						.getString("CorreoElectronico") == null ? "XD"
+						.getString("CorreoElectronico") == "null" ? " * no disponible"
 						: colaborador.getString("CorreoElectronico"));
-				infoColaborador.setAnexo(colaborador.getString("Telefono"));
+				infoColaborador.setAnexo(colaborador.getString("Telefono") == "null" ? " * no disponible"
+						: colaborador.getString("Telefono"));
 				infoColaborador.setFecha_ingreso(colaborador
-						.getString("FechaIngreso"));
+						.getString("FechaIngreso") == "null" ? " * no disponible"
+								: colaborador.getString("FechaIngreso"));				
+				System.out.println(colaborador.toString());
+				System.out.println(colaborador
+						.getString("CorreoElectronico") == "null" ? " * no disponible"
+								: colaborador.getString("CorreoElectronico"));
 
 				//DECIRLE A MANOLIN QUE EL WS NO DEVUELVA LA IMAGEN PORQUE EL JSON ES INESTABLE Y SE CAE 
 				

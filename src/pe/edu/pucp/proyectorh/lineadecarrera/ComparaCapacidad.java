@@ -43,8 +43,9 @@ public class ComparaCapacidad extends Fragment{
 	
 	int ConvSelec;
 	String titulo;
+	String desc;
 	
-	List<ConvocatoriaDTO> listaConv;
+	List<OfertaLaboralMobilePostulanteDTO> listaConv;
 	List<String> lista ;
 	
 	public ComparaCapacidad(){
@@ -88,6 +89,7 @@ public class ComparaCapacidad extends Fragment{
 			      argumentos.putInt("ConvSelec", ConvSelec);
 			      argumentos.putString("titulo", titulo);
 			      argumentos.putString("IdUsuario", usuario);
+			      argumentos.putString("desc", desc);
 			      //argumentos.putString("idUsuario", idUsuario);
 			      fragment.setArguments(argumentos);
 			      
@@ -107,8 +109,8 @@ public class ComparaCapacidad extends Fragment{
 		
 		if (ConnectionManager.connect(getActivity())) {
 		// construir llamada al servicio
-		//String request = LineaCarServices.obtenerConvocatorias;
-		//new getConvocatorias().execute(request);
+		  String request = LineaCarServices.obtenerConvocatorias;
+		  new getConvocatorias().execute(request);
 		}else {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -129,13 +131,13 @@ public class ComparaCapacidad extends Fragment{
 			
 			System.out.println("Recibido: " + result.toString());
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			List<ConvocatoriaDTO> Convocatorias = gson.fromJson(result,
-					new TypeToken<List<ConvocatoriaDTO>>(){}.getType());
+			List<OfertaLaboralMobilePostulanteDTO> Convocatorias = gson.fromJson(result,
+					new TypeToken<List<OfertaLaboralMobilePostulanteDTO>>(){}.getType());
 			
 			listaConv = Convocatorias;
 			
 			for(int i =0; i<listaConv.size();i++){
-				lista.add(listaConv.get(i).getNombre());
+				lista.add(listaConv.get(i).getNombreAreaPuesto());
 			}
 			
 			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
@@ -150,8 +152,9 @@ public class ComparaCapacidad extends Fragment{
 						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
 						Toast.LENGTH_SHORT).show(); */
 					
-					ConvSelec = listaConv.get(pos).getID(); //aqui idobjetivo selec
+					ConvSelec = listaConv.get(pos).getID(); //aqui idconvocatoria selec
 					titulo = parent.getItemAtPosition(pos).toString();
+					desc = listaConv.get(pos).getDescripcionOferta().toString();
 
 				  }
 				@Override
@@ -162,12 +165,20 @@ public class ComparaCapacidad extends Fragment{
 		}
 	}
 	
-	public class ConvocatoriaDTO {
+	public class OfertaLaboralMobilePostulanteDTO {
 		
 		private int ID ;
-		private String Nombre ;
+		private String NombreAreaPuesto;
+		//private String NombrePuesto;
+		//private String Nombre;
+		private String DescripcionOferta;
+		private int SueldoTentativo;
+		private List<FuncionDTO> Funciones;
+		private List<CompetenciaConPonderadoDTO> CompetenciasPonderadasPuesto;
+		private List<CompetenciaConPonderadoDTO> CompetenciasPonderadasColaborador;
+		private double MatchLevel;
 		
-		public ConvocatoriaDTO() {
+		public OfertaLaboralMobilePostulanteDTO() {
 		}
 		
 		public int getID() {
@@ -179,13 +190,156 @@ public class ComparaCapacidad extends Fragment{
 			ID = iD;
 		}
 		
+		//public String getNombre() {
+			//return Nombre;
+		//}
+
+
+		//public void setNombre(String nombre) {
+			//Nombre = nombre;
+		//}
+		
+		public String getNombreAreaPuesto() {
+			return NombreAreaPuesto;
+		}
+
+
+		public void setNombreAreaPuesto(String nombreareapuesto) {
+			NombreAreaPuesto = nombreareapuesto;
+		}
+		
+		public String getDescripcionOferta() {
+			return DescripcionOferta;
+		}
+
+
+		public void setDescripcionOferta(String descoferta) {
+			DescripcionOferta = descoferta;
+		}
+		
+		//public String getNombrePuesto() {
+			//return NombrePuesto;
+		//}
+
+
+		//public void setNombrePuesto(String nombrepuesto) {
+			//NombrePuesto = nombrepuesto;
+		//}
+		
+		public List<FuncionDTO> getFunciones() {
+			return Funciones;
+		}
+
+
+		public void setFunciones(List<FuncionDTO> funciones) {
+			Funciones = funciones;
+		}
+		
+		public List<CompetenciaConPonderadoDTO> getCompetenciasPonderadasPuesto() {
+			return CompetenciasPonderadasPuesto;
+		}
+
+
+		public void setCompetenciasPonderadasPuesto(List<CompetenciaConPonderadoDTO> competenciasponderadaspuesto) {
+			CompetenciasPonderadasPuesto = competenciasponderadaspuesto;
+		}
+		
+		public List<CompetenciaConPonderadoDTO> getCompetenciasPonderadasColaborador() {
+			return CompetenciasPonderadasColaborador;
+		}
+
+
+		public void setCompetenciasPonderadasColaborador(List<CompetenciaConPonderadoDTO> competenciasponderadascolaborador) {
+			CompetenciasPonderadasColaborador = competenciasponderadascolaborador;
+		}
+		
+		public int getSueldoTentativo() {
+			return SueldoTentativo;
+		}
+
+
+		public void setSueltoTentativo(int sueldotent) {
+			SueldoTentativo = sueldotent;
+		}
+		
+		public double getMatchLevel() {
+			return MatchLevel;
+		}
+
+		public void setMatchLevel(double matchlevel) {
+			MatchLevel = matchlevel;
+		}
+	}
+	
+	public class FuncionDTO {
+		
+		private int ID;
+		private String Nombre;
+		private int PuestoID;
+		private int Peso;
+		
+		public int getID() {
+			return ID;
+		}
+
+		public void setID(int iD) {
+			ID = iD;
+		}
+		
+		public int getPuestoID() {
+			return PuestoID;
+		}
+
+		public void setPuestoID(int iD) {
+			PuestoID = iD;
+		}
+		
 		public String getNombre() {
 			return Nombre;
 		}
 
-
 		public void setNombre(String nombre) {
 			Nombre = nombre;
+		}
+		
+		public int getPeso() {
+			return Peso;
+		}
+
+		public void setPeso(int peso) {
+			Peso = peso;
+		}
+		
+	}
+	
+	public class CompetenciaConPonderadoDTO {
+		
+		private int CompetenciaID;
+		private String CompetenciaNombre;
+		private double Ponderado;
+		
+		public int getCompetenciaID() {
+			return CompetenciaID;
+		}
+
+		public void setCompetenciaID(int competenciaid) {
+			CompetenciaID = competenciaid;
+		}
+		
+		public String getCompetenciaNombre() {
+			return CompetenciaNombre;
+		}
+
+		public void setCompetenciaNombre(String competencianombre) {
+			CompetenciaNombre = competencianombre;
+		}
+		
+		public double getPonderado() {
+			return Ponderado;
+		}
+
+		public void setPonderado(double ponderado) {
+			Ponderado = ponderado;
 		}
 	}
 }

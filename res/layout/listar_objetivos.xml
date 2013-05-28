@@ -4,5 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+   	<Spinner
+		android:id="@+id/spinnerMisObjsPeriodo"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" />
+    
+    <ExpandableListView
+        android:id="@+id/listaObjetivos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ExpandableListView>
 
 </LinearLayout>

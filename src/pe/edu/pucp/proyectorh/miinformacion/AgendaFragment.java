@@ -15,9 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class AgendaFragment extends Fragment {
 
@@ -89,7 +90,6 @@ public class AgendaFragment extends Fragment {
 			}
 		});
 
-		
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
@@ -102,17 +102,30 @@ public class AgendaFragment extends Fragment {
 						day = "0" + day;
 					}
 					// return chosen date as string format
-//					intent.putExtra(
-//							"date",
-//							android.text.format.DateFormat.format("yyyy-MM",
-//									month) + "-" + day);
-////					getActivity().setResult(RESULT_OK, intent);
-//					getActivity().setResult(0, intent);
-//					getActivity().finish();
+					// intent.putExtra(
+					// "date",
+					// android.text.format.DateFormat.format("yyyy-MM",
+					// month) + "-" + day);
+					// // getActivity().setResult(RESULT_OK, intent);
+					// getActivity().setResult(0, intent);
+					// getActivity().finish();
 				}
 
 			}
 		});
+
+		gridview.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view,
+					int position, long id) {
+				SemanaFragment fragment = new SemanaFragment();
+				getActivity().getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
+				return false;
+			}
+		});
+
 		llamarServicioEventos();
 		return rootView;
 	}
@@ -128,7 +141,7 @@ public class AgendaFragment extends Fragment {
 	}
 
 	public void onNewIntent(Intent intent) {
-		intent.putExtra("date", "2013-5-20");
+		intent.putExtra("date", "2013-4-21");
 		String date = intent.getStringExtra("date");
 		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
 		month.set(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),

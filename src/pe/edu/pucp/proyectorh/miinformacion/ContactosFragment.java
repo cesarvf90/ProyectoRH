@@ -19,6 +19,7 @@ import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
+import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
@@ -58,16 +59,13 @@ public class ContactosFragment extends Fragment {
 	}
 
 	private void llamarServicioContactos() {
-		// TODO cvasquez: llamar al servicio que devuelve los contactos del
-		// usuario
 		obtenerContactos(LoginActivity.getUsuario());
 	}
 
 	/**
-	 * Llama al ws de validacion de usuario
+	 * Llama al servicio que obtiene los contactos del usuario
 	 * 
 	 * @param usuario
-	 * @param contrasena
 	 */
 	private void obtenerContactos(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
@@ -76,14 +74,7 @@ public class ContactosFragment extends Fragment {
 					+ usuario.getID();
 			new ObtencionContactos().execute(request);
 		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Error de conexión");
-			builder.setMessage(ConstanteServicio.MENSAJE_PROBLEMA_CONEXION);
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
@@ -217,8 +208,7 @@ public class ContactosFragment extends Fragment {
 								.getJSONObject(i);
 						Colaborador contacto = new Colaborador();
 						contacto.setId(contactoObject.getString("ID"));
-						contacto.setNombres(contactoObject
-								.getString("Nombre"));
+						contacto.setNombres(contactoObject.getString("Nombre"));
 						contacto.setApellidos(contactoObject
 								.getString("ApellidoPaterno")
 								+ Constante.CADENA_VACIA
@@ -226,19 +216,20 @@ public class ContactosFragment extends Fragment {
 						contacto.setArea(contactoObject.getString("Area"));
 						contacto.setAreaID(contactoObject.getString("AreaID"));
 						contacto.setPuesto(contactoObject.getString("Puesto"));
-						contacto.setPuestoID(contactoObject.getString("PuestoID"));
+						contacto.setPuestoID(contactoObject
+								.getString("PuestoID"));
 						contacto.setTelefono(contactoObject
 								.getString("Telefono"));
 						contacto.setDireccion(contactoObject
 								.getString("Direccion"));
 						contacto.setPaisID(contactoObject.getString("PaisID"));
 						// TODO cvasquez: parsear de string a date
-//						contacto.setFechaNacimiento(contactoObject.getString("FechaNacimiento"));
+						// contacto.setFechaNacimiento(contactoObject.getString("FechaNacimiento"));
 						contacto.setFechaNacimiento(new Date(2012, 3, 7));
-//						contacto.setFechaIngreso(contactoObject
-//									.getString("FechaIngreso"));
+						// contacto.setFechaIngreso(contactoObject
+						// .getString("FechaIngreso"));
 						contacto.setFechaIngreso(new Date(2012, 3, 7));
-						 contacto.setTipoDocumentoID(contactoObject
+						contacto.setTipoDocumentoID(contactoObject
 								.getString("TipoDocumentoID"));
 						contacto.setCentroEstudios(contactoObject
 								.getString("CentroEstudios"));
@@ -246,16 +237,18 @@ public class ContactosFragment extends Fragment {
 								.getString("NumeroDocumento"));
 						contacto.setCorreoElectronico(contactoObject
 								.getString("CorreoElectronico"));
-						
+
 						contactos.add(contacto);
 					}
 
 					mostrarContactos();
 				}
 			} catch (JSONException e) {
-				mostrarErrorComunicacion(e.toString());
+				ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
+//				mostrarErrorComunicacion(e.toString());
 			} catch (NullPointerException ex) {
-				mostrarErrorComunicacion(ex.toString());
+				ErrorServicio.mostrarErrorComunicacion(ex.toString(), getActivity());
+//				mostrarErrorComunicacion(ex.toString());
 			}
 		}
 	}
@@ -286,25 +279,16 @@ public class ContactosFragment extends Fragment {
 		}
 	}
 
-	private void mostrarErrorComunicacion(String excepcion) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Error de servicio");
-		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
-				+ excepcion.toString());
-		builder.setCancelable(false);
-		builder.setPositiveButton("Ok", null);
-		builder.create();
-		builder.show();
-	}
-
 	private void mostrarContactos() {
 		ListView listaContactos = (ListView) rootView
 				.findViewById(R.id.mi_info_lista_contactos);
 		Collections.sort(contactos, new Comparator<Colaborador>() {
 
 			@Override
-			public int compare(Colaborador colaborador1, Colaborador colaborador2) {
-				return colaborador1.toString().compareTo(colaborador2.toString());
+			public int compare(Colaborador colaborador1,
+					Colaborador colaborador2) {
+				return colaborador1.toString().compareTo(
+						colaborador2.toString());
 
 			}
 		});

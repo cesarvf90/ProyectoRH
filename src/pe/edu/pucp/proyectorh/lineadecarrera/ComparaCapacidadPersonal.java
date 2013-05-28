@@ -1,8 +1,12 @@
 package pe.edu.pucp.proyectorh.lineadecarrera;
 
+import com.google.gson.Gson;
+
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.reportes.PerspectivaAdapter;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCObjetivos;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.DataObject;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.InterfaceChartLineal;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,17 +15,60 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.content.Context;
+import android.webkit.WebView;
+
 
 public class ComparaCapacidadPersonal extends Fragment {
 
 	int idConvocatoria;
 	//GridView gridView;
+	private WebView browser;
+	private Spinner spinnerRequisitos;
 	
 	public ComparaCapacidadPersonal(){
 		
 	}
+	
+	public class DataObject {
+		String[] lineax = new String[] { 
+				"Área-Puesto"};
+		
+		int[] avance = new int[] {100};
+		int[] avance2 = new int[] {84}; 
+		
+	}
+	
+	public class InterfaceChartLineal {
+		Context mContext;
+
+	    /** Instantiate the interface and set the context */
+	    InterfaceChartLineal(Context c) {
+	        mContext = c;
+	    }
+	    
+	    public String getData(){
+	    	
+	    	DataObject obj = new DataObject();
+	    	Gson gson = new Gson();
+	    	 
+	    	// convert java object to JSON format,
+	    	// and returned as JSON formatted string
+	    	String json = gson.toJson(obj);
+	    	System.out.println(json);
+	    	return json;
+	    }
+	    
+	    public String getTituloGraf(){
+
+	    	return "Nivel de Cumplimiento para el puesto";
+	    }
+	    
+	}
+	    
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,14 +83,27 @@ public class ComparaCapacidadPersonal extends Fragment {
 		View rootView = inflater.inflate(R.layout.comparacap2per,
 				container, false);
 		
-		String titulo = getArguments().getString("titulo");
+		browser = (WebView)rootView.findViewById(R.id.comparaCap1WebkitGLineal);
+		
+		//habilitamos javascript y flash
+		browser.getSettings().setJavaScriptEnabled(true);
+		browser.getSettings().setPluginsEnabled(true);
+		browser.addJavascriptInterface(new InterfaceChartLineal(rootView.getContext()), "Android");
+		
+		browser.loadUrl("file:///android_asset/ComparaCapPerbarchart.html");
+		
+		spinnerRequisitos = (Spinner) rootView.findViewById(R.id.comp_puesto_requi);
+		
+		String tituloconv = getArguments().getString("titulo");
+		String descrip = getArguments().getString("desc");
 		idConvocatoria = getArguments().getInt("convocSelec");
 		String usuario = getArguments().getString("IdUsuario");
 		
 		TextView textView = (TextView)rootView.findViewById(R.id.CompCapConvSelec);
-		textView.setText(titulo);
+		textView.setText(tituloconv);
 		
 		TextView textView2 = (TextView)rootView.findViewById(R.id.comp_puesto_descrip);
+		textView2.setText(descrip);
 		
 		//gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
 		//gridView.setAdapter(new PerspectivaAdapter(rootView.getContext(), perspectivas));

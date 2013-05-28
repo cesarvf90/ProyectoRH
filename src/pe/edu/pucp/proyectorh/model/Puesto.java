@@ -14,6 +14,10 @@ public class Puesto {
 	private String descripcion;
 	private int puestoSuperiorID;
 
+	public Puesto(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public Puesto(Area area, String nombre) {
 		this.area = area;
 		this.nombre = nombre;

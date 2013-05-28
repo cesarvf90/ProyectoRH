@@ -8,23 +8,27 @@
         android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="30dp"
             android:text="@string/mi_info_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
-
     </LinearLayout>
 
     <TableLayout
         android:id="@+id/mi_info_tableLayout1"
         android:layout_width="700dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mi_info_title_layout" >
+        android:layout_below="@+id/mi_info_title_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" >
 
         <TableRow android:id="@+id/mi_info_tableRow1" >
 
@@ -39,8 +43,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_nombres"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -48,6 +53,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_nombres"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -66,8 +72,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_apellidos"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -75,6 +82,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_apellidos"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -93,8 +101,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_area"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -102,6 +111,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_area"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -120,8 +130,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_puesto"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -129,6 +140,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_cargo"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -147,8 +159,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_email"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -156,6 +169,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_email"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -174,8 +188,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_anexo"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -183,6 +198,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_anexo"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -201,8 +217,9 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:background="@drawable/tabla_tag"
                     android:text="@string/mi_info_fecha_ingreso"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -210,6 +227,7 @@
                     android:layout_width="240dp"
                     android:layout_height="40dp"
                     android:layout_weight="3"
+                    android:background="@drawable/tabla_value"
                     android:text="@string/mi_info_value_fecha_ingreso"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -219,9 +237,21 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="109dp" >
-
+        android:layout_alignLeft="@+id/mi_info_tableLayout1"
+        android:layout_below="@+id/mi_info_tableLayout1"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="103dp" >
     </LinearLayout>
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mi_info_tableLayout1"
+        android:layout_alignRight="@+id/mi_info_tableLayout1"
+        android:layout_below="@+id/mi_info_tableLayout1"
+        android:layout_marginTop="66dp"
+        android:text="* Para actualizar su información, por favor visite la web\n http://dp2kendo.apphb.com/ o póngase en contacto con su supervisor."
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="50dp"
-        android:text="Seleccione periodo" />
+        android:text="Seleccione periodo"/>
     
     <Spinner
         android:id="@+id/reportebscspinner"
