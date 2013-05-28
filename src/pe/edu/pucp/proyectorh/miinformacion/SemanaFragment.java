@@ -20,7 +20,8 @@ public class SemanaFragment extends Fragment {
 	private View rootView;
 	private ArrayList<Evento> eventos;
 
-	public SemanaFragment() {
+	public SemanaFragment(ArrayList<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 	@Override

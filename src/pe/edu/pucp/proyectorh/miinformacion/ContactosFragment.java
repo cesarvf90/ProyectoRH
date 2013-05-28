@@ -244,11 +244,11 @@ public class ContactosFragment extends Fragment {
 					mostrarContactos();
 				}
 			} catch (JSONException e) {
-				ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
-//				mostrarErrorComunicacion(e.toString());
+				ErrorServicio.mostrarErrorComunicacion(e.toString(),
+						getActivity());
 			} catch (NullPointerException ex) {
-				ErrorServicio.mostrarErrorComunicacion(ex.toString(), getActivity());
-//				mostrarErrorComunicacion(ex.toString());
+				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
+						getActivity());
 			}
 		}
 	}

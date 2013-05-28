@@ -95,7 +95,9 @@ public class ConfirmacionEvaluacion extends Fragment {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								llamarServicioEnviarRespuestas();
+								// TODO cvasquez: coordinar servicio de enviar
+								// respuestas
+								// llamarServicioEnviarRespuestas();
 								dialog.cancel();
 							}
 
