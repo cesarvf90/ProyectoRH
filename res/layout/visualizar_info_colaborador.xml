@@ -250,8 +250,8 @@
         android:layout_alignRight="@+id/mi_info_tableLayout1"
         android:layout_below="@+id/mi_info_tableLayout1"
         android:layout_marginTop="66dp"
-        android:text="* Para actualizar su información, por favor visite la web\n http://dp2kendo.apphb.com/ o póngase en contacto con help desk."
+        android:text="* Para actualizar su información, por favor visite la web\n http://dp2kendo.apphb.com/ o póngase en contacto con Help Desk."
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 </RelativeLayout>

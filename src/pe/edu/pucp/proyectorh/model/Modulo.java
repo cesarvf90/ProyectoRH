@@ -84,8 +84,9 @@ public class Modulo {
 		submodulos
 				.add(new ModuloItem("2", "Aceptar solicitudes de oferta laboral"));
 		submodulos.add(new ModuloItem("3", "Aceptar solicitudes de promoción"));
-		submodulos.add(new ModuloItem("4", "Evaluar postulante"));
-		submodulos.add(new ModuloItem("5", "Postular a convocatoria"));
+		submodulos.add(new ModuloItem("4", "Evaluar postulantes 2ra fase"));
+		submodulos.add(new ModuloItem("5", "Evaluar postulantes 3ra fase"));
+		submodulos.add(new ModuloItem("6", "Postular a convocatoria"));
 		return submodulos;
 	}
 
