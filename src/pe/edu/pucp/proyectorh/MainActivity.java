@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
@@ -139,16 +140,21 @@ public class MainActivity extends FragmentActivity implements
 				if (id.equals("2")) {// Mis Objetivos
 					MisObjetivos fragment = new MisObjetivos();
 					fragment.indicador=MisObjetivos.IND_MISOBJS;
-					getSupportFragmentManager().beginTransaction()
-							.replace(R.id.opcion_detail_container, fragment)
+					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
 				if (id.equals("3")) {// Objetivos Subordinados
 					MisObjetivos fragment = new MisObjetivos();
 					fragment.indicador=MisObjetivos.IND_SUBORD;
-					getSupportFragmentManager().beginTransaction()
-							.replace(R.id.opcion_detail_container, fragment)
-							.commit();
+					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
+						.commit();
+
+					//MisObjetivos fragment = new MisObjetivos();
+					//fragment.indicador=MisObjetivos.IND_SUBORD;
+					//getSupportFragmentManager().beginTransaction()
+					//		.replace(R.id.opcion_detail_container, fragment)
+					//		.commit();
+
 				}
 				if (id.equals("4")) {// Registrar Avance
 

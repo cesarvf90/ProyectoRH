@@ -186,18 +186,20 @@ public class ObjetivosEmpresa extends Fragment {
 
 		    EditText descripObj = new EditText(contexto);
 		    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-		  
+
 		    descripObj.setText(szNombre);
 		    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
 		    fila.addView(descripObj);
 			
 		    EditText peso = new EditText(contexto);
 		    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
+
 		    peso.setText(szPeso);
 		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
 		    fila.addView(peso);
 		    
 		    TextView creador = new TextView(contexto);
+
 		    creador.setText(szCreador);
 		    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 		    fila.addView(creador);
