@@ -321,6 +321,7 @@ public class MisSubordinados extends Fragment {
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			elMenuDeSubordinados.setAdapter(dataAdapter);
 			
+//			Colaborador.consultarColaboradoresDelServidorDeProduccion();
 			
 			return rootView;
 		}			
