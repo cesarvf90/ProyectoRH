@@ -59,8 +59,8 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		
 		spinnerPuesto = (Spinner) rootView.findViewById(R.id.reportecubspinner);
 		lista = new ArrayList<String>();
-		titulo="Puesto X";
-		//obtenerlistaPuestos();
+		//titulo="Puesto X";
+		obtenerlistaPuestos();
 
 		btnSubmit = (Button) rootView.findViewById(R.id.reportecubbtnConsultar);
 		
@@ -122,7 +122,7 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 
 			System.out.println("Recibido: " + result.toString());
 
-			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+			Gson gson = new GsonBuilder().create();
 			puestos = gson.fromJson(result,
 					new TypeToken<List<PuestoDTO>>(){}.getType());
 			
