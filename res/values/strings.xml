@@ -68,5 +68,6 @@
     <string name="fecha_fin_evento">Fecha de fin</string>
     <string name="creador_evento">Creador</string>
     <string name="invitados_evento">Invitados</string>
+    <string name="reclut_postular_lab_title">Postular a Oferta Laboral</string>
 
 </resources>

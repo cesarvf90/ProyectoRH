@@ -272,7 +272,7 @@ public class EvaluacionPostulante extends Fragment {
 	}
 
 	private boolean seEvaluo(int puntaje) {
-		return puntaje > 1 ? true : false;
+		return puntaje > 0 ? true : false;
 	}
 
 	private void obtenerEvaluacionPostulante() {
@@ -304,7 +304,7 @@ public class EvaluacionPostulante extends Fragment {
 						Funcion funcion = new Funcion();
 						funcion.setID(funcionObject.getInt("ID"));
 						funcion.setDescripcion(funcionObject
-								.getString("Descripcion"));
+								.getString("Nombre"));
 						funcion.setPuestoID(funcionObject.getString("PuestoID"));
 						funciones.add(funcion);
 					}
