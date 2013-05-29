@@ -17,6 +17,32 @@ public class Objetivo {
 	private ArrayList<AvanceDeObjetivo> susAvances;
 	private Colaborador dueño;
 	
+	public static ArrayList<Objetivo> solicitarServidorPorData()
+	{
+		
+		Colaborador admin = new Colaborador();
+		admin.setNombres("admin");
+		admin.setId("1");	
+		
+		ArrayList<Objetivo> datosSupuestamenteDelServidor = new ArrayList<Objetivo>();
+		
+		try {
+			datosSupuestamenteDelServidor.add(new Objetivo(
+					"1", "Aumentar las ventas", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2013"),
+					new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2013"), 20,
+					new ArrayList<AvanceDeObjetivo>(), admin));
+			return datosSupuestamenteDelServidor;
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		ArrayList<Objetivo> nada = null;
+		
+		return nada;
+	}
+	
 	public static ArrayList<Objetivo> tomarPrestadoDataDePrueba()
 	{
 		Colaborador admin = new Colaborador();

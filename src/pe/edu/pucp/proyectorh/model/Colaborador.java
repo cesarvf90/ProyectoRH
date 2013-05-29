@@ -3,6 +3,14 @@ package pe.edu.pucp.proyectorh.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase.ObtencionOfertas;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ErrorServicio;
+import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 
 /**
@@ -34,7 +42,29 @@ public class Colaborador {
 	private String Sueldo;
 	private String resumenEjecutivo;
 	private String estadoColaboradorID;
+	
+	public static ArrayList<String> consultarColaboradoresDelServidorDeProduccion()
+	{
+		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
 
+		
+		new UnaConsultaDeDatos().execute(direccionDeDestino);
+		
+		ArrayList<String> empleadosConSusDatos = new ArrayList<String>();
+		
+		empleadosConSusDatos.add("Todos los empleados");
+		
+		return empleadosConSusDatos;
+		
+	}
+
+	public static class UnaConsultaDeDatos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String loQueRespondio) {
+			System.out.println("Recibido: " + loQueRespondio.toString());
+		}
+	}	
+	
 	public static ArrayList<String> tomarPrestadoDataDePrueba() {
 		
 		String rchavez = "Chávez Alcántara, Rodrigo";
