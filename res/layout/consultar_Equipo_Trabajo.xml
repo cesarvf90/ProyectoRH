@@ -28,6 +28,7 @@
                 android:id="@+id/equipo_trabajo_cabecera_jefe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:text="@string/equipo_trabajo_jefe"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -49,6 +50,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/equipo_trabajo_title_layout"
+        android:layout_marginTop="25dp"
         android:textSize="260sp" >
 
     </ExpandableListView>
@@ -59,6 +61,7 @@
         android:layout_height="50dp"
         android:layout_alignRight="@+id/equipo_trabajo_detalle_contacto_part"
         android:layout_below="@+id/equipo_trabajo_title_layout"
+        android:layout_marginTop="25dp"
         android:layout_toRightOf="@+id/equipo_trabajo_contactos_list"
         android:orientation="vertical" >
 
@@ -76,8 +79,9 @@
     <LinearLayout
         android:id="@+id/equipo_trabajo_detalle_contacto_part"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/equipo_trabajo_cabecera_layout"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/equipo_trabajo_contactos_list"
         android:orientation="horizontal" >
 
@@ -113,6 +117,7 @@
                 android:text="@string/equipo_trabajo_email"
                 android:textColor="@android:color/black"
                 android:textSize="22sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -154,5 +159,15 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/equipo_trabajo_detalle_contacto_part"
+        android:layout_below="@+id/equipo_trabajo_detalle_contacto_part"
+        android:layout_marginTop="53dp"
+        android:textSize="16sp"
+        android:text="* Indica que el colaborador no tiene actualizada su información." />
 
 </RelativeLayout>

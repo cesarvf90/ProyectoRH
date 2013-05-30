@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/reclut_title_layout"
         android:layout_width="fill_parent"
-        android:layout_height="100px"
+        android:layout_height="50px"
         android:layout_alignParentTop="true"
         android:orientation="horizontal" >
 
@@ -63,14 +63,28 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cargo:"
+                android:text="Puesto:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha de Publicación:"
+                android:text="Nro. Vacantes:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sueldo Tentativo:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha Requerimiento:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -91,18 +105,18 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
-                android:text="Comentarios:"
+                android:text="Descripción:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
-                android:text="Observación:"
+                android:text="Comentarios:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
-            <LinearLayout 
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -111,7 +125,7 @@
                 <Button
                     android:id="@+id/reclu_btn_Validar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"                    
+                    android:layout_height="wrap_content"
                     android:text="Aprobar" />
 
                 <Button
@@ -119,7 +133,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rechazar" />
-
             </LinearLayout>
         </LinearLayout>
 
@@ -133,44 +146,60 @@
                 android:id="@+id/reclut_area_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="  "
                 android:textColor="@android:color/black"
-                android:text="  "	
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/reclut_cargo_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
                 android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/reclut_nro_vacantes_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/reclut_sueldo_tentativo_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/reclut_fecha_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
                 android:text="  "
+                android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/reclut_modo_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
                 android:text="  "
+                android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/reclut_responsable_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
                 android:text="  "
+                android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/reclut_comentarios_input"
+                android:id="@+id/reclut_descripcion_input"
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
                 android:ems="10"
@@ -179,7 +208,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/reclut_observacion_input"
+                android:id="@+id/reclut_comentarios_input"
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
                 android:editable="false"
