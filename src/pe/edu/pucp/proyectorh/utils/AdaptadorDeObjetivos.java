@@ -12,8 +12,6 @@ import android.widget.TextView;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
 import pe.edu.pucp.proyectorh.model.Objetivo;
-import pe.edu.pucp.proyectorh.model.OfertaLaboral;
-import pe.edu.pucp.proyectorh.model.Postulante;
 
 public class AdaptadorDeObjetivos extends BaseExpandableListAdapter {
 	

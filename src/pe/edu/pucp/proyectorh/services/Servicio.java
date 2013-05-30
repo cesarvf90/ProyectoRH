@@ -54,6 +54,8 @@ public class Servicio {
 
 	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 
+	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivosSuperiores";
+
 	
 	/**
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral

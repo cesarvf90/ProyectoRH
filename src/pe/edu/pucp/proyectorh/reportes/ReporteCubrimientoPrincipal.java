@@ -10,8 +10,6 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getPeriodos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
