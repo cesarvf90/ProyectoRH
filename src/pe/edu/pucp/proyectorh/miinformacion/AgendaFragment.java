@@ -53,7 +53,7 @@ public class AgendaFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.calendar, container, false);
 
-//		llamarServicioEventos();
+		// llamarServicioEventos();
 
 		month = Calendar.getInstance();
 		onNewIntent(getActivity().getIntent());
@@ -172,8 +172,11 @@ public class AgendaFragment extends Fragment {
 	private void llamarServicioEventos() {
 		// TODO cvasquez: llamar servicio para consultar eventos del usuario
 		if (ConnectionManager.connect(getActivity())) {
-			String request = Servicio.ObtenerEventos + "?id="
-					+ LoginActivity.getUsuario().getID();
+			String fechaDesde = "28/05/2013%2000:00:00";
+			String fechaHasta = "30/07/2013%2023:59:59";
+			String request = Servicio.ObtenerEventos + "?colaboradorID="
+					+ LoginActivity.getUsuario().getID() + "&fechaDesde="
+					+ fechaDesde + "&fechaHasta=" + fechaHasta;
 			new ObtencionEventos().execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());

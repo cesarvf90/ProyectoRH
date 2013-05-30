@@ -27,22 +27,21 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AprobarSolicitudOfertaLaboral extends Fragment {
+public class PostularOfertaLaboral extends Fragment {
 
 	private View rootView;
 	private View layoutVacio;
-	private ListView listaSolicitudes;
+	private ListView listaOfertasLaborales;
 	private ArrayAdapter<SolicitudOfertaLaboral> solicitudesAdapter;
 	private ArrayList<SolicitudOfertaLaboral> solicitudes = null;
 	private static final String OPERACION_VALIDA = "true";
 	private static final String OPERACION_INVALIDA = "false";
 	private int IDSolicitudSeleccionada;
 	private Button aceptarButton;
-	private Button rechazarButton;
 	private int posicionLista = -1;
 	private SolicitudOfertaLaboral solicitud;
 
-	public AprobarSolicitudOfertaLaboral() {
+	public PostularOfertaLaboral() {
 	}
 
 	@Override
@@ -54,13 +53,11 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(
-				R.layout.aprobar_solicitud_oferta_laboral, container, false);
-		this.listaSolicitudes = (ListView) rootView
-				.findViewById(R.id.reclut_lista_solicit_of_laboral);
+				R.layout.postular_oferta_laboral, container, false);
+		this.listaOfertasLaborales = (ListView) rootView
+				.findViewById(R.id.reclut_lista_ofertas_laborales);
 		this.aceptarButton = (Button) this.rootView
 				.findViewById(R.id.reclu_btn_Validar);
-		this.rechazarButton = (Button) this.rootView
-				.findViewById(R.id.reclu_btn_Rechazar);
 
 		// Llamamos al WS que poblará "solicitudes"
 		// llamarServiciosAprobarSolicitudOfertaLaboral("laboral");
@@ -70,8 +67,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			this.solicitudesAdapter = new ArrayAdapter<SolicitudOfertaLaboral>(
 					this.getActivity(), android.R.layout.simple_list_item_1,
 					solicitudes);
-			listaSolicitudes.setAdapter(solicitudesAdapter);
-			listaSolicitudes
+			listaOfertasLaborales.setAdapter(solicitudesAdapter);
+			listaOfertasLaborales
 					.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 						@Override
 						public void onItemClick(AdapterView<?> parent,
@@ -96,8 +93,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 					if ((solicitudes.size() > 0) && (posicionLista != -1)) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								getActivity());
-						builder.setTitle("Validar Solicitud Oferta Laboral");
-						builder.setMessage("¿Desea aprobar la solicitud de oferta laboral?");
+						builder.setTitle("Postular a Oferta Laboral");
+						builder.setMessage("¿Desea postular a la oferta laboral?");
 						builder.setCancelable(false);
 						builder.setNegativeButton("Cancelar",
 								new DialogInterface.OnClickListener() {
@@ -143,58 +140,6 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				}
 			});
 
-			rechazarButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if ((solicitudes.size() > 0) && (posicionLista != -1)) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								getActivity());
-						builder.setTitle("Validar Solicitud Oferta Laboral");
-						builder.setMessage("¿Desea rechazar la solicitud de oferta laboral?");
-						builder.setCancelable(false);
-						builder.setNegativeButton("Cancelar",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.cancel();
-									}
-								});
-						builder.setPositiveButton("Aceptar",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										if (posicionLista != -1) {
-											solicitudes.remove(posicionLista);
-											solicitudesAdapter
-													.notifyDataSetChanged();
-											// comunicarle al ws que se rechazo
-											// solicitud oferta
-											// laboral
-
-											EditText observacion = (EditText) rootView
-													.findViewById(R.id.reclut_comentarios_input);
-											// enviarMensajeWS(rechazada,
-											// IDSolicitudSeleccionada,
-											// observacion);
-											posicionLista = -1; // volvemos a
-																// colocar el
-																// boton en -1
-											SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-											mostrarSolicitudSeleccionada(nueva);
-										}
-										dialog.cancel();
-									}
-
-								});
-						builder.create();
-						builder.show();
-					}
-
-				}
-			});
 			return rootView;
 		} else {
 			// Caso contrario, mostramos una vista vacía
@@ -239,13 +184,13 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
 			if (procesaRespuesta(respuesta)) {
-				JSONArray listaSolicitudes = (JSONArray) jsonObject
+				JSONArray listaOfertasLaborales = (JSONArray) jsonObject
 						.get("data");
 
 				JSONObject solicitudObject;
 				solicitudes = new ArrayList<SolicitudOfertaLaboral>();
-				for (int i = 0; i < listaSolicitudes.length(); i++) {
-					solicitudObject = listaSolicitudes.getJSONObject(i);
+				for (int i = 0; i < listaOfertasLaborales.length(); i++) {
+					solicitudObject = listaOfertasLaborales.getJSONObject(i);
 
 					solicitud = new SolicitudOfertaLaboral(
 							solicitudObject.getInt("ID"),

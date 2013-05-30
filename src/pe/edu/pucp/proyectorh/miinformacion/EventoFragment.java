@@ -58,7 +58,8 @@ public class EventoFragment extends Fragment {
 		fechaFinText.setText(evento.getFechaFin());
 		TextView creadorEventoText = (TextView) rootView
 				.findViewById(R.id.creador_evento_content);
-		creadorEventoText.setText(evento.getCreador().getNombres());
+		creadorEventoText.setText(evento.getCreador().getNombres()
+				+ evento.getCreador().getApellidos());
 
 		ListView listaInvitados = (ListView) rootView
 				.findViewById(R.id.lista_invitados_evento);
