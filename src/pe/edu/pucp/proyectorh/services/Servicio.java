@@ -36,7 +36,7 @@ public class Servicio {
 	/**
 	 * Servicio que retorna las eventos del usuario
 	 */
-	public final static String ObtenerEventos = "http://dp2kendo.apphb.com/WSOfertaLaboral/getFunciones";
+	public final static String ObtenerEventos = "http://dp2kendo.apphb.com/WSEvento/getEventos";
 
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
