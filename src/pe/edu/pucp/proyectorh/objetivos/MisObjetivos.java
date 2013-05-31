@@ -3,37 +3,27 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 public class MisObjetivos extends Fragment {
 	
@@ -53,6 +43,7 @@ public class MisObjetivos extends Fragment {
 	ExpandableListView listaObjs;
 	
 	Context contexto;
+	ObjetivosExpandableAdapter adapter;
 	
 	private ArrayList<ObjetivosBSC> groups;
 	private ArrayList<ArrayList<ObjetivosBSC>> childs;
@@ -177,29 +168,46 @@ public class MisObjetivos extends Fragment {
 	}
 	
 	
-	public void cargaObjs(){
-		objsPadre = new ArrayList<ObjetivosBSC>();
-		objsHijos = new ArrayList<ObjetivosBSC>();
-	}
-	
-
     private void loadData(ArrayList<ObjetivosBSC> listObjetivosBSC){
     	for(int i=0;i<listObjetivosBSC.size();i++){
     		System.out.println("agrega obj="+listObjetivosBSC.get(i).Nombre);
     		groups.add(listObjetivosBSC.get(i));
-    		
-    		childs.add(new ArrayList<ObjetivosBSC>());
-    		//TableFila fila = agregaFila(auxPerspectiva,objBSC,flagUltimo);
-    		
-    		
-        	for(int j=0; j<3;j++){
-        	    childs.get(groups.size()-1).add(new ObjetivosBSC("prueba gg"+i));
-        	}
+      	}
+    	
+    	ListadoObjetivosChild lo = new ListadoObjetivosChild();
+    	String rutaLlamada ="";
+
+    	if(indicador==IND_MISOBJS){
+    		System.out.println("MIS OBJETIVOS 2");
+			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
+	    	System.out.println("Ruta-Hijos="+rutaLlamada);
+			Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
+    	}else if(indicador==IND_SUBORD){
+    		System.out.println("MIS SUBORDINADOS 2");
+			//rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
     	}
+    	
 
     	System.out.println("new adapter");
-    	ObjetivosExpandableAdapter adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
+    	adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
     	listaObjs.setAdapter(adapter);
+    }
+    
+    private ArrayList<ObjetivosBSC> obtenerHijos(int idPadre, ArrayList<ObjetivosBSC> listObjetivosBSC){
+    	ArrayList<ObjetivosBSC> hijos = new ArrayList<ObjetivosBSC>();
+    	for(int i=0;i<listObjetivosBSC.size();i++){
+    		if(listObjetivosBSC.get(i).ObjetivoPadreID==idPadre){
+    			hijos.add(listObjetivosBSC.get(i));
+    		}
+    	}
+    	return hijos;
+    }
+    
+    private void loadDataChild(ArrayList<ObjetivosBSC> listObjetivosBSC){
+    	for(int i=0;i<groups.size();i++){
+    		childs.add(obtenerHijos(groups.get(i).ID,listObjetivosBSC));
+    	}
+    	adapter.actualizaHijos(childs);
     }
     
     public boolean isAdmin(){
@@ -214,18 +222,11 @@ public class MisObjetivos extends Fragment {
     	String rutaLlamada ="";
     	
     	if(indicador==IND_MISOBJS){
-    		System.out.println("MIS OBJETIVOS");    		
-    		if (isAdmin()){
-    			System.out.println("ES ADMIN");
-    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?BSCID="+periodoBSCActual; //CAMBIAR
-    		}else{
-    			System.out.println("ES EMPLEADO NORMAL");
-    			rutaLlamada = Servicio.ListarAllObjetivosBSC+"?idPeriodo="+periodoBSCActual; //CAMBIAR a listar objetivos propuestos
-    		}
-    	    	
+    		System.out.println("MIS OBJETIVOS");
+    		rutaLlamada = Servicio.ListarMisObjetivosSuperiores+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual;
     	}else if(indicador==IND_SUBORD){
     		System.out.println("MIS SUBORDINADOS");
-			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; //CAMBIAR
+			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
     	}
     	
     	System.out.println("Ruta="+rutaLlamada);
@@ -238,6 +239,15 @@ public class MisObjetivos extends Fragment {
 			System.out.println("Recibido: " + result.toString());
 			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
 			loadData(listObjetivosBSC);
+		}
+	}
+
+	public class ListadoObjetivosChild extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("Recibido: " + result.toString());
+			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
+			loadDataChild(listObjetivosBSC);
 		}
 	}
 	

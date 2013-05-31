@@ -69,6 +69,10 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		idPersp = getArguments().getInt("idPerspectiva");
 		idPadre = getArguments().getInt("idPadre");
 		
+		System.out.println("periodo: " + idPeriodo);
+		System.out.println("persp: " + idPersp);
+		System.out.println("padre: " + idPadre);
+		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridObjetivos);
 		//llamar a WS
 		cargarObjetivos(idPadre,idPeriodo,idPersp);
@@ -76,8 +80,8 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		//gridView.setAdapter(new ObjetivoAdapter(rootView.getContext(),objetivos));
 		
 		
-		objpadre = getArguments().getString("objetivopadre");
-		nivel = getArguments().getInt("nivel");
+		//objpadre = getArguments().getString("objetivopadre");
+		//nivel = getArguments().getInt("nivel");
 		
 		//incrementar_nivel(nivel, objpadre);
 		
@@ -96,7 +100,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			
 			if (ConnectionManager.connect(getActivity())) {
 				// construir llamada al servicio
-				String request = ReporteServices.obtenerObjetivosXPadre + "?PadreId=1";
+				String request = ReporteServices.obtenerObjetivosXBCS + "?BSCId=" + idPerspectiva + "&idperiodo=1" ; // + idPeriodo
 
 				new getObjetivos().execute(request);
 				
@@ -160,7 +164,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 				public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 					
-					if (nivel==2){
+					if ((listaObjetivos.get(position).getHijos()==0) && (listaObjetivos.get(position).getIdObjetivo() != 1)){
 						
 						Toast.makeText(v.getContext(),
 								"Objetivo de último nivel", Toast.LENGTH_SHORT).show();
@@ -171,7 +175,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 						Bundle b = new Bundle();
 						b.putInt("nivel",nivel + 1);
 						//String cadena = "" + ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-						String cadena = "idpadre: " + listaObjetivos.get(position).getIdObjetivo();
+						String cadena = listaObjetivos.get(position).getDescripcion();
 						b.putString("objetivopadre", cadena);
 						
 						b.putInt("idPadre",listaObjetivos.get(position).getIdObjetivo());
@@ -199,6 +203,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 							Bundle b = new Bundle();
 							String cadena = "" +  ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
 							b.putString("titulo", cadena);
+							b.putInt("idObjetivo",listaObjetivos.get(position).getIdObjetivo());
 							
 							ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
 							fragment.setArguments(b);

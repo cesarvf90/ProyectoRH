@@ -256,10 +256,10 @@ public class EvaluacionPostulante extends Fragment {
 		pregunta2Text.setText("2) " + funciones.get(1).getDescripcion());
 		TextView pregunta3Text = (TextView) rootView
 				.findViewById(R.id.pregunta3);
-		pregunta3Text.setText("3) " + funciones.get(3).getDescripcion());
+		pregunta3Text.setText("3) " + funciones.get(2).getDescripcion());
 		TextView pregunta4Text = (TextView) rootView
 				.findViewById(R.id.pregunta4);
-		pregunta4Text.setText("4) " + funciones.get(4).getDescripcion());
+		pregunta4Text.setText("4) " + funciones.get(3).getDescripcion());
 	}
 
 	private boolean seCompletoEvaluacion() {
@@ -338,15 +338,15 @@ public class EvaluacionPostulante extends Fragment {
 				31,
 				"Desarrollar el informe de cobertura / rentabilidad de zonas por campaña.",
 				puestoID);
-		Funcion funcion5 = new Funcion(
-				32,
-				"Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
-				puestoID);
+//		Funcion funcion5 = new Funcion(
+//				32,
+//				"Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
+//				puestoID);
 		funciones.add(funcion1);
 		funciones.add(funcion2);
 		funciones.add(funcion3);
 		funciones.add(funcion4);
-		funciones.add(funcion5);
+//		funciones.add(funcion5);
 	}
 
 	public void prepararRespuestasYEvaluacion() {
