@@ -17,6 +17,12 @@ public class Servicio {
 	public final static String InformacionPersonalService = "http://dp2kendo.apphb.com/WSColaborador/getColaborador";
 
 	/**
+	 * Servicio que devuelve el equipo de trabajo del usuario loggeado
+	 */
+	public final static String getEquipoTrabajo = "http://dp2kendo.apphb.com/WSColaborador/getEquipoTrabajo";
+	
+	
+	/**
 	 * Servicio que devuelve los contactos del usuario loggeado
 	 */
 	public final static String MisContactosService = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
@@ -59,7 +65,7 @@ public class Servicio {
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral
 	 * pendientes de aprobar
 	 */
-	public final static String AprobarSolicitudOfertaLaboral = "";
+	public final static String AprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
 	/**
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una
 	 * oferta laboral (android devuelve 1 o 0 al WS)

@@ -52,8 +52,8 @@ public class PostularOfertaLaboral extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(
-				R.layout.postular_oferta_laboral, container, false);
+		this.rootView = inflater.inflate(R.layout.postular_oferta_laboral,
+				container, false);
 		this.listaOfertasLaborales = (ListView) rootView
 				.findViewById(R.id.reclut_lista_ofertas_laborales);
 		this.aceptarButton = (Button) this.rootView
@@ -82,7 +82,7 @@ public class PostularOfertaLaboral extends Fragment {
 							// solicitudes.get(position).getSolicitudID();
 
 							IDSolicitudSeleccionada = solicitudes.get(position)
-									.getSolicitudID();
+									.getID();
 							posicionLista = position;
 						}
 					});
@@ -194,15 +194,16 @@ public class PostularOfertaLaboral extends Fragment {
 
 					solicitud = new SolicitudOfertaLaboral(
 							solicitudObject.getInt("ID"),
-							solicitudObject.getString("area"),
-							solicitudObject.getString("cargo"),
+							solicitudObject.getString("Area"),
+							solicitudObject.getString("Puesto"),
+							solicitudObject.getInt("NumeroVacantes"),
+							solicitudObject.getInt("SueldoTentativo"),
 							formatoFecha.parse(solicitudObject
-									.getString("fechaRequerimiento")),
-							solicitudObject.getString("modoPublicacion"),
-							solicitudObject.getString("responsable"),
-							solicitudObject.getString("comentarios"),
-							solicitudObject.getString("observacion"),
-							solicitudObject.getString("estado"));
+									.getString("FechaRequerimiento")),
+							solicitudObject.getString("ModoSolicitud"),
+							solicitudObject.getString("Responsable"),
+							solicitudObject.getString("Descripcion"),
+							solicitudObject.getString("Comentarios"));
 
 					solicitudes.add(solicitud);
 				}
@@ -271,10 +272,22 @@ public class PostularOfertaLaboral extends Fragment {
 		area.setText(solicitudOfertaLaboral.getArea() == "null" ? " - "
 				: solicitudOfertaLaboral.getArea());
 
-		TextView cargo = (TextView) rootView
+		TextView puesto = (TextView) rootView
 				.findViewById(R.id.reclut_cargo_input);
-		cargo.setText(solicitudOfertaLaboral.getCargo() == "null" ? " - "
-				: solicitudOfertaLaboral.getCargo());
+		puesto.setText(solicitudOfertaLaboral.getPuesto() == "null" ? " - "
+				: solicitudOfertaLaboral.getPuesto());
+
+		/*
+		 * TextView nrovacantes = (TextView) rootView
+		 * .findViewById(R.id.reclut_nro_vacantes_input);
+		 * nrovacantes.setText(solicitudOfertaLaboral.getNroVacantes() == "null"
+		 * ? " - " : solicitudOfertaLaboral.getNroVacantes());
+		 * 
+		 * TextView sueldotentativo = (TextView) rootView
+		 * .findViewById(R.id.reclut_sueldo_tentativo_input);
+		 * sueldotentativo.setText(solicitudOfertaLaboral.getSueldoTentativo()
+		 * == "null" ? " - " : solicitudOfertaLaboral.getSueldoTentativo());
+		 */
 
 		TextView fechaRequerimiento = (TextView) rootView
 				.findViewById(R.id.reclut_fecha_input);
@@ -285,35 +298,23 @@ public class PostularOfertaLaboral extends Fragment {
 			fechaRequerimiento.setText("");
 		}
 
-		TextView modoPublicacion = (TextView) rootView
-				.findViewById(R.id.reclut_modo_input);
-		modoPublicacion
-				.setText(solicitudOfertaLaboral.getModoPublicacion() == "null" ? " - "
-						: solicitudOfertaLaboral.getModoPublicacion());
+		/*
+		 * TextView modoPublicacion = (TextView) rootView
+		 * .findViewById(R.id.reclut_modo_input); modoPublicacion
+		 * .setText(solicitudOfertaLaboral.getModoPublicacion() == "null" ?
+		 * " - " : solicitudOfertaLaboral.getModoPublicacion());
+		 * 
+		 * TextView responsable = (TextView) rootView
+		 * .findViewById(R.id.reclut_responsable_input); responsable
+		 * .setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - " :
+		 * solicitudOfertaLaboral.getResponsable());
+		 */
 
-		TextView responsable = (TextView) rootView
-				.findViewById(R.id.reclut_responsable_input);
-		responsable
-				.setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - "
-						: solicitudOfertaLaboral.getResponsable());
-
-		TextView comentarios = (TextView) rootView
+		TextView descripcion = (TextView) rootView
 				.findViewById(R.id.reclut_descripcion_input);
-		if ((solicitudOfertaLaboral.getComentarios() == null)
-				|| ((solicitudOfertaLaboral.getComentarios() == "null"))) {
-			comentarios.setText("");
-		} else {
-			comentarios.setText(solicitudOfertaLaboral.getComentarios());
-		}
-
-		EditText observacion = (EditText) rootView
-				.findViewById(R.id.reclut_comentarios_input);
-		if ((solicitudOfertaLaboral.getObservacion() == null)
-				|| ((solicitudOfertaLaboral.getObservacion() == "null"))) {
-			observacion.setText("");
-		} else {
-			observacion.setText(solicitudOfertaLaboral.getObservacion());
-		}
+		descripcion
+				.setText(solicitudOfertaLaboral.getDescripcion() == "null" ? " - "
+						: solicitudOfertaLaboral.getDescripcion());
 	}
 
 	private void enviarMensajeWS(String nuevoEstado, int ID, String comentario) {
