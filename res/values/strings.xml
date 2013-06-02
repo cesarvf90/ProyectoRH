@@ -29,19 +29,19 @@
     <string name="mi_info_value_anexo">-</string>
     <string name="mi_info_value_fecha_ingreso">-</string>
     <string name="mi_info_title">Mi Información Personal</string>
-    <string name="equipo_trabajo_nombre_completo">Mateo Julián Soto Rivera</string>
+    <string name="equipo_trabajo_nombre_completo"> - </string>
     <string name="equipo_trabajo_cargo_persona_seleccionada">Analista Funcional</string>
     <string name="equipo_trabajo_area">Área:</string>
-    <string name="equipo_trabajo_area_value">Logística y Operaciones</string>
+    <string name="equipo_trabajo_area_value"> - </string>
     <string name="equipo_trabajo_puesto">Puesto:</string>
-    <string name="equipo_trabajo_puesto_value">Análisis de Operaciones de Campo</string>
+    <string name="equipo_trabajo_puesto_value"> - </string>
     <string name="equipo_trabajo_email">Email:</string>
-    <string name="equipo_trabajo_email_value">m.soto@rhplus.com</string>
+    <string name="equipo_trabajo_email_value"> - </string>
     <string name="equipo_trabajo_anexo">Anexo:</string>
-    <string name="equipo_trabajo_anexo_value">33221</string>
+    <string name="equipo_trabajo_anexo_value"> - </string>
     <string name="equipo_trabajo_jefe_cargo">Jefe de Área</string>
     <string name="menuofertas_title">Ofertas laborales</string>
-    <string name="equipo_trabajo_jefe">Supervisor: Juan Perez</string>
+    <string name="equipo_trabajo_jefe">Jefe de Equipo: - </string>
     <string name="reclut_validar_solic_of_lab_title">Validar Solicitud de Oferta Laboral</string>
 
     <color name="text_color">#31D1F1</color>

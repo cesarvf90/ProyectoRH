@@ -3,14 +3,7 @@ package pe.edu.pucp.proyectorh.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase.ObtencionOfertas;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.services.ErrorServicio;
-import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 
 /**

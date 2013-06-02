@@ -65,14 +65,14 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 				|| (LoginActivity.usuario.getHijos() == null)
 				|| (LoginActivity.usuario.getJefe() == null)) {
 			System.out.println("Primera vez: llamamos al WS");
-			probarDeserializacionJSON("");
-			// llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
+			//probarDeserializacionJSON("");
+			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
 			LoginActivity.usuario.setJefe(this.jefe);
 			LoginActivity.usuario.setHijos(this.hijos);
 			LoginActivity.usuario.setPadres(this.padres);
-			this.padres = LoginActivity.usuario.getPadres();
+			/*this.padres = LoginActivity.usuario.getPadres();
 			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();
+			this.jefe = LoginActivity.usuario.getJefe();*/
 		} else {
 			System.out.println("Ya en memoria");
 			this.padres = LoginActivity.usuario.getPadres();
@@ -156,10 +156,10 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
 	}
 
-	private void llamarServicioConsultarEquipoTrabajo(int idUsuario) {
+	private void llamarServicioConsultarEquipoTrabajo(String idUsuario) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
-			String request = Servicio.InformacionPersonalService + "?username="
+			String request = Servicio.getEquipoTrabajo + "?colaboradorID="
 					+ idUsuario;
 			System.out.println("pagina: " + request);
 			new deserializarJSON().execute(request);
@@ -319,18 +319,18 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
-			System.out.println(e.toString());
-			mostrarErrorComunicacion(e.toString());
+			System.out.println(e.toString());			
 			padres = null;
 			hijos = null;
 			jefe = null;
+			mostrarErrorComunicacion(e.toString());
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
-			System.out.println(ex.toString());
-			mostrarErrorComunicacion(ex.toString());
+			System.out.println(ex.toString());			
 			padres = null;
 			hijos = null;
 			jefe = null;
+			mostrarErrorComunicacion(ex.toString());
 		}
 	}
 
@@ -370,7 +370,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	public boolean procesaRespuesta(String respuestaServidor) {
 		if (OPERACION_VALIDA.equals(respuestaServidor)) {
 			return true;
-		} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
+		/*} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
 			// Se muestra mensaje de usuario invalido
 			AlertDialog.Builder builder = new AlertDialog.Builder(this
 					.getActivity().getApplicationContext());
@@ -380,11 +380,11 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
+			return false;*/
 		} else {
-			// Se muestra mensaje de usuario invalido
+			// Se muestra mensaje de error
 			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
+					.getActivity());
 			builder.setTitle("Problema en el servidor");
 			builder.setMessage("Hay un problema en el servidor.");
 			builder.setCancelable(false);
