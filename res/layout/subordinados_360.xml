@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+	    
+	    <TextView
+	        android:id="@+id/elEventoDeEvaluacion"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Seleccione el proceso a inspeccionar: " />
+	
+	    <Spinner
+	        android:id="@+id/elNombre"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" />
+	    
+	</LinearLayout>
+	
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp">    
+    
+        <ExpandableListView
+	        android:id="@+id/laSupervisionDeEvaluaciones"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" >
+	    </ExpandableListView>
+    
+	</LinearLayout>        
+	
+</LinearLayout>

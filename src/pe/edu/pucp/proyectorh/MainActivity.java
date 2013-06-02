@@ -135,7 +135,10 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("3")) {// Mis subordinados
-
+					pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados fragment = new pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
 				if (id.equals("1")) { // Objetivos Empresa
