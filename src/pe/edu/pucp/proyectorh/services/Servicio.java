@@ -74,6 +74,8 @@ public class Servicio {
 	 */
 	public final static String RespuestaAprobarSolicitudOfertaLaboral = "";
 
+	public static final String EnviarPostulacionOfertaLaboral = null;
+
 	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,
 			String request) {
 		if (ConnectionManager.connect(miActividad)) {

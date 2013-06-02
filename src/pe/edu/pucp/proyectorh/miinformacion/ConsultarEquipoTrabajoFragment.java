@@ -54,92 +54,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
-		exv = (ExpandableListView) this.rootView
-				.findViewById(R.id.equipo_trabajo_contactos_list);
-		txtVJefe = (TextView) this.rootView
-				.findViewById(R.id.equipo_trabajo_cabecera_jefe);
 
-		// loadData();
-
-		if ((LoginActivity.usuario.getPadres() == null)
-				|| (LoginActivity.usuario.getHijos() == null)
-				|| (LoginActivity.usuario.getJefe() == null)) {
-			System.out.println("Primera vez: llamamos al WS");
-			//probarDeserializacionJSON("");
-			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
-			LoginActivity.usuario.setJefe(this.jefe);
-			LoginActivity.usuario.setHijos(this.hijos);
-			LoginActivity.usuario.setPadres(this.padres);
-			/*this.padres = LoginActivity.usuario.getPadres();
-			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();*/
-		} else {
-			System.out.println("Ya en memoria");
-			this.padres = LoginActivity.usuario.getPadres();
-			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();
-		}
-
-		// Si todo salió bien y logramos poblar todos los elementos, levantamos
-		// la vista
-		if ((this.jefe != null) && (this.padres != null)
-				&& (this.hijos != null)) {
-			TextView txtCabeceraJefe = (TextView) rootView
-					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
-			txtCabeceraJefe.setText("Jefe de Equipo: "
-					+ (jefe.getNombres() == "null" ? "" : jefe.getNombres())
-					+ " "
-					+ (jefe.getApellidoPaterno() == "null" ? "" : jefe
-							.getApellidoPaterno())
-					+ " "
-					+ (jefe.getApellidoMaterno() == "null" ? "" : jefe
-							.getApellidoMaterno()));
-
-			/*
-			 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
-			 * .getActivity().getApplicationContext(), groups, childs);
-			 * exv.setAdapter(adapter);
-			 */
-
-			AdapterEquipoObjetosColaboradores adapter = new AdapterEquipoObjetosColaboradores(
-					this.getActivity().getApplicationContext(), padres, hijos);
-			exv.setAdapter(adapter);
-
-			exv.setOnGroupClickListener(new OnGroupClickListener() {
-				@Override
-				public boolean onGroupClick(ExpandableListView parent, View v,
-						int groupPosition, long id) {
-					System.out.println("Grupo " + (groupPosition));
-
-					mostrarDatosPadre(groupPosition);
-					return false;
-				}
-			});
-
-			exv.setOnChildClickListener(new OnChildClickListener() {
-				@Override
-				public boolean onChildClick(ExpandableListView parent, View v,
-						int groupPosition, int childPosition, long id) {
-					System.out.println("Grupo " + (groupPosition) + "Hijo "
-							+ childPosition);
-					mostrarDatosHijo(groupPosition, childPosition);
-					return false;
-				}
-			});
-
-			txtVJefe.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					pintarLadoDerecho(jefe);
-				}
-			});
-			return rootView;
-		} else {
-			// Caso contrario, mostramos una vista vacía
-			this.layoutVacio = inflater.inflate(
-					R.layout.layout_vacio_para_errores, container, false);
-			return layoutVacio;
-		}
+		return rootView;
 	}
 
 	protected void mostrarDatosPadre(int groupPosition) {
@@ -316,17 +232,19 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 						.println("***********************************************************************");
 				System.out.println(padres.toString());
 				System.out.println(hijos.toString());
+
+				mostrarEquipo();
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
-			System.out.println(e.toString());			
+			System.out.println(e.toString());
 			padres = null;
 			hijos = null;
 			jefe = null;
 			mostrarErrorComunicacion(e.toString());
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
-			System.out.println(ex.toString());			
+			System.out.println(ex.toString());
 			padres = null;
 			hijos = null;
 			jefe = null;
@@ -334,7 +252,93 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		}
 	}
 
-	private void loadData() {
+	private void mostrarEquipo() {
+		exv = (ExpandableListView) this.rootView
+				.findViewById(R.id.equipo_trabajo_contactos_list);
+		txtVJefe = (TextView) this.rootView
+				.findViewById(R.id.equipo_trabajo_cabecera_jefe);
+
+		// loadDataPrueba();
+
+		if ((LoginActivity.usuario.getPadres() == null)
+				|| (LoginActivity.usuario.getHijos() == null)
+				|| (LoginActivity.usuario.getJefe() == null)) {
+			System.out.println("Primera vez: llamamos al WS");
+			// probarDeserializacionJSON("");
+			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
+			LoginActivity.usuario.setJefe(this.jefe);
+			LoginActivity.usuario.setHijos(this.hijos);
+			LoginActivity.usuario.setPadres(this.padres);
+			/*
+			 * this.padres = LoginActivity.usuario.getPadres(); this.hijos =
+			 * LoginActivity.usuario.getHijos(); this.jefe =
+			 * LoginActivity.usuario.getJefe();
+			 */
+		} else {
+			System.out.println("Ya en memoria");
+			this.padres = LoginActivity.usuario.getPadres();
+			this.hijos = LoginActivity.usuario.getHijos();
+			this.jefe = LoginActivity.usuario.getJefe();
+		}
+
+		// Si todo salió bien y logramos poblar todos los elementos, levantamos
+		// la vista
+		if ((this.jefe != null) && (this.padres != null)
+				&& (this.hijos != null)) {
+			TextView txtCabeceraJefe = (TextView) rootView
+					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
+			txtCabeceraJefe.setText("Jefe de Equipo: "
+					+ (jefe.getNombres() == "null" ? "" : jefe.getNombres())
+					+ " "
+					+ (jefe.getApellidoPaterno() == "null" ? "" : jefe
+							.getApellidoPaterno())
+					+ " "
+					+ (jefe.getApellidoMaterno() == "null" ? "" : jefe
+							.getApellidoMaterno()));
+
+			/*
+			 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
+			 * .getActivity().getApplicationContext(), groups, childs);
+			 * exv.setAdapter(adapter);
+			 */
+
+			AdapterEquipoObjetosColaboradores adapter = new AdapterEquipoObjetosColaboradores(
+					this.getActivity().getApplicationContext(), padres, hijos);
+			exv.setAdapter(adapter);
+
+			exv.setOnGroupClickListener(new OnGroupClickListener() {
+				@Override
+				public boolean onGroupClick(ExpandableListView parent, View v,
+						int groupPosition, long id) {
+					System.out.println("Grupo " + (groupPosition));
+
+					mostrarDatosPadre(groupPosition);
+					return false;
+				}
+			});
+
+			exv.setOnChildClickListener(new OnChildClickListener() {
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v,
+						int groupPosition, int childPosition, long id) {
+					System.out.println("Grupo " + (groupPosition) + "Hijo "
+							+ childPosition);
+					mostrarDatosHijo(groupPosition, childPosition);
+					return false;
+				}
+			});
+
+			txtVJefe.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					pintarLadoDerecho(jefe);
+				}
+			});
+
+		}
+	}
+
+	private void loadDataPrueba() {
 		groups = new ArrayList<String>();
 		childs = new ArrayList<ArrayList<ArrayList<String>>>();
 
@@ -370,21 +374,20 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	public boolean procesaRespuesta(String respuestaServidor) {
 		if (OPERACION_VALIDA.equals(respuestaServidor)) {
 			return true;
-		/*} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
-			// Se muestra mensaje de usuario invalido
-			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
-			builder.setTitle("Login inválido");
-			builder.setMessage("Combinación de usuario y/o contraseña incorrectos.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return false;*/
+			/*
+			 * } else if (OPERACION_INVALIDA.equals(respuestaServidor)) { // Se
+			 * muestra mensaje de usuario invalido AlertDialog.Builder builder =
+			 * new AlertDialog.Builder(this
+			 * .getActivity().getApplicationContext());
+			 * builder.setTitle("Login inválido"); builder.setMessage(
+			 * "Combinación de usuario y/o contraseña incorrectos.");
+			 * builder.setCancelable(false); builder.setPositiveButton("Ok",
+			 * null); builder.create(); builder.show(); return false;
+			 */
 		} else {
 			// Se muestra mensaje de error
-			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity());
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					this.getActivity());
 			builder.setTitle("Problema en el servidor");
 			builder.setMessage("Hay un problema en el servidor.");
 			builder.setCancelable(false);
