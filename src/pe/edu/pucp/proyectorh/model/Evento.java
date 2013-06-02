@@ -4,13 +4,24 @@ import java.util.ArrayList;
 
 public class Evento {
 
+	private int ID;
 	private String nombre;
 	private String fechaInicio;
 	private String fechaFin;
 	private String tipo;
+	private int estadoID;
 	private String estado;
-	private Colaborador creador;
+	private int creadorID;
+	private String creador;
 	private ArrayList<Colaborador> invitados;
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -44,6 +55,14 @@ public class Evento {
 		this.tipo = tipo;
 	}
 
+	public int getEstadoID() {
+		return estadoID;
+	}
+
+	public void setEstadoID(int estadoID) {
+		this.estadoID = estadoID;
+	}
+
 	public String getEstado() {
 		return estado;
 	}
@@ -52,11 +71,19 @@ public class Evento {
 		this.estado = estado;
 	}
 
-	public Colaborador getCreador() {
+	public int getCreadorID() {
+		return creadorID;
+	}
+
+	public void setCreadorID(int creadorID) {
+		this.creadorID = creadorID;
+	}
+
+	public String getCreador() {
 		return creador;
 	}
 
-	public void setCreador(Colaborador creador) {
+	public void setCreador(String creador) {
 		this.creador = creador;
 	}
 

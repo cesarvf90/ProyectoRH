@@ -3,119 +3,111 @@ package pe.edu.pucp.proyectorh.model;
 import java.util.Date;
 
 public class SolicitudOfertaLaboral {
-	private int solicitudID;
+	private int ID;
 	private String area;
-	private String cargo;
+	private String puesto;
+	private int nroVacantes;
+	private int sueldoTentativo;
 	private Date fechaRequerimiento;
-	private String modoPublicacion;
+	private String modoPublicacion;	
 	private String responsable;
+	private String descripcion;
 	private String comentarios;
-	private String observacion;
-	private String estado;
-			
+	
+	
+	
 	public SolicitudOfertaLaboral() {
 		super();
-		this.area = "";
-		this.cargo = "";
-		this.fechaRequerimiento = null;
-		this.modoPublicacion = "";
-		this.responsable = "";
-		this.comentarios = "";
-		this.observacion = "";
-		this.estado = "";
 	}
-
-	public SolicitudOfertaLaboral(int solicitudID, String area, String cargo,
+	
+	public SolicitudOfertaLaboral(int iD, String area, String puesto,
+			int nroVacantes, int sueldoTentativo,
 			Date fechaRequerimiento, String modoPublicacion,
-			String responsable, String comentarios, String observacion,
-			String estado) {
+			String responsable, String descripcion, String comentarios) {
 		super();
-		this.solicitudID = solicitudID;
+		this.ID = iD;
 		this.area = area;
-		this.cargo = cargo;
+		this.puesto = puesto;
+		this.nroVacantes = nroVacantes;
+		this.sueldoTentativo = sueldoTentativo;
 		this.fechaRequerimiento = fechaRequerimiento;
 		this.modoPublicacion = modoPublicacion;
 		this.responsable = responsable;
+		this.descripcion = descripcion;
 		this.comentarios = comentarios;
-		this.observacion = observacion;
-		this.estado = estado;
 	}
-
-	public int getSolicitudID() {
-		return solicitudID;
+	public int getID() {
+		return ID;
 	}
-
-	public void setSolicitudID(int solicitudID) {
-		this.solicitudID = solicitudID;
+	public void setID(int iD) {
+		ID = iD;
 	}
-
 	public String getArea() {
 		return area;
 	}
-
 	public void setArea(String area) {
 		this.area = area;
 	}
-
-	public String getCargo() {
-		return cargo;
+	public String getPuesto() {
+		return puesto;
 	}
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
+	public void setPuesto(String puesto) {
+		this.puesto = puesto;
 	}
-
+	public int getNroVacantes() {
+		return nroVacantes;
+	}
+	public void setNroVacantes(int nroVacantes) {
+		this.nroVacantes = nroVacantes;
+	}
+	public int getSueldoTentativo() {
+		return sueldoTentativo;
+	}
+	public void setSueldoTentativo(int sueldoTentativo) {
+		this.sueldoTentativo = sueldoTentativo;
+	}
 	public Date getFechaRequerimiento() {
 		return fechaRequerimiento;
 	}
-
 	public void setFechaRequerimiento(Date fechaRequerimiento) {
 		this.fechaRequerimiento = fechaRequerimiento;
 	}
-
 	public String getModoPublicacion() {
 		return modoPublicacion;
 	}
-
 	public void setModoPublicacion(String modoPublicacion) {
 		this.modoPublicacion = modoPublicacion;
 	}
-
 	public String getResponsable() {
 		return responsable;
 	}
-
 	public void setResponsable(String responsable) {
 		this.responsable = responsable;
 	}
-
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	public String getComentarios() {
 		return comentarios;
 	}
-
 	public void setComentarios(String comentarios) {
 		this.comentarios = comentarios;
 	}
-
-	public String getObservacion() {
-		return observacion;
-	}
-
-	public void setObservacion(String observacion) {
-		this.observacion = observacion;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
 	@Override
 	public String toString() {
-		return cargo;
+		return "SolicitudOfertaLaboral [ID=" + ID + ", area=" + area
+				+ ", puesto=" + puesto + ", nroVacantes=" + nroVacantes
+				+ ", sueldoTentativo=" + sueldoTentativo
+				+ ", fechaRequerimiento=" + fechaRequerimiento
+				+ ", modoPublicacion=" + modoPublicacion + ", responsable="
+				+ responsable + ", descripcion=" + descripcion
+				+ ", comentarios=" + comentarios + "]";
 	}
+	
+	
+	
 	
 }
