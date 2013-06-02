@@ -2,7 +2,6 @@ package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +66,7 @@ public class AgendaFragment extends Fragment {
 		gridview.setAdapter(adapter);
 
 		handler = new Handler();
-		handler.post(calendarUpdater);
+		// handler.post(calendarUpdater);
 
 		TextView title = (TextView) rootView.findViewById(R.id.title);
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
@@ -157,17 +156,23 @@ public class AgendaFragment extends Fragment {
 			items.clear();
 			// format random values. You can implement a dedicated class to
 			// provide real values
-			for (int i = 0; i < 31; i++) {
 
-				// TODO no generar aleatorio sino que generar la misma
-				// estructura a partir de los eventos recibidos en el servicio
-
-				Random r = new Random();
-
-				if (r.nextInt(10) > 6) {
-					items.add(Integer.toString(i));
-				}
+			// se que genera una estructura a partir de los eventos recibidos en
+			// el servicio
+			for (Evento evento : eventos) {
+				String[] dateArr = evento.getFechaInicio().split("/");
+				items.add(dateArr[0]);
 			}
+
+			// for (int i = 0; i < 31; i++) {
+			//
+			//
+			// Random r = new Random();
+			//
+			// if (r.nextInt(10) > 6) {
+			// items.add(Integer.toString(i));
+			// }
+			// }
 
 			adapter.setItems(items);
 			adapter.notifyDataSetChanged(); // refresca la vista
@@ -227,6 +232,7 @@ public class AgendaFragment extends Fragment {
 						eventos.add(evento);
 					}
 					agregarEventosMock();
+					handler.post(calendarUpdater);
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
@@ -258,6 +264,11 @@ public class AgendaFragment extends Fragment {
 		evento4.setNombre("Evento 4");
 		evento4.setFechaInicio("10/06/2013");
 		evento4.setFechaFin("10/06/2013");
+
+		eventos.add(evento1);
+		eventos.add(evento2);
+		eventos.add(evento3);
+		eventos.add(evento4);
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
