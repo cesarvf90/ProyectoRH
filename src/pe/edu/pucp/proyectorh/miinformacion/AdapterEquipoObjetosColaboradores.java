@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter {
+public class AdapterEquipoObjetosColaboradores extends
+		BaseExpandableListAdapter {
 
 	private ArrayList<ColaboradorEquipoTrabajo> groups;
 
@@ -19,7 +20,8 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 
 	private Context context;
 
-	public AdapterEquipoObjetosColaboradores(Context context, ArrayList<ColaboradorEquipoTrabajo> groups,
+	public AdapterEquipoObjetosColaboradores(Context context,
+			ArrayList<ColaboradorEquipoTrabajo> groups,
 			ArrayList<ArrayList<ArrayList<ColaboradorEquipoTrabajo>>> children) {
 		this.context = context;
 		this.groups = groups;
@@ -32,7 +34,8 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 	}
 
 	@Override
-	public ArrayList<ColaboradorEquipoTrabajo> getChild(int groupPosition, int childPosition) {
+	public ArrayList<ColaboradorEquipoTrabajo> getChild(int groupPosition,
+			int childPosition) {
 		return children.get(groupPosition).get(childPosition);
 	}
 
@@ -45,8 +48,8 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
-		ColaboradorEquipoTrabajo child = getChild(groupPosition,
-				childPosition).get(0);
+		ColaboradorEquipoTrabajo child = getChild(groupPosition, childPosition)
+				.get(0);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context
@@ -58,7 +61,11 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 		TextView childtxt = (TextView) convertView
 				.findViewById(R.id.TextViewChild01);
 
-		childtxt.setText(child.getNombreCompleto());
+		childtxt.setText((child.getNombres() == "null" ? "" : child
+				.getNombres())
+				+ " "
+				+ (child.getApellidoPaterno() == "null" ? "" : child
+						.getApellidoPaterno()));
 
 		return convertView;
 	}
@@ -99,7 +106,11 @@ public class AdapterEquipoObjetosColaboradores extends BaseExpandableListAdapter
 		TextView grouptxt = (TextView) convertView
 				.findViewById(R.id.TextViewGroup);
 
-		grouptxt.setText(group.getNombreCompleto());
+		grouptxt.setText((group.getNombres() == "null" ? "" : group
+				.getNombres())
+				+ " "
+				+ (group.getApellidoPaterno() == "null" ? "" : group
+						.getApellidoPaterno()));
 
 		return convertView;
 	}

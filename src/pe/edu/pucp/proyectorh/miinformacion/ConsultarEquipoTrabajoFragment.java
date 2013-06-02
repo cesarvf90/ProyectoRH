@@ -25,8 +25,8 @@ import android.widget.TextView;
 
 public class ConsultarEquipoTrabajoFragment extends Fragment {
 
-	private static final String OPERACION_VALIDA = "1";
-	private static final String OPERACION_INVALIDA = "0";
+	private static final String OPERACION_VALIDA = "true";
+	private static final String OPERACION_INVALIDA = "false";
 	private View rootView;
 	private View layoutVacio;
 	private ExpandableListView exv;
@@ -65,14 +65,14 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 				|| (LoginActivity.usuario.getHijos() == null)
 				|| (LoginActivity.usuario.getJefe() == null)) {
 			System.out.println("Primera vez: llamamos al WS");
-			probarDeserializacionJSON("");
-			// llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
+			//probarDeserializacionJSON("");
+			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
 			LoginActivity.usuario.setJefe(this.jefe);
 			LoginActivity.usuario.setHijos(this.hijos);
 			LoginActivity.usuario.setPadres(this.padres);
-			this.padres = LoginActivity.usuario.getPadres();
+			/*this.padres = LoginActivity.usuario.getPadres();
 			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();
+			this.jefe = LoginActivity.usuario.getJefe();*/
 		} else {
 			System.out.println("Ya en memoria");
 			this.padres = LoginActivity.usuario.getPadres();
@@ -87,7 +87,13 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			TextView txtCabeceraJefe = (TextView) rootView
 					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
 			txtCabeceraJefe.setText("Jefe de Equipo: "
-					+ jefe.getNombreCompleto());
+					+ (jefe.getNombres() == "null" ? "" : jefe.getNombres())
+					+ " "
+					+ (jefe.getApellidoPaterno() == "null" ? "" : jefe
+							.getApellidoPaterno())
+					+ " "
+					+ (jefe.getApellidoMaterno() == "null" ? "" : jefe
+							.getApellidoMaterno()));
 
 			/*
 			 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
@@ -150,10 +156,10 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
 	}
 
-	private void llamarServicioConsultarEquipoTrabajo(int idUsuario) {
+	private void llamarServicioConsultarEquipoTrabajo(String idUsuario) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
-			String request = Servicio.InformacionPersonalService + "?username="
+			String request = Servicio.getEquipoTrabajo + "?colaboradorID="
 					+ idUsuario;
 			System.out.println("pagina: " + request);
 			new deserializarJSON().execute(request);
@@ -171,23 +177,34 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	public void pintarLadoDerecho(ColaboradorEquipoTrabajo colaborador) {
 		TextView nombreCompleto = (TextView) this.rootView
 				.findViewById(R.id.equipo_trabajo_nombreCompleto);
-		nombreCompleto.setText(colaborador.getNombreCompleto());
+		nombreCompleto.setText((colaborador.getNombres() == "null" ? ""
+				: colaborador.getNombres())
+				+ " "
+				+ (colaborador.getApellidoPaterno() == "null" ? ""
+						: colaborador.getApellidoPaterno())
+				+ " "
+				+ (colaborador.getApellidoMaterno() == "null" ? ""
+						: colaborador.getApellidoMaterno()));
 
 		TextView area = (TextView) this.rootView
 				.findViewById(R.id.equipo_trabajo_area_value);
-		area.setText(colaborador.getArea());
+		area.setText(colaborador.getArea() == "null" ? "* no disponible"
+				: colaborador.getArea());
 
 		TextView email = (TextView) this.rootView
 				.findViewById(R.id.equipo_trabajo_email);
-		email.setText(colaborador.getEmail());
+		email.setText(colaborador.getEmail() == "null" ? "* no disponible"
+				: colaborador.getEmail());
 
 		TextView anexo = (TextView) this.rootView
 				.findViewById(R.id.equipo_trabajo_anexo);
-		anexo.setText(colaborador.getAnexo());
+		anexo.setText(colaborador.getAnexo() == "null" ? "* no disponible"
+				: colaborador.getAnexo());
 
 		TextView puesto = (TextView) this.rootView
 				.findViewById(R.id.equipo_trabajo_puesto_value);
-		puesto.setText(colaborador.getPuesto());
+		puesto.setText(colaborador.getPuesto() == "null" ? "* no disponible"
+				: colaborador.getPuesto());
 	}
 
 	public void probarDeserializacionJSON(String str) {
@@ -196,31 +213,36 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		if (str != "")
 			result = str;
 		else
-			result = "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"big boss\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"2\",	\"listaSubordinados\":[{\"nombreCompleto\":\"nombre1\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":[{\"nombreCompleto\":\"nombre2\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\"},{\"nombreCompleto\":\"nombre3\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\"}]},{\"nombreCompleto\":\"nombre4\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":[]}]}}";
+			// cadena ejemplo antes de que manolin termine el ws
+			// result =
+			// "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"big boss\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"2\",	\"listaSubordinados\":[{\"nombreCompleto\":\"nombre1\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":[{\"nombreCompleto\":\"nombre2\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\"},{\"nombreCompleto\":\"nombre3\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\"}]},{\"nombreCompleto\":\"nombre4\",\"area\":\"xxx\",\"puesto\":\"xxx\",\"anexo\":\"xxx\",\"email\":\"xxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":[]}]}}";
+			// cadena real despues que manolin termino el ws
+			result = "{\"success\":true,\"data\":{\"NombreCompleto\":\"Moreno Reyes, Fortino Mario Alonso\",\"ID\":2,\"Nombre\":\"Fortino Mario Alonso\",\"ApellidoPaterno\":\"Moreno\",\"ApellidoMaterno\":\"Reyes\",\"Telefono\":null,\"Direccion\":null,\"PaisID\":1,\"FechaNacimiento\":null,\"TipoDocumentoID\":2,\"NumeroDocumento\":null,\"Usuario\":null,\"EstadoColaboradorID\":1,\"CurriculumVitaeID\":0,\"ImagenColaboradorID\":0,\"CentroEstudios\":null,\"GradoAcademicoID\":1,\"CorreoElectronico\":null,\"FechaIngreso\":null,\"AreaID\":1,\"Area\":\"Directorio\",\"PuestoID\":1,\"Puesto\":\"Presidente\",\"Sueldo\":2300,\"ResumenEjecutivo\":null,\"Contrasenha\":null,\"NuevaContrasenha\":null,\"Objetivos\":[],\"Subordinados\":[{\"NombreCompleto\":\"Vega Buendía, Miguel\",\"ID\":3,\"Nombre\":\"Miguel\",\"ApellidoPaterno\":\"Vega\",\"ApellidoMaterno\":\"Buendía\",\"Telefono\":null,\"Direccion\":null,\"PaisID\":1,\"FechaNacimiento\":null,\"TipoDocumentoID\":2,\"NumeroDocumento\":null,\"Usuario\":null,\"EstadoColaboradorID\":1,\"CurriculumVitaeID\":0,\"ImagenColaboradorID\":0,\"CentroEstudios\":null,\"GradoAcademicoID\":1,\"CorreoElectronico\":null,\"FechaIngreso\":null,\"AreaID\":2,\"Area\":\"Gerencia general\",\"PuestoID\":2,\"Puesto\":\"Gerente general\",\"Sueldo\":2500,\"ResumenEjecutivo\":null,\"Contrasenha\":null,\"NuevaContrasenha\":null,\"Objetivos\":[],\"Subordinados\":[{\"NombreCompleto\":\"Chavez Moreno, Rodrigo\",\"ID\":23,\"Nombre\":\"Rodrigo\",\"ApellidoPaterno\":\"Chavez\",\"ApellidoMaterno\":\"Moreno\",\"Telefono\":null,\"Direccion\":null,\"PaisID\":1,\"FechaNacimiento\":null,\"TipoDocumentoID\":2,\"NumeroDocumento\":null,\"Usuario\":null,\"EstadoColaboradorID\":1,\"CurriculumVitaeID\":0,\"ImagenColaboradorID\":0,\"CentroEstudios\":null,\"GradoAcademicoID\":0,\"CorreoElectronico\":null,\"FechaIngreso\":null,\"AreaID\":6,\"Area\":\"Márketing\",\"PuestoID\":5,\"Puesto\":\"Gerente de márketing\",\"Sueldo\":2000,\"ResumenEjecutivo\":null,\"Contrasenha\":null,\"NuevaContrasenha\":null,\"Objetivos\":[{\"ID\":5,\"Nombre\":\"Aumentar las ventas\",\"Peso\":50,\"AvanceFinal\":10,\"TipoObjetivoBSCID\":0,\"ObjetivoPadreID\":1,\"BSCID\":1,\"FechaDePropuesta\":\"\",\"FechaFinalizacion\":\"\"},{\"ID\":6,\"Nombre\":\"Reducir los costos\",\"Peso\":25,\"AvanceFinal\":10,\"TipoObjetivoBSCID\":0,\"ObjetivoPadreID\":1,\"BSCID\":1,\"FechaDePropuesta\":\"\",\"FechaFinalizacion\":\"\"},{\"ID\":7,\"Nombre\":\"Ganar nuevos clientes\",\"Peso\":25,\"AvanceFinal\":10,\"TipoObjetivoBSCID\":0,\"ObjetivoPadreID\":1,\"BSCID\":1,\"FechaDePropuesta\":\"\",\"FechaFinalizacion\":\"\"}],\"Subordinados\":null}]}]}}";
 		// System.out.println("Recibido: " + result.toString());
 		// deserializando el json parte por parte
 		try {
 			JSONObject jsonObject = new JSONObject(result);
 			System.out.println("result: " + result);
-			String respuesta = jsonObject.getString("respuesta");
+			String respuesta = jsonObject.getString("success");
 			if (procesaRespuesta(respuesta)) {
 				// System.out.println("respuesta: "+respuesta);
 				// Obtenemos el jefe de todos --NIVEL 0
-				JSONObject jefeObject = (JSONObject) jsonObject
-						.get("jefeEquipo");
-				jefe = new ColaboradorEquipoTrabajo(
-						jefeObject.getString("nombreCompleto"),
-						jefeObject.getString("area"),
-						jefeObject.getString("puesto"),
-						jefeObject.getString("anexo"),
-						jefeObject.getString("email"),
-						jefeObject.getInt("cantidadSubordinados"));
+				JSONObject jefeObject = (JSONObject) jsonObject.get("data");
+				jefe = new ColaboradorEquipoTrabajo(jefeObject.getString("ID"),
+						jefeObject.getString("Nombre"),
+						jefeObject.getString("ApellidoPaterno"),
+						jefeObject.getString("ApellidoMaterno"),
+						jefeObject.getString("Area"),
+						jefeObject.getString("Puesto"),
+						jefeObject.getString("Telefono"),
+						jefeObject.getString("CorreoElectronico"));
+				// jefeObject.getInt("cantidadSubordinados"));
 
 				System.out.println(jefe.toString());
 				// Obtenemos la lista de subordinados del jefe de todos --NIVEL
 				// 1
 				JSONArray listaSubordinadosNivel1 = (JSONArray) jefeObject
-						.get("listaSubordinados");
+						.get("Subordinados");
 
 				int m = listaSubordinadosNivel1.length();
 				System.out.println("size: " + String.valueOf(m));
@@ -236,18 +258,27 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 							.getJSONObject(i);
 
 					subordinadoNivel1 = new ColaboradorEquipoTrabajo(
-							subordinadoNivel1Object.getString("nombreCompleto"),
-							subordinadoNivel1Object.getString("area"),
-							subordinadoNivel1Object.getString("puesto"),
-							subordinadoNivel1Object.getString("anexo"),
-							subordinadoNivel1Object.getString("email"),
+							subordinadoNivel1Object.getString("ID"),
+							subordinadoNivel1Object.getString("Nombre"),
 							subordinadoNivel1Object
-									.getInt("cantidadSubordinados"));
+									.getString("ApellidoPaterno"),
+							subordinadoNivel1Object
+									.getString("ApellidoMaterno"),
+							subordinadoNivel1Object.getString("Area"),
+							subordinadoNivel1Object.getString("Puesto"),
+							subordinadoNivel1Object.getString("Telefono"),
+							subordinadoNivel1Object
+									.getString("CorreoElectronico"));
+					// subordinadoNivel1Object.getInt("cantidadSubordinados"));
 
+					// Si es distinto de la persona logueada (la que hace la
+					// consulta) lo agregamos
+					// if (subordinadoNivel1.getId() !=
+					// LoginActivity.usuario.getID()) {
 					padres.add(subordinadoNivel1);
 					System.out.println(subordinadoNivel1.toString());
 					JSONArray listaSubordinadosNivel2 = (JSONArray) subordinadoNivel1Object
-							.get("listaSubordinados");
+							.get("Subordinados");
 
 					m = listaSubordinadosNivel2.length();
 					System.out.println("size2: " + String.valueOf(m));
@@ -260,14 +291,17 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 								.get(j);
 
 						subordinadoNivel2 = new ColaboradorEquipoTrabajo(
+								subordinadoNivel2Object.getString("ID"),
+								subordinadoNivel2Object.getString("Nombre"),
 								subordinadoNivel2Object
-										.getString("nombreCompleto"),
-								subordinadoNivel2Object.getString("area"),
-								subordinadoNivel2Object.getString("puesto"),
-								subordinadoNivel2Object.getString("anexo"),
-								subordinadoNivel2Object.getString("email"),
+										.getString("ApellidoPaterno"),
 								subordinadoNivel2Object
-										.getInt("cantidadSubordinados"));
+										.getString("ApellidoMaterno"),
+								subordinadoNivel2Object.getString("Area"),
+								subordinadoNivel2Object.getString("Puesto"),
+								subordinadoNivel2Object.getString("Telefono"),
+								subordinadoNivel2Object
+										.getString("CorreoElectronico"));
 
 						hijos.get(i).add(
 								new ArrayList<ColaboradorEquipoTrabajo>());
@@ -277,6 +311,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 
 					}
 				}
+				// }
 				System.out
 						.println("***********************************************************************");
 				System.out.println(padres.toString());
@@ -284,18 +319,18 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
-			System.out.println(e.toString());
-			mostrarErrorComunicacion(e.toString());
+			System.out.println(e.toString());			
 			padres = null;
 			hijos = null;
 			jefe = null;
+			mostrarErrorComunicacion(e.toString());
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
-			System.out.println(ex.toString());
-			mostrarErrorComunicacion(ex.toString());
+			System.out.println(ex.toString());			
 			padres = null;
 			hijos = null;
 			jefe = null;
+			mostrarErrorComunicacion(ex.toString());
 		}
 	}
 
@@ -335,7 +370,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	public boolean procesaRespuesta(String respuestaServidor) {
 		if (OPERACION_VALIDA.equals(respuestaServidor)) {
 			return true;
-		} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
+		/*} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
 			// Se muestra mensaje de usuario invalido
 			AlertDialog.Builder builder = new AlertDialog.Builder(this
 					.getActivity().getApplicationContext());
@@ -345,11 +380,11 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
+			return false;*/
 		} else {
-			// Se muestra mensaje de usuario invalido
+			// Se muestra mensaje de error
 			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
+					.getActivity());
 			builder.setTitle("Problema en el servidor");
 			builder.setMessage("Hay un problema en el servidor.");
 			builder.setCancelable(false);

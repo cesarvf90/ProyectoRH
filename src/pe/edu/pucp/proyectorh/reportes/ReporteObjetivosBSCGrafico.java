@@ -1,8 +1,17 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.util.Date;
+import java.util.List;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +24,7 @@ import android.widget.TextView;
 public class ReporteObjetivosBSCGrafico extends Fragment{
 	
 	private WebView browser;
-	
+	int objSelec;
 	
 
 	
@@ -26,20 +35,27 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	
 	
 	public class DataObject {
-		String[] meses = new String[] { 
-				"Juan", "Pedro", "Gustavo", "Gabriel"};
+		String[] personas;
 		
-		int[] avance = new int[] { 10, 15, 18, 25 };
+		/*= new String[] { 
+				"Juan", "Pedro", "Gustavo", "Gabriel"};*/
 		
+		int[] avance; // = new int[] { 10, 15, 18, 25 };
+		
+		public DataObject(String[] personas , int[] avance){
+			this.personas = personas;
+			this.avance = avance;
+		}
 
 	}
 	
 	public class InterfaceChartLineal {
 	    Context mContext;
-
+	    DataObject obj;
 	    /** Instantiate the interface and set the context */
-	    InterfaceChartLineal(Context c) {
+	    InterfaceChartLineal(Context c, DataObject o) {
 	        mContext = c;
+	        obj = o;
 	    }
 
 	    /* Show a toast from the web page 
@@ -49,7 +65,7 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	    
 	    public String getData(){
 	    	
-	    	DataObject obj = new DataObject();
+	    	
 	    	Gson gson = new Gson();
 	    	 
 	    	// convert java object to JSON format,
@@ -83,23 +99,89 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 
 		
 		browser = (WebView)rootView.findViewById(R.id.reportebscWebkitGLineal);
-		 
-        //habilitamos javascript y flash
-		browser.getSettings().setJavaScriptEnabled(true);
-		browser.getSettings().setPluginsEnabled(true);
-		browser.addJavascriptInterface(new InterfaceChartLineal(rootView.getContext()), "Android");
-		
-		
-		browser.loadUrl("file:///android_asset/ReporteBSCperspectivabarchart.html");
-		
 		
 		String titulo = getArguments().getString("titulo");
-		// set value into textview
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscTitulografico);
 		textView.setText(titulo);
-		
+		objSelec= getArguments().getInt("idObjetivo");
+		cargarPersonasAvance(objSelec);
 		
 		return rootView;
 	}
+	
+	public void cargarPersonasAvance(int idObj){
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			String request = ReporteServices.obtenerAvanceXPersona + "?idObjetivo=" + idObj;
+
+			new getAvances().execute(request);
+			
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexción");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+	}
+	
+	public class getAvances extends AsyncCall {
+
+		@Override
+		protected void onPostExecute(String result) {
+			
+			System.out.println("Recibido: " + result.toString());
+			
+			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+			List<ObjetivosXPersonaRDTO> Personas = gson.fromJson(result,new TypeToken<List<ObjetivosXPersonaRDTO>>(){}.getType());
+			
+			String [] nombres = new String[Personas.size()];
+			int[] avances = new int[Personas.size()];
+			
+			for (int i=0;i<Personas.size();i++){
+				nombres[i] = Personas.get(i).getNombreColaborador();
+				avances[i] = Personas.get(i).getAvance();
+			}
+			
+			//habilitamos javascript y flash
+			browser.getSettings().setJavaScriptEnabled(true);
+			browser.getSettings().setPluginsEnabled(true);
+			
+			DataObject data = new DataObject(nombres, avances);
+			
+			InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);
+			
+			browser.addJavascriptInterface(intface, "Android");
+			
+			
+			browser.loadUrl("file:///android_asset/ReporteBSCperspectivabarchart.html");
+			
+			
+		}
+	}
+	
+	public class ObjetivosXPersonaRDTO
+	   {
+	        private int avance;      
+	        private String nombreColaborador;
+	        
+			public int getAvance() {
+				return avance;
+			}
+			public void setAvance(int avance) {
+				this.avance = avance;
+			}
+			public String getNombreColaborador() {
+				return nombreColaborador;
+			}
+			public void setNombreColaborador(String nombreColaborador) {
+				this.nombreColaborador = nombreColaborador;
+			}
+	}
+	
+	
 
 }

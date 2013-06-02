@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.content.Intent;
@@ -26,13 +27,23 @@ public class DetalleActivity extends FragmentActivity {
 
 		if (savedInstanceState == null) {
 			
-			if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
-					&& ("4".equals(getIntent()
-							.getStringExtra(DetalleFragment.ARG_ITEM_ID)))) {
-				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
-				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.opcion_detail_container, fragment)
-						.commit();
+			if (Modulo.MODULO_ACTUAL == Constante.REPORTES){
+				if ("3".equals(getIntent()
+						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
+					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+				
+				
+				if ("4".equals(getIntent()
+							.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
+						ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
+						getSupportFragmentManager().beginTransaction()
+								.replace(R.id.opcion_detail_container, fragment)
+								.commit();
+					}
 			}
 			else{
 			

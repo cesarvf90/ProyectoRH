@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
     
-	<TableLayout
-    	android:orientation="vertical"
-        android:id="@+id/objChild"
-        android:layout_width="match_parent"
+	<EditText
+        android:id="@+id/nombreObj"        
+        android:inputType="text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >					
-    </TableLayout>
+    </EditText>
 
+	<EditText
+        android:id="@+id/pesoObj"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >					
+    </EditText>
+    
+	<Button
+        android:id="@+id/buttonMenos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >					
+    </Button>
+    
+	<Button
+        android:id="@+id/buttonMas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >					
+    </Button>
+    
 </LinearLayout>

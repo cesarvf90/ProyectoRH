@@ -1,7 +1,6 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
@@ -67,7 +66,7 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public void validaCambios(ObjetivosBSC obj){
 		for(int i=0;i<objetivosIDS.size();i++){
-			if(objetivosIDS.get(i)==(Integer)obj.ID){
+			if(objetivosIDS.get(i)==obj.ID){
 				creaObjetivo(obj);
 				break;
 			}else{
@@ -116,7 +115,7 @@ public class ObjetivosEmpresa extends Fragment {
 			for(int i=0;i<listObjetivosBSC.size();i++){
 				int flagUltimo = 0;
 				ObjetivosBSC objBSC = listObjetivosBSC.get(i);
-				objetivosIDS.add((Integer)objBSC.BSCID);
+				objetivosIDS.add(objBSC.BSCID);
 				if ((i+1) == listObjetivosBSC.size()){
 					flagUltimo=1;
 				}

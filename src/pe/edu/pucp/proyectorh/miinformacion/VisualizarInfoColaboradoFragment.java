@@ -260,7 +260,7 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 
 	private void mostrarErrorComunicacion(String excepcion) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this
-				.getActivity().getApplicationContext());
+				.getActivity());
 		builder.setTitle("Error de servicio");
 		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
 				+ excepcion.toString());
@@ -273,21 +273,21 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 	public boolean procesaRespuesta(String respuestaServidor) {
 		if (OPERACION_VALIDA.equals(respuestaServidor)) {
 			return true;
-		} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
+		/*} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
 			// Se muestra mensaje de usuario invalido
 			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
+					.getActivity());
 			builder.setTitle("Login inválido");
 			builder.setMessage("Combinación de usuario y/o contraseña incorrectos.");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
+			return false;*/
 		} else {
-			// Se muestra mensaje de usuario invalido
+			// Se muestra mensaje de error
 			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
+					.getActivity());
 			builder.setTitle("Problema en el servidor");
 			builder.setMessage("Hay un problema en el servidor.");
 			builder.setCancelable(false);
