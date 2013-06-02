@@ -32,12 +32,11 @@ import android.widget.TextView;
 
 public class CalendarAdapter extends BaseAdapter {
 	static final int FIRST_DAY_OF_WEEK = 0; // Sunday = 0, Monday = 1
-
 	private Context mContext;
-
 	private java.util.Calendar month;
 	private Calendar selectedDate;
 	private ArrayList<String> items;
+	public String[] days; // references to our items
 
 	public CalendarAdapter(Context c, Calendar monthCalendar) {
 		month = monthCalendar;
@@ -161,6 +160,4 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 	}
 
-	// references to our items
-	public String[] days;
 }

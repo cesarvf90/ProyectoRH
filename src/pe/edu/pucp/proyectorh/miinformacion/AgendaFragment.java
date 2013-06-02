@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evento;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
@@ -53,7 +55,7 @@ public class AgendaFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.calendar, container, false);
 
-		// llamarServicioEventos();
+		llamarServicioEventos();
 
 		month = Calendar.getInstance();
 		onNewIntent(getActivity().getIntent());
@@ -101,7 +103,6 @@ public class AgendaFragment extends Fragment {
 					month.set(Calendar.MONTH, month.get(Calendar.MONTH) + 1);
 				}
 				refreshCalendar();
-
 			}
 		});
 
@@ -142,7 +143,7 @@ public class AgendaFragment extends Fragment {
 	}
 
 	public void onNewIntent(Intent intent) {
-		intent.putExtra("date", "2013-4-28");
+		intent.putExtra("date", "2013-5-2");
 		String date = intent.getStringExtra("date");
 		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
 		month.set(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
@@ -157,6 +158,10 @@ public class AgendaFragment extends Fragment {
 			// format random values. You can implement a dedicated class to
 			// provide real values
 			for (int i = 0; i < 31; i++) {
+
+				// TODO no generar aleatorio sino que generar la misma
+				// estructura a partir de los eventos recibidos en el servicio
+
 				Random r = new Random();
 
 				if (r.nextInt(10) > 6) {
@@ -165,7 +170,7 @@ public class AgendaFragment extends Fragment {
 			}
 
 			adapter.setItems(items);
-			adapter.notifyDataSetChanged();
+			adapter.notifyDataSetChanged(); // refresca la vista
 		}
 	};
 
@@ -193,6 +198,35 @@ public class AgendaFragment extends Fragment {
 				if (procesaRespuesta(respuesta)) {
 					JSONObject datosObject = (JSONObject) jsonObject
 							.get("data");
+					JSONArray eventosListObject = (JSONArray) datosObject
+							.get("eventos");
+					eventos = new ArrayList<Evento>();
+					for (int i = 0; i < eventosListObject.length(); ++i) {
+						JSONObject eventoObject = eventosListObject
+								.getJSONObject(i);
+						Evento evento = new Evento();
+						evento.setID(eventoObject.getInt("ID"));
+						evento.setNombre(eventoObject.getString("Nombre"));
+						evento.setFechaInicio(eventoObject.getString("Inicio"));
+						evento.setFechaFin(eventoObject.getString("Fin"));
+						evento.setEstadoID(eventoObject.getInt("EstadoID"));
+						evento.setEstado(eventoObject.getString("Estado"));
+						evento.setCreadorID(eventoObject.getInt("CreadorID"));
+						evento.setCreador(eventoObject.getString("Creador"));
+						JSONArray invitadosListObject = eventoObject
+								.getJSONArray("Invitados");
+
+						ArrayList<Colaborador> listaInvitados = new ArrayList<Colaborador>();
+						for (int j = 0; j < invitadosListObject.length(); ++j) {
+							JSONObject invitadoObject = invitadosListObject
+									.getJSONObject(j);
+							Colaborador invitado = new Colaborador();
+							listaInvitados.add(invitado);
+						}
+						evento.setInvitados(listaInvitados);
+						eventos.add(evento);
+					}
+					agregarEventosMock();
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
@@ -202,6 +236,28 @@ public class AgendaFragment extends Fragment {
 						getActivity());
 			}
 		}
+	}
+
+	private void agregarEventosMock() {
+		Evento evento1 = new Evento();
+		evento1.setNombre("Evento 1");
+		evento1.setFechaInicio("05/06/2013");
+		evento1.setFechaFin("05/06/2013");
+
+		Evento evento2 = new Evento();
+		evento2.setNombre("Evento 2");
+		evento2.setFechaInicio("04/06/2013");
+		evento2.setFechaFin("04/06/2013");
+
+		Evento evento3 = new Evento();
+		evento3.setNombre("Evento 3");
+		evento3.setFechaInicio("08/06/2013");
+		evento3.setFechaFin("08/06/2013");
+
+		Evento evento4 = new Evento();
+		evento4.setNombre("Evento 4");
+		evento4.setFechaInicio("10/06/2013");
+		evento4.setFechaFin("10/06/2013");
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
