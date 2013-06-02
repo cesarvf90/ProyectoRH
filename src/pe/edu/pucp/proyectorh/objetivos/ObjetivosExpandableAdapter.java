@@ -31,6 +31,8 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
     TableLayout lay;
     
 	private Context contexto;
+	boolean flagMostrar;
+	boolean primeraVez=true;
 
 	public ObjetivosExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<ObjetivosBSC>> children) {
         this.contexto = contexto;
@@ -39,7 +41,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		contadorImpresionHijos = new ArrayList<Integer>();
 		
 		for(int i=0;i<groups.size();i++){
-			contadorImpresionHijos.add(new Integer(0));
+			contadorImpresionHijos.add(0);
 		}
 	}
 	
@@ -69,31 +71,33 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
 
-    	System.out.println("vere gpos="+groupPosition+ " y cpos="+childPosition);
+    	System.out.println("vere gpos="+groupPosition+ " y cpos="+childPosition + " isLastChild="+isLastChild);
     	
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.objetivos_expandablelist_child, null);           
         }
         
-      	System.out.println("agregara para papa="+groups.get(groupPosition).Nombre+ " el child = "+children.get(groupPosition).get(childPosition).Nombre);
-	    
-	    ObjetivosBSC objBSC = getChild(groupPosition, childPosition);
-	    String szNombre ="";
-	    String szPeso = "";
-	    if(objBSC != null){
-			szNombre=objBSC.Nombre;
-			szPeso = Integer.toString(objBSC.Peso);
-		}
-			
-		EditText descripObj = (EditText) convertView.findViewById(R.id.nombreObj);
-		descripObj.setText(szNombre);
-		descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-			
-	    EditText peso = (EditText) convertView.findViewById(R.id.pesoObj);
-	    peso.setText(szPeso);
-	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
-	
+  	      	System.out.println("agregara para papa="+groups.get(groupPosition).Nombre+ " el child = "+children.get(groupPosition).get(childPosition).Nombre);
+		    
+		    ObjetivosBSC objBSC = getChild(groupPosition, childPosition);
+		    String szNombre ="";
+		    String szPeso = "";
+		    if(objBSC != null){
+				szNombre=objBSC.Nombre;
+				szPeso = Integer.toString(objBSC.Peso);
+			}
+				
+			EditText descripObj = (EditText) convertView.findViewById(R.id.nombreObj);
+			descripObj.setText(szNombre);
+			descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+				
+		    EditText peso = (EditText) convertView.findViewById(R.id.pesoObj);
+		    peso.setText(szPeso);
+		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+        
+
+		    convertView.setFocusable(false);
 	    return convertView;       
     }
 
@@ -120,9 +124,8 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     	String group = getGroup(groupPosition).Nombre;
-    	System.out.println("groupView de ="+group);
-    	lay = new TableLayout(contexto);
-    	
+    	System.out.println("groupView de ="+group +" isExp="+isExpanded);    	
+
     	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.expandablelistview_group, null);
@@ -130,7 +133,6 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
-
         grouptxt.setText(group);
 
         return convertView;
@@ -151,7 +153,6 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		
 		public TableFila(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
 		}		
 	}
  
