@@ -39,38 +39,39 @@ public final class R {
         public static final int btn_cab_done_pressed_rhactionbar=0x7f020009;
         public static final int cab_background_bottom_rhactionbar=0x7f02000a;
         public static final int cab_background_top_rhactionbar=0x7f02000b;
-        public static final int fondo_plomo_claro=0x7f02000c;
-        public static final int gradiente_verde_green2=0x7f02000d;
-        public static final int header_background=0x7f02000e;
-        public static final int ic_action_search=0x7f02000f;
-        public static final int ic_launcher=0x7f020010;
-        public static final int icon=0x7f020011;
-        public static final int img_colaborador=0x7f020012;
-        public static final int item_background=0x7f020013;
-        public static final int item_background_focused=0x7f020014;
-        public static final int list_focused_rhactionbar=0x7f020015;
-        public static final int list_item_background=0x7f020016;
-        public static final int logorh1=0x7f020017;
-        public static final int logorh2=0x7f020018;
-        public static final int menu_dropdown_panel_rhactionbar=0x7f020019;
-        public static final int progress_bg_rhactionbar=0x7f02001a;
-        public static final int progress_primary_rhactionbar=0x7f02001b;
-        public static final int progress_secondary_rhactionbar=0x7f02001c;
-        public static final int spinner_ab_default_rhactionbar=0x7f02001d;
-        public static final int spinner_ab_disabled_rhactionbar=0x7f02001e;
-        public static final int spinner_ab_focused_rhactionbar=0x7f02001f;
-        public static final int spinner_ab_pressed_rhactionbar=0x7f020020;
-        public static final int tab_selected_focused_rhactionbar=0x7f020021;
-        public static final int tab_selected_pressed_rhactionbar=0x7f020022;
-        public static final int tab_selected_rhactionbar=0x7f020023;
-        public static final int tab_unselected_focused_rhactionbar=0x7f020024;
-        public static final int tab_unselected_pressed_rhactionbar=0x7f020025;
-        public static final int tab_unselected_rhactionbar=0x7f020026;
-        public static final int tabla_tag=0x7f020027;
-        public static final int tabla_value=0x7f020028;
-        public static final int tema_verde=0x7f020029;
-        public static final int textview_back=0x7f02002a;
-        public static final int textview_backred=0x7f02002b;
+        public static final int evento_icon=0x7f02000c;
+        public static final int fondo_plomo_claro=0x7f02000d;
+        public static final int gradiente_verde_green2=0x7f02000e;
+        public static final int header_background=0x7f02000f;
+        public static final int ic_action_search=0x7f020010;
+        public static final int ic_launcher=0x7f020011;
+        public static final int icon=0x7f020012;
+        public static final int img_colaborador=0x7f020013;
+        public static final int item_background=0x7f020014;
+        public static final int item_background_focused=0x7f020015;
+        public static final int list_focused_rhactionbar=0x7f020016;
+        public static final int list_item_background=0x7f020017;
+        public static final int logorh1=0x7f020018;
+        public static final int logorh2=0x7f020019;
+        public static final int menu_dropdown_panel_rhactionbar=0x7f02001a;
+        public static final int progress_bg_rhactionbar=0x7f02001b;
+        public static final int progress_primary_rhactionbar=0x7f02001c;
+        public static final int progress_secondary_rhactionbar=0x7f02001d;
+        public static final int spinner_ab_default_rhactionbar=0x7f02001e;
+        public static final int spinner_ab_disabled_rhactionbar=0x7f02001f;
+        public static final int spinner_ab_focused_rhactionbar=0x7f020020;
+        public static final int spinner_ab_pressed_rhactionbar=0x7f020021;
+        public static final int tab_selected_focused_rhactionbar=0x7f020022;
+        public static final int tab_selected_pressed_rhactionbar=0x7f020023;
+        public static final int tab_selected_rhactionbar=0x7f020024;
+        public static final int tab_unselected_focused_rhactionbar=0x7f020025;
+        public static final int tab_unselected_pressed_rhactionbar=0x7f020026;
+        public static final int tab_unselected_rhactionbar=0x7f020027;
+        public static final int tabla_tag=0x7f020028;
+        public static final int tabla_value=0x7f020029;
+        public static final int tema_verde=0x7f02002a;
+        public static final int textview_back=0x7f02002b;
+        public static final int textview_backred=0x7f02002c;
     }
     public static final class id {
         public static final int AquiSupervisoSusObjetivos=0x7f0a006b;
@@ -139,7 +140,11 @@ public final class R {
         public static final int loginButton=0x7f0a0007;
         public static final int lunesLayout=0x7f0a00bf;
         public static final int martesLayout=0x7f0a00c0;
+<<<<<<< HEAD
         public static final int menu_segunda_fase_title_layout=0x7f0a0049;
+=======
+        public static final int menu_segunda_fase_title_layout=0x7f0a0048;
+>>>>>>> d7653da5f24641c03446b57be33fd84dff083230
         public static final int menu_settings=0x7f0a00c5;
         public static final int menu_tercera_fase_title_layout=0x7f0a005a;
         public static final int menuofertas_title=0x7f0a004a;
@@ -253,10 +258,17 @@ public final class R {
         public static final int scrollView1=0x7f0a00b6;
         public static final int semanaContenidoLayout=0x7f0a00b8;
         public static final int siguienteEvaluacion=0x7f0a0085;
+<<<<<<< HEAD
         public static final int spinnerMisObjsPeriodo=0x7f0a0047;
         public static final int spinnerObjEmpPeriodo=0x7f0a0071;
         public static final int text1=0x7f0a002d;
         public static final int text2=0x7f0a002e;
+=======
+        public static final int spinnerMisObjsPeriodo=0x7f0a0046;
+        public static final int spinnerObjEmpPeriodo=0x7f0a0070;
+        public static final int text1=0x7f0a002c;
+        public static final int text2=0x7f0a002d;
+>>>>>>> d7653da5f24641c03446b57be33fd84dff083230
         public static final int textView1=0x7f0a0003;
         public static final int textView10=0x7f0a00ba;
         public static final int textView2=0x7f0a0005;

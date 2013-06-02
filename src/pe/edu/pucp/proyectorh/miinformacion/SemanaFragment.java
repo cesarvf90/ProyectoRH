@@ -68,8 +68,7 @@ public class SemanaFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Evento evento = new Evento();
-				evento.setCreador(new Colaborador("César", "Vásquez Flores",
-						"Tecnología", "Gerente"));
+				evento.setCreador("César Vásquez Flores");
 				evento.setFechaInicio("04/06/2013");
 				evento.setFechaFin("05/06/2013");
 				evento.setNombre("Desayuno de la empresa");
