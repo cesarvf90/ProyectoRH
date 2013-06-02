@@ -140,11 +140,7 @@ public final class R {
         public static final int loginButton=0x7f0a0007;
         public static final int lunesLayout=0x7f0a00bf;
         public static final int martesLayout=0x7f0a00c0;
-<<<<<<< HEAD
         public static final int menu_segunda_fase_title_layout=0x7f0a0049;
-=======
-        public static final int menu_segunda_fase_title_layout=0x7f0a0048;
->>>>>>> d7653da5f24641c03446b57be33fd84dff083230
         public static final int menu_settings=0x7f0a00c5;
         public static final int menu_tercera_fase_title_layout=0x7f0a005a;
         public static final int menuofertas_title=0x7f0a004a;
@@ -258,17 +254,10 @@ public final class R {
         public static final int scrollView1=0x7f0a00b6;
         public static final int semanaContenidoLayout=0x7f0a00b8;
         public static final int siguienteEvaluacion=0x7f0a0085;
-<<<<<<< HEAD
         public static final int spinnerMisObjsPeriodo=0x7f0a0047;
         public static final int spinnerObjEmpPeriodo=0x7f0a0071;
         public static final int text1=0x7f0a002d;
         public static final int text2=0x7f0a002e;
-=======
-        public static final int spinnerMisObjsPeriodo=0x7f0a0046;
-        public static final int spinnerObjEmpPeriodo=0x7f0a0070;
-        public static final int text1=0x7f0a002c;
-        public static final int text2=0x7f0a002d;
->>>>>>> d7653da5f24641c03446b57be33fd84dff083230
         public static final int textView1=0x7f0a0003;
         public static final int textView10=0x7f0a00ba;
         public static final int textView2=0x7f0a0005;

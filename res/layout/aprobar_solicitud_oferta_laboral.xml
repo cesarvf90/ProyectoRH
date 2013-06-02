@@ -230,6 +230,7 @@
                 android:ems="10"
                 android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
+                android:maxLength="100"
                 android:textSize="24sp" >
 
             </EditText>

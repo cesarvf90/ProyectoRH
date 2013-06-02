@@ -58,7 +58,7 @@ public class PostularOfertaLaboral extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(
-				R.layout.aprobar_solicitud_oferta_laboral, container, false);
+				R.layout.postular_oferta_laboral, container, false);
 
 		// Llamamos al WS que poblará "solicitudes"
 		/*
@@ -222,7 +222,7 @@ public class PostularOfertaLaboral extends Fragment {
 										// a la oferta
 										// laboral
 
-										//enviarPostulacionOfertaLaboral(LoginActivity.idUsuario, IDOfertaLaboral);
+										//enviarPostulacionOfertaLaboral(LoginActivity.getUsuario().getID(), IDOfertaLaboral);
 										posicionLista = -1; // volvemos a
 															// colocar el
 															// boton

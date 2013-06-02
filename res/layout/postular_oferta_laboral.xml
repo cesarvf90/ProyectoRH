@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/reclut_validar_solic_of_lab_title"
+            android:text="@string/reclut_postular_lab_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
@@ -87,14 +87,14 @@
                 android:text="Fecha Requerimiento:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
-            
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fecha Límite Solicitud:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
-
+            
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,22 +115,7 @@
                 android:text="Descripción:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
-            
-                <Button
-                android:id="@+id/reclu_btn_Validar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="Postular" />
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="45dp"
-                    android:textSize="18sp"                    
-                    android:text="* También puede postular a través de la web \n en la sección Bolsa de Trabajo" />
-            
         </LinearLayout>
 
         <LinearLayout
@@ -209,8 +194,24 @@
                 android:layout_height="150sp"
                 android:ems="10"
                 android:text="  "
-                android:textSize="24sp" >
+                android:textSize="24sp">
+                
             </TextView>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/reclu_btn_Validar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Postular" />
+                
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

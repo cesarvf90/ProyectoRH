@@ -224,8 +224,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 
 										EditText comentarios = (EditText) rootView
 												.findViewById(R.id.reclut_comentarios_input);
-										// actualizarEstadoSolicitudOfertaLaboral(IDSolicitudSeleccionada,
-										// "Aprobado", comentarios.toString());
+										actualizarEstadoSolicitudOfertaLaboral(IDSolicitudSeleccionada,
+										 "Aprobado", comentarios.getText().toString());
 										posicionLista = -1; // volvemos a
 															// colocar el
 															// boton
@@ -276,8 +276,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 
 										EditText comentarios = (EditText) rootView
 												.findViewById(R.id.reclut_comentarios_input);
-										// actualizarEstadoSolicitudOfertaLaboral(IDSolicitudSeleccionada,
-										// "Rechazado", comentarios.toString());
+										actualizarEstadoSolicitudOfertaLaboral(IDSolicitudSeleccionada,
+										 "Rechazado", comentarios.getText().toString());
 										posicionLista = -1; // volvemos a
 															// colocar el
 															// boton en -1
@@ -353,14 +353,14 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		TextView nrovacantes = (TextView) rootView
 				.findViewById(R.id.reclut_nro_vacantes_input);
 		nrovacantes
-				.setText(solicitudOfertaLaboral.getNroVacantes() == 0 ? " 0 "
+				.setText(solicitudOfertaLaboral.getNroVacantes() == 0 ? " - "
 						: String.valueOf(solicitudOfertaLaboral
 								.getNroVacantes()));
 
 		TextView sueldotentativo = (TextView) rootView
 				.findViewById(R.id.reclut_sueldo_tentativo_input);
 		sueldotentativo
-				.setText(solicitudOfertaLaboral.getSueldoTentativo() == 0 ? " S/. 0 "
+				.setText(solicitudOfertaLaboral.getSueldoTentativo() == 0 ? " - "
 						: String.valueOf("S/. "
 								+ solicitudOfertaLaboral.getSueldoTentativo()));
 
@@ -415,8 +415,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.RespuestaAprobarSolicitudOfertaLaboral
-					+ "?ID=" + ID + "?estadoOfertaLaboral=" + nuevoEstado
-					+ "?comentarios=" + comentarios;
+					+ "?ofertaLaboralID=" + ID + "&nuevoEstado=" + nuevoEstado
+					+ "&comentarios=" + comentarios;
 			System.out.println("pagina: " + request);
 			new enviarMensajeWS().execute(request);
 		}
@@ -437,9 +437,31 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			String respuesta = jsonObject.getString("success");
 			// si no pudo actualizar, mostramos mensaje de error y volvemos a
 			// mostrar todas las solicitudes pendientes
-			if (!procesaRespuesta(respuesta)) {
-				llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+			if (respuesta == "true") {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						this.getActivity());
+				builder.setTitle("Mensaje de Confirmación");
+				builder.setMessage("Operación exitosa");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				
+				//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 			}
+			else if (respuesta == "false")
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						this.getActivity());
+				builder.setTitle("Problema en el servidor");
+				builder.setMessage("Hay un problema en el servidor.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+			}
+			llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());

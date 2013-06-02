@@ -54,22 +54,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
-
+		llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
 		return rootView;
-	}
-
-	protected void mostrarDatosPadre(int groupPosition) {
-		/*
-		 * String e = groups.get(groupPosition); System.out.println(e);
-		 */
-		pintarLadoDerecho(padres.get(groupPosition));
-	}
-
-	protected void mostrarDatosHijo(int groupPosition, int childPosition) {
-		/*
-		 * String e = groups.get(groupPosition); System.out.println(e);
-		 */
-		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
 	}
 
 	private void llamarServicioConsultarEquipoTrabajo(String idUsuario) {
@@ -143,7 +129,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			if (procesaRespuesta(respuesta)) {
 				// System.out.println("respuesta: "+respuesta);
 				// Obtenemos el jefe de todos --NIVEL 0
-				JSONObject jefeObject = (JSONObject) jsonObject.get("data");
+				JSONObject dataObject = (JSONObject) jsonObject.get("data");
+				JSONObject jefeObject = (JSONObject) dataObject.get("jefe");
 				jefe = new ColaboradorEquipoTrabajo(jefeObject.getString("ID"),
 						jefeObject.getString("Nombre"),
 						jefeObject.getString("ApellidoPaterno"),
@@ -187,10 +174,13 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 									.getString("CorreoElectronico"));
 					// subordinadoNivel1Object.getInt("cantidadSubordinados"));
 
-					// Si es distinto de la persona logueada (la que hace la
-					// consulta) lo agregamos
-					// if (subordinadoNivel1.getId() !=
-					// LoginActivity.usuario.getID()) {
+					// Si coincide con la persona logueada (la que hace la
+					// consulta) le agregamos una marca * para distinguirlo
+					if (subordinadoNivel1.getId() == LoginActivity.usuario
+							.getID()) {
+						//setear nombre Miguel Vega *
+						//subordinadoNivel1.set
+					}
 					padres.add(subordinadoNivel1);
 					System.out.println(subordinadoNivel1.toString());
 					JSONArray listaSubordinadosNivel2 = (JSONArray) subordinadoNivel1Object
@@ -396,6 +386,20 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			builder.show();
 			return false;
 		}
+	}
+
+	protected void mostrarDatosPadre(int groupPosition) {
+		/*
+		 * String e = groups.get(groupPosition); System.out.println(e);
+		 */
+		pintarLadoDerecho(padres.get(groupPosition));
+	}
+
+	protected void mostrarDatosHijo(int groupPosition, int childPosition) {
+		/*
+		 * String e = groups.get(groupPosition); System.out.println(e);
+		 */
+		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
 	}
 
 }
