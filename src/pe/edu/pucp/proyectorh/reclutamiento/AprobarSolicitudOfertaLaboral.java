@@ -215,23 +215,20 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									if (posicionLista != -1) {
-										solicitudes.remove(posicionLista);
-										solicitudesAdapter
-												.notifyDataSetChanged();
 										// comunicarle al ws que se acepto
 										// solicitud oferta
 										// laboral
 
 										EditText comentarios = (EditText) rootView
 												.findViewById(R.id.reclut_comentarios_input);
-										actualizarEstadoSolicitudOfertaLaboral(IDSolicitudSeleccionada,
-										 "Aprobado", comentarios.getText().toString());
-										posicionLista = -1; // volvemos a
-															// colocar el
-															// boton
-															// en -1
-										SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-										mostrarSolicitudSeleccionada(nueva);
+										String comments = comentarios
+												.getText().toString();
+										comments = comments.trim();
+										comments = comments.replace(" ", "_");
+										comments = comments.replace("&", "_");									
+										actualizarEstadoSolicitudOfertaLaboral(
+												IDSolicitudSeleccionada,
+												"Aprobado", comments);
 									}
 									dialog.cancel();
 								}
@@ -267,22 +264,20 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									if (posicionLista != -1) {
-										solicitudes.remove(posicionLista);
-										solicitudesAdapter
-												.notifyDataSetChanged();
 										// comunicarle al ws que se rechazo
 										// solicitud oferta
 										// laboral
 
 										EditText comentarios = (EditText) rootView
 												.findViewById(R.id.reclut_comentarios_input);
-										actualizarEstadoSolicitudOfertaLaboral(IDSolicitudSeleccionada,
-										 "Rechazado", comentarios.getText().toString());
-										posicionLista = -1; // volvemos a
-															// colocar el
-															// boton en -1
-										SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-										mostrarSolicitudSeleccionada(nueva);
+										String comments = comentarios
+												.getText().toString();
+										comments = comments.trim();
+										comments = comments.replace(" ", "_");
+										comments = comments.replace("&", "_");
+										actualizarEstadoSolicitudOfertaLaboral(
+												IDSolicitudSeleccionada,
+												"Rechazado", comments);
 									}
 									dialog.cancel();
 								}
@@ -372,7 +367,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		} else {
 			fechaRequerimiento.setText("");
 		}
-		
+
 		TextView fechaLimiteSolicitud = (TextView) rootView
 				.findViewById(R.id.reclut_fecha_limite_input);
 		if (solicitudOfertaLaboral.getFechaLimiteSolicitud() != null) {
@@ -393,21 +388,23 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		responsable
 				.setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - "
 						: solicitudOfertaLaboral.getResponsable());
-
+		
 		TextView descripcion = (TextView) rootView
 				.findViewById(R.id.reclut_descripcion_input);
-		descripcion
-				.setText(solicitudOfertaLaboral.getDescripcion() == "null" ? " - "
-						: solicitudOfertaLaboral.getDescripcion());
-
-		/*
-		 * EditText comentarios = (EditText) rootView
-		 * .findViewById(R.id.reclut_comentarios_input); if
-		 * ((solicitudOfertaLaboral.getObservacion() == null) ||
-		 * ((solicitudOfertaLaboral.getComentarios() == "null"))) {
-		 * comentarios.setText(""); } else {
-		 * comentarios.setText(solicitudOfertaLaboral.getComentarios()); }
-		 */
+		String comment = "* sin descripción disponible *";
+		if ((solicitudOfertaLaboral.getDescripcion() == null)
+				|| (solicitudOfertaLaboral.getDescripcion() == "null"))
+			descripcion.setText(" - ");
+		else if (solicitudOfertaLaboral.getDescripcion().isEmpty()
+				|| (solicitudOfertaLaboral.getDescripcion() == "")
+				|| (solicitudOfertaLaboral.getDescripcion().length() <= 0))
+			descripcion.setText(comment);
+		else
+			descripcion.setText(solicitudOfertaLaboral.getDescripcion());
+		
+		EditText comentarios = (EditText) rootView
+				.findViewById(R.id.reclut_comentarios_input);
+		comentarios.setText("");		
 	}
 
 	private void actualizarEstadoSolicitudOfertaLaboral(int ID,
@@ -446,11 +443,15 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				builder.setPositiveButton("Ok", null);
 				builder.create();
 				builder.show();
-				
-				//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
-			}
-			else if (respuesta == "false")
-			{
+
+				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
+				mostrarSolicitudSeleccionada(nueva);
+				puestosSolicitudes.remove(posicionLista);
+				solicitudes.remove(posicionLista);
+				solicitudesAdapter.notifyDataSetChanged();
+				posicionLista = -1; // volvemos a colocar el posicion en -1
+				// llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+			} else if (respuesta == "false") {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						this.getActivity());
 				builder.setTitle("Problema en el servidor");
@@ -459,9 +460,12 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				builder.setPositiveButton("Ok", null);
 				builder.create();
 				builder.show();
-				//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+				posicionLista = -1; // volvemos a colocar el posicion en -1
+				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
+				mostrarSolicitudSeleccionada(nueva);
+				llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 			}
-			llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+			//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());

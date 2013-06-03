@@ -343,9 +343,14 @@ public class PostularOfertaLaboral extends Fragment {
 
 		TextView descripcion = (TextView) rootView
 				.findViewById(R.id.reclut_descripcion_input);
-		descripcion
-				.setText(solicitudOfertaLaboral.getDescripcion() == "null" ? " - "
-						: solicitudOfertaLaboral.getDescripcion());
+		String comment = "* sin descripción disponible *";
+		if ((solicitudOfertaLaboral.getDescripcion() == null)
+				|| (solicitudOfertaLaboral.getDescripcion() == "null"))
+			descripcion.setText(" - ");
+		else if (solicitudOfertaLaboral.getDescripcion().isEmpty() || (solicitudOfertaLaboral.getDescripcion() == "") || (solicitudOfertaLaboral.getDescripcion().length()<=0))
+			descripcion.setText(comment);
+		else
+			descripcion.setText(solicitudOfertaLaboral.getDescripcion());
 		
 	}
 

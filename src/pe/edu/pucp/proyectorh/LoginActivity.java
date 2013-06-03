@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
 
 	public static final String USUARIO_VALIDO = "1";
 	public static final String USUARIO_INVALIDO = "0";
-	public static String idUsuario;
+	
 	public static Usuario usuario;
 	public int DEBUG_NO_LOGIN = 0; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
 									// LOGIN
@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 				String usuario = ((EditText) findViewById(R.id.usuarioText))
 						.getText().toString();
-				idUsuario = usuario;
+				
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
 

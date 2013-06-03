@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import android.content.Context;
@@ -106,12 +107,21 @@ public class AdapterEquipoObjetosColaboradores extends
 		TextView grouptxt = (TextView) convertView
 				.findViewById(R.id.TextViewGroup);
 
-		grouptxt.setText((group.getNombres() == "null" ? "" : group
-				.getNombres())
-				+ " "
-				+ (group.getApellidoPaterno() == "null" ? "" : group
-						.getApellidoPaterno()));
-
+		// Si coincide con la persona logueada (la que hace la
+		// consulta) le agregamos una marca [] para distinguirlo
+		if (group.getId() == LoginActivity.usuario.getID()) {
+			grouptxt.setText("[ "
+					+ (group.getNombres() == "null" ? "" : group.getNombres())
+					+ " "
+					+ (group.getApellidoPaterno() == "null" ? "" : group
+							.getApellidoPaterno()) + " ]");
+		} else {
+			grouptxt.setText((group.getNombres() == "null" ? "" : group
+					.getNombres())
+					+ " "
+					+ (group.getApellidoPaterno() == "null" ? "" : group
+							.getApellidoPaterno()));
+		}
 		return convertView;
 	}
 
