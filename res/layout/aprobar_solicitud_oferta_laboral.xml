@@ -91,7 +91,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Modo de Publicación:"
+                android:text="Fecha Límite Solicitud:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo de Convocatoria:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -181,6 +188,14 @@
                 android:text="  "
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
+            
+            <TextView
+                android:id="@+id/reclut_fecha_limite_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/reclut_modo_input"
@@ -213,8 +228,11 @@
                 android:layout_height="150sp"
                 android:editable="false"
                 android:ems="10"
+                android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
+                android:maxLength="100"
                 android:textSize="24sp" >
+
             </EditText>
         </LinearLayout>
     </LinearLayout>

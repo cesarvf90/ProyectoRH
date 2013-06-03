@@ -3,10 +3,12 @@ package pe.edu.pucp.proyectorh.reclutamiento;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.SolicitudOfertaLaboral;
@@ -18,8 +20,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,15 +33,18 @@ public class PostularOfertaLaboral extends Fragment {
 
 	private View rootView;
 	private View layoutVacio;
-	private ListView listaOfertasLaborales;
-	private ArrayAdapter<SolicitudOfertaLaboral> solicitudesAdapter;
+	private ListView listaSolicitudes;
+	private ArrayAdapter<String> solicitudesAdapter;
 	private ArrayList<SolicitudOfertaLaboral> solicitudes = null;
+	private ArrayList<String> puestosSolicitudes = null;
 	private static final String OPERACION_VALIDA = "true";
 	private static final String OPERACION_INVALIDA = "false";
-	private int IDSolicitudSeleccionada;
-	private Button aceptarButton;
+	private int IDOfertaLaboral;
+	private Button postularButton;
+	
 	private int posicionLista = -1;
 	private SolicitudOfertaLaboral solicitud;
+	boolean espera = true;
 
 	public PostularOfertaLaboral() {
 	}
@@ -52,110 +57,37 @@ public class PostularOfertaLaboral extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.postular_oferta_laboral,
-				container, false);
-		this.listaOfertasLaborales = (ListView) rootView
-				.findViewById(R.id.reclut_lista_ofertas_laborales);
-		this.aceptarButton = (Button) this.rootView
-				.findViewById(R.id.reclu_btn_Validar);
+		this.rootView = inflater.inflate(
+				R.layout.postular_oferta_laboral, container, false);
 
 		// Llamamos al WS que poblará "solicitudes"
-		// llamarServiciosAprobarSolicitudOfertaLaboral("laboral");
-		probarDeserializacionJSON("");
+		/*
+		 * synchronized (this) { jcjj = true;
+		 * llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente"); try {
+		 * this.wait(3000); } catch (InterruptedException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } }
+		 */
+		llamarServicioObtenerOfertasLaborales("Aprobado");
 
-		if (solicitudes != null) {
-			this.solicitudesAdapter = new ArrayAdapter<SolicitudOfertaLaboral>(
-					this.getActivity(), android.R.layout.simple_list_item_1,
-					solicitudes);
-			listaOfertasLaborales.setAdapter(solicitudesAdapter);
-			listaOfertasLaborales
-					.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View childView, int position, long id) {
-							// position tiene la posicion de la vista en el
-							// adapter
-							mostrarSolicitudSeleccionada(solicitudes
-									.get(position));
-							// obtenemos el id de la solicitud seleccionada
-							// IDSolicitudSeleccionada =
-							// solicitudes.get(position).getSolicitudID();
+		// while (espera);
+		// probarDeserializacionJSON("");
 
-							IDSolicitudSeleccionada = solicitudes.get(position)
-									.getID();
-							posicionLista = position;
-						}
-					});
+		// if (solicitudes != null) {
 
-			aceptarButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if ((solicitudes.size() > 0) && (posicionLista != -1)) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								getActivity());
-						builder.setTitle("Postular a Oferta Laboral");
-						builder.setMessage("¿Desea postular a la oferta laboral?");
-						builder.setCancelable(false);
-						builder.setNegativeButton("Cancelar",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.cancel();
-									}
-								});
-						builder.setPositiveButton("Aceptar",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										if (posicionLista != -1) {
-											solicitudes.remove(posicionLista);
-											solicitudesAdapter
-													.notifyDataSetChanged();
-											// comunicarle al ws que se acepto
-											// solicitud oferta
-											// laboral
-
-											EditText observacion = (EditText) rootView
-													.findViewById(R.id.reclut_comentarios_input);
-											// enviarMensajeWS(aprobada,
-											// IDSolicitudSeleccionada,
-											// observacion);
-											posicionLista = -1; // volvemos a
-																// colocar el
-																// boton
-																// en -1
-											SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-											mostrarSolicitudSeleccionada(nueva);
-										}
-										dialog.cancel();
-									}
-
-								});
-						builder.create();
-						builder.show();
-					}
-				}
-			});
-
-			return rootView;
-		} else {
-			// Caso contrario, mostramos una vista vacía
-			this.layoutVacio = inflater.inflate(
-					R.layout.layout_vacio_para_errores, container, false);
-			return layoutVacio;
-		}
-
+		/*
+		 * } else { System.out.println("solicitudes == NULL"); // Caso
+		 * contrario, mostramos una vista vacía this.layoutVacio =
+		 * inflater.inflate( R.layout.layout_vacio_para_errores, container,
+		 * false); return layoutVacio; }
+		 */
+		return rootView;
 	}
 
-	private void llamarServiciosAprobarSolicitudOfertaLaboral(
-			String tipoSolicitud) {
+	private void llamarServicioObtenerOfertasLaborales(String estado) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
-			String request = Servicio.AprobarSolicitudOfertaLaboral + "?tipo="
-					+ tipoSolicitud;
+			String request = Servicio.AprobarSolicitudOfertaLaboral
+					+ "?estadoOfertaLaboral=" + estado;
 			System.out.println("pagina: " + request);
 			new deserializarJSON().execute(request);
 		}
@@ -164,6 +96,7 @@ public class PostularOfertaLaboral extends Fragment {
 	public class deserializarJSON extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
+			System.out.println("result: " + result);
 			probarDeserializacionJSON(result);
 		}
 	}
@@ -181,14 +114,16 @@ public class PostularOfertaLaboral extends Fragment {
 		// deserializando el json parte por parte
 		try {
 			JSONObject jsonObject = new JSONObject(result);
-			System.out.println("result: " + result);
+			// System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
 			if (procesaRespuesta(respuesta)) {
-				JSONArray listaOfertasLaborales = (JSONArray) jsonObject
-						.get("data");
+				JSONObject data = (JSONObject) jsonObject.get("data");
+				JSONArray listaOfertasLaborales = (JSONArray) data
+						.get("ofertasLaborales");
 
-				JSONObject solicitudObject;
 				solicitudes = new ArrayList<SolicitudOfertaLaboral>();
+				puestosSolicitudes = new ArrayList<String>();
+				JSONObject solicitudObject;
 				for (int i = 0; i < listaOfertasLaborales.length(); i++) {
 					solicitudObject = listaOfertasLaborales.getJSONObject(i);
 
@@ -200,13 +135,17 @@ public class PostularOfertaLaboral extends Fragment {
 							solicitudObject.getInt("SueldoTentativo"),
 							formatoFecha.parse(solicitudObject
 									.getString("FechaRequerimiento")),
+							formatoFecha.parse(solicitudObject
+									.getString("FechaFinRequerimiento")),
 							solicitudObject.getString("ModoSolicitud"),
 							solicitudObject.getString("Responsable"),
 							solicitudObject.getString("Descripcion"),
 							solicitudObject.getString("Comentarios"));
 
 					solicitudes.add(solicitud);
+					puestosSolicitudes.add(solicitud.getPuesto());
 				}
+				mostrarSolicitudes();
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
@@ -220,11 +159,93 @@ public class PostularOfertaLaboral extends Fragment {
 			e.printStackTrace();
 			mostrarErrorComunicacion(e.toString());
 		}
+
+	}
+
+	private void mostrarSolicitudes() {
+		this.listaSolicitudes = (ListView) rootView
+				.findViewById(R.id.reclut_lista_solicit_of_laboral);
+		this.postularButton = (Button) this.rootView
+				.findViewById(R.id.reclu_btn_Validar);
+		
+
+		// System.out.println("solicitudes != NULL");
+		this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
+				android.R.layout.simple_list_item_1, puestosSolicitudes);
+		listaSolicitudes.setAdapter(solicitudesAdapter);
+		listaSolicitudes
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent,
+							View childView, int position, long id) {
+						// position tiene la posicion de la vista en el
+						// adapter
+						mostrarSolicitudSeleccionada(solicitudes.get(position));
+						// obtenemos el id de la solicitud seleccionada
+						// IDOfertaLaboral =
+						// solicitudes.get(position).getSolicitudID();
+
+						IDOfertaLaboral = solicitudes.get(position)
+								.getID();
+						posicionLista = position;
+					}
+				});
+
+		postularButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if ((solicitudes.size() > 0) && (posicionLista != -1)) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Postular a Oferta Laboral");
+					builder.setMessage("¿Desea postular a la oferta laboral?");
+					builder.setCancelable(false);
+					builder.setNegativeButton("Cancelar",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.cancel();
+								}
+							});
+					builder.setPositiveButton("Aceptar",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									if (posicionLista != -1) {
+										solicitudes.remove(posicionLista);
+										solicitudesAdapter
+												.notifyDataSetChanged();
+										// comunicarle al ws que se postulo
+										// a la oferta
+										// laboral
+
+										//enviarPostulacionOfertaLaboral(LoginActivity.getUsuario().getID(), IDOfertaLaboral);
+										posicionLista = -1; // volvemos a
+															// colocar el
+															// boton
+															// en -1
+										SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
+										mostrarSolicitudSeleccionada(nueva);
+									}
+									dialog.cancel();
+								}
+
+							});
+					builder.create();
+					builder.show();
+				}
+			}
+		});
+
+		
 	}
 
 	private void mostrarErrorComunicacion(String excepcion) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this
-				.getActivity().getApplicationContext());
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
 		builder.setTitle("Error de servicio");
 		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
 				+ excepcion.toString());
@@ -232,26 +253,25 @@ public class PostularOfertaLaboral extends Fragment {
 		builder.setPositiveButton("Ok", null);
 		builder.create();
 		builder.show();
+
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
 		if (OPERACION_VALIDA.equals(respuestaServidor)) {
 			return true;
-		} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
-			// Se muestra mensaje de usuario invalido
-			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
-			builder.setTitle("Login inválido");
-			builder.setMessage("Combinación de usuario y/o contraseña incorrectos.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return false;
+			/*
+			 * } else if (OPERACION_INVALIDA.equals(respuestaServidor)) { // Se
+			 * muestra mensaje de usuario invalido AlertDialog.Builder builder =
+			 * new AlertDialog.Builder(this .getActivity());
+			 * builder.setTitle("Login inválido"); builder.setMessage(
+			 * "Combinación de usuario y/o contraseña incorrectos.");
+			 * builder.setCancelable(false); builder.setPositiveButton("Ok",
+			 * null); builder.create(); builder.show(); return false;
+			 */
 		} else {
-			// Se muestra mensaje de usuario invalido
-			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
+			// Se muestra mensaje de error
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					this.getActivity());
 			builder.setTitle("Problema en el servidor");
 			builder.setMessage("Hay un problema en el servidor.");
 			builder.setCancelable(false);
@@ -277,17 +297,19 @@ public class PostularOfertaLaboral extends Fragment {
 		puesto.setText(solicitudOfertaLaboral.getPuesto() == "null" ? " - "
 				: solicitudOfertaLaboral.getPuesto());
 
-		/*
-		 * TextView nrovacantes = (TextView) rootView
-		 * .findViewById(R.id.reclut_nro_vacantes_input);
-		 * nrovacantes.setText(solicitudOfertaLaboral.getNroVacantes() == "null"
-		 * ? " - " : solicitudOfertaLaboral.getNroVacantes());
-		 * 
-		 * TextView sueldotentativo = (TextView) rootView
-		 * .findViewById(R.id.reclut_sueldo_tentativo_input);
-		 * sueldotentativo.setText(solicitudOfertaLaboral.getSueldoTentativo()
-		 * == "null" ? " - " : solicitudOfertaLaboral.getSueldoTentativo());
-		 */
+		TextView nrovacantes = (TextView) rootView
+				.findViewById(R.id.reclut_nro_vacantes_input);
+		nrovacantes
+				.setText(solicitudOfertaLaboral.getNroVacantes() == 0 ? " 0 "
+						: String.valueOf(solicitudOfertaLaboral
+								.getNroVacantes()));
+
+		TextView sueldotentativo = (TextView) rootView
+				.findViewById(R.id.reclut_sueldo_tentativo_input);
+		sueldotentativo
+				.setText(solicitudOfertaLaboral.getSueldoTentativo() == 0 ? " S/. 0 "
+						: String.valueOf("S/. "
+								+ solicitudOfertaLaboral.getSueldoTentativo()));
 
 		TextView fechaRequerimiento = (TextView) rootView
 				.findViewById(R.id.reclut_fecha_input);
@@ -297,34 +319,73 @@ public class PostularOfertaLaboral extends Fragment {
 		} else {
 			fechaRequerimiento.setText("");
 		}
+		
+		TextView fechaLimiteSolicitud = (TextView) rootView
+				.findViewById(R.id.reclut_fecha_limite_input);
+		if (solicitudOfertaLaboral.getFechaLimiteSolicitud() != null) {
+			fechaLimiteSolicitud.setText(formatoFecha
+					.format(solicitudOfertaLaboral.getFechaLimiteSolicitud()));
+		} else {
+			fechaLimiteSolicitud.setText("");
+		}
 
-		/*
-		 * TextView modoPublicacion = (TextView) rootView
-		 * .findViewById(R.id.reclut_modo_input); modoPublicacion
-		 * .setText(solicitudOfertaLaboral.getModoPublicacion() == "null" ?
-		 * " - " : solicitudOfertaLaboral.getModoPublicacion());
-		 * 
-		 * TextView responsable = (TextView) rootView
-		 * .findViewById(R.id.reclut_responsable_input); responsable
-		 * .setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - " :
-		 * solicitudOfertaLaboral.getResponsable());
-		 */
+		TextView modoPublicacion = (TextView) rootView
+				.findViewById(R.id.reclut_modo_input);
+		modoPublicacion
+				.setText(solicitudOfertaLaboral.getModoPublicacion() == "null" ? " - "
+						: solicitudOfertaLaboral.getModoPublicacion());
+
+		TextView responsable = (TextView) rootView
+				.findViewById(R.id.reclut_responsable_input);
+		responsable
+				.setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - "
+						: solicitudOfertaLaboral.getResponsable());
 
 		TextView descripcion = (TextView) rootView
 				.findViewById(R.id.reclut_descripcion_input);
 		descripcion
 				.setText(solicitudOfertaLaboral.getDescripcion() == "null" ? " - "
 						: solicitudOfertaLaboral.getDescripcion());
+		
 	}
 
-	private void enviarMensajeWS(String nuevoEstado, int ID, String comentario) {
+	private void enviarPostulacionOfertaLaboral(int IDusuario,
+			int IDofertaLaboral) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
-			String request = Servicio.RespuestaAprobarSolicitudOfertaLaboral
-					+ "?nuevoEstado=" + nuevoEstado + "?ID=" + ID
-					+ "?comentario=" + comentario;
+			String request = Servicio.EnviarPostulacionOfertaLaboral
+					+ "?IDusuario=" + IDusuario + "?IDofertaLaboral=" + IDofertaLaboral;					
 			System.out.println("pagina: " + request);
+			new enviarMensajeWS().execute(request);
 		}
 	}
 
+	public class enviarMensajeWS extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("result: " + result);
+			confirmacionPostulacion(result);
+		}
+	}
+
+	public void confirmacionPostulacion(String result) {
+		try {
+			JSONObject jsonObject = new JSONObject(result);
+			System.out.println("result: " + result);
+			String respuesta = jsonObject.getString("success");
+			// si no pudo actualizar, mostramos mensaje de error y volvemos a
+			// mostrar todas las solicitudes pendientes
+			if (!procesaRespuesta(respuesta)) {
+				llamarServicioObtenerOfertasLaborales("Aprobado");
+			}
+		} catch (JSONException e) {
+			System.out.println("entre al catch1");
+			System.out.println(e.toString());
+			mostrarErrorComunicacion(e.toString());
+		} catch (NullPointerException ex) {
+			System.out.println("entre al catch2");
+			System.out.println(ex.toString());
+			mostrarErrorComunicacion(ex.toString());
+		}
+	}
 }

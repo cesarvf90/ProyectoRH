@@ -9,6 +9,7 @@ public class SolicitudOfertaLaboral {
 	private int nroVacantes;
 	private int sueldoTentativo;
 	private Date fechaRequerimiento;
+	private Date fechaLimiteSolicitud;
 	private String modoPublicacion;	
 	private String responsable;
 	private String descripcion;
@@ -22,7 +23,7 @@ public class SolicitudOfertaLaboral {
 	
 	public SolicitudOfertaLaboral(int iD, String area, String puesto,
 			int nroVacantes, int sueldoTentativo,
-			Date fechaRequerimiento, String modoPublicacion,
+			Date fechaRequerimiento, Date fechaLimiteSolicitud, String modoPublicacion,
 			String responsable, String descripcion, String comentarios) {
 		super();
 		this.ID = iD;
@@ -31,6 +32,7 @@ public class SolicitudOfertaLaboral {
 		this.nroVacantes = nroVacantes;
 		this.sueldoTentativo = sueldoTentativo;
 		this.fechaRequerimiento = fechaRequerimiento;
+		this.fechaLimiteSolicitud = fechaLimiteSolicitud;
 		this.modoPublicacion = modoPublicacion;
 		this.responsable = responsable;
 		this.descripcion = descripcion;
@@ -71,6 +73,12 @@ public class SolicitudOfertaLaboral {
 	}
 	public void setFechaRequerimiento(Date fechaRequerimiento) {
 		this.fechaRequerimiento = fechaRequerimiento;
+	}	
+	public Date getFechaLimiteSolicitud() {
+		return fechaLimiteSolicitud;
+	}
+	public void setFechaLimiteSolicitud(Date fechaLimiteSolicitud) {
+		this.fechaLimiteSolicitud = fechaLimiteSolicitud;
 	}
 	public String getModoPublicacion() {
 		return modoPublicacion;
@@ -96,18 +104,16 @@ public class SolicitudOfertaLaboral {
 	public void setComentarios(String comentarios) {
 		this.comentarios = comentarios;
 	}
+
 	@Override
 	public String toString() {
 		return "SolicitudOfertaLaboral [ID=" + ID + ", area=" + area
 				+ ", puesto=" + puesto + ", nroVacantes=" + nroVacantes
 				+ ", sueldoTentativo=" + sueldoTentativo
 				+ ", fechaRequerimiento=" + fechaRequerimiento
+				+ ", fechaLimiteSolicitud=" + fechaLimiteSolicitud
 				+ ", modoPublicacion=" + modoPublicacion + ", responsable="
 				+ responsable + ", descripcion=" + descripcion
 				+ ", comentarios=" + comentarios + "]";
 	}
-	
-	
-	
-	
 }
