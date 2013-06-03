@@ -33,7 +33,7 @@
 
     <ListView
         android:id="@+id/reclut_lista_solicit_of_laboral"
-        android:layout_width="350px"
+        android:layout_width="280px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/reclut_title_layout" >
@@ -91,7 +91,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Modo de Publicación:"
+                android:text="Fecha Límite Solicitud:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo de Convocatoria:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -146,6 +153,7 @@
                 android:id="@+id/reclut_area_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                
                 android:text="  "
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -176,6 +184,14 @@
 
             <TextView
                 android:id="@+id/reclut_fecha_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+            
+            <TextView
+                android:id="@+id/reclut_fecha_limite_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="  "
@@ -213,8 +229,12 @@
                 android:layout_height="150sp"
                 android:editable="false"
                 android:ems="10"
+                android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
-                android:textSize="24sp" >
+                android:maxLength="100"
+                android:textSize="24sp" 
+                android:hint="Ingrese un comentario sobre la solicitud">
+
             </EditText>
         </LinearLayout>
     </LinearLayout>

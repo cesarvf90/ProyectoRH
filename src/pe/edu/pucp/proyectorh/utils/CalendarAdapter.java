@@ -160,4 +160,16 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 	}
 
+	public java.util.Calendar getMonth() {
+		return month;
+	}
+
+	public static int getFirstDayOfWeek() {
+		return FIRST_DAY_OF_WEEK;
+	}
+
+	public Calendar getSelectedDate() {
+		return selectedDate;
+	}
+
 }

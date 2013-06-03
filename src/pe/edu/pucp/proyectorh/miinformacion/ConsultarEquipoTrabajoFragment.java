@@ -54,106 +54,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
-		exv = (ExpandableListView) this.rootView
-				.findViewById(R.id.equipo_trabajo_contactos_list);
-		txtVJefe = (TextView) this.rootView
-				.findViewById(R.id.equipo_trabajo_cabecera_jefe);
-
-		// loadData();
-
-		if ((LoginActivity.usuario.getPadres() == null)
-				|| (LoginActivity.usuario.getHijos() == null)
-				|| (LoginActivity.usuario.getJefe() == null)) {
-			System.out.println("Primera vez: llamamos al WS");
-			//probarDeserializacionJSON("");
-			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
-			LoginActivity.usuario.setJefe(this.jefe);
-			LoginActivity.usuario.setHijos(this.hijos);
-			LoginActivity.usuario.setPadres(this.padres);
-			/*this.padres = LoginActivity.usuario.getPadres();
-			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();*/
-		} else {
-			System.out.println("Ya en memoria");
-			this.padres = LoginActivity.usuario.getPadres();
-			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();
-		}
-
-		// Si todo salió bien y logramos poblar todos los elementos, levantamos
-		// la vista
-		if ((this.jefe != null) && (this.padres != null)
-				&& (this.hijos != null)) {
-			TextView txtCabeceraJefe = (TextView) rootView
-					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
-			txtCabeceraJefe.setText("Jefe de Equipo: "
-					+ (jefe.getNombres() == "null" ? "" : jefe.getNombres())
-					+ " "
-					+ (jefe.getApellidoPaterno() == "null" ? "" : jefe
-							.getApellidoPaterno())
-					+ " "
-					+ (jefe.getApellidoMaterno() == "null" ? "" : jefe
-							.getApellidoMaterno()));
-
-			/*
-			 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
-			 * .getActivity().getApplicationContext(), groups, childs);
-			 * exv.setAdapter(adapter);
-			 */
-
-			AdapterEquipoObjetosColaboradores adapter = new AdapterEquipoObjetosColaboradores(
-					this.getActivity().getApplicationContext(), padres, hijos);
-			exv.setAdapter(adapter);
-
-			exv.setOnGroupClickListener(new OnGroupClickListener() {
-				@Override
-				public boolean onGroupClick(ExpandableListView parent, View v,
-						int groupPosition, long id) {
-					System.out.println("Grupo " + (groupPosition));
-
-					mostrarDatosPadre(groupPosition);
-					return false;
-				}
-			});
-
-			exv.setOnChildClickListener(new OnChildClickListener() {
-				@Override
-				public boolean onChildClick(ExpandableListView parent, View v,
-						int groupPosition, int childPosition, long id) {
-					System.out.println("Grupo " + (groupPosition) + "Hijo "
-							+ childPosition);
-					mostrarDatosHijo(groupPosition, childPosition);
-					return false;
-				}
-			});
-
-			txtVJefe.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					pintarLadoDerecho(jefe);
-				}
-			});
-			return rootView;
-		} else {
-			// Caso contrario, mostramos una vista vacía
-			this.layoutVacio = inflater.inflate(
-					R.layout.layout_vacio_para_errores, container, false);
-			return layoutVacio;
-		}
-	}
-
-	protected void mostrarDatosPadre(int groupPosition) {
-		/*
-		 * String e = groups.get(groupPosition); System.out.println(e);
-		 */
-		pintarLadoDerecho(padres.get(groupPosition));
-	}
-
-	protected void mostrarDatosHijo(int groupPosition, int childPosition) {
-		/*
-		 * String e = groups.get(groupPosition); System.out.println(e);
-		 */
-		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
+		llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
+		return rootView;
 	}
 
 	private void llamarServicioConsultarEquipoTrabajo(String idUsuario) {
@@ -227,7 +129,8 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			if (procesaRespuesta(respuesta)) {
 				// System.out.println("respuesta: "+respuesta);
 				// Obtenemos el jefe de todos --NIVEL 0
-				JSONObject jefeObject = (JSONObject) jsonObject.get("data");
+				JSONObject dataObject = (JSONObject) jsonObject.get("data");
+				JSONObject jefeObject = (JSONObject) dataObject.get("jefe");
 				jefe = new ColaboradorEquipoTrabajo(jefeObject.getString("ID"),
 						jefeObject.getString("Nombre"),
 						jefeObject.getString("ApellidoPaterno"),
@@ -238,14 +141,13 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 						jefeObject.getString("CorreoElectronico"));
 				// jefeObject.getInt("cantidadSubordinados"));
 
-				System.out.println(jefe.toString());
+				System.out.println("jefe: " + jefe.toString());
 				// Obtenemos la lista de subordinados del jefe de todos --NIVEL
 				// 1
 				JSONArray listaSubordinadosNivel1 = (JSONArray) jefeObject
 						.get("Subordinados");
 
-				int m = listaSubordinadosNivel1.length();
-				System.out.println("size: " + String.valueOf(m));
+				
 				System.out.println("listaSubordinadosNivel1: "
 						+ listaSubordinadosNivel1.toString());
 
@@ -269,20 +171,18 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 							subordinadoNivel1Object.getString("Telefono"),
 							subordinadoNivel1Object
 									.getString("CorreoElectronico"));
-					// subordinadoNivel1Object.getInt("cantidadSubordinados"));
 
-					// Si es distinto de la persona logueada (la que hace la
-					// consulta) lo agregamos
-					// if (subordinadoNivel1.getId() !=
-					// LoginActivity.usuario.getID()) {
+					String nombre = subordinadoNivel1.getNombres();
+					if (nombre.indexOf(" ") > -1) {
+						nombre = nombre.substring(0, nombre.indexOf(" "));
+						subordinadoNivel1.setNombres(nombre);
+					}
+
 					padres.add(subordinadoNivel1);
-					System.out.println(subordinadoNivel1.toString());
+					//System.out.println(subordinadoNivel1.toString());
 					JSONArray listaSubordinadosNivel2 = (JSONArray) subordinadoNivel1Object
 							.get("Subordinados");
-
-					m = listaSubordinadosNivel2.length();
-					System.out.println("size2: " + String.valueOf(m));
-
+					
 					JSONObject subordinadoNivel2Object;
 					hijos.add(new ArrayList<ArrayList<ColaboradorEquipoTrabajo>>());
 
@@ -307,26 +207,28 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 								new ArrayList<ColaboradorEquipoTrabajo>());
 						hijos.get(i).get(j).add(subordinadoNivel2);
 
-						System.out.println(subordinadoNivel2.toString());
+						//System.out.println(subordinadoNivel2.toString());
 
 					}
 				}
-				// }
+				/*
 				System.out
 						.println("***********************************************************************");
 				System.out.println(padres.toString());
-				System.out.println(hijos.toString());
+				System.out.println(hijos.toString());*/
+				
+				mostrarEquipo();
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
-			System.out.println(e.toString());			
+			System.out.println(e.toString());
 			padres = null;
 			hijos = null;
 			jefe = null;
 			mostrarErrorComunicacion(e.toString());
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
-			System.out.println(ex.toString());			
+			System.out.println(ex.toString());
 			padres = null;
 			hijos = null;
 			jefe = null;
@@ -334,7 +236,93 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		}
 	}
 
-	private void loadData() {
+	private void mostrarEquipo() {
+		exv = (ExpandableListView) this.rootView
+				.findViewById(R.id.equipo_trabajo_contactos_list);
+		txtVJefe = (TextView) this.rootView
+				.findViewById(R.id.equipo_trabajo_cabecera_jefe);
+
+		// loadDataPrueba();
+
+		if ((LoginActivity.usuario.getPadres() == null)
+				|| (LoginActivity.usuario.getHijos() == null)
+				|| (LoginActivity.usuario.getJefe() == null)) {
+			System.out.println("Primera vez: llamamos al WS");
+			// probarDeserializacionJSON("");
+			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
+			LoginActivity.usuario.setJefe(this.jefe);
+			LoginActivity.usuario.setHijos(this.hijos);
+			LoginActivity.usuario.setPadres(this.padres);
+			/*
+			 * this.padres = LoginActivity.usuario.getPadres(); this.hijos =
+			 * LoginActivity.usuario.getHijos(); this.jefe =
+			 * LoginActivity.usuario.getJefe();
+			 */
+		} else {
+			System.out.println("Ya en memoria");
+			this.padres = LoginActivity.usuario.getPadres();
+			this.hijos = LoginActivity.usuario.getHijos();
+			this.jefe = LoginActivity.usuario.getJefe();
+		}
+
+		// Si todo salió bien y logramos poblar todos los elementos, levantamos
+		// la vista
+		if ((this.jefe != null) && (this.padres != null)
+				&& (this.hijos != null)) {
+			TextView txtCabeceraJefe = (TextView) rootView
+					.findViewById(R.id.equipo_trabajo_cabecera_jefe);
+			txtCabeceraJefe.setText("Jefe de Equipo: "
+					+ (jefe.getNombres() == "null" ? "" : jefe.getNombres())
+					+ " "
+					+ (jefe.getApellidoPaterno() == "null" ? "" : jefe
+							.getApellidoPaterno())
+					+ " "
+					+ (jefe.getApellidoMaterno() == "null" ? "" : jefe
+							.getApellidoMaterno()));
+
+			/*
+			 * MyExpandableAdapter adapter = new MyExpandableAdapter(this
+			 * .getActivity().getApplicationContext(), groups, childs);
+			 * exv.setAdapter(adapter);
+			 */
+
+			AdapterEquipoObjetosColaboradores adapter = new AdapterEquipoObjetosColaboradores(
+					this.getActivity().getApplicationContext(), padres, hijos);
+			exv.setAdapter(adapter);
+
+			exv.setOnGroupClickListener(new OnGroupClickListener() {
+				@Override
+				public boolean onGroupClick(ExpandableListView parent, View v,
+						int groupPosition, long id) {
+					System.out.println("Grupo " + (groupPosition));
+
+					mostrarDatosPadre(groupPosition);
+					return false;
+				}
+			});
+
+			exv.setOnChildClickListener(new OnChildClickListener() {
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v,
+						int groupPosition, int childPosition, long id) {
+					System.out.println("Grupo " + (groupPosition) + "Hijo "
+							+ childPosition);
+					mostrarDatosHijo(groupPosition, childPosition);
+					return false;
+				}
+			});
+
+			txtVJefe.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					pintarLadoDerecho(jefe);
+				}
+			});
+
+		}
+	}
+
+	private void loadDataPrueba() {
 		groups = new ArrayList<String>();
 		childs = new ArrayList<ArrayList<ArrayList<String>>>();
 
@@ -370,21 +358,20 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	public boolean procesaRespuesta(String respuestaServidor) {
 		if (OPERACION_VALIDA.equals(respuestaServidor)) {
 			return true;
-		/*} else if (OPERACION_INVALIDA.equals(respuestaServidor)) {
-			// Se muestra mensaje de usuario invalido
-			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity().getApplicationContext());
-			builder.setTitle("Login inválido");
-			builder.setMessage("Combinación de usuario y/o contraseña incorrectos.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return false;*/
+			/*
+			 * } else if (OPERACION_INVALIDA.equals(respuestaServidor)) { // Se
+			 * muestra mensaje de usuario invalido AlertDialog.Builder builder =
+			 * new AlertDialog.Builder(this
+			 * .getActivity().getApplicationContext());
+			 * builder.setTitle("Login inválido"); builder.setMessage(
+			 * "Combinación de usuario y/o contraseña incorrectos.");
+			 * builder.setCancelable(false); builder.setPositiveButton("Ok",
+			 * null); builder.create(); builder.show(); return false;
+			 */
 		} else {
 			// Se muestra mensaje de error
-			AlertDialog.Builder builder = new AlertDialog.Builder(this
-					.getActivity());
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					this.getActivity());
 			builder.setTitle("Problema en el servidor");
 			builder.setMessage("Hay un problema en el servidor.");
 			builder.setCancelable(false);
@@ -393,6 +380,20 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			builder.show();
 			return false;
 		}
+	}
+
+	protected void mostrarDatosPadre(int groupPosition) {
+		/*
+		 * String e = groups.get(groupPosition); System.out.println(e);
+		 */
+		pintarLadoDerecho(padres.get(groupPosition));
+	}
+
+	protected void mostrarDatosHijo(int groupPosition, int childPosition) {
+		/*
+		 * String e = groups.get(groupPosition); System.out.println(e);
+		 */
+		pintarLadoDerecho(hijos.get(groupPosition).get(childPosition).get(0));
 	}
 
 }

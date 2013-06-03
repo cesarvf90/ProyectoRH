@@ -9,6 +9,7 @@ import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesSegundaFase;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
+import pe.edu.pucp.proyectorh.reclutamiento.PostularOfertaLaboral;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.objetivos.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
@@ -106,7 +107,10 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("6")) {// Postular a Convocatoria
-
+					PostularOfertaLaboral fragment = new PostularOfertaLaboral();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.REPORTES) {

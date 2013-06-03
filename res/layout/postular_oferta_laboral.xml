@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/reclut_title_layout"
         android:layout_width="fill_parent"
-        android:layout_height="80px"
+        android:layout_height="50px"
         android:layout_alignParentTop="true"
         android:orientation="horizontal" >
 
@@ -32,8 +32,8 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/reclut_lista_ofertas_laborales"
-        android:layout_width="350px"
+        android:id="@+id/reclut_lista_solicit_of_laboral"
+        android:layout_width="280px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/reclut_title_layout" >
@@ -44,7 +44,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/reclut_title_layout"
-        android:layout_toRightOf="@+id/reclut_lista_ofertas_laborales"
+        android:layout_toRightOf="@+id/reclut_lista_solicit_of_laboral"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -55,22 +55,57 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:text="Área:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:text="Cargo:"
+                android:layout_height="wrap_content"
+                android:text="Puesto:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:text="Fecha de Publicación:"
+                android:layout_height="wrap_content"
+                android:text="Nro. Vacantes:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sueldo Tentativo:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha Requerimiento:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha Límite Solicitud:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo de Convocatoria:"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Responsable:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
@@ -80,13 +115,22 @@
                 android:text="Descripción:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/reclu_btn_Validar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
                 android:layout_gravity="right"
-                android:text="Postular" />
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/reclu_btn_Validar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Postular" />
+                
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +142,7 @@
             <TextView
                 android:id="@+id/reclut_area_input"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:text="  "
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -106,7 +150,23 @@
             <TextView
                 android:id="@+id/reclut_cargo_input"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/reclut_nro_vacantes_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/reclut_sueldo_tentativo_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="  "
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -114,7 +174,31 @@
             <TextView
                 android:id="@+id/reclut_fecha_input"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+            
+            <TextView
+                android:id="@+id/reclut_fecha_limite_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/reclut_modo_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/reclut_responsable_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="  "
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -125,8 +209,11 @@
                 android:layout_height="150sp"
                 android:ems="10"
                 android:text="  "
-                android:textSize="24sp" >
+                android:textSize="24sp">
+                
             </TextView>
+            
+            
         </LinearLayout>
     </LinearLayout>
 

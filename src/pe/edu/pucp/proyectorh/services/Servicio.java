@@ -72,7 +72,9 @@ public class Servicio {
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una
 	 * oferta laboral (android devuelve 1 o 0 al WS)
 	 */
-	public final static String RespuestaAprobarSolicitudOfertaLaboral = "";
+	public final static String RespuestaAprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/setEstadoSolicitudOfertaLaboral";
+
+	public static final String EnviarPostulacionOfertaLaboral = null;
 
 	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,
 			String request) {

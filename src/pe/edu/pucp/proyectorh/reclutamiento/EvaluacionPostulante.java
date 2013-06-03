@@ -338,15 +338,15 @@ public class EvaluacionPostulante extends Fragment {
 				31,
 				"Desarrollar el informe de cobertura / rentabilidad de zonas por campaña.",
 				puestoID);
-//		Funcion funcion5 = new Funcion(
-//				32,
-//				"Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
-//				puestoID);
+		Funcion funcion5 = new Funcion(
+				32,
+				"Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
+				puestoID);
 		funciones.add(funcion1);
 		funciones.add(funcion2);
 		funciones.add(funcion3);
 		funciones.add(funcion4);
-//		funciones.add(funcion5);
+		funciones.add(funcion5);
 	}
 
 	public void prepararRespuestasYEvaluacion() {

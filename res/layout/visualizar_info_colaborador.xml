@@ -44,6 +44,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_nombres"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -54,8 +55,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_nombres"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
 
@@ -73,6 +76,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_apellidos"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -83,8 +87,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_apellidos"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
 
@@ -102,6 +108,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_area"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -112,8 +119,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_area"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
 
@@ -131,6 +140,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_puesto"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -141,8 +151,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_cargo"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
 
@@ -160,6 +172,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_email"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -170,8 +183,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_email"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
 
@@ -189,6 +204,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_anexo"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -199,8 +215,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_anexo"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
 
@@ -218,6 +236,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/tabla_tag"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_fecha_ingreso"
                     android:textColor="@android:color/white"
                     android:textSize="24sp" />
@@ -228,8 +247,10 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:background="@drawable/tabla_value"
+                    android:paddingLeft="10dp"
                     android:text="@string/mi_info_value_fecha_ingreso"
                     android:textSize="24sp" />
+
             </LinearLayout>
         </TableRow>
     </TableLayout>
