@@ -80,6 +80,62 @@ public class Colaborador {
 		
 	}
 	
+	public static ArrayList<Colaborador> devolverSubordinadosFicticios()
+	{
+		ArrayList<String> losNombres = tomarPrestadoDataDePrueba();
+		
+		ArrayList<Colaborador> personas = new ArrayList<Colaborador>(); 
+		
+//		for(String elEmpleado : losNombres)
+//		{
+////			personas.add(new Colaborador());
+//			Colaborador subordinado = new Colaborador();
+//			subordinado.setNombres(elEmpleado);
+//			subordinado.setPuesto("Gerente de Ventas");
+////			subordinado.setid(i);
+//			
+//			personas.add(subordinado);
+//		}
+		
+
+		Colaborador subordinado = new Colaborador();
+//		subordinado.setNombres("Chávez Alcántara, Rodrigo");
+		subordinado.setNombres(losNombres.get(0));
+		subordinado.setPuesto("Gerente de Ventas");
+		
+		Colaborador crios = new Colaborador();
+		crios.setNombres(losNombres.get(1));
+		crios.setPuesto("Gerente de Marketing");	
+		
+		Colaborador surteaga = new Colaborador();
+		surteaga.setNombres(losNombres.get(2));
+		surteaga.setPuesto("Gerente de Operaciones");
+		
+		Colaborador ccamino = new Colaborador();
+		ccamino.setNombres(losNombres.get(3));
+		ccamino.setPuesto("Gerente de Recursos Humanos");			
+		
+		Colaborador abustamante = new Colaborador();
+		abustamante.setNombres(losNombres.get(4));
+		abustamante.setPuesto("Subgerente");	
+		
+		
+		Colaborador areas = new Colaborador();
+		areas.setNombres(losNombres.get(5));
+		areas.setPuesto("Analista de riesgos");			
+		
+		
+		personas.add(subordinado);
+		personas.add(crios);
+		personas.add(surteaga);
+		personas.add(ccamino);
+		personas.add(abustamante);
+		personas.add(areas);
+
+		return personas;	
+		
+	}
+	
 	public Colaborador() {
 	}
 
@@ -277,5 +333,10 @@ public class Colaborador {
 	@Override
 	public String toString() {
 		return nombres + Constante.ESPACIO_VACIO + apellidos;
+	}
+	
+	public String retornarPresentacionBreve()
+	{
+		return nombres + " - " + puesto;
 	}
 }
