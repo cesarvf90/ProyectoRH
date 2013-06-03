@@ -1,6 +1,8 @@
 package pe.edu.pucp.proyectorh.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Evento {
 
@@ -14,6 +16,8 @@ public class Evento {
 	private int creadorID;
 	private String creador;
 	private ArrayList<Colaborador> invitados;
+	private Date dateInicio;
+	private Date dateFin;
 
 	public int getID() {
 		return ID;
@@ -93,6 +97,22 @@ public class Evento {
 
 	public void setInvitados(ArrayList<Colaborador> invitados) {
 		this.invitados = invitados;
+	}
+
+	public Date getDateInicio() {
+		return dateInicio;
+	}
+
+	public void setDateInicio(Date dateInicio) {
+		this.dateInicio = dateInicio;
+	}
+
+	public Date getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
 	}
 
 }
