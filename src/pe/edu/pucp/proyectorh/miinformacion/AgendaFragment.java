@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,7 +67,6 @@ public class AgendaFragment extends Fragment {
 		gridview.setAdapter(adapter);
 
 		handler = new Handler();
-		// handler.post(calendarUpdater);
 
 		TextView title = (TextView) rootView.findViewById(R.id.title);
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
@@ -109,10 +109,18 @@ public class AgendaFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				SemanaFragment fragment = new SemanaFragment(eventos);
-				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.opcion_detail_container, fragment)
-						.addToBackStack("tag").commit();
+				if (adapter.days[position] != "") {
+					int diaSelecccionado = Integer
+							.valueOf(adapter.days[position]);
+					// String fechaEscogida = diaSeleccionado + "/" + adapter.
+					Calendar diaEscogido = adapter.getSelectedDate();
+					SemanaFragment fragment = new SemanaFragment(eventos);
+					getActivity().getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.addToBackStack("tag").commit();
+
+				}
 			}
 		});
 
@@ -120,10 +128,13 @@ public class AgendaFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View view,
 					int position, long id) {
-				SemanaFragment fragment = new SemanaFragment(eventos);
-				getActivity().getSupportFragmentManager().beginTransaction()
-						.replace(R.id.opcion_detail_container, fragment)
-						.addToBackStack("tag").commit();
+				if (adapter.days[position] != "") {
+					SemanaFragment fragment = new SemanaFragment(eventos);
+					getActivity().getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.addToBackStack("tag").commit();
+				}
 				return false;
 			}
 		});
@@ -154,26 +165,12 @@ public class AgendaFragment extends Fragment {
 		@Override
 		public void run() {
 			items.clear();
-			// format random values. You can implement a dedicated class to
-			// provide real values
-
 			// se que genera una estructura a partir de los eventos recibidos en
 			// el servicio
 			for (Evento evento : eventos) {
 				String[] dateArr = evento.getFechaInicio().split("/");
 				items.add(dateArr[0]);
 			}
-
-			// for (int i = 0; i < 31; i++) {
-			//
-			//
-			// Random r = new Random();
-			//
-			// if (r.nextInt(10) > 6) {
-			// items.add(Integer.toString(i));
-			// }
-			// }
-
 			adapter.setItems(items);
 			adapter.notifyDataSetChanged(); // refresca la vista
 		}
@@ -249,21 +246,29 @@ public class AgendaFragment extends Fragment {
 		evento1.setNombre("Evento 1");
 		evento1.setFechaInicio("05/06/2013");
 		evento1.setFechaFin("05/06/2013");
+		evento1.setDateInicio(new Date(2013, 5, 5, 15, 0));
+		evento1.setDateFin(new Date(2013, 5, 5, 18, 0));
 
 		Evento evento2 = new Evento();
 		evento2.setNombre("Evento 2");
 		evento2.setFechaInicio("04/06/2013");
 		evento2.setFechaFin("04/06/2013");
+		evento2.setDateInicio(new Date(2013, 5, 4, 15, 0));
+		evento2.setDateFin(new Date(2013, 5, 4, 18, 0));
 
 		Evento evento3 = new Evento();
 		evento3.setNombre("Evento 3");
 		evento3.setFechaInicio("08/06/2013");
 		evento3.setFechaFin("08/06/2013");
+		evento3.setDateInicio(new Date(2013, 5, 8, 15, 0));
+		evento3.setDateFin(new Date(2013, 5, 8, 18, 0));
 
 		Evento evento4 = new Evento();
 		evento4.setNombre("Evento 4");
 		evento4.setFechaInicio("10/06/2013");
 		evento4.setFechaFin("10/06/2013");
+		evento4.setDateInicio(new Date(2013, 5, 10, 15, 0));
+		evento4.setDateFin(new Date(2013, 5, 10, 18, 0));
 
 		eventos.add(evento1);
 		eventos.add(evento2);
