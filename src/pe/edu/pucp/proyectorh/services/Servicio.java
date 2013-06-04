@@ -62,6 +62,13 @@ public class Servicio {
 
 	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivosSuperiores";
 
+	public final static String ListarObjetivosParaSubordinados = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/ListarObjetivosDeSubordinados";
+	
+	public final static String ListarProcesosEvaluacion360 = "";
+	
+	public final static String ListarMisEvaluados360 = "";
+	
+	
 	
 	/**
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral

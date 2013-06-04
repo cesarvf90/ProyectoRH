@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:stretchColumns="0,1">
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="Datos de Convocatoria"
+        android:textSize="20sp" />
+    
+    
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:inputType="textMultiLine"
+        android:id="@+id/CompCapConvSelec"
+        android:textSize="15sp" />
+    
+
+	<TableRow>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:inputType="textMultiLine"
+        android:text="Descripción del Puesto" />
+        
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:inputType="textMultiLine"
+        android:text="Requisitos" />
+    </TableRow>   
+    	
+    	
+    	
+	<TableRow>
+	    <TextView
+        android:id="@+id/comp_puesto_descrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textColor="@android:color/black"
+        android:paddingBottom="10px"
+        android:inputType="textMultiLine"
+        
+        />
+	    
+	    <Spinner
+        android:id="@+id/comp_puesto_requi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textColor="@android:color/black"
+        android:paddingBottom="10px"
+        />
+	    
+    </TableRow>
+    
+	<TableRow>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:inputType="textMultiLine"
+        android:text="Job Match"
+        android:textSize="15sp" />
+    </TableRow>
+    
+	<RelativeLayout >
+	<WebView
+	    android:id="@+id/comparaCap1WebkitGLineal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    />
+	
+	<Button
+	android:id="@+id/detalleCompbtnConsultar"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="40dp"
+    android:text="Detalle"
+    android:layout_alignParentBottom="true"/>    
+	</RelativeLayout>
+	
+</TableLayout>
