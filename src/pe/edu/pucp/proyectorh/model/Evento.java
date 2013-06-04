@@ -1,7 +1,6 @@
 package pe.edu.pucp.proyectorh.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Evento {
@@ -10,14 +9,16 @@ public class Evento {
 	private String nombre;
 	private String fechaInicio;
 	private String fechaFin;
-	private String tipo;
 	private int estadoID;
 	private String estado;
 	private int creadorID;
-	private String creador;
+	private Colaborador creador;
+	private int tipoEventoID;
+	private String tipoEvento;
 	private ArrayList<Colaborador> invitados;
 	private Date dateInicio;
 	private Date dateFin;
+	private String lugar;
 
 	public int getID() {
 		return ID;
@@ -51,14 +52,6 @@ public class Evento {
 		this.fechaFin = fechaFin;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public int getEstadoID() {
 		return estadoID;
 	}
@@ -83,11 +76,11 @@ public class Evento {
 		this.creadorID = creadorID;
 	}
 
-	public String getCreador() {
+	public Colaborador getCreador() {
 		return creador;
 	}
 
-	public void setCreador(String creador) {
+	public void setCreador(Colaborador creador) {
 		this.creador = creador;
 	}
 
@@ -113,6 +106,30 @@ public class Evento {
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
+	}
+
+	public int getTipoEventoID() {
+		return tipoEventoID;
+	}
+
+	public void setTipoEventoID(int tipoEventoID) {
+		this.tipoEventoID = tipoEventoID;
+	}
+
+	public String getTipoEvento() {
+		return tipoEvento;
+	}
+
+	public void setTipoEvento(String tipoEvento) {
+		this.tipoEvento = tipoEvento;
+	}
+
+	public String getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
 	}
 
 }

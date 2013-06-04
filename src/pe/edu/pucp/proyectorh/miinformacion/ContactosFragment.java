@@ -2,11 +2,9 @@ package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,57 +74,6 @@ public class ContactosFragment extends Fragment {
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
-	}
-
-	private void mostrarContactosMock() {
-		ListView listaContactos = (ListView) rootView
-				.findViewById(R.id.mi_info_lista_contactos);
-		final ArrayList<Colaborador> contactos = new ArrayList<Colaborador>();
-		Date fecha1 = new Date(2012, 3, 7);
-		Date fecha2 = new Date(1990, 11, 18);
-		Date fecha3 = new Date(1986, 5, 17);
-		Date fecha4 = new Date(2011, 10, 25);
-		Date fecha5 = new Date(1982, 7, 11);
-		Date fecha6 = new Date(2013, 3, 4);
-		Calendar date = new GregorianCalendar();
-		date.setTime(fecha1);
-		Colaborador colaborador1 = new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente", fecha1, fecha2, "cesarvf90@gmail.com",
-				"945872121");
-		Colaborador colaborador2 = new Colaborador("Yordy", "Reyna Serna",
-				"Ventas", "Analista", fecha4, fecha3, "yreyna@gmail.com",
-				"998547124");
-		Colaborador colaborador3 = new Colaborador("Claudia", "Montero Reyes",
-				"Logística", "Jefe de Logística", fecha6, fecha5,
-				"claudia.montero@gmail.com", "958411142");
-		for (int i = 0; i < 7; ++i) {
-			contactos.add(colaborador1);
-			contactos.add(colaborador2);
-			contactos.add(colaborador3);
-		}
-		Collections.sort(contactos, new Comparator<Colaborador>() {
-
-			@Override
-			public int compare(Colaborador lhs, Colaborador rhs) {
-				return lhs.toString().compareTo(rhs.toString());
-			}
-		});
-		final ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
-				this.getActivity(), android.R.layout.simple_list_item_1,
-				contactos);
-		listaContactos.setAdapter(colaboradoresAdapter);
-		listaContactos
-				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> parent,
-							View childView, int position, long id) {
-						// position tiene la posicion de la vista en el adapter
-						mostrarContactoSeleccionado(contactos.get(position));
-						// contactos.remove(position);
-						colaboradoresAdapter.notifyDataSetChanged();
-					}
-				});
 	}
 
 	protected void mostrarContactoSeleccionado(Colaborador colaborador) {

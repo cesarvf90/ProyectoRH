@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textColor="@android:color/black"
+        android:background="#1d943b"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
 
@@ -32,14 +33,23 @@
             android:paddingTop="10dp" >
 
             <TextView
+                android:id="@+id/title_creador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1d943b"
+                android:paddingLeft="10px"
+                android:text="@string/creador_evento"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Title" />
+
+            <TextView
                 android:id="@+id/nombre_creador_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="20dp"
                 android:text="@string/nombre_persona"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textSize="@dimen/Title" />
 
             <TextView
                 android:id="@+id/area_creador_title"
@@ -48,8 +58,7 @@
                 android:paddingBottom="20dp"
                 android:text="@string/area_persona"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textSize="@dimen/Title" />
 
             <TextView
                 android:id="@+id/puesto_creador_title"
@@ -58,8 +67,7 @@
                 android:paddingBottom="20dp"
                 android:text="@string/puesto_persona"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textSize="@dimen/Title" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,8 +85,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="20dp"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textSize="@dimen/Title" />
 
             <TextView
                 android:id="@+id/area_creador_content"
@@ -86,8 +93,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="20dp"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textSize="@dimen/Title" />
 
             <TextView
                 android:id="@+id/puesto_creador_content"
@@ -95,8 +101,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="20dp"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textSize="@dimen/Title" />
         </LinearLayout>
     </LinearLayout>
 
@@ -108,7 +113,7 @@
         android:layout_marginLeft="20dp"
         android:baselineAligned="false"
         android:orientation="vertical"
-        android:paddingBottom="40dp" >
+        android:paddingBottom="25dp" >
 
         <LinearLayout
             android:id="@+id/datos_evento"
@@ -133,8 +138,7 @@
                     android:paddingBottom="20dp"
                     android:text="@string/tipo_evento"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/fecha_inicio_title"
@@ -143,8 +147,7 @@
                     android:paddingBottom="20dp"
                     android:text="@string/fecha_inicio"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/fecha_fin_title"
@@ -153,18 +156,16 @@
                     android:paddingBottom="20dp"
                     android:text="@string/fecha_fin_evento"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
-                    android:id="@+id/creador_evento_title"
+                    android:id="@+id/lugar_evento_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:text="@string/lugar_evento"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
             </LinearLayout>
 
             <LinearLayout
@@ -182,8 +183,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/fecha_inicio_content"
@@ -191,8 +191,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/fecha_fin_content"
@@ -200,17 +199,15 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
-                    android:id="@+id/creador_evento_content"
+                    android:id="@+id/lugar_evento_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -225,24 +222,24 @@
 
         <LinearLayout
             android:id="@+id/layout_lista"
-            android:layout_width="500dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/title_invitados"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="30dp"
+                android:background="#1d943b"
+                android:paddingLeft="10px"
                 android:text="@string/invitados_evento"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title"
-                android:textStyle="bold" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/Title" />
 
             <ListView
                 android:id="@+id/lista_invitados_evento"
-                android:layout_width="500dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content" >
             </ListView>
         </LinearLayout>
@@ -260,7 +257,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingLeft="10dp" >
 
                 <TextView
                     android:id="@+id/invitado_nombre_title"
@@ -269,8 +267,7 @@
                     android:paddingBottom="20dp"
                     android:text="@string/nombre_persona"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/invitado_area_title"
@@ -279,8 +276,7 @@
                     android:paddingBottom="20dp"
                     android:text="@string/area_persona"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/invitado_puesto_title"
@@ -289,8 +285,24 @@
                     android:paddingBottom="20dp"
                     android:text="@string/puesto_persona"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
+
+                <TextView
+                    android:id="@+id/invitado_telefono_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:text="@string/telefono_persona"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
+
+                <TextView
+                    android:id="@+id/invitado_correo_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/correo_persona"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
             </LinearLayout>
 
             <LinearLayout
@@ -305,25 +317,40 @@
                     android:id="@+id/invitado_nombre_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/invitado_area_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
 
                 <TextView
                     android:id="@+id/invitado_puesto_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/Title"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/Title" />
+
+                <TextView
+                    android:id="@+id/invitado_telefono_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
+
+                <TextView
+                    android:id="@+id/invitado_correo_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

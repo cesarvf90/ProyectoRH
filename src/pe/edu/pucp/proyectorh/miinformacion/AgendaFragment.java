@@ -18,6 +18,7 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
+import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -177,7 +178,6 @@ public class AgendaFragment extends Fragment {
 	};
 
 	private void llamarServicioEventos() {
-		// TODO cvasquez: llamar servicio para consultar eventos del usuario
 		if (ConnectionManager.connect(getActivity())) {
 			String fechaDesde = "28/05/2013%2000:00:00";
 			String fechaHasta = "30/07/2013%2023:59:59";
@@ -214,7 +214,13 @@ public class AgendaFragment extends Fragment {
 						evento.setEstadoID(eventoObject.getInt("EstadoID"));
 						evento.setEstado(eventoObject.getString("Estado"));
 						evento.setCreadorID(eventoObject.getInt("CreadorID"));
-						evento.setCreador(eventoObject.getString("Creador"));
+						// evento.setCreador(eventoObject.getString("Creador"));
+						evento.setCreador(new Colaborador("César",
+								"Vásquez Flores", "Tecnología", "Gerente"));
+						evento.setTipoEventoID(eventoObject
+								.getInt("TipoEventoID"));
+						evento.setTipoEvento(eventoObject
+								.getString("TipoEvento"));
 						JSONArray invitadosListObject = eventoObject
 								.getJSONArray("Invitados");
 
@@ -223,6 +229,22 @@ public class AgendaFragment extends Fragment {
 							JSONObject invitadoObject = invitadosListObject
 									.getJSONObject(j);
 							Colaborador invitado = new Colaborador();
+							invitado.setNombreCompleto(invitadoObject
+									.getString("NombreCompleto"));
+							invitado.setNombres(invitadoObject
+									.getString("Nombre"));
+							invitado.setApellidos(invitadoObject
+									.getString("ApellidoPaterno")
+									+ Constante.ESPACIO_VACIO
+									+ invitadoObject
+											.getString("ApellidoMaterno"));
+							invitado.setArea(invitadoObject.getString("Area"));
+							invitado.setPuesto(invitadoObject
+									.getString("Puesto"));
+							invitado.setTelefono(invitadoObject
+									.getString("Telefono"));
+							invitado.setCorreoElectronico(invitadoObject
+									.getString("CorreoElectronico"));
 							listaInvitados.add(invitado);
 						}
 						evento.setInvitados(listaInvitados);
