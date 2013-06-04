@@ -24,11 +24,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AprobarSolicitudOfertaLaboral extends Fragment {
+public class PostularOfertaLaboral extends Fragment {
 
 	private View rootView;
 	private View layoutVacio;
@@ -38,14 +37,14 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 	private ArrayList<String> puestosSolicitudes = null;
 	private static final String OPERACION_VALIDA = "true";
 	private static final String OPERACION_INVALIDA = "false";
-	private int IDSolicitudSeleccionada;
-	private Button aceptarButton;
-	private Button rechazarButton;
+	private int IDOfertaLaboral;
+	private Button postularButton;
+	
 	private int posicionLista = -1;
 	private SolicitudOfertaLaboral solicitud;
 	boolean espera = true;
 
-	public AprobarSolicitudOfertaLaboral() {
+	public PostularOfertaLaboral() {
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(
-				R.layout.aprobar_solicitud_oferta_laboral, container, false);
+				R.layout.postular_oferta_laboral, container, false);
 
 		// Llamamos al WS que poblará "solicitudes"
 		/*
@@ -66,7 +65,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		 * this.wait(3000); } catch (InterruptedException e) { // TODO
 		 * Auto-generated catch block e.printStackTrace(); } }
 		 */
-		llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+		llamarServicioObtenerOfertasLaborales("Aprobado");
 
 		// while (espera);
 		// probarDeserializacionJSON("");
@@ -82,7 +81,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		return rootView;
 	}
 
-	private void llamarServiciosAprobarSolicitudOfertaLaboral(String estado) {
+	private void llamarServicioObtenerOfertasLaborales(String estado) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.AprobarSolicitudOfertaLaboral
@@ -164,10 +163,9 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 	private void mostrarSolicitudes() {
 		this.listaSolicitudes = (ListView) rootView
 				.findViewById(R.id.reclut_lista_solicit_of_laboral);
-		this.aceptarButton = (Button) this.rootView
+		this.postularButton = (Button) this.rootView
 				.findViewById(R.id.reclu_btn_Validar);
-		this.rechazarButton = (Button) this.rootView
-				.findViewById(R.id.reclu_btn_Rechazar);
+		
 
 		// System.out.println("solicitudes != NULL");
 		this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
@@ -182,23 +180,23 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 						// adapter
 						mostrarSolicitudSeleccionada(solicitudes.get(position));
 						// obtenemos el id de la solicitud seleccionada
-						// IDSolicitudSeleccionada =
+						// IDOfertaLaboral =
 						// solicitudes.get(position).getSolicitudID();
 
-						IDSolicitudSeleccionada = solicitudes.get(position)
+						IDOfertaLaboral = solicitudes.get(position)
 								.getID();
 						posicionLista = position;
 					}
 				});
 
-		aceptarButton.setOnClickListener(new OnClickListener() {
+		postularButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if ((solicitudes.size() > 0) && (posicionLista != -1)) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
-					builder.setTitle("Validar Solicitud Oferta Laboral");
-					builder.setMessage("¿Desea aprobar la solicitud de oferta laboral?");
+					builder.setTitle("Postular a Oferta Laboral");
+					builder.setMessage("¿Desea postular a la oferta laboral?");
 					builder.setCancelable(false);
 					builder.setNegativeButton("Cancelar",
 							new DialogInterface.OnClickListener() {
@@ -215,20 +213,20 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									if (posicionLista != -1) {
-										// comunicarle al ws que se acepto
-										// solicitud oferta
+										solicitudes.remove(posicionLista);
+										solicitudesAdapter
+												.notifyDataSetChanged();
+										// comunicarle al ws que se postulo
+										// a la oferta
 										// laboral
 
-										EditText comentarios = (EditText) rootView
-												.findViewById(R.id.reclut_comentarios_input);
-										String comments = comentarios
-												.getText().toString();
-										comments = comments.trim();
-										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");									
-										actualizarEstadoSolicitudOfertaLaboral(
-												IDSolicitudSeleccionada,
-												"Aprobado", comments);
+										//enviarPostulacionOfertaLaboral(LoginActivity.getUsuario().getID(), IDOfertaLaboral);
+										posicionLista = -1; // volvemos a
+															// colocar el
+															// boton
+															// en -1
+										SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
+										mostrarSolicitudSeleccionada(nueva);
 									}
 									dialog.cancel();
 								}
@@ -240,55 +238,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			}
 		});
 
-		rechazarButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if ((solicitudes.size() > 0) && (posicionLista != -1)) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					builder.setTitle("Validar Solicitud Oferta Laboral");
-					builder.setMessage("¿Desea rechazar la solicitud de oferta laboral?");
-					builder.setCancelable(false);
-					builder.setNegativeButton("Cancelar",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									dialog.cancel();
-								}
-							});
-					builder.setPositiveButton("Aceptar",
-							new DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									if (posicionLista != -1) {
-										// comunicarle al ws que se rechazo
-										// solicitud oferta
-										// laboral
-
-										EditText comentarios = (EditText) rootView
-												.findViewById(R.id.reclut_comentarios_input);
-										String comments = comentarios
-												.getText().toString();
-										comments = comments.trim();
-										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");
-										actualizarEstadoSolicitudOfertaLaboral(
-												IDSolicitudSeleccionada,
-												"Rechazado", comments);
-									}
-									dialog.cancel();
-								}
-
-							});
-					builder.create();
-					builder.show();
-				}
-
-			}
-		});
+		
 	}
 
 	private void mostrarErrorComunicacion(String excepcion) {
@@ -348,14 +298,14 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		TextView nrovacantes = (TextView) rootView
 				.findViewById(R.id.reclut_nro_vacantes_input);
 		nrovacantes
-				.setText(solicitudOfertaLaboral.getNroVacantes() == 0 ? " - "
+				.setText(solicitudOfertaLaboral.getNroVacantes() == 0 ? " 0 "
 						: String.valueOf(solicitudOfertaLaboral
 								.getNroVacantes()));
 
 		TextView sueldotentativo = (TextView) rootView
 				.findViewById(R.id.reclut_sueldo_tentativo_input);
 		sueldotentativo
-				.setText(solicitudOfertaLaboral.getSueldoTentativo() == 0 ? " - "
+				.setText(solicitudOfertaLaboral.getSueldoTentativo() == 0 ? " S/. 0 "
 						: String.valueOf("S/. "
 								+ solicitudOfertaLaboral.getSueldoTentativo()));
 
@@ -367,7 +317,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		} else {
 			fechaRequerimiento.setText("");
 		}
-
+		
 		TextView fechaLimiteSolicitud = (TextView) rootView
 				.findViewById(R.id.reclut_fecha_limite_input);
 		if (solicitudOfertaLaboral.getFechaLimiteSolicitud() != null) {
@@ -388,32 +338,26 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		responsable
 				.setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - "
 						: solicitudOfertaLaboral.getResponsable());
-		
+
 		TextView descripcion = (TextView) rootView
 				.findViewById(R.id.reclut_descripcion_input);
 		String comment = "* sin descripción disponible *";
 		if ((solicitudOfertaLaboral.getDescripcion() == null)
 				|| (solicitudOfertaLaboral.getDescripcion() == "null"))
 			descripcion.setText(" - ");
-		else if (solicitudOfertaLaboral.getDescripcion().isEmpty()
-				|| (solicitudOfertaLaboral.getDescripcion() == "")
-				|| (solicitudOfertaLaboral.getDescripcion().length() <= 0))
+		else if (solicitudOfertaLaboral.getDescripcion().isEmpty() || (solicitudOfertaLaboral.getDescripcion() == "") || (solicitudOfertaLaboral.getDescripcion().length()<=0))
 			descripcion.setText(comment);
 		else
 			descripcion.setText(solicitudOfertaLaboral.getDescripcion());
 		
-		EditText comentarios = (EditText) rootView
-				.findViewById(R.id.reclut_comentarios_input);
-		comentarios.setText("");		
 	}
 
-	private void actualizarEstadoSolicitudOfertaLaboral(int ID,
-			String nuevoEstado, String comentarios) {
+	private void enviarPostulacionOfertaLaboral(int IDusuario,
+			int IDofertaLaboral) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
-			String request = Servicio.RespuestaAprobarSolicitudOfertaLaboral
-					+ "?ofertaLaboralID=" + ID + "&nuevoEstado=" + nuevoEstado
-					+ "&comentarios=" + comentarios;
+			String request = Servicio.EnviarPostulacionOfertaLaboral
+					+ "?IDusuario=" + IDusuario + "?IDofertaLaboral=" + IDofertaLaboral;					
 			System.out.println("pagina: " + request);
 			new enviarMensajeWS().execute(request);
 		}
@@ -423,49 +367,20 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("result: " + result);
-			confirmacionActualizacionEstado(result);
+			confirmacionPostulacion(result);
 		}
 	}
 
-	public void confirmacionActualizacionEstado(String result) {
+	public void confirmacionPostulacion(String result) {
 		try {
 			JSONObject jsonObject = new JSONObject(result);
 			System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
 			// si no pudo actualizar, mostramos mensaje de error y volvemos a
 			// mostrar todas las solicitudes pendientes
-			if (respuesta == "true") {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						this.getActivity());
-				builder.setTitle("Mensaje de Confirmación");
-				builder.setMessage("Operación exitosa");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
-				builder.create();
-				builder.show();
-
-				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-				mostrarSolicitudSeleccionada(nueva);
-				puestosSolicitudes.remove(posicionLista);
-				solicitudes.remove(posicionLista);
-				solicitudesAdapter.notifyDataSetChanged();
-				posicionLista = -1; // volvemos a colocar el posicion en -1
-				// llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
-			} else if (respuesta == "false") {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						this.getActivity());
-				builder.setTitle("Problema en el servidor");
-				builder.setMessage("Hay un problema en el servidor.");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
-				builder.create();
-				builder.show();
-				posicionLista = -1; // volvemos a colocar el posicion en -1
-				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-				mostrarSolicitudSeleccionada(nueva);
-				llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+			if (!procesaRespuesta(respuesta)) {
+				llamarServicioObtenerOfertasLaborales("Aprobado");
 			}
-			//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());

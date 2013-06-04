@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.content.Intent;
@@ -33,6 +34,15 @@ public class DetalleActivity extends FragmentActivity {
 						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) { // Comparar capacidades
 					ComparaCapacidad fragment = new ComparaCapacidad();
 					getSupportFragmentManager().beginTransaction()
+					.replace(R.id.opcion_detail_container, fragment)
+					.commit();
+				}
+			}
+			if (Modulo.MODULO_ACTUAL == Constante.REPORTES){
+				if ("3".equals(getIntent()
+						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
+					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
+					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
@@ -45,8 +55,16 @@ public class DetalleActivity extends FragmentActivity {
 				getSupportFragmentManager().beginTransaction()
 						.replace(R.id.opcion_detail_container, fragment)
 						.commit();
-			}
-			else{
+			}	
+				
+			if ("4".equals(getIntent()
+							.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
+						ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
+						getSupportFragmentManager().beginTransaction()
+								.replace(R.id.opcion_detail_container, fragment)
+								.commit();
+					}
+			}else{
 			
 			Bundle arguments = new Bundle();
 			arguments.putString(DetalleFragment.ARG_ITEM_ID, getIntent()
@@ -57,7 +75,7 @@ public class DetalleActivity extends FragmentActivity {
 					.add(R.id.opcion_detail_container, fragment).commit();
 			}
 		}
-	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

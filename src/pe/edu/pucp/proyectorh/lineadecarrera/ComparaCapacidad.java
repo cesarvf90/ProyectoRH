@@ -11,10 +11,6 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas;
-import pe.edu.pucp.proyectorh.reportes.ReporteServices;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getPeriodos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
@@ -31,7 +27,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 import pe.edu.pucp.proyectorh.LoginActivity;
 
 public class ComparaCapacidad extends Fragment{
@@ -59,6 +54,7 @@ public class ComparaCapacidad extends Fragment{
 		
 	}
 	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		

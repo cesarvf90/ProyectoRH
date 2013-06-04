@@ -2,28 +2,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    
+    
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:gravity="left"
         android:text="Reporte de Objetivos BSC"
-        android:textSize="20sp" />
+        android:textSize="30sp"
+android:layout_marginLeft="30dp"
+android:layout_marginTop="10dp"
+android:id="@+id/reportebsc1titulo"/>
+    
+    
+    <RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="35dp"
+    android:background="@color/verde_menubar"
+    android:layout_marginTop="60dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+   
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
-        android:text="Seleccione periodo"/>
+        android:textSize="20sp"
+        android:text="Opciones"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp" />
+    
+     </RelativeLayout>
+     
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        android:text="Seleccione periodo"
+        android:layout_marginTop="120dp"/>
     
     <Spinner
         android:id="@+id/reportebscspinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp" />
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="150dp" />
     
     <Button
         android:id="@+id/reportebscbtnConsultar"
@@ -31,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="Consultar"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="150dp"  />
+        android:layout_marginTop="210dp" />
 
     <ProgressBar
         android:id="@+id/reportebscprogressbar"
@@ -40,7 +69,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="177dp"
-        android:visibility="invisible" 
+        android:visibility="invisible"
         android:indeterminate="true"/>
     
     

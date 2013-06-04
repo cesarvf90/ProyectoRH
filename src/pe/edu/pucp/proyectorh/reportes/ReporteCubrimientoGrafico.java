@@ -3,8 +3,6 @@ package pe.edu.pucp.proyectorh.reportes;
 import com.google.gson.Gson;
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.DataObject;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.InterfaceChartLineal;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

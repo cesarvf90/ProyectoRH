@@ -1,6 +1,5 @@
 package pe.edu.pucp.proyectorh.miinformacion;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -13,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,24 +41,33 @@ public class EventoFragment extends Fragment {
 	}
 
 	private void mostrarEvento() {
-		SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		formatoFecha.applyPattern("dd/MM/yyyy");
-
+		// Datos del evento
 		TextView nombreEventoText = (TextView) rootView
 				.findViewById(R.id.nombre_evento);
 		nombreEventoText.setText(evento.getNombre());
 		TextView tipoEventoText = (TextView) rootView
 				.findViewById(R.id.tipo_evento_content);
-		tipoEventoText.setText(evento.getTipo());
+		tipoEventoText.setText(evento.getTipoEvento());
 		TextView fechaInicioText = (TextView) rootView
 				.findViewById(R.id.fecha_inicio_content);
 		fechaInicioText.setText(evento.getFechaInicio());
 		TextView fechaFinText = (TextView) rootView
 				.findViewById(R.id.fecha_fin_content);
 		fechaFinText.setText(evento.getFechaFin());
-		TextView creadorEventoText = (TextView) rootView
-				.findViewById(R.id.creador_evento_content);
-		creadorEventoText.setText(evento.getCreador().getNombres());
+		TextView lugarEventoText = (TextView) rootView
+				.findViewById(R.id.lugar_evento_content);
+		lugarEventoText.setText(evento.getLugar());
+
+		// Datos del creador
+		TextView nombreCreadorText = (TextView) rootView
+				.findViewById(R.id.nombre_creador_content);
+		nombreCreadorText.setText(evento.getCreador().getNombres());
+		TextView areaCreadorText = (TextView) rootView
+				.findViewById(R.id.area_creador_content);
+		areaCreadorText.setText(evento.getCreador().getArea());
+		TextView puestoCreadorText = (TextView) rootView
+				.findViewById(R.id.puesto_creador_content);
+		puestoCreadorText.setText(evento.getCreador().getPuesto());
 
 		ListView listaInvitados = (ListView) rootView
 				.findViewById(R.id.lista_invitados_evento);
@@ -76,5 +85,35 @@ public class EventoFragment extends Fragment {
 				this.getActivity(), android.R.layout.simple_list_item_1,
 				evento.getInvitados());
 		listaInvitados.setAdapter(invitadosAdapter);
+		listaInvitados
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent,
+							View childView, int position, long id) {
+						// position tiene la posicion de la vista en el adapter
+						mostrarInvitadoSeleccionado(evento.getInvitados().get(
+								position));
+						invitadosAdapter.notifyDataSetChanged();
+					}
+				});
+	}
+
+	protected void mostrarInvitadoSeleccionado(Colaborador invitado) {
+		TextView nombreText = (TextView) rootView
+				.findViewById(R.id.invitado_nombre_content);
+		nombreText.setText(invitado.getNombreCompleto());
+		TextView areaText = (TextView) rootView
+				.findViewById(R.id.invitado_area_content);
+		areaText.setText(invitado.getArea());
+		TextView puestoText = (TextView) rootView
+				.findViewById(R.id.invitado_puesto_content);
+		puestoText.setText(invitado.getPuesto());
+		TextView telefonoText = (TextView) rootView
+				.findViewById(R.id.invitado_telefono_content);
+		telefonoText.setText(invitado.getPuesto());
+		TextView correoText = (TextView) rootView
+				.findViewById(R.id.invitado_correo_content);
+		correoText.setText(invitado.getPuesto());
 	}
 }

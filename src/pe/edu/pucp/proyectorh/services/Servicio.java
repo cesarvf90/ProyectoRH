@@ -17,6 +17,12 @@ public class Servicio {
 	public final static String InformacionPersonalService = "http://dp2kendo.apphb.com/WSColaborador/getColaborador";
 
 	/**
+	 * Servicio que devuelve el equipo de trabajo del usuario loggeado
+	 */
+	public final static String getEquipoTrabajo = "http://dp2kendo.apphb.com/WSColaborador/getEquipoTrabajo";
+	
+	
+	/**
 	 * Servicio que devuelve los contactos del usuario loggeado
 	 */
 	public final static String MisContactosService = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
@@ -36,7 +42,7 @@ public class Servicio {
 	/**
 	 * Servicio que retorna las eventos del usuario
 	 */
-	public final static String ObtenerEventos = "http://dp2kendo.apphb.com/WSOfertaLaboral/getFunciones";
+	public final static String ObtenerEventos = "http://dp2kendo.apphb.com/WSEvento/getEventos";
 
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
@@ -54,17 +60,28 @@ public class Servicio {
 
 	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 
+	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivosSuperiores";
+
+	public final static String ListarObjetivosParaSubordinados = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/ListarObjetivosDeSubordinados";
+	
+	public final static String ListarProcesosEvaluacion360 = "";
+	
+	public final static String ListarMisEvaluados360 = "";
+	
+	
 	
 	/**
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral
 	 * pendientes de aprobar
 	 */
-	public final static String AprobarSolicitudOfertaLaboral = "";
+	public final static String AprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
 	/**
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una
 	 * oferta laboral (android devuelve 1 o 0 al WS)
 	 */
-	public final static String RespuestaAprobarSolicitudOfertaLaboral = "";
+	public final static String RespuestaAprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/setEstadoSolicitudOfertaLaboral";
+
+	public static final String EnviarPostulacionOfertaLaboral = null;
 
 	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,
 			String request) {

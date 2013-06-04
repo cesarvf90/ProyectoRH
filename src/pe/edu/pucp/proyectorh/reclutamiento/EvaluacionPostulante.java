@@ -256,10 +256,10 @@ public class EvaluacionPostulante extends Fragment {
 		pregunta2Text.setText("2) " + funciones.get(1).getDescripcion());
 		TextView pregunta3Text = (TextView) rootView
 				.findViewById(R.id.pregunta3);
-		pregunta3Text.setText("3) " + funciones.get(3).getDescripcion());
+		pregunta3Text.setText("3) " + funciones.get(2).getDescripcion());
 		TextView pregunta4Text = (TextView) rootView
 				.findViewById(R.id.pregunta4);
-		pregunta4Text.setText("4) " + funciones.get(4).getDescripcion());
+		pregunta4Text.setText("4) " + funciones.get(3).getDescripcion());
 	}
 
 	private boolean seCompletoEvaluacion() {
@@ -272,7 +272,7 @@ public class EvaluacionPostulante extends Fragment {
 	}
 
 	private boolean seEvaluo(int puntaje) {
-		return puntaje > 1 ? true : false;
+		return puntaje > 0 ? true : false;
 	}
 
 	private void obtenerEvaluacionPostulante() {
@@ -304,7 +304,7 @@ public class EvaluacionPostulante extends Fragment {
 						Funcion funcion = new Funcion();
 						funcion.setID(funcionObject.getInt("ID"));
 						funcion.setDescripcion(funcionObject
-								.getString("Descripcion"));
+								.getString("Nombre"));
 						funcion.setPuestoID(funcionObject.getString("PuestoID"));
 						funciones.add(funcion);
 					}

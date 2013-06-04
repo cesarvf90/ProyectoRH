@@ -1,7 +1,6 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +10,10 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCObjetivos.getObjetivos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -54,25 +53,29 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.reportebsc2perspectivas,
 				container, false);
+
 		
 		String titulo = getArguments().getString("titulo");
-		idPeriodo = getArguments().getInt("periodoSelec");
+		idPeriodo = getArguments().getInt("PeriodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
 		textView.setText(titulo);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		textView.setTypeface(font);
+		
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
 		
-		
+		cargarAvances(idPeriodo);
 		
 		
 		return rootView;
 	}
 	
-	public void cargarAvances(){
+	public void cargarAvances(int idperiodo){
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			String request = ReporteServices.obtenerAvanceXBCS + "?idperiodo=1";
+			String request = ReporteServices.obtenerAvanceXBCS + "?idperiodo=" + idperiodo;
 
 			new getObjetivos().execute(request);
 			
@@ -100,14 +103,14 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 			System.out.println("Recibido: " + result.toString());
 			
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			BSCAvanceDTO bscAvance = gson.fromJson(result,BSCAvanceDTO.class);
+			List<BSCAvanceDTO> bscAvance = gson.fromJson(result,new TypeToken<List<BSCAvanceDTO>>(){}.getType());
 			
 			int [] arregloAvance = new int[4];
 			
-			arregloAvance[0]=(int)bscAvance.NotaFinalFinanciero;
-			arregloAvance[1]=(int)bscAvance.NotaFinalAprendizaje;
-			arregloAvance[2]=(int)bscAvance.NotaFinalCliente;
-			arregloAvance[3]=(int)bscAvance.NotaFinalProcesosInternos;
+			arregloAvance[0]=bscAvance.get(0).NotaFinalFinanciero;
+			arregloAvance[1]=bscAvance.get(0).NotaFinalAprendizaje;
+			arregloAvance[2]=bscAvance.get(0).NotaFinalCliente;
+			arregloAvance[3]=bscAvance.get(0).NotaFinalProcesosInternos;
 			
 			gridView.setAdapter(new PerspectivaAdapter(getActivity(), perspectivas, arregloAvance));
 			
@@ -149,33 +152,33 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	
 	public class BSCAvanceDTO
     {
-         double NotaFinalFinanciero;
-         double NotaFinalAprendizaje;
-         double NotaFinalCliente;
-         double NotaFinalProcesosInternos;
+        private int NotaFinalFinanciero;
+        private int NotaFinalAprendizaje;
+        private int NotaFinalCliente;
+        private int NotaFinalProcesosInternos;
          
-		public double getNotaFinalFinanciero() {
+		public int getNotaFinalFinanciero() {
 			return NotaFinalFinanciero;
 		}
-		public void setNotaFinalFinanciero(double notaFinalFinanciero) {
+		public void setNotaFinalFinanciero(int notaFinalFinanciero) {
 			NotaFinalFinanciero = notaFinalFinanciero;
 		}
-		public double getNotaFinalAprendizaje() {
+		public int getNotaFinalAprendizaje() {
 			return NotaFinalAprendizaje;
 		}
-		public void setNotaFinalAprendizaje(double notaFinalAprendizaje) {
+		public void setNotaFinalAprendizaje(int notaFinalAprendizaje) {
 			NotaFinalAprendizaje = notaFinalAprendizaje;
 		}
-		public double getNotaFinalCliente() {
+		public int getNotaFinalCliente() {
 			return NotaFinalCliente;
 		}
-		public void setNotaFinalCliente(double notaFinalCliente) {
+		public void setNotaFinalCliente(int notaFinalCliente) {
 			NotaFinalCliente = notaFinalCliente;
 		}
-		public double getNotaFinalProcesosInternos() {
+		public int getNotaFinalProcesosInternos() {
 			return NotaFinalProcesosInternos;
 		}
-		public void setNotaFinalProcesosInternos(double notaFinalProcesosInternos) {
+		public void setNotaFinalProcesosInternos(int notaFinalProcesosInternos) {
 			NotaFinalProcesosInternos = notaFinalProcesosInternos;
 		}
     }

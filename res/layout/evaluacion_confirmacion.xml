@@ -35,12 +35,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
             android:baselineAligned="false"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingRight="80dp"
+            android:paddingTop="10dp" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:text="@string/comentarios"
                 android:textColor="@android:color/white"
@@ -49,11 +50,15 @@
 
             <EditText
                 android:id="@+id/editTextComentarios"
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="200dp"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:ems="10"
-                android:inputType="textMultiLine" >
+                android:gravity="top|center_vertical"
+                android:inputType="textMultiLine"
+                android:text="@string/registrar_evaluacion"
+                android:textColor="@android:color/black" >
 
                 <requestFocus />
             </EditText>
@@ -63,11 +68,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
-            android:paddingTop="10dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingRight="80dp"
+            android:paddingTop="10dp" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:text="@string/observaciones"
                 android:textColor="@android:color/white"
@@ -76,11 +82,15 @@
 
             <EditText
                 android:id="@+id/editTextObservaciones"
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="200dp"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:ems="10"
-                android:inputType="textMultiLine" >
+                android:gravity="top|center_vertical"
+                android:inputType="textMultiLine"
+                android:text="@string/registrar_evaluacion"
+                android:textColor="@android:color/black" >
 
                 <requestFocus />
             </EditText>
@@ -89,10 +99,10 @@
 
     <Button
         android:id="@+id/finalizarEvaluacion"
-        android:paddingTop="20dp"
-        android:layout_below="@+id/evaluacion_feedback_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/evaluacion_feedback_layout"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp" />
 
 </RelativeLayout>

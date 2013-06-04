@@ -2,6 +2,7 @@ package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
+import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
@@ -12,8 +13,8 @@ import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesSegundaFase;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
+import pe.edu.pucp.proyectorh.reclutamiento.PostularOfertaLaboral;
+import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -108,7 +109,10 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("6")) {// Postular a Convocatoria
-
+					PostularOfertaLaboral fragment = new PostularOfertaLaboral();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.REPORTES) {
@@ -133,7 +137,10 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("2")) {// Rol evaluadores
-
+					RolEvaluador fragment = new RolEvaluador();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 				if (id.equals("3")) {// Mis subordinados
 
@@ -182,6 +189,9 @@ public class MainActivity extends FragmentActivity implements
 				}
 				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE
 										// MIS SUBORDINADOS - CARLOS)
+				}
+				if (id.equals("4")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
+
 					MisSubordinados fragment = new MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
