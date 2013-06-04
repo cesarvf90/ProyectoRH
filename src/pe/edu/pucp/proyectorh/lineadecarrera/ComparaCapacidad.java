@@ -42,6 +42,7 @@ public class ComparaCapacidad extends Fragment{
 	private String usuario;
 	
 	int ConvSelec;
+	double match;
 	String titulo;
 	String desc;
 	
@@ -90,6 +91,7 @@ public class ComparaCapacidad extends Fragment{
 			      argumentos.putString("titulo", titulo);
 			      argumentos.putString("IdUsuario", usuario);
 			      argumentos.putString("desc", desc);
+			      argumentos.putDouble("match",match);
 			      //argumentos.putString("idUsuario", idUsuario);
 			      fragment.setArguments(argumentos);
 			      
@@ -155,7 +157,8 @@ public class ComparaCapacidad extends Fragment{
 					ConvSelec = listaConv.get(pos).getID(); //aqui idconvocatoria selec
 					titulo = parent.getItemAtPosition(pos).toString();
 					desc = listaConv.get(pos).getDescripcionOferta().toString();
-
+					match = listaConv.get(pos).getMatchLevel();
+						
 				  }
 				@Override
 				  public void onNothingSelected(AdapterView<?> arg0) {

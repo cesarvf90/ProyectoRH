@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
 import pe.edu.pucp.proyectorh.utils.Constante;
@@ -26,7 +27,18 @@ public class DetalleActivity extends FragmentActivity {
 
 		if (savedInstanceState == null) {
 			
-			if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
+			if (Modulo.MODULO_ACTUAL == Constante.LINEA_DE_CARRERA)
+			{
+				if ("1".equals(getIntent()
+						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) { // Comparar capacidades
+					ComparaCapacidad fragment = new ComparaCapacidad();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+			}
+			
+			else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
 					&& ("4".equals(getIntent()
 							.getStringExtra(DetalleFragment.ARG_ITEM_ID)))) {
 				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();

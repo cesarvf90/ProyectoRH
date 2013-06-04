@@ -1,23 +1,39 @@
 package pe.edu.pucp.proyectorh.lineadecarrera;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
+import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
+import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.getConvocatorias;
 import pe.edu.pucp.proyectorh.reportes.PerspectivaAdapter;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCObjetivos;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.DataObject;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.InterfaceChartLineal;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.webkit.WebView;
 
@@ -28,17 +44,25 @@ public class ComparaCapacidadPersonal extends Fragment {
 	//GridView gridView;
 	private WebView browser;
 	private Spinner spinnerRequisitos;
+	private Button btnDetalle;
+	
+	
+	List<FuncionDTO> listaReq;
+	List<OfertaLaboralMobilePostulanteDTO> listaConv;
+	List<String> listaN ;
+	
 	
 	public ComparaCapacidadPersonal(){
 		
 	}
 	
 	public class DataObject {
-		String[] lineax = new String[] { 
-				"Área-Puesto"};
 		
-		int[] avance = new int[] {100};
-		int[] avance2 = new int[] {84}; 
+		//int[] avance = new int[] {100};
+		//int[] avance2 = new int[] {84}; 
+		
+		double match = getArguments().getDouble("match");
+		double[] arrmatch = new double[] {match};
 		
 	}
 	
@@ -92,11 +116,17 @@ public class ComparaCapacidadPersonal extends Fragment {
 		
 		browser.loadUrl("file:///android_asset/ComparaCapPerbarchart.html");
 		
+		idConvocatoria = getArguments().getInt("ConvSelec");
 		spinnerRequisitos = (Spinner) rootView.findViewById(R.id.comp_puesto_requi);
+		listaN = new ArrayList<String>();
+		
+		
+		obtenerlistaRequisitos();
+		
 		
 		String tituloconv = getArguments().getString("titulo");
 		String descrip = getArguments().getString("desc");
-		idConvocatoria = getArguments().getInt("convocSelec");
+		
 		String usuario = getArguments().getString("IdUsuario");
 		
 		TextView textView = (TextView)rootView.findViewById(R.id.CompCapConvSelec);
@@ -104,6 +134,23 @@ public class ComparaCapacidadPersonal extends Fragment {
 		
 		TextView textView2 = (TextView)rootView.findViewById(R.id.comp_puesto_descrip);
 		textView2.setText(descrip);
+		
+		btnDetalle = (Button) rootView.findViewById(R.id.detalleCompbtnConsultar);
+		
+		btnDetalle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			  public void onClick(View v) {
+				
+				DetalleCompetencias fragment = new DetalleCompetencias();
+				
+				FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+				ft.replace(R.id.opcion_detail_container, fragment);
+				ft.addToBackStack(null);
+				ft.commit();
+			}
+			
+		});
 		
 		//gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
 		//gridView.setAdapter(new PerspectivaAdapter(rootView.getContext(), perspectivas));
@@ -142,4 +189,52 @@ public class ComparaCapacidadPersonal extends Fragment {
 		
 		return rootView;
 	}
+	
+	protected void obtenerlistaRequisitos(){
+		
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			  String request = LineaCarServices.obtenerConvocatorias;
+			  new getRequisitos().execute(request);
+			}else {
+				// Se muestra mensaje de error de conexion con el servicio
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de conexción");
+				builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			}
+		}
+	
+	public class getRequisitos extends AsyncCall {
+		
+		//webservice
+		
+		@Override
+		protected void onPostExecute(String result) {
+					
+			System.out.println("Recibido: " + result.toString());
+			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+			List<OfertaLaboralMobilePostulanteDTO> Convocatorias = gson.fromJson(result,
+					new TypeToken<List<OfertaLaboralMobilePostulanteDTO>>(){}.getType());
+			
+			listaConv = Convocatorias;
+			
+			for(int i =0; i<listaConv.size();i++){
+				
+				if (listaConv.get(i).getID() == idConvocatoria){
+					listaReq = listaConv.get(i).getFunciones(); 
+					for (int j=0; j<listaReq.size();j++){
+						listaN.add(listaReq.get(j).getNombre());
+					}	
+				}
+			}
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaN);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerRequisitos.setAdapter(dataAdapter);
+		}
+	}
+	
 }

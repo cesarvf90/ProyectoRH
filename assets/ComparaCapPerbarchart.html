@@ -26,33 +26,31 @@
                             visible: false
                         },
                         legend: {
-                         	visible: false
-                            //position: "top"
+                         	//visible: false
+                            position: "top"
                         },
                         seriesDefaults: {
                             type: "bar"
                         },
                         series: [{
                             name: "Puesto",
-                            data: arrAvance.avance
+                            data: [100]
                         }, {
                         	name: "Empleado",
-                            data: arrAvance.avance2
+                            data: [80]
                         }],
                         valueAxis: {
-                        	max 100,
+                            max: 100,
                             labels: {
                                 format: "{0}%"
                             },
                             line: {
                                 visible: false
                             },
-                            
-                            //axisCrossingValue: 0
+                            axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: arrAvance.lineax,
-                            
+                            categories: ["Ponderado"],
                             line: {
                                 visible: false
                             }

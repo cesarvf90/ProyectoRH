@@ -48,6 +48,7 @@
         android:id="@+id/comp_puesto_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:textColor="@android:color/black"
         android:paddingBottom="10px"
         android:inputType="textMultiLine"
@@ -58,6 +59,7 @@
         android:id="@+id/comp_puesto_requi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:textColor="@android:color/black"
         android:paddingBottom="10px"
         />
@@ -75,10 +77,21 @@
         android:textSize="15sp" />
     </TableRow>
     
+	<RelativeLayout >
 	<WebView
 	    android:id="@+id/comparaCap1WebkitGLineal"
 	    android:layout_width="fill_parent"
-	    android:text="Nivel de Cumplimiento para el puesto"
-	    android:layout_height="348dp" />
+	    android:layout_height="fill_parent" 
+	    />
+	
+	<Button
+	android:id="@+id/detalleCompbtnConsultar"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="40dp"
+    android:text="Detalle"
+    android:layout_alignParentBottom="true"/>    
+	</RelativeLayout>
 	
 </TableLayout>
