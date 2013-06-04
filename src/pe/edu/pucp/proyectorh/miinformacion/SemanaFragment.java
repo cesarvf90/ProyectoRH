@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 
 public class SemanaFragment extends Fragment {
 
+	private static int UNA_HORA = 40;
 	private View rootView;
 	private ArrayList<Evento> eventos;
 
@@ -49,22 +50,28 @@ public class SemanaFragment extends Fragment {
 	 * muestra
 	 */
 	private void mostrarEventos() {
-		int unaHora = 40;
+		int horas = 1;
 		for (final Evento evento : eventos) {
 
 			RelativeLayout diaLayout = obtieneDiaLayout(evento);
 
-			Button eventoButton = new Button(rootView.getContext());
-
 			LinearLayout.LayoutParams layoutParametros = new LinearLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-			layoutParametros.topMargin = 40;
-			layoutParametros.height = 60;
+			layoutParametros.topMargin = 5 * UNA_HORA;
+			layoutParametros.height = horas++ * UNA_HORA;
+
+			View eventoView = new View(getActivity());
+			eventoView.setLayoutParams(layoutParametros);
+			eventoView.setBackgroundColor(Color.CYAN);
+
+			Button eventoButton = new Button(rootView.getContext());
+
 			eventoButton.setText(evento.getNombre());
 			eventoButton.setTag(evento.getNombre());
 			eventoButton.setBackgroundColor(Color.CYAN);
 			eventoButton.setLayoutParams(layoutParametros);
 
+			diaLayout.addView(eventoView);
 			diaLayout.addView(eventoButton);
 
 			Button eventoSeleccionadoButton = (Button) rootView
@@ -85,6 +92,13 @@ public class SemanaFragment extends Fragment {
 		}
 	}
 
+	/**
+	 * Obtiene el layout correspondiente al dia en que se da el evento
+	 * 
+	 * @param evento
+	 *            evento
+	 * @return layout del dia correspondiente
+	 */
 	private RelativeLayout obtieneDiaLayout(Evento evento) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
 		Date fecha = new Date();
