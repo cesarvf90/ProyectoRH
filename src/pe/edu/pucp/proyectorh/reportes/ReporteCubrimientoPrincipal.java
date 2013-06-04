@@ -11,6 +11,7 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ReporteCubrimientoPrincipal extends Fragment {
@@ -52,6 +54,11 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.reportecubrimiento,
 				container, false);
+		
+		//fuente
+		TextView txt = (TextView) rootView.findViewById(R.id.reportecub1titulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
 		
 		spinnerPuesto = (Spinner) rootView.findViewById(R.id.reportecubspinner);
 		lista = new ArrayList<String>();

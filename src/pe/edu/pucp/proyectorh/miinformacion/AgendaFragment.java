@@ -18,6 +18,7 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
+import pe.edu.pucp.proyectorh.utils.Constante;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -177,7 +178,6 @@ public class AgendaFragment extends Fragment {
 	};
 
 	private void llamarServicioEventos() {
-		// TODO cvasquez: llamar servicio para consultar eventos del usuario
 		if (ConnectionManager.connect(getActivity())) {
 			String fechaDesde = "28/05/2013%2000:00:00";
 			String fechaHasta = "30/07/2013%2023:59:59";
@@ -214,7 +214,13 @@ public class AgendaFragment extends Fragment {
 						evento.setEstadoID(eventoObject.getInt("EstadoID"));
 						evento.setEstado(eventoObject.getString("Estado"));
 						evento.setCreadorID(eventoObject.getInt("CreadorID"));
-						evento.setCreador(eventoObject.getString("Creador"));
+						// evento.setCreador(eventoObject.getString("Creador"));
+						evento.setCreador(new Colaborador("César",
+								"Vásquez Flores", "Tecnología", "Gerente"));
+						evento.setTipoEventoID(eventoObject
+								.getInt("TipoEventoID"));
+						evento.setTipoEvento(eventoObject
+								.getString("TipoEvento"));
 						JSONArray invitadosListObject = eventoObject
 								.getJSONArray("Invitados");
 
@@ -223,6 +229,22 @@ public class AgendaFragment extends Fragment {
 							JSONObject invitadoObject = invitadosListObject
 									.getJSONObject(j);
 							Colaborador invitado = new Colaborador();
+							invitado.setNombreCompleto(invitadoObject
+									.getString("NombreCompleto"));
+							invitado.setNombres(invitadoObject
+									.getString("Nombre"));
+							invitado.setApellidos(invitadoObject
+									.getString("ApellidoPaterno")
+									+ Constante.ESPACIO_VACIO
+									+ invitadoObject
+											.getString("ApellidoMaterno"));
+							invitado.setArea(invitadoObject.getString("Area"));
+							invitado.setPuesto(invitadoObject
+									.getString("Puesto"));
+							invitado.setTelefono(invitadoObject
+									.getString("Telefono"));
+							invitado.setCorreoElectronico(invitadoObject
+									.getString("CorreoElectronico"));
 							listaInvitados.add(invitado);
 						}
 						evento.setInvitados(listaInvitados);
@@ -248,6 +270,8 @@ public class AgendaFragment extends Fragment {
 		evento1.setFechaFin("05/06/2013");
 		evento1.setDateInicio(new Date(2013, 5, 5, 15, 0));
 		evento1.setDateFin(new Date(2013, 5, 5, 18, 0));
+		evento1.setCreador(new Colaborador("César", "Vásquez Flores",
+				"Tecnología", "Gerente"));
 
 		Evento evento2 = new Evento();
 		evento2.setNombre("Evento 2");
@@ -255,6 +279,8 @@ public class AgendaFragment extends Fragment {
 		evento2.setFechaFin("04/06/2013");
 		evento2.setDateInicio(new Date(2013, 5, 4, 15, 0));
 		evento2.setDateFin(new Date(2013, 5, 4, 18, 0));
+		evento2.setCreador(new Colaborador("César", "Vásquez Flores",
+				"Tecnología", "Gerente"));
 
 		Evento evento3 = new Evento();
 		evento3.setNombre("Evento 3");
@@ -262,6 +288,8 @@ public class AgendaFragment extends Fragment {
 		evento3.setFechaFin("08/06/2013");
 		evento3.setDateInicio(new Date(2013, 5, 8, 15, 0));
 		evento3.setDateFin(new Date(2013, 5, 8, 18, 0));
+		evento3.setCreador(new Colaborador("César", "Vásquez Flores",
+				"Tecnología", "Gerente"));
 
 		Evento evento4 = new Evento();
 		evento4.setNombre("Evento 4");
@@ -269,6 +297,8 @@ public class AgendaFragment extends Fragment {
 		evento4.setFechaFin("10/06/2013");
 		evento4.setDateInicio(new Date(2013, 5, 10, 15, 0));
 		evento4.setDateFin(new Date(2013, 5, 10, 18, 0));
+		evento4.setCreador(new Colaborador("César", "Vásquez Flores",
+				"Tecnología", "Gerente"));
 
 		eventos.add(evento1);
 		eventos.add(evento2);

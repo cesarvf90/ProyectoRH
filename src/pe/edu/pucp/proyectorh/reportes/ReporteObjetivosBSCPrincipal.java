@@ -17,6 +17,7 @@ import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
@@ -59,6 +61,12 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.reportebsc1principal,
 				container, false);
+		
+		//fuente
+		TextView txt = (TextView) rootView.findViewById(R.id.reportebsc1titulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
+		
 		pbarra = (ProgressBar) rootView.findViewById(R.id.reportebscprogressbar);
 
 		

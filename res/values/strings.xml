@@ -51,6 +51,7 @@
     <color name="naranja">#ffb848</color>
     <color name="verde_bajo">#28b779</color>
     <color name="verde_rh">#1D943B</color>
+    <color name="verde_menubar">#35A847</color>
 
     <string name="agenda_title">Agenda</string>
     <string name="domingo">Domingo</string>
@@ -65,10 +66,16 @@
     <string name="observaciones">Observaciones:</string>
     <string name="registrar_evaluacion">Registrar evaluación</string>
     <string name="tipo_evento">Tipo:</string>
-    <string name="fecha_inicio">Fecha de inicio:</string>
-    <string name="fecha_fin_evento">Fecha de fin:</string>
-    <string name="creador_evento">Creador:</string>
+    <string name="fecha_inicio">Inicio:</string>
+    <string name="fecha_fin_evento">Fin:</string>
     <string name="invitados_evento">Invitados:</string>
     <string name="reclut_postular_lab_title">Postular a Oferta Laboral</string>
+    <string name="nombre_persona">Nombre:</string>
+    <string name="area_persona">Área:</string>
+    <string name="puesto_persona">Puesto:</string>
+    <string name="telefono_persona">Teléfono:</string>
+    <string name="correo_persona">Correo:</string>
+    <string name="lugar_evento">Lugar:</string>
+    <string name="creador_evento">Creador:</string>
 
 </resources>

@@ -15,6 +15,7 @@ import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -88,6 +89,8 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		String titulo = getArguments().getString("objetivopadre");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscObjetivopadre);
 		textView.setText(titulo);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		textView.setTypeface(font);
 		
 		
 		return rootView;
@@ -100,7 +103,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			
 			if (ConnectionManager.connect(getActivity())) {
 				// construir llamada al servicio
-				String request = ReporteServices.obtenerObjetivosXBCS + "?BSCId=" + idPerspectiva + "&idperiodo=1" ; // + idPeriodo
+				String request = ReporteServices.obtenerObjetivosXBCS + "?BSCId=" + idPerspectiva + "&idperiodo=" + idPeriodo;
 
 				new getObjetivos().execute(request);
 				
@@ -164,7 +167,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 				public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 					
-					if ((listaObjetivos.get(position).getHijos()==0) && (listaObjetivos.get(position).getIdObjetivo() != 1)){
+					if (listaObjetivos.get(position).getHijos()==0) {
 						
 						Toast.makeText(v.getContext(),
 								"Objetivo de último nivel", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,10 @@
 package pe.edu.pucp.proyectorh.miinformacion;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
@@ -20,6 +24,7 @@ import android.widget.RelativeLayout;
 
 public class SemanaFragment extends Fragment {
 
+	private static int UNA_HORA = 40;
 	private View rootView;
 	private ArrayList<Evento> eventos;
 
@@ -45,22 +50,28 @@ public class SemanaFragment extends Fragment {
 	 * muestra
 	 */
 	private void mostrarEventos() {
-		for (Evento evento : eventos) {
-			RelativeLayout diaLayout = (RelativeLayout) rootView
-					.findViewById(R.id.martesLayout);
+		int horas = 1;
+		for (final Evento evento : eventos) {
 
-			Button eventoButton = new Button(rootView.getContext());
+			RelativeLayout diaLayout = obtieneDiaLayout(evento);
 
 			LinearLayout.LayoutParams layoutParametros = new LinearLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-			layoutParametros.topMargin = 40;
-			layoutParametros.height = 60;
+			layoutParametros.topMargin = 5 * UNA_HORA;
+			layoutParametros.height = horas++ * UNA_HORA;
+
+			View eventoView = new View(getActivity());
+			eventoView.setLayoutParams(layoutParametros);
+			eventoView.setBackgroundColor(Color.CYAN);
+
+			Button eventoButton = new Button(rootView.getContext());
+
 			eventoButton.setText(evento.getNombre());
-			// eventoButton.setTag("evento");
 			eventoButton.setTag(evento.getNombre());
 			eventoButton.setBackgroundColor(Color.CYAN);
 			eventoButton.setLayoutParams(layoutParametros);
 
+			diaLayout.addView(eventoView);
 			diaLayout.addView(eventoButton);
 
 			Button eventoSeleccionadoButton = (Button) rootView
@@ -69,7 +80,6 @@ public class SemanaFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					Evento evento = creaEventoMock();
 					FragmentTransaction ft = getActivity()
 							.getSupportFragmentManager().beginTransaction();
 					EventoFragment fragment = new EventoFragment(evento);
@@ -82,13 +92,65 @@ public class SemanaFragment extends Fragment {
 		}
 	}
 
+	/**
+	 * Obtiene el layout correspondiente al dia en que se da el evento
+	 * 
+	 * @param evento
+	 *            evento
+	 * @return layout del dia correspondiente
+	 */
+	private RelativeLayout obtieneDiaLayout(Evento evento) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+		Date fecha = new Date();
+		try {
+			fecha = dateFormat.parse(evento.getFechaInicio());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(fecha);
+		int diaDeLaSemana = c.get(Calendar.DAY_OF_WEEK);
+		RelativeLayout diaLayout = new RelativeLayout(getActivity());
+
+		switch (diaDeLaSemana) {
+		case Calendar.MONDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.lunesLayout);
+			break;
+		case Calendar.TUESDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.martesLayout);
+			break;
+		case Calendar.WEDNESDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.miercolesLayout);
+			break;
+		case Calendar.THURSDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.juevesLayout);
+			break;
+		case Calendar.FRIDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.viernesLayout);
+			break;
+		case Calendar.SATURDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.sabadoLayout);
+			break;
+		case Calendar.SUNDAY:
+			diaLayout = (RelativeLayout) rootView
+					.findViewById(R.id.domingoLayout);
+			break;
+		}
+		return diaLayout;
+	}
+
 	private Evento creaEventoMock() {
 		Evento evento = new Evento();
-		evento.setCreador("César Vásquez Flores");
 		evento.setFechaInicio("04/06/2013");
 		evento.setFechaFin("05/06/2013");
 		evento.setNombre("Desayuno de la empresa");
-		evento.setTipo("Evento de la empresa");
+		evento.setTipoEvento("Evento de la empresa");
 		ArrayList<Colaborador> invitados = new ArrayList<Colaborador>();
 		invitados.add(new Colaborador("César", "Vásquez Flores", "Tecnología",
 				"Gerente"));

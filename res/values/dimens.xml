@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="Title">30dp</dimen>
+    <dimen name="Medium">25dp</dimen>
     <dimen name="Question">23dp</dimen>
+
 </resources>
