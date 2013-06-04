@@ -74,25 +74,6 @@ public final class R {
         public static final int textview_backred=0x7f02002c;
     }
     public static final class id {
-<<<<<<< HEAD
-        public static final int AquiSupervisoSusObjetivos=0x7f0a006a;
-        public static final int DeseoVisitar=0x7f0a0068;
-        public static final int ObjEmpDescCambios=0x7f0a0075;
-        public static final int ObjEmpGuardarCambios=0x7f0a0076;
-        public static final int ObjEmpPeriodo=0x7f0a006f;
-        public static final int TextViewChild01=0x7f0a0042;
-        public static final int TextViewGroup=0x7f0a0043;
-        public static final int UnoDeEstosSubordinados=0x7f0a0069;
-        public static final int about=0x7f0a00c9;
-        public static final int accordion_list=0x7f0a0000;
-        public static final int atrasEvaluacion=0x7f0a0083;
-        public static final int botonesLayout=0x7f0a0082;
-        public static final int button1=0x7f0a00c1;
-        public static final int buttonMas=0x7f0a006e;
-        public static final int buttonMenos=0x7f0a006d;
-        public static final int calendarView1=0x7f0a005a;
-        public static final int contactos_title=0x7f0a005c;
-=======
         public static final int AquiSupervisoSusObjetivos=0x7f0a006b;
         public static final int DeseoVisitar=0x7f0a0069;
         public static final int ObjEmpDescCambios=0x7f0a0076;
@@ -101,16 +82,15 @@ public final class R {
         public static final int TextViewChild01=0x7f0a0043;
         public static final int TextViewGroup=0x7f0a0044;
         public static final int UnoDeEstosSubordinados=0x7f0a006a;
-        public static final int about=0x7f0a00c6;
+        public static final int about=0x7f0a00c9;
         public static final int accordion_list=0x7f0a0000;
         public static final int atrasEvaluacion=0x7f0a0083;
         public static final int botonesLayout=0x7f0a0082;
-        public static final int button1=0x7f0a00be;
+        public static final int button1=0x7f0a00c1;
         public static final int buttonMas=0x7f0a006f;
         public static final int buttonMenos=0x7f0a006e;
         public static final int calendarView1=0x7f0a005b;
         public static final int contactos_title=0x7f0a005d;
->>>>>>> 9b62453fc4d78f4c5bfc222b39272bcb9db6d9fb
         public static final int contrasenaText=0x7f0a0006;
         public static final int creador_evento_content=0x7f0a003f;
         public static final int creador_evento_title=0x7f0a003b;
@@ -118,42 +98,15 @@ public final class R {
         public static final int date_icon=0x7f0a0021;
         public static final int datos_evento=0x7f0a0037;
         public static final int descripcion_evaluacion=0x7f0a0078;
-<<<<<<< HEAD
-        public static final int detalleContacto_title=0x7f0a005d;
-        public static final int detalleofertas_title=0x7f0a004a;
+        public static final int detalleContacto_title=0x7f0a005e;
+        public static final int detalleofertas_title=0x7f0a004b;
         public static final int diasLayout=0x7f0a00be;
         public static final int diasLinearLayout=0x7f0a00bf;
         public static final int domingoLayout=0x7f0a00c0;
-        public static final int editTextComentarios=0x7f0a0031;
-        public static final int editTextObservaciones=0x7f0a0032;
-        public static final int elEventoDeEvaluacion=0x7f0a0098;
-        public static final int elNombre=0x7f0a0099;
-        public static final int equipo_trabajo_anexo=0x7f0a002a;
-        public static final int equipo_trabajo_area_value=0x7f0a0028;
-        public static final int equipo_trabajo_cabecera_jefe=0x7f0a0022;
-        public static final int equipo_trabajo_cabecera_layout=0x7f0a0025;
-        public static final int equipo_trabajo_contactos_list=0x7f0a0024;
-        public static final int equipo_trabajo_detalleContacto_title=0x7f0a0023;
-        public static final int equipo_trabajo_detalle_contacto_part=0x7f0a0026;
-        public static final int equipo_trabajo_email=0x7f0a002b;
-        public static final int equipo_trabajo_nombreCompleto=0x7f0a0027;
-        public static final int equipo_trabajo_puesto_value=0x7f0a0029;
-        public static final int equipo_trabajo_title_layout=0x7f0a0021;
-        public static final int evaluacion_feedback_layout=0x7f0a0030;
-        public static final int evaluar_lista_ofertas=0x7f0a004b;
-        public static final int expandable_view=0x7f0a0044;
-        public static final int fecha_fin_content=0x7f0a003d;
-        public static final int fecha_fin_title=0x7f0a0039;
-        public static final int fecha_inicio_content=0x7f0a003c;
-        public static final int fecha_inicio_title=0x7f0a0038;
-=======
-        public static final int detalleContacto_title=0x7f0a005e;
-        public static final int detalleofertas_title=0x7f0a004b;
-        public static final int diasLayout=0x7f0a00bb;
-        public static final int diasLinearLayout=0x7f0a00bc;
-        public static final int domingoLayout=0x7f0a00bd;
         public static final int editTextComentarios=0x7f0a0032;
         public static final int editTextObservaciones=0x7f0a0033;
+        public static final int elEventoDeEvaluacion=0x7f0a0098;
+        public static final int elNombre=0x7f0a0099;
         public static final int equipo_trabajo_anexo=0x7f0a002b;
         public static final int equipo_trabajo_area_value=0x7f0a0029;
         public static final int equipo_trabajo_cabecera_jefe=0x7f0a0023;
@@ -172,43 +125,30 @@ public final class R {
         public static final int fecha_fin_title=0x7f0a003a;
         public static final int fecha_inicio_content=0x7f0a003d;
         public static final int fecha_inicio_title=0x7f0a0039;
->>>>>>> 9b62453fc4d78f4c5bfc222b39272bcb9db6d9fb
         public static final int finalizar=0x7f0a0084;
         public static final int finalizarEvaluacion=0x7f0a0034;
         public static final int funcionesscroll=0x7f0a0079;
-<<<<<<< HEAD
-        public static final int gridview=0x7f0a001e;
-        public static final int header=0x7f0a001a;
-        public static final int help=0x7f0a00ca;
-        public static final int horasLayout=0x7f0a00bc;
-        public static final int infopostulante_title=0x7f0a0053;
-        public static final int juevesLayout=0x7f0a00c5;
-        public static final int laSupervisionDeEvaluaciones=0x7f0a009a;
-        public static final int layout_evento=0x7f0a0035;
-        public static final int layout_lista_invitados=0x7f0a003f;
-=======
         public static final int gridview=0x7f0a001f;
         public static final int header=0x7f0a001b;
-        public static final int help=0x7f0a00c7;
-        public static final int horasLayout=0x7f0a00b9;
+        public static final int help=0x7f0a00ca;
+        public static final int horasLayout=0x7f0a00bc;
         public static final int infopostulante_title=0x7f0a0054;
-        public static final int juevesLayout=0x7f0a00c2;
+        public static final int juevesLayout=0x7f0a00c5;
+        public static final int laSupervisionDeEvaluaciones=0x7f0a009a;
         public static final int layout_evento=0x7f0a0036;
         public static final int layout_lista_invitados=0x7f0a0040;
->>>>>>> 9b62453fc4d78f4c5bfc222b39272bcb9db6d9fb
         public static final int linearLayout1=0x7f0a0002;
         public static final int listaObjetivos=0x7f0a0048;
         public static final int lista_invitados_evento=0x7f0a0042;
         public static final int loginButton=0x7f0a0007;
-<<<<<<< HEAD
         public static final int lunesLayout=0x7f0a00c2;
         public static final int martesLayout=0x7f0a00c3;
-        public static final int menu_segunda_fase_title_layout=0x7f0a0048;
+        public static final int menu_segunda_fase_title_layout=0x7f0a0049;
         public static final int menu_settings=0x7f0a00c8;
-        public static final int menu_tercera_fase_title_layout=0x7f0a0059;
-        public static final int menuofertas_title=0x7f0a0049;
-        public static final int mi_info_contactos_title_layout=0x7f0a005b;
-        public static final int mi_info_detalle_contacto_part=0x7f0a005f;
+        public static final int menu_tercera_fase_title_layout=0x7f0a005a;
+        public static final int menuofertas_title=0x7f0a004a;
+        public static final int mi_info_contactos_title_layout=0x7f0a005c;
+        public static final int mi_info_detalle_contacto_part=0x7f0a0060;
         public static final int mi_info_input_apellidos=0x7f0a00a2;
         public static final int mi_info_input_area=0x7f0a00a5;
         public static final int mi_info_input_email=0x7f0a00ab;
@@ -223,7 +163,7 @@ public final class R {
         public static final int mi_info_lbl_nombres=0x7f0a009e;
         public static final int mi_info_lbl_puesto=0x7f0a00a7;
         public static final int mi_info_lbl_telefono=0x7f0a00ad;
-        public static final int mi_info_lista_contactos=0x7f0a005e;
+        public static final int mi_info_lista_contactos=0x7f0a005f;
         public static final int mi_info_tableLayout1=0x7f0a009c;
         public static final int mi_info_tableRow1=0x7f0a009d;
         public static final int mi_info_tableRow10=0x7f0a00a9;
@@ -234,56 +174,6 @@ public final class R {
         public static final int mi_info_tableRow9=0x7f0a00ac;
         public static final int mi_info_title_layout=0x7f0a009b;
         public static final int miercolesLayout=0x7f0a00c4;
-        public static final int miinfo_contactos_apellidos=0x7f0a0061;
-        public static final int miinfo_contactos_area=0x7f0a0062;
-        public static final int miinfo_contactos_correo=0x7f0a0066;
-        public static final int miinfo_contactos_fecingreso=0x7f0a0065;
-        public static final int miinfo_contactos_fecnacimiento=0x7f0a0064;
-        public static final int miinfo_contactos_nombre=0x7f0a0060;
-        public static final int miinfo_contactos_puesto=0x7f0a0063;
-        public static final int miinfo_contactos_telefono=0x7f0a0067;
-        public static final int next=0x7f0a001d;
-        public static final int nombreObj=0x7f0a006b;
-        public static final int nombre_evento=0x7f0a0034;
-        public static final int objEmpTab1=0x7f0a0071;
-        public static final int objEmpTab2=0x7f0a0072;
-        public static final int objEmpTab3=0x7f0a0073;
-        public static final int objEmpTab4=0x7f0a0074;
-        public static final int opcion_detail=0x7f0a0045;
-=======
-        public static final int lunesLayout=0x7f0a00bf;
-        public static final int martesLayout=0x7f0a00c0;
-        public static final int menu_segunda_fase_title_layout=0x7f0a0049;
-        public static final int menu_settings=0x7f0a00c5;
-        public static final int menu_tercera_fase_title_layout=0x7f0a005a;
-        public static final int menuofertas_title=0x7f0a004a;
-        public static final int mi_info_contactos_title_layout=0x7f0a005c;
-        public static final int mi_info_detalle_contacto_part=0x7f0a0060;
-        public static final int mi_info_input_apellidos=0x7f0a009f;
-        public static final int mi_info_input_area=0x7f0a00a2;
-        public static final int mi_info_input_email=0x7f0a00a8;
-        public static final int mi_info_input_fechaingreso=0x7f0a00ae;
-        public static final int mi_info_input_nombres=0x7f0a009c;
-        public static final int mi_info_input_puesto=0x7f0a00a5;
-        public static final int mi_info_input_telefono=0x7f0a00ab;
-        public static final int mi_info_lbl_apellidos=0x7f0a009e;
-        public static final int mi_info_lbl_area=0x7f0a00a1;
-        public static final int mi_info_lbl_email=0x7f0a00a7;
-        public static final int mi_info_lbl_fechaingreso=0x7f0a00ad;
-        public static final int mi_info_lbl_nombres=0x7f0a009b;
-        public static final int mi_info_lbl_puesto=0x7f0a00a4;
-        public static final int mi_info_lbl_telefono=0x7f0a00aa;
-        public static final int mi_info_lista_contactos=0x7f0a005f;
-        public static final int mi_info_tableLayout1=0x7f0a0099;
-        public static final int mi_info_tableRow1=0x7f0a009a;
-        public static final int mi_info_tableRow10=0x7f0a00a6;
-        public static final int mi_info_tableRow11=0x7f0a00a0;
-        public static final int mi_info_tableRow12=0x7f0a00a3;
-        public static final int mi_info_tableRow13=0x7f0a00ac;
-        public static final int mi_info_tableRow2=0x7f0a009d;
-        public static final int mi_info_tableRow9=0x7f0a00a9;
-        public static final int mi_info_title_layout=0x7f0a0098;
-        public static final int miercolesLayout=0x7f0a00c1;
         public static final int miinfo_contactos_apellidos=0x7f0a0062;
         public static final int miinfo_contactos_area=0x7f0a0063;
         public static final int miinfo_contactos_correo=0x7f0a0067;
@@ -300,7 +190,6 @@ public final class R {
         public static final int objEmpTab3=0x7f0a0074;
         public static final int objEmpTab4=0x7f0a0075;
         public static final int opcion_detail=0x7f0a0046;
->>>>>>> 9b62453fc4d78f4c5bfc222b39272bcb9db6d9fb
         public static final int opcion_detail_container=0x7f0a0008;
         public static final int opcion_list=0x7f0a0009;
         public static final int pesoObj=0x7f0a006d;
@@ -376,29 +265,16 @@ public final class R {
         public static final int textView10=0x7f0a00bd;
         public static final int textView2=0x7f0a0005;
         public static final int textView3=0x7f0a0001;
-<<<<<<< HEAD
         public static final int textView4=0x7f0a00b3;
         public static final int textView5=0x7f0a00b4;
         public static final int textView6=0x7f0a00b5;
         public static final int textView7=0x7f0a00b6;
         public static final int textView8=0x7f0a00b7;
         public static final int textView9=0x7f0a00b8;
-        public static final int tipo_evento_content=0x7f0a003b;
-        public static final int tipo_evento_title=0x7f0a0037;
-        public static final int title=0x7f0a001c;
-        public static final int title_invitados=0x7f0a0040;
-=======
-        public static final int textView4=0x7f0a00b0;
-        public static final int textView5=0x7f0a00b1;
-        public static final int textView6=0x7f0a00b2;
-        public static final int textView7=0x7f0a00b3;
-        public static final int textView8=0x7f0a00b4;
-        public static final int textView9=0x7f0a00b5;
         public static final int tipo_evento_content=0x7f0a003c;
         public static final int tipo_evento_title=0x7f0a0038;
         public static final int title=0x7f0a001d;
         public static final int title_invitados=0x7f0a0041;
->>>>>>> 9b62453fc4d78f4c5bfc222b39272bcb9db6d9fb
         public static final int usuarioText=0x7f0a0004;
         public static final int viernesLayout=0x7f0a00c6;
     }

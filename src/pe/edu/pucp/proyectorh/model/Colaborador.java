@@ -3,6 +3,9 @@ package pe.edu.pucp.proyectorh.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.Constante;
 
@@ -38,8 +41,9 @@ public class Colaborador {
 	
 	public static ArrayList<String> consultarColaboradoresDelServidorDeProduccion()
 	{
-		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
-
+//		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
+		String direccionDeDestino = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo?deEsteColaborador=23";
+		
 		
 		new UnaConsultaDeDatos().execute(direccionDeDestino);
 		
@@ -55,6 +59,38 @@ public class Colaborador {
 		@Override
 		protected void onPostExecute(String loQueRespondio) {
 			System.out.println("Recibido: " + loQueRespondio.toString());
+			
+			try {
+				
+				JSONObject losSubordinados = new JSONObject(loQueRespondio);
+				
+				JSONObject losEmpleados = (JSONObject) losSubordinados.get("data");
+				
+				JSONArray elGrupoDeColaboradores = (JSONArray) losEmpleados
+						.get("losEmpleadosQueLeReportan");
+				
+				ArrayList<Colaborador> susNombres = new ArrayList<Colaborador>();
+				
+				for (int i = 0; i < elGrupoDeColaboradores.length(); i++) {
+					
+					JSONObject suInformacionPersonal = elGrupoDeColaboradores.getJSONObject(i);
+					
+					Colaborador laPersona = new Colaborador();
+					
+					laPersona.setId(suInformacionPersonal.getString("ID"));
+					laPersona.setNombres(suInformacionPersonal.getString("NombreCompleto"));
+					
+//					elGrupoDeColaboradores
+					susNombres.add(laPersona);
+				}
+				
+				
+				
+			} catch (Exception ocurrioUnProblema) {
+				System.out.println("Sucedio un inconveniente: " + ocurrioUnProblema);
+				
+			}
+			
 		}
 	}	
 	

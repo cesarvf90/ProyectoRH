@@ -1,6 +1,10 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
@@ -28,6 +34,7 @@ import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Objetivo;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
+import pe.edu.pucp.proyectorh.model.Colaborador.UnaConsultaDeDatos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.AdaptadorDeObjetivos;
@@ -312,7 +319,96 @@ public class MisSubordinados extends Fragment {
 			elMenuDeSubordinados.setAdapter(dataAdapter);
 			
 //			Colaborador.consultarColaboradoresDelServidorDeProduccion();
+//			MisSubordinados.consultarColaboradoresDelServidorDeProduccion();
+			consultarColaboradoresDelServidorDeProduccion();
 			
 			return rootView;
-		}			
+		}	
+	
+	public ArrayList<String> consultarColaboradoresDelServidorDeProduccion()
+	{
+//		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
+		String direccionDeDestino = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo?deEsteColaborador=23";
+		
+		
+		new UnaConsultaDeDatos().execute(direccionDeDestino);
+		
+		ArrayList<String> empleadosConSusDatos = new ArrayList<String>();
+		
+		empleadosConSusDatos.add("Todos los empleados");
+		
+		return empleadosConSusDatos;
+		
+	}
+
+	public class UnaConsultaDeDatos extends AsyncCall {
+		@Override
+		protected void onPostExecute(String loQueRespondio) {
+			System.out.println("Recibido: " + loQueRespondio.toString());
+			
+			try {
+				
+				JSONObject losSubordinados = new JSONObject(loQueRespondio);
+				
+				JSONObject losEmpleados = (JSONObject) losSubordinados.get("data");
+				
+				JSONArray elGrupoDeColaboradores = (JSONArray) losEmpleados
+						.get("losEmpleadosQueLeReportan");
+				
+				ArrayList<Colaborador> susNombres = new ArrayList<Colaborador>();
+				
+				for (int i = 0; i < elGrupoDeColaboradores.length(); i++) {
+					
+					JSONObject suInformacionPersonal = elGrupoDeColaboradores.getJSONObject(i);
+					
+					Colaborador laPersona = new Colaborador();
+					
+					laPersona.setId(suInformacionPersonal.getString("ID"));
+					laPersona.setNombres(suInformacionPersonal.getString("NombreCompleto"));
+					
+//					elGrupoDeColaboradores
+					susNombres.add(laPersona);
+				}
+				
+				comunicaLosSubordinados(susNombres);
+				
+			} catch (Exception ocurrioUnProblema) {
+				System.out.println("Sucedio un inconveniente: " + ocurrioUnProblema);
+				
+			}
+			
+		}
+	}		
+	
+	public void comunicaLosSubordinados(ArrayList<Colaborador> susNombres)
+	{
+		final ArrayList<Colaborador> losEmpleados = susNombres;
+		
+		Spinner elMenuDeSubordinados = (Spinner) rootView.findViewById(R.id.UnoDeEstosSubordinados);
+		
+		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, susNombres);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		elMenuDeSubordinados.setAdapter(dataAdapter);
+		
+		elMenuDeSubordinados.setOnItemSelectedListener(new OnItemSelectedListener(){
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+				String elColaboradorSeleccionado = losEmpleados.get(pos).getId();
+				System.out.println("Persona: " + elColaboradorSeleccionado);
+//				actualizaTabs();
+			}
+			
+			@Override
+			  public void onNothingSelected(AdapterView<?> arg0) {
+		    	// TODO Auto-generated method stub
+			  }
+		});		
+		
+//		Colaborador.consultarColaboradoresDelServidorDeProduccion();
+//		MisSubordinados.consultarColaboradoresDelServidorDeProduccion();
+//				
+		
+		
+	}	
+	
 }
