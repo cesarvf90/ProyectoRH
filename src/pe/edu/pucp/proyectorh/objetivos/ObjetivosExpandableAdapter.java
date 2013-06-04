@@ -96,7 +96,19 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		    peso.setText(szPeso);
 		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
         
-
+		    Button btnEliminar = (Button) convertView.findViewById(R.id.buttonMenos);
+		    btnEliminar.setText("X");
+		    btnEliminar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+        
+		    Button btnAumentar = (Button) convertView.findViewById(R.id.buttonMas);
+		    btnAumentar.setText("+");
+		    btnAumentar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+		    if(!isLastChild){
+		    	btnAumentar.setVisibility(View.INVISIBLE);
+		    }else{
+		    	btnAumentar.setVisibility(View.VISIBLE);
+		    }
+		    
 		    convertView.setFocusable(false);
 	    return convertView;       
     }
@@ -157,73 +169,6 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	}
  
 	
-	public TableFila agregaFila2(ObjetivosBSC objBSC, final int flagUltimo){
-		final TableFila fila = new TableFila(contexto);
-		fila.flagUlt=flagUltimo;
-		String szNombre ="";
-		String szPeso ="";
-		//String szCreador=LoginActivity.getUsuario().getUsername();
-		
-		if(objBSC != null){
-			szNombre=objBSC.Nombre;
-			szPeso = Integer.toString(objBSC.Peso);
-			//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
-		}
-		
-		fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-
-	    EditText descripObj = new EditText(contexto);
-	    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-	  
-	    descripObj.setText(szNombre);
-	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-	    fila.addView(descripObj);
-		
-	    EditText peso = new EditText(contexto);
-	    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
-	    peso.setText(szPeso);
-	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
-	    fila.addView(peso);
-	    
-	    /*
-	    TextView creador = new TextView(contexto);
-	    creador.setText(szCreador);
-	    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
-	    fila.addView(creador);
-	    */
-	    
-	    Button eliminarObj = new Button(contexto);
-	    eliminarObj.setText("X");
-	    eliminarObj.setOnClickListener(new OnClickListener() {
-			  @Override
-			  public void onClick(View v) {
-				  lay.removeView(fila);
-			  }
-		});
-	    fila.addView(eliminarObj);	
-	    
-	    /**BOTON AUMENTAR - INICIO**/
-	    final Button aumentarObj = new Button(contexto);
-	    aumentarObj.setText("+");
-	    aumentarObj.setOnClickListener(new OnClickListener() {
-			  @Override
-			  public void onClick(View v) {	
-				  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
-				  TableFila fila = agregaFila(null,1);
-				  lay.addView(fila);
-			  }
-		});
-	    fila.addView(aumentarObj);
-	    
-	    if(fila.flagUlt!=1){
-	    	aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton		    	
-	    }
-	    
-	    /**BORON AUMENTAR - FIN**/
-	    System.out.println("retorna fila");
-	return fila;
-}
-	
 	public TableFila agregaFila(ObjetivosBSC objBSC, final int flagUltimo){
 		final TableFila fila = new TableFila(contexto);
 		fila.flagUlt=flagUltimo;
@@ -251,13 +196,6 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	    peso.setText(szPeso);
 	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
 	    fila.addView(peso);
-	    
-	    /*
-	    TextView creador = new TextView(contexto);
-	    creador.setText(szCreador);
-	    creador.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
-	    fila.addView(creador);
-	    */
 	    
 	    Button eliminarObj = new Button(contexto);
 	    eliminarObj.setText("X");
