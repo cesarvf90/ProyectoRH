@@ -27,6 +27,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ExpandableListView.OnChildClickListener;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
@@ -35,6 +36,7 @@ import pe.edu.pucp.proyectorh.model.Objetivo;
 import pe.edu.pucp.proyectorh.model.Periodo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
 import pe.edu.pucp.proyectorh.model.Colaborador.UnaConsultaDeDatos;
+import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.AdaptadorDeObjetivos;
@@ -307,6 +309,24 @@ public class MisSubordinados extends Fragment {
 			AdaptadorDeObjetivos adaptador = new AdaptadorDeObjetivos(this.getActivity().getApplicationContext(), objetivosSubordinado, avancesHastaHoy);
 			listaDeObjetivos.setAdapter(adaptador);
 			listaDeObjetivos.setLongClickable(true);
+			
+			final MisSubordinados elContenedor = this;
+			
+			listaDeObjetivos.setOnChildClickListener(new OnChildClickListener() {
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v,
+						int groupPosition, int childPosition, long id) {
+					
+					getFragmentManager().beginTransaction()
+						.replace(elContenedor.getId(), new MenuOfertasLaboralesTerceraFase(), "Una etiqueta")
+						.commit();
+					
+					return true;
+				}
+			});			
+			
+			
+			
 			
 			//Esta parte responde: ¿De donde saca los subordinados?
 
