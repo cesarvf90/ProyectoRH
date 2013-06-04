@@ -18,6 +18,7 @@ import pe.edu.pucp.proyectorh.utils.Constante;
 public class Colaborador {
 
 	private String id;
+	private String nombreCompleto;
 	private String nombres;
 	private String apellidos;
 	private String areaID;
@@ -44,15 +45,14 @@ public class Colaborador {
 //		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
 		String direccionDeDestino = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo?deEsteColaborador=23";
 		
-		
 		new UnaConsultaDeDatos().execute(direccionDeDestino);
-		
+
 		ArrayList<String> empleadosConSusDatos = new ArrayList<String>();
-		
+
 		empleadosConSusDatos.add("Todos los empleados");
-		
+
 		return empleadosConSusDatos;
-		
+
 	}
 
 	public static class UnaConsultaDeDatos extends AsyncCall {
@@ -92,28 +92,28 @@ public class Colaborador {
 			}
 			
 		}
-	}	
-	
+	}
+
 	public static ArrayList<String> tomarPrestadoDataDePrueba() {
-		
+
 		String rchavez = "Chávez Alcántara, Rodrigo";
 		String crios = "Ríos Montesinos, Carmen";
 		String surteaga = "Urteaga Gonzáles, Sammantha";
 		String ccamino = "Camino Prades, Carla";
 		String abustamante = "Bustamante Ferda, Alejandra";
 		String areas = "Reas Fernández, Antonnella";
-		
+
 		ArrayList<String> losSupuestosSubordinados = new ArrayList<String>();
-		
+
 		losSupuestosSubordinados.add(rchavez);
 		losSupuestosSubordinados.add(crios);
 		losSupuestosSubordinados.add(surteaga);
 		losSupuestosSubordinados.add(ccamino);
 		losSupuestosSubordinados.add(abustamante);
 		losSupuestosSubordinados.add(areas);
-		
+
 		return losSupuestosSubordinados;
-		
+
 	}
 	
 	public static ArrayList<Colaborador> devolverSubordinadosFicticios()
@@ -196,6 +196,14 @@ public class Colaborador {
 		this.fechaNacimiento = fechaNacimiento;
 		this.correoElectronico = correoElectronico;
 		this.telefono = telefono;
+	}
+
+	public String getNombreCompleto() {
+		return nombreCompleto;
+	}
+
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
 
 	public String getCorreoElectronico() {

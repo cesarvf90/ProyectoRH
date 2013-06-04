@@ -13,6 +13,7 @@ import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -52,11 +53,14 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.reportebsc2perspectivas,
 				container, false);
+
 		
 		String titulo = getArguments().getString("titulo");
 		idPeriodo = getArguments().getInt("PeriodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
 		textView.setText(titulo);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		textView.setTypeface(font);
 		
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
