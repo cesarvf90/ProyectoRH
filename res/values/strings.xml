@@ -70,5 +70,9 @@
     <string name="creador_evento">Creador:</string>
     <string name="invitados_evento">Invitados:</string>
     <string name="reclut_postular_lab_title">Postular a Oferta Laboral</string>
+    <string name="nombre_persona">Nombre:</string>
+    <string name="area_persona">Área:</string>
+    <string name="puesto_persona">Puesto:</string>
+    <string name="lugar_evento">Lugar:</string>
 
 </resources>
