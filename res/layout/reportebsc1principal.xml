@@ -7,15 +7,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:gravity="left"
         android:text="Reporte de Objetivos BSC"
-        android:textSize="20sp" />
+        android:textSize="30sp"
+		android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp"
+		android:id="@+id/reportebsc1titulo"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
+        android:textSize="20sp"
         android:text="Seleccione periodo" />
     
     <Spinner

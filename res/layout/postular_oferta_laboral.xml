@@ -33,7 +33,7 @@
 
     <ListView
         android:id="@+id/reclut_lista_solicit_of_laboral"
-        android:layout_width="350px"
+        android:layout_width="280px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/reclut_title_layout" >
@@ -115,6 +115,21 @@
                 android:text="Descripción:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/reclu_btn_Validar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Postular" />
+                
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -198,20 +213,7 @@
                 
             </TextView>
             
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:layout_gravity="right"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/reclu_btn_Validar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Postular" />
-                
-            </LinearLayout>
+            
         </LinearLayout>
     </LinearLayout>
 

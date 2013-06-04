@@ -141,14 +141,13 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 						jefeObject.getString("CorreoElectronico"));
 				// jefeObject.getInt("cantidadSubordinados"));
 
-				System.out.println(jefe.toString());
+				System.out.println("jefe: " + jefe.toString());
 				// Obtenemos la lista de subordinados del jefe de todos --NIVEL
 				// 1
 				JSONArray listaSubordinadosNivel1 = (JSONArray) jefeObject
 						.get("Subordinados");
 
-				int m = listaSubordinadosNivel1.length();
-				System.out.println("size: " + String.valueOf(m));
+				
 				System.out.println("listaSubordinadosNivel1: "
 						+ listaSubordinadosNivel1.toString());
 
@@ -172,23 +171,18 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 							subordinadoNivel1Object.getString("Telefono"),
 							subordinadoNivel1Object
 									.getString("CorreoElectronico"));
-					// subordinadoNivel1Object.getInt("cantidadSubordinados"));
 
-					// Si coincide con la persona logueada (la que hace la
-					// consulta) le agregamos una marca * para distinguirlo
-					if (subordinadoNivel1.getId() == LoginActivity.usuario
-							.getID()) {
-						//setear nombre Miguel Vega *
-						//subordinadoNivel1.set
+					String nombre = subordinadoNivel1.getNombres();
+					if (nombre.indexOf(" ") > -1) {
+						nombre = nombre.substring(0, nombre.indexOf(" "));
+						subordinadoNivel1.setNombres(nombre);
 					}
+
 					padres.add(subordinadoNivel1);
-					System.out.println(subordinadoNivel1.toString());
+					//System.out.println(subordinadoNivel1.toString());
 					JSONArray listaSubordinadosNivel2 = (JSONArray) subordinadoNivel1Object
 							.get("Subordinados");
-
-					m = listaSubordinadosNivel2.length();
-					System.out.println("size2: " + String.valueOf(m));
-
+					
 					JSONObject subordinadoNivel2Object;
 					hijos.add(new ArrayList<ArrayList<ColaboradorEquipoTrabajo>>());
 
@@ -213,16 +207,16 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 								new ArrayList<ColaboradorEquipoTrabajo>());
 						hijos.get(i).get(j).add(subordinadoNivel2);
 
-						System.out.println(subordinadoNivel2.toString());
+						//System.out.println(subordinadoNivel2.toString());
 
 					}
 				}
-				// }
+				/*
 				System.out
 						.println("***********************************************************************");
 				System.out.println(padres.toString());
-				System.out.println(hijos.toString());
-
+				System.out.println(hijos.toString());*/
+				
 				mostrarEquipo();
 			}
 		} catch (JSONException e) {

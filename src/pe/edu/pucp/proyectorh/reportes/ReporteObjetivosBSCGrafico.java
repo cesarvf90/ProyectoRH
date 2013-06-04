@@ -13,6 +13,7 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -103,6 +104,8 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 		String titulo = getArguments().getString("titulo");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscTitulografico);
 		textView.setText(titulo);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		textView.setTypeface(font);
 		objSelec= getArguments().getInt("idObjetivo");
 		cargarPersonasAvance(objSelec);
 		
