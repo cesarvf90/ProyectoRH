@@ -3,6 +3,9 @@ package pe.edu.pucp.proyectorh.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.Constante;
 
@@ -36,10 +39,12 @@ public class Colaborador {
 	private String Sueldo;
 	private String resumenEjecutivo;
 	private String estadoColaboradorID;
-
-	public static ArrayList<String> consultarColaboradoresDelServidorDeProduccion() {
-		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
-
+	
+	public static ArrayList<String> consultarColaboradoresDelServidorDeProduccion()
+	{
+//		String direccionDeDestino = "http://10.0.2.2:2642/Evaluacion360/GestorDatosDeColaboradores/consultarSusCompanerosPares?deEsteColaborador=23";
+		String direccionDeDestino = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo?deEsteColaborador=23";
+		
 		new UnaConsultaDeDatos().execute(direccionDeDestino);
 
 		ArrayList<String> empleadosConSusDatos = new ArrayList<String>();
@@ -54,6 +59,38 @@ public class Colaborador {
 		@Override
 		protected void onPostExecute(String loQueRespondio) {
 			System.out.println("Recibido: " + loQueRespondio.toString());
+			
+			try {
+				
+				JSONObject losSubordinados = new JSONObject(loQueRespondio);
+				
+				JSONObject losEmpleados = (JSONObject) losSubordinados.get("data");
+				
+				JSONArray elGrupoDeColaboradores = (JSONArray) losEmpleados
+						.get("losEmpleadosQueLeReportan");
+				
+				ArrayList<Colaborador> susNombres = new ArrayList<Colaborador>();
+				
+				for (int i = 0; i < elGrupoDeColaboradores.length(); i++) {
+					
+					JSONObject suInformacionPersonal = elGrupoDeColaboradores.getJSONObject(i);
+					
+					Colaborador laPersona = new Colaborador();
+					
+					laPersona.setId(suInformacionPersonal.getString("ID"));
+					laPersona.setNombres(suInformacionPersonal.getString("NombreCompleto"));
+					
+//					elGrupoDeColaboradores
+					susNombres.add(laPersona);
+				}
+				
+				
+				
+			} catch (Exception ocurrioUnProblema) {
+				System.out.println("Sucedio un inconveniente: " + ocurrioUnProblema);
+				
+			}
+			
 		}
 	}
 
@@ -78,7 +115,63 @@ public class Colaborador {
 		return losSupuestosSubordinados;
 
 	}
+	
+	public static ArrayList<Colaborador> devolverSubordinadosFicticios()
+	{
+		ArrayList<String> losNombres = tomarPrestadoDataDePrueba();
+		
+		ArrayList<Colaborador> personas = new ArrayList<Colaborador>(); 
+		
+//		for(String elEmpleado : losNombres)
+//		{
+////			personas.add(new Colaborador());
+//			Colaborador subordinado = new Colaborador();
+//			subordinado.setNombres(elEmpleado);
+//			subordinado.setPuesto("Gerente de Ventas");
+////			subordinado.setid(i);
+//			
+//			personas.add(subordinado);
+//		}
+		
 
+		Colaborador subordinado = new Colaborador();
+//		subordinado.setNombres("Chávez Alcántara, Rodrigo");
+		subordinado.setNombres(losNombres.get(0));
+		subordinado.setPuesto("Gerente de Ventas");
+		
+		Colaborador crios = new Colaborador();
+		crios.setNombres(losNombres.get(1));
+		crios.setPuesto("Gerente de Marketing");	
+		
+		Colaborador surteaga = new Colaborador();
+		surteaga.setNombres(losNombres.get(2));
+		surteaga.setPuesto("Gerente de Operaciones");
+		
+		Colaborador ccamino = new Colaborador();
+		ccamino.setNombres(losNombres.get(3));
+		ccamino.setPuesto("Gerente de Recursos Humanos");			
+		
+		Colaborador abustamante = new Colaborador();
+		abustamante.setNombres(losNombres.get(4));
+		abustamante.setPuesto("Subgerente");	
+		
+		
+		Colaborador areas = new Colaborador();
+		areas.setNombres(losNombres.get(5));
+		areas.setPuesto("Analista de riesgos");			
+		
+		
+		personas.add(subordinado);
+		personas.add(crios);
+		personas.add(surteaga);
+		personas.add(ccamino);
+		personas.add(abustamante);
+		personas.add(areas);
+
+		return personas;	
+		
+	}
+	
 	public Colaborador() {
 	}
 
@@ -284,5 +377,10 @@ public class Colaborador {
 	@Override
 	public String toString() {
 		return nombres + Constante.ESPACIO_VACIO + apellidos;
+	}
+	
+	public String retornarPresentacionBreve()
+	{
+		return nombres + " - " + puesto;
 	}
 }

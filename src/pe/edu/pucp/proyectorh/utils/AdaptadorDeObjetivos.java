@@ -6,7 +6,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pe.edu.pucp.proyectorh.R;
@@ -55,13 +58,96 @@ public class AdaptadorDeObjetivos extends BaseExpandableListAdapter {
 					R.layout.expandable_ofertas_child, null);
 		}
 
-		TextView textoAvance = (TextView) convertView
-				.findViewById(R.id.TextViewChild01);
+//		TextView textoAvance = (TextView) convertView
+//				.findViewById(R.id.TextViewChild01);
 
 //		textoAvance.setText(avance.toString());
-		textoAvance.setText(avance.descritoBrevemente());
+//		textoAvance.setText(avance.descritoBrevemente());
+		
+//		ViewGroup unElemento = new ViewGroup(parent.getContext()) {
+		LinearLayout unElemento = new LinearLayout(parent.getContext()) {
+			
+			@Override
+			protected void onLayout(boolean arg0, int arg1, int arg2, int arg3, int arg4) {
+				// TODO Auto-generated method stub
+				
+				final int cuenta = getChildCount();
+				
+//				int ancho = hi
+				
+//				for (int i = 0; i < cuenta; i++)
+//				{
+//					final View hijo = this.getChildAt(i);
+//					
+////					int ancho = hijo.getMeasuredHeight();
+////					int ancho = hijo.getMeasuredWidth();
+////					int alto = hijo.getMeasuredHeight();
+//					
+//					int ancho = 100;
+//					int alto = 100;
+//					
+//					
+//					hijo.layout(10, 10, 10 + ancho, 10 + alto);
+//					
+//				}
+//				
 
-		return convertView;
+				int ancho, alto;
+				
+				
+				final View descripcion = this.getChildAt(0);
+				
+				
+				ancho = 500;
+				alto = 100;
+				
+				
+				descripcion.layout(10, 10, 10 + ancho, 10 + alto);	
+				
+				
+				final View autorizar = this.getChildAt(1);
+				
+				
+				ancho = 150;
+				alto = 30;
+				
+				
+				autorizar.layout(500, 5, 10 + ancho, 5 + alto);		
+				
+				
+				final View ajustar = this.getChildAt(2);
+				
+				
+				ancho = 150;
+				alto = 30;
+				
+				
+				ajustar.layout(700, 5, 820 + ancho, 5 + alto);						
+			}
+		};
+		
+//		View elAvance = new TextView
+//		TextView elAvance = new TextView(parent.getContext()).setText(avance.descritoBrevemente());
+		TextView elAvance = new TextView(parent.getContext());
+//		elAvance.setWidth(pixels);
+		elAvance.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		elAvance.setText(avance.descritoBrevemente());
+		
+		Button aceptar = new Button(parent.getContext());
+		aceptar.setText("Aprobar");
+		aceptar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		Button cambiarValor = new Button(parent.getContext());
+		cambiarValor.setText("Modificar");
+		cambiarValor.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		
+		unElemento.addView(elAvance);
+		unElemento.addView(aceptar);
+		unElemento.addView(cambiarValor);
+		
+//		View unElemento = new Vi
+
+//		return convertView;
+		return unElemento;
 	}	
 	
 	@Override

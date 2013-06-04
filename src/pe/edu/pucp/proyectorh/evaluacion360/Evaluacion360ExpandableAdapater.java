@@ -1,9 +1,12 @@
-package pe.edu.pucp.proyectorh.objetivos;
+package pe.edu.pucp.proyectorh.evaluacion360;
+
 
 import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.model.Evaluados360;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
+import pe.edu.pucp.proyectorh.model.ProcesoEvaluacion360;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
@@ -18,11 +21,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
+public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
 	
-	private ArrayList<ObjetivosBSC> groups;
+	private ArrayList<ProcesoEvaluacion360> groups;
 	 
-    private ArrayList<ArrayList<ObjetivosBSC>> children;
+    private ArrayList<ArrayList<Evaluados360>> children;
 
     private ArrayList<Integer> contadorImpresionHijos;
     
@@ -32,7 +35,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	boolean flagMostrar;
 	boolean primeraVez=true;
 
-	public ObjetivosExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<ObjetivosBSC>> children) {
+	public Evaluacion360ExpandableAdapater(Context contexto, ArrayList<ProcesoEvaluacion360> groups, ArrayList<ArrayList<Evaluados360>> children) {
         this.contexto = contexto;
         this.groups = groups;
         this.children = children;
@@ -43,7 +46,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		}
 	}
 	
-	public void actualizaHijos(ArrayList<ArrayList<ObjetivosBSC>> children){
+	public void actualizaHijos(ArrayList<ArrayList<Evaluados360>> children){
 		this.children = children;
 	}
 	 
@@ -56,7 +59,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 
 
     @Override
-    public ObjetivosBSC getChild(int groupPosition, int childPosition) {
+    public Evaluados360 getChild(int groupPosition, int childPosition) {
         return children.get(groupPosition).get(childPosition);
     }
 
@@ -76,38 +79,8 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.objetivos_expandablelist_child, null);           
         }
         
-  	      	System.out.println("agregara para papa="+groups.get(groupPosition).Nombre+ " el child = "+children.get(groupPosition).get(childPosition).Nombre);
-		    
-		    ObjetivosBSC objBSC = getChild(groupPosition, childPosition);
-		    String szNombre ="";
-		    String szPeso = "";
-		    if(objBSC != null){
-				szNombre=objBSC.Nombre;
-				szPeso = Integer.toString(objBSC.Peso);
-			}
-				
-			EditText descripObj = (EditText) convertView.findViewById(R.id.nombreObj);
-			descripObj.setText(szNombre);
-			descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-				
-		    EditText peso = (EditText) convertView.findViewById(R.id.pesoObj);
-		    peso.setText(szPeso);
-		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
-        
-		    Button btnEliminar = (Button) convertView.findViewById(R.id.buttonMenos);
-		    btnEliminar.setText("X");
-		    btnEliminar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-        
-		    Button btnAumentar = (Button) convertView.findViewById(R.id.buttonMas);
-		    btnAumentar.setText("+");
-		    btnAumentar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-		    if(!isLastChild){
-		    	btnAumentar.setVisibility(View.INVISIBLE);
-		    }else{
-		    	btnAumentar.setVisibility(View.VISIBLE);
-		    }
-		    
-		    convertView.setFocusable(false);
+  	    System.out.println("agregara para papa="+groups.get(groupPosition).Nombre+ " el child = "+children.get(groupPosition).get(childPosition).Nombre);
+		   
 	    return convertView;       
     }
 
@@ -117,7 +90,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public ObjetivosBSC getGroup(int groupPosition) {
+    public ProcesoEvaluacion360 getGroup(int groupPosition) {
         return groups.get(groupPosition);
     }
 
