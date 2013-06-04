@@ -115,21 +115,21 @@
 
         <Button
             android:id="@+id/atrasEvaluacion"
-            android:layout_width="30dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:text="Atrás" />
 
         <Button
             android:id="@+id/finalizar"
-            android:layout_width="30dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
+            android:layout_weight=".4"
             android:text="Finalizar evaluación" />
 
         <Button
             android:id="@+id/siguienteEvaluacion"
-            android:layout_width="30dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight=".3"
