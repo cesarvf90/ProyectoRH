@@ -156,8 +156,14 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			mostrarErrorComunicacion(ex.toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
+			System.out.println("entre al catch3");
+			System.out.println(e.toString());
 			mostrarErrorComunicacion(e.toString());
-		}
+		}catch (Exception ex2) {
+			System.out.println("entre al catch4");
+			System.out.println(ex2.toString());
+			mostrarErrorComunicacion(ex2.toString());
+		} 
 
 	}
 
@@ -221,11 +227,11 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 
 										EditText comentarios = (EditText) rootView
 												.findViewById(R.id.reclut_comentarios_input);
-										String comments = comentarios
-												.getText().toString();
+										String comments = comentarios.getText()
+												.toString();
 										comments = comments.trim();
 										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");									
+										comments = comments.replace("&", "_");
 										actualizarEstadoSolicitudOfertaLaboral(
 												IDSolicitudSeleccionada,
 												"Aprobado", comments);
@@ -270,8 +276,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 
 										EditText comentarios = (EditText) rootView
 												.findViewById(R.id.reclut_comentarios_input);
-										String comments = comentarios
-												.getText().toString();
+										String comments = comentarios.getText()
+												.toString();
 										comments = comments.trim();
 										comments = comments.replace(" ", "_");
 										comments = comments.replace("&", "_");
@@ -388,7 +394,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		responsable
 				.setText(solicitudOfertaLaboral.getResponsable() == "null" ? " - "
 						: solicitudOfertaLaboral.getResponsable());
-		
+
 		TextView descripcion = (TextView) rootView
 				.findViewById(R.id.reclut_descripcion_input);
 		String comment = "* sin descripción disponible *";
@@ -401,10 +407,10 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			descripcion.setText(comment);
 		else
 			descripcion.setText(solicitudOfertaLaboral.getDescripcion());
-		
+
 		EditText comentarios = (EditText) rootView
 				.findViewById(R.id.reclut_comentarios_input);
-		comentarios.setText("");		
+		comentarios.setText("");
 	}
 
 	private void actualizarEstadoSolicitudOfertaLaboral(int ID,
@@ -465,7 +471,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				mostrarSolicitudSeleccionada(nueva);
 				llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 			}
-			//llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
+			// llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());
@@ -474,6 +480,10 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			System.out.println("entre al catch2");
 			System.out.println(ex.toString());
 			mostrarErrorComunicacion(ex.toString());
+		} catch (Exception ex2) {
+			System.out.println("entre al catch3");
+			System.out.println(ex2.toString());
+			mostrarErrorComunicacion(ex2.toString());
 		}
 	}
 }

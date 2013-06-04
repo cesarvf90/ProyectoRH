@@ -68,13 +68,18 @@ public class Servicio {
 	 * pendientes de aprobar
 	 */
 	public final static String AprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
+	
 	/**
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una
 	 * oferta laboral (android devuelve 1 o 0 al WS)
 	 */
 	public final static String RespuestaAprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/setEstadoSolicitudOfertaLaboral";
 
-	public static final String EnviarPostulacionOfertaLaboral = null;
+	/**
+	 * Servicio get que consiste en devolver el ID del colaborador y el ID de la oferta laboral para
+	 * registrar en el ws la postulación
+	 */
+	public static final String EnviarPostulacionOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/registrarPostulacion";
 
 	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,
 			String request) {
