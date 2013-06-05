@@ -168,10 +168,10 @@ public class MisObjetivos extends Fragment {
 	}
 	
 	
-    private void loadData(ArrayList<ObjetivosBSC> listObjetivosBSC){
-    	for(int i=0;i<listObjetivosBSC.size();i++){
-    		System.out.println("agrega obj="+listObjetivosBSC.get(i).Nombre);
-    		groups.add(listObjetivosBSC.get(i));
+    private void loadData(ArrayList<ObjetivosBSC> listObjetivosPadre){
+    	for(int i=0;i<listObjetivosPadre.size();i++){
+    		System.out.println("agrega obj="+listObjetivosPadre.get(i).Nombre);
+    		groups.add(listObjetivosPadre.get(i));
       	}
     	
     	ListadoObjetivosChild lo = new ListadoObjetivosChild();
@@ -180,14 +180,14 @@ public class MisObjetivos extends Fragment {
     	if(indicador==IND_MISOBJS){
     		System.out.println("MIS OBJETIVOS 2");
 			rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
-	    	System.out.println("Ruta-Hijos="+rutaLlamada);
-			Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
-    	}else if(indicador==IND_SUBORD){
+	    }else if(indicador==IND_SUBORD){
     		System.out.println("MIS SUBORDINADOS 2");
-			//rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
+    		rutaLlamada = Servicio.ListarObjetivosParaSubordinados+"?idColaborador="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
     	}
     	
-
+    	System.out.println("Ruta-Hijos="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
+	
     	System.out.println("new adapter");
     	adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
     	listaObjs.setAdapter(adapter);
@@ -203,9 +203,9 @@ public class MisObjetivos extends Fragment {
     	return hijos;
     }
     
-    private void loadDataChild(ArrayList<ObjetivosBSC> listObjetivosBSC){
+    private void loadDataChild(ArrayList<ObjetivosBSC> listObjetivosHijos){
     	for(int i=0;i<groups.size();i++){
-    		childs.add(obtenerHijos(groups.get(i).ID,listObjetivosBSC));
+    		childs.add(obtenerHijos(groups.get(i).ID,listObjetivosHijos));
     	}
     	adapter.actualizaHijos(childs);
     }
@@ -246,8 +246,8 @@ public class MisObjetivos extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
-			loadDataChild(listObjetivosBSC);
+			ArrayList<ObjetivosBSC> listObjetivosHijos = ObjetivosBSC.getObjetivosByResult(result);		
+			loadDataChild(listObjetivosHijos);
 		}
 	}
 	

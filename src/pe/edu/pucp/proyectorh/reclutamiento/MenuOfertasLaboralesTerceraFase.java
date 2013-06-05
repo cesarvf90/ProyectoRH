@@ -255,12 +255,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 									ft.replace(R.id.opcion_detail_container,
 											fragment, "detailFragment")
 											.addToBackStack("tag").commit();
-									// getActivity()
-									// .getSupportFragmentManager()
-									// .beginTransaction()
-									// .replace(
-									// R.id.opcion_detail_container,
-									// fragment).commit();
 								}
 							});
 					builder.create();

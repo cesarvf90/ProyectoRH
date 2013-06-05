@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
@@ -27,6 +28,16 @@ public class DetalleActivity extends FragmentActivity {
 
 		if (savedInstanceState == null) {
 			
+			if (Modulo.MODULO_ACTUAL == Constante.LINEA_DE_CARRERA)
+			{
+				if ("1".equals(getIntent()
+						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) { // Comparar capacidades
+					ComparaCapacidad fragment = new ComparaCapacidad();
+					getSupportFragmentManager().beginTransaction()
+					.replace(R.id.opcion_detail_container, fragment)
+					.commit();
+				}
+			}
 			if (Modulo.MODULO_ACTUAL == Constante.REPORTES){
 				if ("3".equals(getIntent()
 						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
@@ -35,17 +46,25 @@ public class DetalleActivity extends FragmentActivity {
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
+			}
+			
+			else if ((Modulo.MODULO_ACTUAL == Constante.REPORTES)
+					&& ("4".equals(getIntent()
+							.getStringExtra(DetalleFragment.ARG_ITEM_ID)))) {
+				ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.opcion_detail_container, fragment)
+						.commit();
+			}	
 				
-				
-				if ("4".equals(getIntent()
+			if ("4".equals(getIntent()
 							.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
 						ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
 						getSupportFragmentManager().beginTransaction()
 								.replace(R.id.opcion_detail_container, fragment)
 								.commit();
 					}
-			}
-			else{
+			}else{
 			
 			Bundle arguments = new Bundle();
 			arguments.putString(DetalleFragment.ARG_ITEM_ID, getIntent()
@@ -56,7 +75,7 @@ public class DetalleActivity extends FragmentActivity {
 					.add(R.id.opcion_detail_container, fragment).commit();
 			}
 		}
-	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

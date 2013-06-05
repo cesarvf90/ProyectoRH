@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="styles/kendo.default.min.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+</head>
+<body>
+    
+        <div id="example" class="k-content">
+            <div class="chart-wrapper">
+                <div id="chart" style="background-color:transparent;"></div>
+            </div>
+            <script>
+            
+                function createChart() {
+					var jsonString = Android.getData();
+        			var arrAvance = JSON.parse(jsonString);
+        			
+                
+                    $("#chart").kendoChart({
+                    	theme:"metro",
+                        title: {
+                            visible: false
+                        },
+                        legend: {
+                         	//visible: false
+                            position: "top"
+                        },
+                        seriesDefaults: {
+                            type: "bar"
+                        },
+                        series: [{
+                            name: "Puesto",
+                            data: [80, 95, 70, 100, 68, 73]
+                        }, {
+                        	name: "Empleado",
+                            data: [75, 90, 50, 87, 70, 70]
+                        }],
+                        valueAxis: {
+                        	max: 100,
+                            labels: {
+                                format: "{0}%"
+                            },
+                            line: {
+                                visible: false
+                            },
+                            axisCrossingValue: 0
+                        },
+                        categoryAxis: {
+                            categories: ["Competencia 1", "Competencia 2", "Competencia 3", "Competencia 4", "Competencia 5", "Competencia 6"],
+                            line: {
+                                visible: false
+                            }
+                        },
+                        tooltip: {
+                            visible: true,
+                            format: "{0}%",
+                            template: "#= series.name #: #= value #"
+                        }
+                    });
+                }
+
+                $(document).ready(function() {
+                    setTimeout(function() {
+                        // Initialize the chart with a delay to make sure
+                        // the initial animation is visible
+                        createChart();
+
+                        $("#example").bind("kendo:skinChange", function(e) {
+                            createChart();
+                        });
+                    }, 400);
+                });
+            </script>
+            <style type="text/css">
+		        #chart {
+		            background-color:rgb(11, 100, 23);
+		        }
+		    </style>
+        </div>
+
+
+</body>
+</html>

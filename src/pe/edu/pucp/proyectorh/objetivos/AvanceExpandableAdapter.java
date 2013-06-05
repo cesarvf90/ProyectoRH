@@ -3,7 +3,9 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
+import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter.TableFila;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
@@ -18,11 +20,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
+public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
 	
 	private ArrayList<ObjetivosBSC> groups;
 	 
-    private ArrayList<ArrayList<ObjetivosBSC>> children;
+    private ArrayList<ArrayList<AvanceDeObjetivo>> children;
 
     private ArrayList<Integer> contadorImpresionHijos;
     
@@ -32,7 +34,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	boolean flagMostrar;
 	boolean primeraVez=true;
 
-	public ObjetivosExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<ObjetivosBSC>> children) {
+	public AvanceExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<AvanceDeObjetivo>> children) {
         this.contexto = contexto;
         this.groups = groups;
         this.children = children;
@@ -43,7 +45,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		}
 	}
 	
-	public void actualizaHijos(ArrayList<ArrayList<ObjetivosBSC>> children){
+	public void actualizaHijos(ArrayList<ArrayList<AvanceDeObjetivo>> children){
 		this.children = children;
 	}
 	 
@@ -56,7 +58,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 
 
     @Override
-    public ObjetivosBSC getChild(int groupPosition, int childPosition) {
+    public AvanceDeObjetivo getChild(int groupPosition, int childPosition) {
         return children.get(groupPosition).get(childPosition);
     }
 
@@ -68,46 +70,16 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
    
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
-
-    	System.out.println("vere gpos="+groupPosition+ " y cpos="+childPosition + " isLastChild="+isLastChild);
-    	
+  	
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.objetivos_expandablelist_child, null);           
+            convertView = infalInflater.inflate(R.layout.avances_expandablelist_child, null);           
         }
         
-  	      	System.out.println("agregara para papa="+groups.get(groupPosition).Nombre+ " el child = "+children.get(groupPosition).get(childPosition).Nombre);
-		    
-		    ObjetivosBSC objBSC = getChild(groupPosition, childPosition);
-		    String szNombre ="";
-		    String szPeso = "";
-		    if(objBSC != null){
-				szNombre=objBSC.Nombre;
-				szPeso = Integer.toString(objBSC.Peso);
-			}
-				
-			EditText descripObj = (EditText) convertView.findViewById(R.id.nombreObj);
-			descripObj.setText(szNombre);
-			descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-				
-		    EditText peso = (EditText) convertView.findViewById(R.id.pesoObj);
-		    peso.setText(szPeso);
-		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
-        
-		    Button btnEliminar = (Button) convertView.findViewById(R.id.buttonMenos);
-		    btnEliminar.setText("X");
-		    btnEliminar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-        
-		    Button btnAumentar = (Button) convertView.findViewById(R.id.buttonMas);
-		    btnAumentar.setText("+");
-		    btnAumentar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-		    if(!isLastChild){
-		    	btnAumentar.setVisibility(View.INVISIBLE);
-		    }else{
-		    	btnAumentar.setVisibility(View.VISIBLE);
-		    }
-		    
-		    convertView.setFocusable(false);
+   	    AvanceDeObjetivo avance = getChild(groupPosition, childPosition);
+		TextView alcance = (EditText) convertView.findViewById(R.id.alcanceLogrado);
+		alcance.setText(avance.getLogroAlcanzado());
+			
 	    return convertView;       
     }
 
