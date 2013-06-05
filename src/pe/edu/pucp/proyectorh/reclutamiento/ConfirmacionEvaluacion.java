@@ -151,6 +151,8 @@ public class ConfirmacionEvaluacion extends Fragment {
 				inputstream = new GZIPInputStream(inputstream);
 			}
 			String resultstring = convertStreamToString(inputstream);
+			System.out.println("Respuesta POST Recibido: "
+					+ resultstring.toString());
 			inputstream.close();
 			resultstring = resultstring.substring(1, resultstring.length() - 1);
 			// recvdref.setText(resultstring + "\n\n"
