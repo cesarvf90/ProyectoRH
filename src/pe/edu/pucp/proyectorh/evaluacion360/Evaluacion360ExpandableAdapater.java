@@ -6,9 +6,15 @@ import java.util.ArrayList;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Evaluados360;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
+import pe.edu.pucp.proyectorh.model.OfertaLaboral;
+import pe.edu.pucp.proyectorh.model.Postulante;
 import pe.edu.pucp.proyectorh.model.ProcesoEvaluacion360;
+import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulante;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,26 +35,18 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
 	 
     private ArrayList<ArrayList<Evaluados360>> children;
 
-    private ArrayList<Integer> contadorImpresionHijos;
-    
-    TableLayout lay;
-    
 	private Context contexto;
-	boolean flagMostrar;
-	boolean primeraVez=true;
+	FragmentActivity act;
 
-	public Evaluacion360ExpandableAdapater(Context contexto, ArrayList<ProcesoEvaluacion360> groups, ArrayList<ArrayList<Evaluados360>> children) {
+	public Evaluacion360ExpandableAdapater(Context contexto,FragmentActivity act, ArrayList<ProcesoEvaluacion360> groups, ArrayList<ArrayList<Evaluados360>> children) {
         this.contexto = contexto;
         this.groups = groups;
         this.children = children;
-		contadorImpresionHijos = new ArrayList<Integer>();
-		
-		for(int i=0;i<groups.size();i++){
-			contadorImpresionHijos.add(0);
-		}
+        this.act = act;
 	}
 	
 	public void actualizaHijos(ArrayList<ArrayList<Evaluados360>> children){
+		System.out.println("actualiza hijos con childrencant="+children.size());
 		this.children = children;
 	}
 	 
@@ -73,16 +71,39 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
    
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
-
-    	System.out.println("vere gpos="+groupPosition+ " y cpos="+childPosition + " isLastChild="+isLastChild);
+    	String texto = getChild(groupPosition, childPosition).Nombre;
+    	String estado = getChild(groupPosition, childPosition).estado;
     	
-        if (convertView == null) {
+    	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.objetivos_expandablelist_child, null);           
+            convertView = infalInflater.inflate(R.layout.evaluacion_expandablelist_child, null);           
         }
-        
-  	    System.out.println("agregara para papa="+groups.get(groupPosition).Nombre+ " el child = "+children.get(groupPosition).get(childPosition).Nombre);
-		   
+     
+  	    TextView childTxt = (TextView) convertView.findViewById(R.id.evaluadoNombre);
+  	    childTxt.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+  	    childTxt.setText(texto);
+
+  	    TextView childTxtEstado = (TextView) convertView.findViewById(R.id.evaluadoEstado);
+  	    childTxtEstado.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+  	    childTxtEstado.setText(estado);
+  	    if(estado.compareTo("Evaluar")==0){
+	  	    childTxtEstado.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					FragmentTransaction ft = act
+							.getSupportFragmentManager()
+							.beginTransaction();
+					Evaluar fragment = new Evaluar();
+					ft.setCustomAnimations(
+							android.R.anim.slide_in_left,
+							android.R.anim.slide_out_right);
+					ft.replace(R.id.opcion_detail_container,
+							fragment, "detailFragment")
+							.addToBackStack("tag").commit();
+				}
+			});
+  	    }
+  	    
 	    return convertView;       
     }
 
@@ -109,8 +130,8 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     	String group = getGroup(groupPosition).Nombre;
-    	System.out.println("groupView de ="+group +" isExp="+isExpanded);    	
-
+    	System.out.println("vista de = "+group);
+    	
     	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.expandablelistview_group, null);
@@ -132,74 +153,5 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int arg0, int arg1) {
         return true;
     }
-    
-	class TableFila extends TableRow {
-		int flagUlt = 0;
-		
-		public TableFila(Context context) {
-			super(context);
-		}		
-	}
- 
-	
-	public TableFila agregaFila(ObjetivosBSC objBSC, final int flagUltimo){
-		final TableFila fila = new TableFila(contexto);
-		fila.flagUlt=flagUltimo;
-		String szNombre ="";
-		String szPeso ="";
-		//String szCreador=LoginActivity.getUsuario().getUsername();
-		
-		if(objBSC != null){
-			szNombre=objBSC.Nombre;
-			szPeso = Integer.toString(objBSC.Peso);
-			//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
-		}
-		
-		fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-
-	    EditText descripObj = new EditText(contexto);
-	    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
-	  
-	    descripObj.setText(szNombre);
-	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-	    fila.addView(descripObj);
-		
-	    EditText peso = new EditText(contexto);
-	    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
-	    peso.setText(szPeso);
-	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
-	    fila.addView(peso);
-	    
-	    Button eliminarObj = new Button(contexto);
-	    eliminarObj.setText("X");
-	    eliminarObj.setOnClickListener(new OnClickListener() {
-			  @Override
-			  public void onClick(View v) {
-				  lay.removeView(fila);
-			  }
-		});
-	    fila.addView(eliminarObj);	
-	    
-	    /**BOTON AUMENTAR - INICIO**/
-	    final Button aumentarObj = new Button(contexto);
-	    aumentarObj.setText("+");
-	    aumentarObj.setOnClickListener(new OnClickListener() {
-			  @Override
-			  public void onClick(View v) {	
-				  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
-				  TableFila fila = agregaFila(null,1);
-				  lay.addView(fila);
-			  }
-		});
-	    fila.addView(aumentarObj);
-	    
-	    if(fila.flagUlt!=1){
-	    	aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton		    	
-	    }
-	    
-	    /**BORON AUMENTAR - FIN**/
-	    System.out.println("retorna fila");
-	return fila;
-}
 
 }
