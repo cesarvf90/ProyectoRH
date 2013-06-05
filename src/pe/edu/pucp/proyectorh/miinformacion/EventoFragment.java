@@ -6,6 +6,7 @@ import java.util.Comparator;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evento;
+import pe.edu.pucp.proyectorh.utils.Constante;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,19 +45,24 @@ public class EventoFragment extends Fragment {
 		// Datos del evento
 		TextView nombreEventoText = (TextView) rootView
 				.findViewById(R.id.nombre_evento);
-		nombreEventoText.setText(evento.getNombre());
+		mostrarTexto(nombreEventoText, evento.getNombre());
+		// nombreEventoText.setText(evento.getNombre());
 		TextView tipoEventoText = (TextView) rootView
 				.findViewById(R.id.tipo_evento_content);
-		tipoEventoText.setText(evento.getTipoEvento());
+		mostrarTexto(tipoEventoText, evento.getTipoEvento());
+		// tipoEventoText.setText(evento.getTipoEvento());
 		TextView fechaInicioText = (TextView) rootView
 				.findViewById(R.id.fecha_inicio_content);
-		fechaInicioText.setText(evento.getFechaInicio());
+		// fechaInicioText.setText(evento.getFechaInicio());
+		mostrarTexto(fechaInicioText, evento.getFechaInicio());
 		TextView fechaFinText = (TextView) rootView
 				.findViewById(R.id.fecha_fin_content);
-		fechaFinText.setText(evento.getFechaFin());
+		// fechaFinText.setText(evento.getFechaFin());
+		mostrarTexto(fechaFinText, evento.getFechaFin());
 		TextView lugarEventoText = (TextView) rootView
 				.findViewById(R.id.lugar_evento_content);
-		lugarEventoText.setText(evento.getLugar());
+		// lugarEventoText.setText(evento.getLugar());
+		mostrarTexto(lugarEventoText, evento.getLugar());
 
 		// Datos del creador
 		TextView nombreCreadorText = (TextView) rootView
@@ -115,5 +121,13 @@ public class EventoFragment extends Fragment {
 		TextView correoText = (TextView) rootView
 				.findViewById(R.id.invitado_correo_content);
 		correoText.setText(invitado.getPuesto());
+	}
+
+	private void mostrarTexto(TextView textView, String texto) {
+		if (texto != null) {
+			textView.setText(texto);
+		} else {
+			textView.setText(Constante.ESPACIO_VACIO);
+		}
 	}
 }

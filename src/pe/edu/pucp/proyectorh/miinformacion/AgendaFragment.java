@@ -42,6 +42,7 @@ public class AgendaFragment extends Fragment {
 	public ArrayList<String> items;
 	private ArrayList<Evento> eventos;
 	private View rootView;
+	private ArrayList<Colaborador> listaInvitados;
 
 	public AgendaFragment() {
 	}
@@ -224,7 +225,7 @@ public class AgendaFragment extends Fragment {
 						JSONArray invitadosListObject = eventoObject
 								.getJSONArray("Invitados");
 
-						ArrayList<Colaborador> listaInvitados = new ArrayList<Colaborador>();
+						listaInvitados = new ArrayList<Colaborador>();
 						for (int j = 0; j < invitadosListObject.length(); ++j) {
 							JSONObject invitadoObject = invitadosListObject
 									.getJSONObject(j);
@@ -272,6 +273,7 @@ public class AgendaFragment extends Fragment {
 		evento1.setDateFin(new Date(2013, 5, 5, 18, 0));
 		evento1.setCreador(new Colaborador("César", "Vásquez Flores",
 				"Tecnología", "Gerente"));
+		evento1.setInvitados(listaInvitados);
 
 		Evento evento2 = new Evento();
 		evento2.setNombre("Evento 2");
@@ -281,6 +283,7 @@ public class AgendaFragment extends Fragment {
 		evento2.setDateFin(new Date(2013, 5, 4, 18, 0));
 		evento2.setCreador(new Colaborador("César", "Vásquez Flores",
 				"Tecnología", "Gerente"));
+		evento2.setInvitados(listaInvitados);
 
 		Evento evento3 = new Evento();
 		evento3.setNombre("Evento 3");
@@ -290,6 +293,7 @@ public class AgendaFragment extends Fragment {
 		evento3.setDateFin(new Date(2013, 5, 8, 18, 0));
 		evento3.setCreador(new Colaborador("César", "Vásquez Flores",
 				"Tecnología", "Gerente"));
+		evento3.setInvitados(listaInvitados);
 
 		Evento evento4 = new Evento();
 		evento4.setNombre("Evento 4");
@@ -299,6 +303,7 @@ public class AgendaFragment extends Fragment {
 		evento4.setDateFin(new Date(2013, 5, 10, 18, 0));
 		evento4.setCreador(new Colaborador("César", "Vásquez Flores",
 				"Tecnología", "Gerente"));
+		evento4.setInvitados(listaInvitados);
 
 		eventos.add(evento1);
 		eventos.add(evento2);

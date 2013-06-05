@@ -1,14 +1,9 @@
 package pe.edu.pucp.proyectorh.evaluacion360;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivosChild;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoPeriodos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
@@ -17,17 +12,9 @@ import android.text.InputType;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
-import android.view.View.OnClickListener;
 import android.widget.*;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 
 
 public class RolEvaluador extends Fragment {

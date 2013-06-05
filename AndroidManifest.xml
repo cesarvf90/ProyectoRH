@@ -20,9 +20,9 @@
             android:name=".MainActivity"
             android:label="@string/title_opcion_list" 
             android:screenOrientation="landscape">
-        </activity>
+        </activity>x
         <activity
-            android:name=".DetalleActivity"
+            android:name="pe.edu.pucp.proyectorh.DetalleActivity"
             android:label="@string/title_opcion_detail" 
             android:screenOrientation="landscape">
             <meta-data
@@ -31,7 +31,7 @@
                 android:screenOrientation="landscape"/>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="pe.edu.pucp.proyectorh.LoginActivity"
             android:label="@string/title_activity_login" 
             android:screenOrientation="landscape">
             <intent-filter>

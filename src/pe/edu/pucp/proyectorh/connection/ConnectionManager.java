@@ -20,9 +20,11 @@ import android.util.Log;
 
 public class ConnectionManager {
 
-	public static int READ_TIME_OUT = 10000;
+	// public static int READ_TIME_OUT = 10000;
+	public static int READ_TIME_OUT = 15000;
 	public static int CONNECT_TIME_OUT = 15000;
-	public static int LENGTH = 50000;
+	// public static int LENGTH = 50000;
+	public static int LENGTH = 70000;
 
 	public static NetworkInfo getConnection(Activity activity) {
 		ConnectivityManager connMgr = (ConnectivityManager) activity
