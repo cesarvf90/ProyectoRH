@@ -10,6 +10,8 @@ import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
+import pe.edu.pucp.proyectorh.objetivos.RegistroAvance;
+import pe.edu.pucp.proyectorh.objetivos.VisualizacionAvance;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesSegundaFase;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
@@ -184,17 +186,20 @@ public class MainActivity extends FragmentActivity implements
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
+
 				if (id.equals("4")) {// Registrar Avance
+					RegistroAvance fragment = new RegistroAvance();
+					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
+						.commit();
 
 				}
 				if (id.equals("5")) {// Mis Avances
+					VisualizacionAvance fragment = new VisualizacionAvance();
+					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
+						.commit();
 
 				}
-				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE
-										// MIS SUBORDINADOS - CARLOS)
-				}
-				if (id.equals("4")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
-
+				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
 					MisSubordinados fragment = new MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)

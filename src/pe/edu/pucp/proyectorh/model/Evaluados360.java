@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 
 public class Evaluados360 {
 	public String Nombre;
+	public String estado;
+	public int idProceso;
 
 	  public static ArrayList<Evaluados360> getEvaluadosByResult(String result){
 	    	ArrayList<Evaluados360> listaEvaluados = new ArrayList<Evaluados360>();
