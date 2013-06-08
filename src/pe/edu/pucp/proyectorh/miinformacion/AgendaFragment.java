@@ -19,6 +19,7 @@ import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -185,13 +186,18 @@ public class AgendaFragment extends Fragment {
 			String request = Servicio.ObtenerEventos + "?colaboradorID="
 					+ LoginActivity.getUsuario().getID() + "&fechaDesde="
 					+ fechaDesde + "&fechaHasta=" + fechaHasta;
-			new ObtencionEventos().execute(request);
+			new ObtencionEventos(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	public class ObtencionEventos extends AsyncCall {
+
+		public ObtencionEventos(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
@@ -253,6 +259,7 @@ public class AgendaFragment extends Fragment {
 					}
 					agregarEventosMock();
 					handler.post(calendarUpdater);
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),

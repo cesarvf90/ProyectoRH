@@ -159,11 +159,11 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			System.out.println("entre al catch3");
 			System.out.println(e.toString());
 			mostrarErrorComunicacion(e.toString());
-		}catch (Exception ex2) {
+		} catch (Exception ex2) {
 			System.out.println("entre al catch4");
 			System.out.println(ex2.toString());
 			mostrarErrorComunicacion(ex2.toString());
-		} 
+		}
 
 	}
 
@@ -486,5 +486,9 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			mostrarErrorComunicacion(ex2.toString());
 		}
 	}
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 965538badc94b68c657e690ddd993ebc82d816f2

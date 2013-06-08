@@ -1,10 +1,12 @@
 package pe.edu.pucp.proyectorh.model;
 
 /**
- * Simular a RespuestaDTO
- * https://github.com/a20012251/KendoDP2/blob/master/KendoDP2/Areas/Reclutamiento/Models/Respuesta.cs#L47
+ * Simular a RespuestaDTO (de la funcion)
+ * https://github.com/a20012251/KendoDP2/blob
+ * /master/KendoDP2/Areas/Reclutamiento/Models/Respuesta.cs#L47
+ * 
  * @author Cesar
- *
+ * 
  */
 public class Respuesta {
 
