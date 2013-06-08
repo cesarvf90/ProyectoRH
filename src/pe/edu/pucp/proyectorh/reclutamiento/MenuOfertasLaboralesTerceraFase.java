@@ -148,6 +148,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 						ofertas.add(oferta);
 					}
 					mostrarOfertas();
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),

@@ -30,12 +30,8 @@ public abstract class AsyncCall extends AsyncTask<String, Integer, String> {
 		return ConnectionManager.downloadUrl(urls[0]);
 	}
 
-	@Override
-	protected void onPostExecute(String result) {
-		if (progressDialog != null) {
-			// TODO cvasquez: validar que la data ya haya sido recogida
-			progressDialog.dismiss();
-		}
+	public void ocultarMensajeProgreso() {
+		progressDialog.dismiss();
 	}
 
 }

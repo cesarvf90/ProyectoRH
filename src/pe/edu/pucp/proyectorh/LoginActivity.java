@@ -140,6 +140,7 @@ public class LoginActivity extends Activity {
 							usuarioObject.getString("Password"));
 					Intent loginIntent = new Intent(LoginActivity.this,
 							pe.edu.pucp.proyectorh.MainActivity.class);
+					ocultarMensajeProgreso();
 					startActivity(loginIntent);
 				}
 			} catch (JSONException e) {

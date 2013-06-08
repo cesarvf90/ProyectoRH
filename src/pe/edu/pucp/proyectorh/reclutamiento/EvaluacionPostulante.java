@@ -345,6 +345,7 @@ public class EvaluacionPostulante extends Fragment {
 					agregarFuncionesMock();
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
