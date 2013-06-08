@@ -57,7 +57,6 @@
                 android:ems="10"
                 android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
-                android:text="@string/registrar_evaluacion"
                 android:textColor="@android:color/black" >
 
                 <requestFocus />
@@ -89,7 +88,6 @@
                 android:ems="10"
                 android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
-                android:text="@string/registrar_evaluacion"
                 android:textColor="@android:color/black" >
 
                 <requestFocus />
@@ -103,6 +101,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/evaluacion_feedback_layout"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:text="@string/registrar_evaluacion" />
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/finalizarEvaluacion"
+        android:paddingTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Medium"
+        android:textStyle="bold" />
 
 </RelativeLayout>

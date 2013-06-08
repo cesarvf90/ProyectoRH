@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.SolicitudOfertaLaboral;
@@ -155,8 +156,14 @@ public class PostularOfertaLaboral extends Fragment {
 			mostrarErrorComunicacion(ex.toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
+			System.out.println("entre al catch3");
+			System.out.println(e.toString());
 			mostrarErrorComunicacion(e.toString());
-		}
+		} catch (Exception ex2) {
+			System.out.println("entre al catch4");
+			System.out.println(ex2.toString());
+			mostrarErrorComunicacion(ex2.toString());
+		} 
 
 	}
 
@@ -213,20 +220,13 @@ public class PostularOfertaLaboral extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									if (posicionLista != -1) {
-										solicitudes.remove(posicionLista);
-										solicitudesAdapter
-												.notifyDataSetChanged();
+										
 										// comunicarle al ws que se postulo
 										// a la oferta
 										// laboral
 
-										//enviarPostulacionOfertaLaboral(LoginActivity.getUsuario().getID(), IDOfertaLaboral);
-										posicionLista = -1; // volvemos a
-															// colocar el
-															// boton
-															// en -1
-										SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
-										mostrarSolicitudSeleccionada(nueva);
+										enviarPostulacionOfertaLaboral(LoginActivity.getUsuario().getID(), IDOfertaLaboral);
+										
 									}
 									dialog.cancel();
 								}
@@ -352,12 +352,12 @@ public class PostularOfertaLaboral extends Fragment {
 		
 	}
 
-	private void enviarPostulacionOfertaLaboral(int IDusuario,
+	private void enviarPostulacionOfertaLaboral(String IDusuario,
 			int IDofertaLaboral) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.EnviarPostulacionOfertaLaboral
-					+ "?IDusuario=" + IDusuario + "?IDofertaLaboral=" + IDofertaLaboral;					
+					+ "?colaboradorID=" + IDusuario + "&ofertaLaboralID=" + IDofertaLaboral;					
 			System.out.println("pagina: " + request);
 			new enviarMensajeWS().execute(request);
 		}
@@ -378,7 +378,35 @@ public class PostularOfertaLaboral extends Fragment {
 			String respuesta = jsonObject.getString("success");
 			// si no pudo actualizar, mostramos mensaje de error y volvemos a
 			// mostrar todas las solicitudes pendientes
-			if (!procesaRespuesta(respuesta)) {
+			if (respuesta == "true") {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						this.getActivity());
+				builder.setTitle("Mensaje de Confirmación");
+				builder.setMessage("Operación exitosa");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+
+				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
+				mostrarSolicitudSeleccionada(nueva);
+				puestosSolicitudes.remove(posicionLista);
+				solicitudes.remove(posicionLista);
+				solicitudesAdapter.notifyDataSetChanged();
+				posicionLista = -1; // volvemos a colocar el posicion en -1
+				// llamarServicioObtenerOfertasLaborales("Aprobado");
+			} else if (respuesta == "false") {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						this.getActivity());
+				builder.setTitle("Problema en el servidor");
+				builder.setMessage("Hay un problema en el servidor.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				posicionLista = -1; // volvemos a colocar el posicion en -1
+				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
+				mostrarSolicitudSeleccionada(nueva);
 				llamarServicioObtenerOfertasLaborales("Aprobado");
 			}
 		} catch (JSONException e) {
@@ -389,6 +417,10 @@ public class PostularOfertaLaboral extends Fragment {
 			System.out.println("entre al catch2");
 			System.out.println(ex.toString());
 			mostrarErrorComunicacion(ex.toString());
-		}
+		} catch (Exception ex2) {
+			System.out.println("entre al catch3");
+			System.out.println(ex2.toString());
+			mostrarErrorComunicacion(ex2.toString());
+		} 
 	}
 }

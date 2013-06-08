@@ -310,8 +310,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:orientation="vertical"
-                android:paddingTop="10dp" >
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/invitado_nombre_content"

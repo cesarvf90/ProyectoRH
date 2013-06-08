@@ -20,9 +20,11 @@ import android.util.Log;
 
 public class ConnectionManager {
 
-	public static int READ_TIME_OUT = 10000;
+	// public static int READ_TIME_OUT = 10000;
+	public static int READ_TIME_OUT = 15000;
 	public static int CONNECT_TIME_OUT = 15000;
-	public static int LENGTH = 50000;
+	// public static int LENGTH = 50000;
+	public static int LENGTH = 100000;
 
 	public static NetworkInfo getConnection(Activity activity) {
 		ConnectivityManager connMgr = (ConnectivityManager) activity
@@ -44,8 +46,8 @@ public class ConnectionManager {
 		try {
 			URL url = new URL(myurl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(READ_TIME_OUT);
-			conn.setConnectTimeout(CONNECT_TIME_OUT);
+//			conn.setReadTimeout(READ_TIME_OUT);
+//			conn.setConnectTimeout(CONNECT_TIME_OUT);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true);
 
@@ -53,6 +55,7 @@ public class ConnectionManager {
 			int response = conn.getResponseCode();
 			Log.d("DEBUG", "The response is " + response);
 			is = conn.getInputStream();
+			// TODO cvasquez: usar http://javarevisited.blogspot.com/2012/08/convert-inputstream-to-string-java-example-tutorial.html
 			String contentAsString = readIt(is, len);
 			return contentAsString;
 		} catch (IOException ex) {
