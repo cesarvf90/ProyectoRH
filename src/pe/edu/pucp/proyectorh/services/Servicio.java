@@ -31,6 +31,12 @@ public class Servicio {
 	 * Servicio que devuelve las ofertas laborales en tercera fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
 	 */
+	public final static String OfertasLaboralesSegundaFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesSegundaFase";
+	
+	/**
+	 * Servicio que devuelve las ofertas laborales en tercera fase cuya
+	 * evaluacion esta bajo la responsabilidad del usuario
+	 */
 	public final static String OfertasLaboralesTerceraFase = "http://dp2kendo.apphb.com//WSOfertaLaboral/getOfertasLaborales";
 
 	/**

@@ -69,8 +69,8 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
 			// TODO cvasquez: enviar id del usuario para filtrar sus ofertas
-			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Aprobado%20Jefe";
+			String request = Servicio.OfertasLaboralesSegundaFase;
+					//+ "?descripcionFase=" + "Aprobado%20Jefe";
 			new ObtencionOfertas().execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
@@ -247,7 +247,7 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
-									EvaluacionPostulante fragment = new EvaluacionPostulante(
+									EvaluacionPostulanteSegundaFase fragment = new EvaluacionPostulanteSegundaFase(
 											oferta, postulante);
 									ft.setCustomAnimations(
 											android.R.anim.slide_in_left,
@@ -255,12 +255,6 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 									ft.replace(R.id.opcion_detail_container,
 											fragment, "detailFragment")
 											.addToBackStack("tag").commit();
-									// getActivity()
-									// .getSupportFragmentManager()
-									// .beginTransaction()
-									// .replace(
-									// R.id.opcion_detail_container,
-									// fragment).commit();
 								}
 							});
 					builder.create();
