@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
 
 	public static final String USUARIO_VALIDO = "1";
 	public static final String USUARIO_INVALIDO = "0";
-	
+
 	public static Usuario usuario;
 	public int DEBUG_NO_LOGIN = 0; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
 									// LOGIN
@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
 			public void onClick(View v) {
 				String usuario = ((EditText) findViewById(R.id.usuarioText))
 						.getText().toString();
-				
+
 				String contrasena = ((EditText) findViewById(R.id.contrasenaText))
 						.getText().toString();
 
@@ -90,7 +90,7 @@ public class LoginActivity extends Activity {
 			// construir llamada al servicio
 			String request = Servicio.LoginService + "?username=" + usuario
 					+ "&password=" + contrasena;
-			new LoginUsuario().execute(request);
+			new LoginUsuario(this).execute(request);
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -119,10 +119,14 @@ public class LoginActivity extends Activity {
 	}
 
 	public class LoginUsuario extends AsyncCall {
+
+		public LoginUsuario(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			// deserializando el json parte por parte
 			try {
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
