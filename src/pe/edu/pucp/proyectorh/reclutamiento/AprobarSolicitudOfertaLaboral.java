@@ -419,7 +419,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			// construir llamada al servicio
 			String request = Servicio.RespuestaAprobarSolicitudOfertaLaboral
 					+ "?ofertaLaboralID=" + ID + "&nuevoEstado=" + nuevoEstado
-					+ "&comentarios=" + comentarios;
+					+ "&comentarios=\"" + comentarios + "\"";
 			System.out.println("pagina: " + request);
 			new enviarMensajeWS().execute(request);
 		}
