@@ -85,7 +85,7 @@ public final class R {
         public static final int TextViewChild01=0x7f0a006e;
         public static final int TextViewGroup=0x7f0a006f;
         public static final int UnoDeEstosSubordinados=0x7f0a0095;
-        public static final int about=0x7f0a00fb;
+        public static final int about=0x7f0a00fa;
         public static final int accordion_list=0x7f0a0000;
         public static final int agenda_title=0x7f0a001d;
         public static final int alcanceLogrado=0x7f0a001b;
@@ -93,7 +93,6 @@ public final class R {
         public static final int area_creador_title=0x7f0a004c;
         public static final int atrasEvaluacion=0x7f0a00b0;
         public static final int botonesLayout=0x7f0a00af;
-        public static final int button1=0x7f0a00f3;
         public static final int buttonMas=0x7f0a009a;
         public static final int buttonMenos=0x7f0a0099;
         public static final int calendarView1=0x7f0a0086;
@@ -151,7 +150,7 @@ public final class R {
         public static final int funcionesscroll=0x7f0a00a6;
         public static final int gridview=0x7f0a0022;
         public static final int header=0x7f0a001e;
-        public static final int help=0x7f0a00fc;
+        public static final int help=0x7f0a00fb;
         public static final int horasLayout=0x7f0a00ee;
         public static final int infopostulante_title=0x7f0a007f;
         public static final int invitado_area_content=0x7f0a006a;
@@ -164,7 +163,7 @@ public final class R {
         public static final int invitado_puesto_title=0x7f0a0065;
         public static final int invitado_telefono_content=0x7f0a006c;
         public static final int invitado_telefono_title=0x7f0a0066;
-        public static final int juevesLayout=0x7f0a00f7;
+        public static final int juevesLayout=0x7f0a00f6;
         public static final int laSupervisionDeEvaluaciones=0x7f0a00ca;
         public static final int layAvance=0x7f0a00a3;
         public static final int layEvaluacion=0x7f0a0045;
@@ -180,10 +179,10 @@ public final class R {
         public static final int loginButton=0x7f0a0007;
         public static final int lugar_evento_content=0x7f0a005c;
         public static final int lugar_evento_title=0x7f0a0057;
-        public static final int lunesLayout=0x7f0a00f4;
-        public static final int martesLayout=0x7f0a00f5;
+        public static final int lunesLayout=0x7f0a00f3;
+        public static final int martesLayout=0x7f0a00f4;
         public static final int menu_segunda_fase_title_layout=0x7f0a0074;
-        public static final int menu_settings=0x7f0a00fa;
+        public static final int menu_settings=0x7f0a00f9;
         public static final int menu_tercera_fase_title_layout=0x7f0a0085;
         public static final int menuofertas_title=0x7f0a0075;
         public static final int mi_info_contactos_title_layout=0x7f0a0087;
@@ -212,7 +211,7 @@ public final class R {
         public static final int mi_info_tableRow2=0x7f0a00d0;
         public static final int mi_info_tableRow9=0x7f0a00dc;
         public static final int mi_info_title_layout=0x7f0a00cb;
-        public static final int miercolesLayout=0x7f0a00f6;
+        public static final int miercolesLayout=0x7f0a00f5;
         public static final int miinfo_contactos_apellidos=0x7f0a008d;
         public static final int miinfo_contactos_area=0x7f0a008e;
         public static final int miinfo_contactos_correo=0x7f0a0092;
@@ -299,7 +298,7 @@ public final class R {
         public static final int reportecubWebkit=0x7f0a00c6;
         public static final int reportecubbtnConsultar=0x7f0a00c4;
         public static final int reportecubspinner=0x7f0a00c3;
-        public static final int sabadoLayout=0x7f0a00f9;
+        public static final int sabadoLayout=0x7f0a00f8;
         public static final int scrollView1=0x7f0a00eb;
         public static final int semanaContenidoLayout=0x7f0a00ed;
         public static final int siguienteEvaluacion=0x7f0a00b2;
@@ -327,7 +326,7 @@ public final class R {
         public static final int titulos_evento=0x7f0a0053;
         public static final int usuarioText=0x7f0a0004;
         public static final int usuario_textview=0x7f0a0003;
-        public static final int viernesLayout=0x7f0a00f8;
+        public static final int viernesLayout=0x7f0a00f7;
         public static final int welcome_textview=0x7f0a0001;
     }
     public static final class layout {

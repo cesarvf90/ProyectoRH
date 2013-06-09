@@ -66,22 +66,17 @@ public class EventoFragment extends Fragment {
 		TextView nombreEventoText = (TextView) rootView
 				.findViewById(R.id.nombre_evento);
 		mostrarTexto(nombreEventoText, evento.getNombre());
-		// nombreEventoText.setText(evento.getNombre());
 		TextView tipoEventoText = (TextView) rootView
 				.findViewById(R.id.tipo_evento_content);
 		mostrarTexto(tipoEventoText, evento.getTipoEvento());
-		// tipoEventoText.setText(evento.getTipoEvento());
 		TextView fechaInicioText = (TextView) rootView
 				.findViewById(R.id.fecha_inicio_content);
-		// fechaInicioText.setText(evento.getFechaInicio());
 		mostrarTexto(fechaInicioText, evento.getFechaInicio());
 		TextView fechaFinText = (TextView) rootView
 				.findViewById(R.id.fecha_fin_content);
-		// fechaFinText.setText(evento.getFechaFin());
 		mostrarTexto(fechaFinText, evento.getFechaFin());
 		TextView lugarEventoText = (TextView) rootView
 				.findViewById(R.id.lugar_evento_content);
-		// lugarEventoText.setText(evento.getLugar());
 		mostrarTexto(lugarEventoText, evento.getLugar());
 
 		// Datos del creador

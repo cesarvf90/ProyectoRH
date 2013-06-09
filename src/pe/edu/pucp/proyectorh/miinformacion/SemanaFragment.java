@@ -70,7 +70,6 @@ public class SemanaFragment extends Fragment {
 	 * muestra
 	 */
 	private void mostrarEventos() {
-		int horas = 1;
 		for (final Evento evento : eventos) {
 			// Se evalua el dia para ubicarlo en un layout
 			RelativeLayout diaLayout = obtieneDiaLayout(evento);
@@ -81,24 +80,27 @@ public class SemanaFragment extends Fragment {
 							* UNA_HORA);
 			layoutParametros.topMargin = obtenerHoraInicial(evento) * UNA_HORA;
 
-			// View eventoView = new View(getActivity());
-			// eventoView.setLayoutParams(layoutParametros);
-			// eventoView.setBackgroundColor(Color.CYAN);
+			View eventoView = new View(getActivity());
+			eventoView.setLayoutParams(layoutParametros);
+			eventoView.setBackgroundColor(Color.CYAN);
 
 			Button eventoButton = new Button(rootView.getContext());
 
 			eventoButton.setText(evento.getNombre());
-			eventoButton.setTag(evento.getNombre());
-			pintarEvento(eventoButton, evento);
+			eventoButton.setTag(evento.getID());
+			pintarEvento(eventoView, evento);
+			diaLayout.addView(eventoView);
 			diaLayout.addView(eventoButton);
+			eventoView.setLayoutParams(layoutParametros);
 			eventoButton.setLayoutParams(layoutParametros);
 
 			Button eventoSeleccionadoButton = (Button) rootView
-					.findViewWithTag(evento.getNombre());
+					.findViewWithTag(evento.getID());
 			eventoSeleccionadoButton.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
+					System.out.println("Se selecciono el evento");
 					FragmentTransaction ft = getActivity()
 							.getSupportFragmentManager().beginTransaction();
 					EventoFragment fragment = new EventoFragment(evento);
@@ -111,7 +113,7 @@ public class SemanaFragment extends Fragment {
 		}
 	}
 
-	private void pintarEvento(Button eventoButton, Evento evento) {
+	private void pintarEvento(View eventoButton, Evento evento) {
 		if (Evento.EVENTO_EMPRESA.equals(evento.getTipoEvento())) {
 			eventoButton.setBackgroundColor(Color.CYAN);
 		} else if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
