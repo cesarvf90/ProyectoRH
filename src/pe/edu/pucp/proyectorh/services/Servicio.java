@@ -28,20 +28,26 @@ public class Servicio {
 	public final static String MisContactosService = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
 
 	/**
-	 * Servicio que devuelve las ofertas laborales en tercera fase cuya
+	 * Servicio que devuelve las ofertas laborales en SEGUNDA fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
 	 */
 	public final static String OfertasLaboralesSegundaFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesSegundaFase";
 	
 	/**
-	 * Servicio que devuelve las ofertas laborales en tercera fase cuya
+	 * Servicio que devuelve las ofertas laborales en TERCERA fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
 	 */
 	public final static String OfertasLaboralesTerceraFase = "http://dp2kendo.apphb.com//WSOfertaLaboral/getOfertasLaborales";
+	
+	/**
+	 * Servicio que retorna las preguntas de la evaluacion a rendir por el
+	 * postulante de SEGUNDA fase seleccionado
+	 */
+	public final static String ObtenerEvaluacionSegundaFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getCompetencias";
 
 	/**
 	 * Servicio que retorna las preguntas de la evaluacion a rendir por el
-	 * postulante de tercera fase seleccionado
+	 * postulante de TERCERA fase seleccionado
 	 */
 	public final static String ObtenerEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getFunciones";
 
@@ -52,7 +58,13 @@ public class Servicio {
 
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
-	 * entrevista de tercera fase
+	 * entrevista de SEGUNDAfase
+	 */
+	public final static String RegistrarRespuestasEvaluacionSegundaFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacionSegundaFase";
+	
+	/**
+	 * Servicio que registra las respuestas registradas por el evaluador de la
+	 * entrevista de TERCERA fase
 	 */
 	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacion";
 

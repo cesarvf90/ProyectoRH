@@ -486,9 +486,4 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			mostrarErrorComunicacion(ex2.toString());
 		}
 	}
-<<<<<<< HEAD
-
 }
-=======
-}
->>>>>>> 965538badc94b68c657e690ddd993ebc82d816f2
