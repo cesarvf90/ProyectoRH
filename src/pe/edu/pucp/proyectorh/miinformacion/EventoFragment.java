@@ -7,7 +7,10 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evento;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,7 +41,24 @@ public class EventoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.evento_layout, container, false);
 		mostrarEvento();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void mostrarEvento() {
@@ -108,7 +128,8 @@ public class EventoFragment extends Fragment {
 	protected void mostrarInvitadoSeleccionado(Colaborador invitado) {
 		TextView nombreText = (TextView) rootView
 				.findViewById(R.id.invitado_nombre_content);
-		nombreText.setText(invitado.getNombreCompleto());
+		nombreText.setText(invitado.getNombres() + Constante.ESPACIO_VACIO
+				+ invitado.getApellidos());
 		TextView areaText = (TextView) rootView
 				.findViewById(R.id.invitado_area_content);
 		areaText.setText(invitado.getArea());

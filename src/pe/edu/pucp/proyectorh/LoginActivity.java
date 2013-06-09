@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends Activity {
 
@@ -61,6 +63,17 @@ public class LoginActivity extends Activity {
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
 		bar.setTitle("RH++");
+
+		customizarEstilos();
+	}
+
+	private void customizarEstilos() {
+		Typeface font = Typeface.createFromAsset(getAssets(),
+				"OpenSans-Light.ttf");
+
+		((TextView) findViewById(R.id.welcome_textview)).setTypeface(font);
+		((TextView) findViewById(R.id.usuario_textview)).setTypeface(font);
+		((TextView) findViewById(R.id.password_textview)).setTypeface(font);
 	}
 
 	protected void validaUsuario(String usuario, String contrasena) {
