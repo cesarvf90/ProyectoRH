@@ -9,7 +9,10 @@ import java.util.Date;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evento;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,8 +22,8 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class SemanaFragment extends Fragment {
 
@@ -42,7 +45,24 @@ public class SemanaFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.weekly_calendar, container, false);
 		mostrarEventos();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	/**
@@ -50,15 +70,15 @@ public class SemanaFragment extends Fragment {
 	 * muestra
 	 */
 	private void mostrarEventos() {
-		int horas = 1;
 		for (final Evento evento : eventos) {
-
+			// Se evalua el dia para ubicarlo en un layout
 			RelativeLayout diaLayout = obtieneDiaLayout(evento);
 
-			LinearLayout.LayoutParams layoutParametros = new LinearLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-			layoutParametros.topMargin = 5 * UNA_HORA;
-			layoutParametros.height = horas++ * UNA_HORA;
+			// Se evaluan las horas para ubicarlo con margenes y longitud
+			RelativeLayout.LayoutParams layoutParametros = new RelativeLayout.LayoutParams(
+					LayoutParams.FILL_PARENT, obtenerHorasDuracion(evento)
+							* UNA_HORA);
+			layoutParametros.topMargin = obtenerHoraInicial(evento) * UNA_HORA;
 
 			View eventoView = new View(getActivity());
 			eventoView.setLayoutParams(layoutParametros);
@@ -67,19 +87,20 @@ public class SemanaFragment extends Fragment {
 			Button eventoButton = new Button(rootView.getContext());
 
 			eventoButton.setText(evento.getNombre());
-			eventoButton.setTag(evento.getNombre());
-			eventoButton.setBackgroundColor(Color.CYAN);
-			eventoButton.setLayoutParams(layoutParametros);
-
+			eventoButton.setTag(evento.getID());
+			pintarEvento(eventoView, evento);
 			diaLayout.addView(eventoView);
 			diaLayout.addView(eventoButton);
+			eventoView.setLayoutParams(layoutParametros);
+			eventoButton.setLayoutParams(layoutParametros);
 
 			Button eventoSeleccionadoButton = (Button) rootView
-					.findViewWithTag(evento.getNombre());
+					.findViewWithTag(evento.getID());
 			eventoSeleccionadoButton.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
+					System.out.println("Se selecciono el evento");
 					FragmentTransaction ft = getActivity()
 							.getSupportFragmentManager().beginTransaction();
 					EventoFragment fragment = new EventoFragment(evento);
@@ -90,6 +111,40 @@ public class SemanaFragment extends Fragment {
 				}
 			});
 		}
+	}
+
+	private void pintarEvento(View eventoButton, Evento evento) {
+		if (Evento.EVENTO_EMPRESA.equals(evento.getTipoEvento())) {
+			eventoButton.setBackgroundColor(Color.CYAN);
+		} else if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
+			eventoButton.setBackgroundColor(Color.MAGENTA);
+		} else if (Evento.EVENTO_ESPECIAL.equals(evento.getTipoEvento())) {
+			eventoButton.setBackgroundColor(Color.YELLOW);
+		}
+	}
+
+	private int obtenerHoraInicial(Evento evento) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy HH:mm:ss");
+		Date fechaInicio = new Date();
+		try {
+			fechaInicio = dateFormat.parse(evento.getFechaInicio());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return fechaInicio.getHours();
+	}
+
+	private int obtenerHorasDuracion(Evento evento) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy HH:mm:ss");
+		Date fechaInicio = new Date();
+		Date fechaFin = new Date();
+		try {
+			fechaInicio = dateFormat.parse(evento.getFechaInicio());
+			fechaFin = dateFormat.parse(evento.getFechaFin());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return fechaFin.getHours() - fechaInicio.getHours();
 	}
 
 	/**

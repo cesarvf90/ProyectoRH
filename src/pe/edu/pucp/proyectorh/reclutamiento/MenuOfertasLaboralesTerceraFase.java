@@ -19,9 +19,13 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -59,7 +63,24 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		rootView = inflater.inflate(R.layout.menu_ofertas_tercera_fase,
 				container, false);
 		llamarServicioOfertasLaboralesTerceraFase();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void llamarServicioOfertasLaboralesTerceraFase() {
@@ -71,13 +92,17 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 			// TODO cvasquez: enviar id del usuario para filtrar sus ofertas
 			String request = Servicio.OfertasLaboralesTerceraFase
 					+ "?descripcionFase=" + "Aprobado%20Jefe";
-			new ObtencionOfertas().execute(request);
+			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	public class ObtencionOfertas extends AsyncCall {
+		public ObtencionOfertas(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
@@ -143,6 +168,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 						ofertas.add(oferta);
 					}
 					mostrarOfertas();
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),

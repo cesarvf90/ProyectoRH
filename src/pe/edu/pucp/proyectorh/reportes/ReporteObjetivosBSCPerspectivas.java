@@ -55,7 +55,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				container, false);
 
 		
-		String titulo = getArguments().getString("titulo");
+		String titulo = getArguments().getString("titulo") + " - Objetivos de la Empresa";
 		idPeriodo = getArguments().getInt("PeriodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
 		textView.setText(titulo);

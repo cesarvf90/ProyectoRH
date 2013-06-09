@@ -9,7 +9,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/welcome_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -52,7 +52,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/usuario_textview"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/user"
@@ -80,7 +80,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/password_textview"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/password"
