@@ -183,7 +183,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 						
 						b.putInt("idPadre",listaObjetivos.get(position).getIdObjetivo());
 						
-						ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
+						ReporteObjetivosBSCPersonales fragment = new ReporteObjetivosBSCPersonales();
 						fragment.setArguments(b);
 						
 						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
