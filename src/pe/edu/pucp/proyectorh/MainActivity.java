@@ -117,6 +117,13 @@ public class MainActivity extends FragmentActivity implements
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.REPORTES) {
 
+				if ("1".equals(id)) {
+					Reporte360 fragment = new Reporte360();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+				
 				if ("3".equals(id)) {
 					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
 					getSupportFragmentManager().beginTransaction()
