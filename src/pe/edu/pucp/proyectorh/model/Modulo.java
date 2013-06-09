@@ -84,7 +84,7 @@ public class Modulo {
 		submodulos
 				.add(new ModuloItem("2", "Aprobar solicitudes de oferta laboral"));
 		submodulos.add(new ModuloItem("3", "Aprobar solicitudes de promoción laboral"));
-		submodulos.add(new ModuloItem("4", "Evaluar postulantes 2da fase"));
+		submodulos.add(new ModuloItem("4", "Evaluar postulantes 1ra fase"));
 		submodulos.add(new ModuloItem("5", "Evaluar postulantes 3ra fase"));
 		submodulos.add(new ModuloItem("6", "Postular a oferta laboral"));
 		return submodulos;
@@ -102,10 +102,10 @@ public class Modulo {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Objetivos Empresariales"));
 		submodulos.add(new ModuloItem("2", "Objetivos Propios"));
-		submodulos.add(new ModuloItem("3", "Objetivos de mis subordinados"));
-//		submodulos.add(new ModuloItem("4", "Fantasma"));
-//		submodulos.add(new ModuloItem("5", "Avance invisible"));
-		submodulos.add(new ModuloItem("4", "Recorrido en mi Equipo de trabajo"));
+		submodulos.add(new ModuloItem("3", "Objetivos para Equipo"));
+		submodulos.add(new ModuloItem("4", "Registrar Avance"));
+		submodulos.add(new ModuloItem("5", "Visualizar Avances"));
+		submodulos.add(new ModuloItem("6", "Monitoreo"));
 		return submodulos;
 	}
 

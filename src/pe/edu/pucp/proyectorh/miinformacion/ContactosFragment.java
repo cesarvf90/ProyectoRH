@@ -80,32 +80,44 @@ public class ContactosFragment extends Fragment {
 		SimpleDateFormat formatoFecha = new SimpleDateFormat();
 		formatoFecha.applyPattern("dd/MM/yyyy");
 
-		TextView tituloContactoText = (TextView) rootView
-				.findViewById(R.id.detalleContacto_title);
-		tituloContactoText.setText(colaborador.toString());
-		TextView nombreText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_nombre);
-		nombreText.setText(colaborador.getNombres());
-		TextView apellidosText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_apellidos);
-		apellidosText.setText(colaborador.getApellidos());
-		TextView areaText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_area);
-		areaText.setText(colaborador.getArea());
-		TextView puestoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_puesto);
-		puestoText.setText(colaborador.getPuesto());
-		TextView fechaNacimientoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_fecnacimiento);
-		fechaNacimientoText.setText(formatoFecha.format(colaborador
-				.getFechaNacimiento().getTime()));
-		TextView fechaIngresoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_fecingreso);
-		fechaIngresoText.setText(formatoFecha.format(colaborador
-				.getFechaIngreso().getTime()));
-		TextView correoElectronicoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_correo);
-		correoElectronicoText.setText(colaborador.getCorreoElectronico());
+		// TextView tituloContactoText = (TextView) rootView
+		// .findViewById(R.id.detalleContacto_title);
+		// tituloContactoText.setText(colaborador.toString());
+		mostrarTexto(R.id.detalleContacto_title, colaborador.toString());
+		// TextView nombreText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_nombre);
+		// nombreText.setText(colaborador.getNombres());
+		mostrarTexto(R.id.miinfo_contactos_nombre, colaborador.getNombres());
+		// TextView apellidosText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_apellidos);
+		// apellidosText.setText(colaborador.getApellidos());
+		mostrarTexto(R.id.miinfo_contactos_apellidos,
+				colaborador.getApellidos());
+		// TextView areaText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_area);
+		// areaText.setText(colaborador.getArea());
+		mostrarTexto(R.id.miinfo_contactos_area, colaborador.getArea());
+		// TextView puestoText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_puesto);
+		// puestoText.setText(colaborador.getPuesto());
+		mostrarTexto(R.id.miinfo_contactos_puesto, colaborador.getPuesto());
+		// TextView fechaNacimientoText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_fecnacimiento);
+		// fechaNacimientoText.setText(formatoFecha.format(colaborador
+		// .getFechaNacimiento().getTime()));
+		mostrarTexto(R.id.miinfo_contactos_fecnacimiento,
+				formatoFecha.format(colaborador.getFechaNacimiento().getTime()));
+		// TextView fechaIngresoText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_fecingreso);
+		// fechaIngresoText.setText(formatoFecha.format(colaborador
+		// .getFechaIngreso().getTime()));
+		mostrarTexto(R.id.miinfo_contactos_fecingreso,
+				formatoFecha.format(colaborador.getFechaIngreso().getTime()));
+		// TextView correoElectronicoText = (TextView) rootView
+		// .findViewById(R.id.miinfo_contactos_correo);
+		// correoElectronicoText.setText(colaborador.getCorreoElectronico());
+		mostrarTexto(R.id.miinfo_contactos_correo,
+				colaborador.getCorreoElectronico());
 	}
 
 	private void llamarContacto(String telefono) {
@@ -257,6 +269,15 @@ public class ContactosFragment extends Fragment {
 					// TODO cvasquez: implementar llamada o envio de correo
 					// onItemLongClick
 				});
+	}
+
+	private void mostrarTexto(int idTextView, String texto) {
+		TextView textView = (TextView) rootView.findViewById(idTextView);
+		if (texto != null) {
+			textView.setText(texto);
+		} else {
+			textView.setText(Constante.ESPACIO_VACIO);
+		}
 	}
 
 }
