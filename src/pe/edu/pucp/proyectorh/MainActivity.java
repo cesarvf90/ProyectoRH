@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
@@ -155,7 +156,10 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("2")) {// Candidatos por puesto
-
+					CandidatosxPuesto fragment = new CandidatosxPuesto();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
