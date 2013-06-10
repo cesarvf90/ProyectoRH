@@ -8,8 +8,13 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.InfoColaborador;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,11 +47,27 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.visualizar_info_colaborador,
 				container, false);
-
+		customizarEstilos(getActivity(), rootView);
 		System.out.println("el usuario es: " + LoginActivity.usuario.getID());
 		llamarServicioInfoColaborador(LoginActivity.usuario.getID());
 		//probarDeserializacionGSON();
 		return rootView;
+	}
+	
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void llamarServicioInfoColaborador(String usuario) {
@@ -55,23 +76,22 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 			String request = Servicio.InformacionPersonalService + "?id="
 					+ usuario;
 			System.out.println("pagina: " + request);
-			new InformacionPersonalColaborador().execute(request);
+			new InformacionPersonalColaborador(this.getActivity()).execute(request);
 		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			/*
-			 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			 * builder.setTitle("Error de conexción"); builder.setMessage(
-			 * "No se pudo conectar con el servidor. Revise su conexión a Internet."
-			 * ); builder.setCancelable(false); builder.setPositiveButton("Ok",
-			 * null); builder.create(); builder.show();
-			 */
+			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	public class InformacionPersonalColaborador extends AsyncCall {
+		
+		public InformacionPersonalColaborador(Activity activity) {
+			super(activity);
+		}
+		
 		@Override
 		protected void onPostExecute(String result) {
 			deserealizarJSON(result);
+			ocultarMensajeProgreso();
 		}
 	}
 

@@ -70,8 +70,8 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
 			// TODO cvasquez: enviar id del usuario para filtrar sus ofertas
-			String request = Servicio.OfertasLaboralesSegundaFase
-					+ "?descripcionFase=" + "Aprobado%20Jefe";
+			String request = Servicio.OfertasLaboralesTerceraFase
+					+ "?descripcionFase=" + "2daFase";
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
