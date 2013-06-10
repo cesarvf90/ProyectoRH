@@ -26,13 +26,13 @@ public class Servicio {
 	 * Servicio que devuelve los contactos del usuario loggeado
 	 */
 	public final static String MisContactosService = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
-
+/*
 	/**
 	 * Servicio que devuelve las ofertas laborales en SEGUNDA fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
-	 */
+	 
 	public final static String OfertasLaboralesSegundaFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesSegundaFase";
-	
+	*/
 	/**
 	 * Servicio que devuelve las ofertas laborales en TERCERA fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
@@ -93,6 +93,12 @@ public class Servicio {
 	 * pendientes de aprobar
 	 */
 	public final static String AprobarSolicitudOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
+	
+	/**
+	 * Servicio que devuelve la lista de solicitudes de oferta laboral
+	 * a las que el colaborador puede postular
+	 */
+	public final static String ObtenerOfertasParaPostulacion = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
 	
 	/**
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una
