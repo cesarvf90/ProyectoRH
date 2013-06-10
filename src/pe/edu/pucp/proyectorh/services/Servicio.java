@@ -138,8 +138,7 @@ public class Servicio {
 	public static void mostrarErrorComunicacion(String excepcion,Activity miActividad) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(miActividad);
 		builder.setTitle("Error de servicio");
-		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
-				+ excepcion.toString());
+		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE	+ excepcion.toString());
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();
