@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.connection;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,6 +18,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ConnectionManager {
 
@@ -38,32 +40,32 @@ public class ConnectionManager {
 	}
 
 	public static String downloadUrl(String myurl) {
-
-		InputStream is = null;
-
+		InputStream inputStream = null;
 		int len = LENGTH;
 
 		try {
 			URL url = new URL(myurl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//			conn.setReadTimeout(READ_TIME_OUT);
-//			conn.setConnectTimeout(CONNECT_TIME_OUT);
+			// conn.setReadTimeout(READ_TIME_OUT);
+			// conn.setConnectTimeout(CONNECT_TIME_OUT);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true);
 
 			conn.connect();
 			int response = conn.getResponseCode();
 			Log.d("DEBUG", "The response is " + response);
-			is = conn.getInputStream();
-			// TODO cvasquez: usar http://javarevisited.blogspot.com/2012/08/convert-inputstream-to-string-java-example-tutorial.html
-			String contentAsString = readIt(is, len);
-			return contentAsString;
+			inputStream = conn.getInputStream();
+			// TODO cvasquez: usar
+			// http://javarevisited.blogspot.com/2012/08/convert-inputstream-to-string-java-example-tutorial.html
+			// String contentAsString = readIt(is, len);
+			String contenido = convertirStreamToString(inputStream);
+			return contenido;
 		} catch (IOException ex) {
 			return "ERROR: No se pudo bajar la pagina web solicitada. La URL puede ser invalida";
 		} finally {
-			if (is != null) {
+			if (inputStream != null) {
 				try {
-					is.close();
+					inputStream.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -97,5 +99,19 @@ public class ConnectionManager {
 		Arrays.fill(buffer, ' ');
 		reader.read(buffer);
 		return new String(buffer).trim();
+	}
+
+	private static String convertirStreamToString(InputStream is) {
+		String line = "";
+		StringBuilder total = new StringBuilder();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		try {
+			while ((line = rd.readLine()) != null) {
+				total.append(line);
+			}
+		} catch (Exception e) {
+			System.out.println("Stream Exception " + e.toString());
+		}
+		return total.toString();
 	}
 }

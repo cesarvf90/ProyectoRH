@@ -115,7 +115,6 @@ public class ExpandableListFragment extends Fragment implements
 				ViewGroup.LayoutParams.FILL_PARENT));
 
 		ExpandableListView lv = new ExpandableListView(getActivity());
-//		lv.setId(android.R.id.list);
 		lv.setId(R.id.expandable_view);
 		lv.setDrawSelectorOnTop(false);
 		lframe.addView(lv, new FrameLayout.LayoutParams(

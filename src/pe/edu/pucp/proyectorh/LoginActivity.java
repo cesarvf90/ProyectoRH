@@ -168,8 +168,10 @@ public class LoginActivity extends Activity {
 					startActivity(loginIntent);
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				mostrarErrorComunicacion(e.toString());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				mostrarErrorComunicacion(ex.toString());
 			}
 		}
