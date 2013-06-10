@@ -68,7 +68,7 @@ public class MenuFragment extends ExpandableListFragment {
 			curGroupMap.put(NAME, modulo.getNombre());
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 6; i++) {
 			List<Map<String, String>> children = new ArrayList<Map<String, String>>();
 			List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 			switch (i + 1) {
@@ -76,21 +76,18 @@ public class MenuFragment extends ExpandableListFragment {
 				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
 				break;
 			case 2:
-				submodulos = Modulo.obtenerFuncionalidadesAdministracion();
-				break;
-			case 3:
 				submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
 				break;
-			case 4:
+			case 3:
 				submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
 				break;
-			case 5:
+			case 4:
 				submodulos = Modulo.obtenerFuncionalidadesObjetivos();
 				break;
-			case 6:
+			case 5:
 				submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
 				break;
-			case 7:
+			case 6:
 				submodulos = Modulo.obtenerFuncionalidadesReportes();
 				break;
 			}
@@ -173,21 +170,18 @@ public class MenuFragment extends ExpandableListFragment {
 			submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
 			break;
 		case 2:
-			submodulos = Modulo.obtenerFuncionalidadesAdministracion();
-			break;
-		case 3:
 			submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
 			break;
-		case 4:
+		case 3:
 			submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
 			break;
-		case 5:
+		case 4:
 			submodulos = Modulo.obtenerFuncionalidadesObjetivos();
 			break;
-		case 6:
+		case 5:
 			submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
 			break;
-		case 7:
+		case 6:
 			submodulos = Modulo.obtenerFuncionalidadesReportes();
 			break;
 		}

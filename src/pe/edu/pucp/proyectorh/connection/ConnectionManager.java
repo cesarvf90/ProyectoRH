@@ -18,7 +18,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 public class ConnectionManager {
 
@@ -55,9 +54,6 @@ public class ConnectionManager {
 			int response = conn.getResponseCode();
 			Log.d("DEBUG", "The response is " + response);
 			inputStream = conn.getInputStream();
-			// TODO cvasquez: usar
-			// http://javarevisited.blogspot.com/2012/08/convert-inputstream-to-string-java-example-tutorial.html
-			// String contentAsString = readIt(is, len);
 			String contenido = convertirStreamToString(inputStream);
 			return contenido;
 		} catch (IOException ex) {
