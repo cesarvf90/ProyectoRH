@@ -4,6 +4,7 @@ import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 
+
 public class Servicio {
 
 	/**
@@ -76,9 +77,12 @@ public class Servicio {
 	
 	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivos";
 
-	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/CrearObjetivoEmpresa";
+	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 
-	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivosSuperiores";
+	public final static String ActualizaObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/UpdateObjetivoEmpresa";
+
+	
+	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/GetAllMisObjetivosSuperiores";
 
 	public final static String ListarObjetivosParaSubordinados = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/ListarObjetivosDeSubordinados";
 	
@@ -106,18 +110,33 @@ public class Servicio {
 	 */
 	public static final String EnviarPostulacionOfertaLaboral = "http://dp2kendo.apphb.com/WSOfertaLaboral/registrarPostulacion";
 
-	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,
-			String request) {
-		if (ConnectionManager.connect(miActividad)) {
-			miClase.execute(request);
-		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(miActividad);
-			builder.setTitle("Error de conexión");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+	public static void llamadaServicio(Activity miActividad, AsyncCall miClase,	String request) {
+		try{
+			if (ConnectionManager.connect(miActividad)) {
+				miClase.execute(request);
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(miActividad);
+				builder.setTitle("Error de conexión");
+				builder.setMessage(ConstanteServicio.MENSAJE_PROBLEMA_CONEXION);
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			}
+		}catch(Exception e){			
+			System.out.println("SE CAYOOOOOOOOOOOOOOOO");
+			mostrarErrorComunicacion(e.toString(),miActividad);
 		}
+	}
+	
+	public static void mostrarErrorComunicacion(String excepcion,Activity miActividad) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(miActividad);
+		builder.setTitle("Error de servicio");
+		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
+				+ excepcion.toString());
+		builder.setCancelable(false);
+		builder.setPositiveButton("Ok", null);
+		builder.create();
+		builder.show();
 	}
 }

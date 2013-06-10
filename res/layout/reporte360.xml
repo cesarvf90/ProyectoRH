@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+ 
+ <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="left"
+        android:text="Reporte 360"
+        android:textSize="30sp"
+		android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp"
+		android:id="@+id/reporte3601titulo"/>
+   
+ 
+ 	<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="35dp"
+    android:background="@color/verde_menubar"
+    android:layout_marginTop="60dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp" 
+    >
+ 
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        android:text="Opciones"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp" />
+    
+ </RelativeLayout>
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="120dp"
+        android:textSize="20sp"
+        android:text="Seleccione área" />
+    
+    <Spinner
+        android:id="@+id/reporte360spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="160dp" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="220dp"
+        android:textSize="20sp"
+        android:text="Seleccione opciones" />
+    
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:layout_marginTop="260dp"
+    android:layout_marginLeft="30dp" >
+    
+        <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:textOn="Requerido"
+        android:textOff="Requerido"
+        android:checked="false"/>
+    
+     <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:textOn="360"
+        android:textOff="360"
+        android:checked="false" />
+     
+     <ToggleButton
+        android:id="@+id/toggleButton3"
+        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:textOn="Ponderado"
+        android:textOff="Ponderado"
+        android:checked="false" />
+     
+     </LinearLayout>
+     
+    <Button
+        android:id="@+id/reporte360btnConsultar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consultar"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="320dp"  />
+    
+
+</RelativeLayout>
