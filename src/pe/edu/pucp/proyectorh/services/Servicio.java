@@ -81,6 +81,7 @@ public class Servicio {
 
 	public final static String ActualizaObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/UpdateObjetivoEmpresa";
 
+	public final static String EliminarObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/Destroy";
 	
 	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/GetAllMisObjetivosSuperiores";
 
