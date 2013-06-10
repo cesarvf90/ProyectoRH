@@ -7,6 +7,7 @@ import pe.edu.pucp.proyectorh.model.OfertaLaboral;
 import pe.edu.pucp.proyectorh.model.Postulante;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,20 +46,19 @@ public class OfertasAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
-		Postulante child = getChild(
-				groupPosition, childPosition).get(0);
+		Postulante child = getChild(groupPosition, childPosition).get(0);
 
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(
-//					R.layout.expandablelistview_child, null);
 					R.layout.expandable_ofertas_child, null);
 		}
 
 		TextView childtxt = (TextView) convertView
 				.findViewById(R.id.TextViewChild01);
-
+		childtxt.setTypeface(Typeface.createFromAsset(context.getAssets(),
+				EstiloApp.FORMATO_LETRA_APP));
 		childtxt.setText(child.toString());
 
 		return convertView;
@@ -94,13 +94,13 @@ public class OfertasAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(
-			// R.layout.expandablelistview_group, null);
 					R.layout.expandable_ofertas_group, null);
 		}
 
 		TextView grouptxt = (TextView) convertView
 				.findViewById(R.id.TextViewGroup);
-
+		grouptxt.setTypeface(Typeface.createFromAsset(context.getAssets(),
+				EstiloApp.FORMATO_LETRA_APP));
 		grouptxt.setText(group.toString());
 
 		return convertView;

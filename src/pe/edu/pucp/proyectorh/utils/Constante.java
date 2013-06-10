@@ -51,10 +51,9 @@ public class Constante {
 	 */
 	public final static int PRINCIPAL = 0;
 	public final static int MI_INFORMACION = 1;
-	public final static int ADMINISTRACION = 2;
-	public final static int RECLUTAMIENTO = 3;
-	public final static int EVALUACION_360 = 4;
-	public final static int OBJETIVOS = 5;
-	public final static int LINEA_DE_CARRERA = 6;
-	public final static int REPORTES = 7;
+	public final static int RECLUTAMIENTO = 2;
+	public final static int EVALUACION_360 = 3;
+	public final static int OBJETIVOS = 4;
+	public final static int LINEA_DE_CARRERA = 5;
+	public final static int REPORTES = 6;
 }

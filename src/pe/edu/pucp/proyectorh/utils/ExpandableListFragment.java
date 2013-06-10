@@ -3,6 +3,7 @@ package pe.edu.pucp.proyectorh.utils;
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -108,6 +109,10 @@ public class ExpandableListFragment extends Fragment implements
 		lframe.setId(INTERNAL_LIST_CONTAINER_ID);
 
 		TextView tv = new TextView(getActivity());
+		/**/
+		((TextView) tv).setTypeface(Typeface.createFromAsset(
+				context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+		/**/
 		tv.setId(INTERNAL_EMPTY_ID);
 		tv.setGravity(Gravity.CENTER);
 		lframe.addView(tv, new FrameLayout.LayoutParams(
@@ -131,7 +136,26 @@ public class ExpandableListFragment extends Fragment implements
 				ViewGroup.LayoutParams.FILL_PARENT,
 				ViewGroup.LayoutParams.FILL_PARENT));
 
+		/**/
+		customizarEstilos(getActivity(), root);
+		/**/
 		return root;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	/**
@@ -352,8 +376,10 @@ public class ExpandableListFragment extends Fragment implements
 					.findViewById(INTERNAL_PROGRESS_CONTAINER_ID);
 			mExpandableListContainer = root
 					.findViewById(INTERNAL_LIST_CONTAINER_ID);
-//			View rawExpandableListView = root.findViewById(android.R.id.list);
-			View rawExpandableListView = root.findViewById(R.id.expandable_view);
+			// View rawExpandableListView =
+			// root.findViewById(android.R.id.list);
+			View rawExpandableListView = root
+					.findViewById(R.id.expandable_view);
 			if (!(rawExpandableListView instanceof ExpandableListView)) {
 				if (rawExpandableListView == null) {
 					throw new RuntimeException(
@@ -451,8 +477,8 @@ public class ExpandableListFragment extends Fragment implements
 	public void onContentChanged() {
 		// super.onContentChanged();
 		View emptyView = getView().findViewById(android.R.id.empty);
-//		mExpandableList = (ExpandableListView) getView().findViewById(
-//				android.R.id.list);
+		// mExpandableList = (ExpandableListView) getView().findViewById(
+		// android.R.id.list);
 		mExpandableList = (ExpandableListView) getView().findViewById(
 				R.id.expandable_view);
 		if (mExpandableList == null) {
