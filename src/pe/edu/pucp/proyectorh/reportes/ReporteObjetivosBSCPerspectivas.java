@@ -32,6 +32,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	int idPeriodo;
 	GridView gridView;
 	int modo;
+	String nomArch;
 	 
 	static final String[] perspectivas = new String[] { 
 			"Financiera", "Formación", "Cliente", "Interno"};
@@ -57,7 +58,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				container, false);
 
 		
-		String titulo = getArguments().getString("titulo") + " - Objetivos de la Empresa";
+		String titulo = getArguments().getString("titulo");
 		idPeriodo = getArguments().getInt("PeriodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
 		textView.setText(titulo);
@@ -65,6 +66,8 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		textView.setTypeface(font);
 		
 		modo = getArguments().getInt("modo");
+		nomArch = getArguments().getString("archivo");
+		if (modo==0) System.out.println("archivo: " + nomArch);
 		
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
@@ -79,7 +82,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		
 		 if(modo==0){
 			  //MODO OFFLINE
-			  ArrayList<ObjetivoDTO> objetivos = PersistentHandler.getObjFromFile(getActivity(), "reporteRH.txt");
+			  ArrayList<ObjetivoDTO> objetivos = PersistentHandler.getObjFromFile(getActivity(), nomArch);
 			  ArrayList<ObjetivoDTO> objetivosEmpresa = new ArrayList<ObjetivoDTO>();
 			  
 			  for (int i=0;i<objetivos.size();i++){
@@ -115,12 +118,13 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 					      
 						  Bundle b = new Bundle();
 						  b.putInt("nivel",0);
-						  b.putString("objetivopadre", "Perspectiva " + ((TextView) v.findViewById(R.id.reportebscPerspectivalabel)).getText());
+						  b.putString("objetivopadre", "Perspectiva " + ((TextView) v.findViewById(R.id.reportebscPerspectivalabel)).getText()  + " - Objetivos de la Empresa");
 						  
 						  b.putInt("idPeriodo", idPeriodo);
 						  b.putInt("idPerspectiva", (position +1));
 						  b.putInt("idPadre",0);
 						  b.putInt("modo", modo);
+						  b.putString("archivo", nomArch);
 						  
 						  fragment.setArguments(b);
 						  

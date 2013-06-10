@@ -43,6 +43,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 	int idPeriodo;
 	
 	int modo;
+	String nomArch;
 	
 	public ReporteObjetivosBSCObjetivos(){
 		
@@ -68,11 +69,13 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		idPersp = getArguments().getInt("idPerspectiva");
 		idPadre = getArguments().getInt("idPadre");
 		modo = getArguments().getInt("modo");
+		nomArch = getArguments().getString("archivo");
 		
 		System.out.println("periodo: " + idPeriodo);
 		System.out.println("persp: " + idPersp);
 		System.out.println("padre: " + idPadre);
 		System.out.println("modo: " + modo);
+		if (modo==0) System.out.println("archivo: " + nomArch);
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridObjetivos);
 		//llamar a WS
@@ -114,10 +117,15 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			}
 			else{
 				//MODO OFFLINE
-				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), "reporteRH.txt");
+				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+				listaObjetivos = new ArrayList<ObjetivoDTO>();
 				
 				//obtener por bsc y idperiodo
-				listaObjetivos = objetivosArch;
+				for (int i=0;i<objetivosArch.size();i++){
+					if ((objetivosArch.get(i).getBSCId()==idPerspectiva) && (objetivosArch.get(i).getIdperiodo()==idPeriodo)){
+						listaObjetivos.add(objetivosArch.get(i));
+					}
+				}
 				setgridview();
 				
 			}
@@ -151,9 +159,15 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			}
 			else{
 				//MODO OFFLINE
-				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), "reporteRH.txt");
+				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+				listaObjetivos = new ArrayList<ObjetivoDTO>();
+				
 				//obtener por padre
-				listaObjetivos = objetivosArch;
+				for (int i=0;i<objetivosArch.size();i++){
+					if (objetivosArch.get(i).getIdpadre()==idobjPadre){
+						listaObjetivos.add(objetivosArch.get(i));
+					}
+				}
 				setgridview();
 				
 				
@@ -210,6 +224,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 					
 					b.putInt("idPadre",listaObjetivos.get(position).getIdObjetivo());
 					b.putInt("modo", modo);
+					b.putString("archivo", nomArch);
 					
 					
 					
@@ -253,6 +268,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 						b.putString("titulo", cadena);
 						b.putInt("idObjetivo",listaObjetivos.get(position).getIdObjetivo());
 						b.putInt("modo", modo);
+						b.putString("archivo", nomArch);
 						
 						ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
 						fragment.setArguments(b);
