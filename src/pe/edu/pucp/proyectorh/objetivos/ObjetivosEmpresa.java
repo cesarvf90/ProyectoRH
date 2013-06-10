@@ -144,18 +144,19 @@ public class ObjetivosEmpresa extends Fragment {
 		ObjetivosBSC obj;		
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("RecibidoModObj: " + result.toString());
+			System.out.println("RecibidoAddObj: " + result.toString());
 			JSONObject jsonObject;
 			try {
+				System.out.println("recibio ok");
 				jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					int idRecibido = Integer.parseInt(((JSONObject)jsonObject.get("ID")).toString());
+					int idRecibido = jsonObject.getInt("ID");
 					obj.ID = idRecibido;
 					objetivosLeidos.add(obj);
 				}
-			} catch (JSONException e) {
-				System.out.println("SE CAYO");
+			} catch (Exception e) {
+				System.out.println("SE CAYO ADD");
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
@@ -164,16 +165,18 @@ public class ObjetivosEmpresa extends Fragment {
 	public class UpdateObjetivo extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("RecibidoModObj: " + result.toString());
+			System.out.println("RecibidoUpdateObj: " + result.toString());
 			JSONObject jsonObject;
 			try {
-				jsonObject = new JSONObject(result);
+				System.out.println("recibio ok");
+				/*jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					String ID = ((JSONObject)jsonObject.get("ID")).toString();
+					System.out.println("-->correcto");
 				}
-			} catch (JSONException e) {
-				System.out.println("SE CAYO");
+				*/
+			} catch (Exception e) {
+				System.out.println("SE CAYO ACT");
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
@@ -439,9 +442,9 @@ public class ObjetivosEmpresa extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
+			actv = getActivity();
 			contexto = rootView.getContext();
 			rootView.findViewById(R.layout.objetivosbsc);
-			actv = getActivity();
 			Resources res = getResources();
 			
 			/*
