@@ -40,6 +40,7 @@ public class MenuFragment extends ExpandableListFragment {
 	private static final String IS_EVEN = "Is even";
 	private ExpandableListView elv;
 	View lastColored;
+	private View rootView;
 
 	public interface Callbacks {
 		public void onItemSelected(String id);
@@ -108,7 +109,6 @@ public class MenuFragment extends ExpandableListFragment {
 				childData, R.layout.custom_simple_expandable_list_item_2,
 				new String[] { NAME, IS_EVEN }, new int[] { R.id.text1,
 						R.id.text2 });
-		customizarEstilos(getActivity(), getView());
 		setListAdapter(mAdapter);
 	}
 
