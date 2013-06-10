@@ -362,15 +362,17 @@ public class EvaluacionPostulante extends Fragment {
 						funcion.setPuestoID(funcionObject.getString("PuestoID"));
 						funciones.add(funcion);
 					}
-					agregarFuncionesMock();
+					// agregarFuncionesMock();
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}

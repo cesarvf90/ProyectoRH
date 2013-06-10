@@ -22,12 +22,21 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
+    
+        <TextView
+        android:id="@+id/puntaje_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postulante_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/evaluacion_feedback_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/postulante_title"
+        android:layout_below="@+id/puntaje_title"
         android:layout_marginLeft="20dp"
         android:baselineAligned="false"
         android:orientation="vertical" >
@@ -51,7 +60,7 @@
             <EditText
                 android:id="@+id/editTextComentarios"
                 android:layout_width="0dip"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:ems="10"
@@ -82,7 +91,7 @@
             <EditText
                 android:id="@+id/editTextObservaciones"
                 android:layout_width="0dip"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:ems="10"

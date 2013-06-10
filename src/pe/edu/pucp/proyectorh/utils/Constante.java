@@ -42,6 +42,11 @@ public class Constante {
 	public final static String ADVERTENCIA_ELIMINACION_VARIOS = "¿Está seguro de que desea eliminar estos registros?";
 
 	/**
+	 * Nulo devuelto por el servidor en la trama Json
+	 */
+	public final static String NULL = "null";
+
+	/**
 	 * Indicadores de modulos
 	 */
 	public final static int PRINCIPAL = 0;
