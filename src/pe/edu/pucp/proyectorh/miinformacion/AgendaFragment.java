@@ -2,7 +2,6 @@ package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,9 +17,12 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
-import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -140,7 +142,24 @@ public class AgendaFragment extends Fragment {
 			}
 		});
 
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	public void refreshCalendar() {
@@ -169,6 +188,7 @@ public class AgendaFragment extends Fragment {
 			// se que genera una estructura a partir de los eventos recibidos en
 			// el servicio
 			for (Evento evento : eventos) {
+				// TODO cvasquez: validar las fechas que estan en el mes actual
 				String[] dateArr = evento.getFechaInicio().split("/");
 				items.add(dateArr[0]);
 			}
@@ -184,17 +204,23 @@ public class AgendaFragment extends Fragment {
 			String request = Servicio.ObtenerEventos + "?colaboradorID="
 					+ LoginActivity.getUsuario().getID() + "&fechaDesde="
 					+ fechaDesde + "&fechaHasta=" + fechaHasta;
-			new ObtencionEventos().execute(request);
+			new ObtencionEventos(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	public class ObtencionEventos extends AsyncCall {
+
+		public ObtencionEventos(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
 			try {
+				ArrayList<Colaborador> invitadosMock = generarInvitadosMock();
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (procesaRespuesta(respuesta)) {
@@ -221,89 +247,66 @@ public class AgendaFragment extends Fragment {
 								.getInt("TipoEventoID"));
 						evento.setTipoEvento(eventoObject
 								.getString("TipoEvento"));
-						JSONArray invitadosListObject = eventoObject
-								.getJSONArray("Invitados");
-
-						ArrayList<Colaborador> listaInvitados = new ArrayList<Colaborador>();
-						for (int j = 0; j < invitadosListObject.length(); ++j) {
-							JSONObject invitadoObject = invitadosListObject
-									.getJSONObject(j);
-							Colaborador invitado = new Colaborador();
-							invitado.setNombreCompleto(invitadoObject
-									.getString("NombreCompleto"));
-							invitado.setNombres(invitadoObject
-									.getString("Nombre"));
-							invitado.setApellidos(invitadoObject
-									.getString("ApellidoPaterno")
-									+ Constante.ESPACIO_VACIO
-									+ invitadoObject
-											.getString("ApellidoMaterno"));
-							invitado.setArea(invitadoObject.getString("Area"));
-							invitado.setPuesto(invitadoObject
-									.getString("Puesto"));
-							invitado.setTelefono(invitadoObject
-									.getString("Telefono"));
-							invitado.setCorreoElectronico(invitadoObject
-									.getString("CorreoElectronico"));
-							listaInvitados.add(invitado);
-						}
-						evento.setInvitados(listaInvitados);
+						// JSONArray invitadosListObject = eventoObject
+						// .getJSONArray("Invitados");
+						//
+						// listaInvitados = new ArrayList<Colaborador>();
+						// for (int j = 0; j < invitadosListObject.length();
+						// ++j) {
+						// JSONObject invitadoObject = invitadosListObject
+						// .getJSONObject(j);
+						// Colaborador invitado = new Colaborador();
+						// invitado.setNombreCompleto(invitadoObject
+						// .getString("NombreCompleto"));
+						// invitado.setNombres(invitadoObject
+						// .getString("Nombre"));
+						// invitado.setApellidos(invitadoObject
+						// .getString("ApellidoPaterno")
+						// + Constante.ESPACIO_VACIO
+						// + invitadoObject
+						// .getString("ApellidoMaterno"));
+						// invitado.setArea(invitadoObject.getString("Area"));
+						// invitado.setPuesto(invitadoObject
+						// .getString("Puesto"));
+						// invitado.setTelefono(invitadoObject
+						// .getString("Telefono"));
+						// invitado.setCorreoElectronico(invitadoObject
+						// .getString("CorreoElectronico"));
+						// listaInvitados.add(invitado);
+						// }
+						// evento.setInvitados(listaInvitados);
+						evento.setInvitados(invitadosMock);
 						eventos.add(evento);
 					}
-					agregarEventosMock();
+					// agregarEventosMock();
 					handler.post(calendarUpdater);
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
 		}
 	}
 
-	private void agregarEventosMock() {
-		Evento evento1 = new Evento();
-		evento1.setNombre("Evento 1");
-		evento1.setFechaInicio("05/06/2013");
-		evento1.setFechaFin("05/06/2013");
-		evento1.setDateInicio(new Date(2013, 5, 5, 15, 0));
-		evento1.setDateFin(new Date(2013, 5, 5, 18, 0));
-		evento1.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-
-		Evento evento2 = new Evento();
-		evento2.setNombre("Evento 2");
-		evento2.setFechaInicio("04/06/2013");
-		evento2.setFechaFin("04/06/2013");
-		evento2.setDateInicio(new Date(2013, 5, 4, 15, 0));
-		evento2.setDateFin(new Date(2013, 5, 4, 18, 0));
-		evento2.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-
-		Evento evento3 = new Evento();
-		evento3.setNombre("Evento 3");
-		evento3.setFechaInicio("08/06/2013");
-		evento3.setFechaFin("08/06/2013");
-		evento3.setDateInicio(new Date(2013, 5, 8, 15, 0));
-		evento3.setDateFin(new Date(2013, 5, 8, 18, 0));
-		evento3.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-
-		Evento evento4 = new Evento();
-		evento4.setNombre("Evento 4");
-		evento4.setFechaInicio("10/06/2013");
-		evento4.setFechaFin("10/06/2013");
-		evento4.setDateInicio(new Date(2013, 5, 10, 15, 0));
-		evento4.setDateFin(new Date(2013, 5, 10, 18, 0));
-		evento4.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-
-		eventos.add(evento1);
-		eventos.add(evento2);
-		eventos.add(evento3);
-		eventos.add(evento4);
+	private ArrayList<Colaborador> generarInvitadosMock() {
+		ArrayList<Colaborador> invitados = new ArrayList<Colaborador>();
+		invitados.add(new Colaborador("César", "Vásquez Flores", "Tecnología",
+				"Gerente"));
+		invitados.add(new Colaborador("Karina", "Sotil Retamoso",
+				"Contabilidad", "Analista"));
+		invitados.add(new Colaborador("Claudio", "Pizarro Guerrero", "RRHH",
+				"Evaluador"));
+		invitados.add(new Colaborador("Jessica", "Rojas Romero", "Operaciones",
+				"Gerente"));
+		invitados.add(new Colaborador("Joel", "Flores Copa", "Operaciones",
+				"Analista"));
+		return invitados;
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {

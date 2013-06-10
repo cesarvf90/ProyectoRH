@@ -19,9 +19,14 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -66,8 +71,24 @@ public class EvaluacionPostulante extends Fragment {
 		activarBotonAtras();
 		activarBotonFinalizar();
 		activarBotonSiguiente();
-		numPagina = 0;
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void activarBotonSiguiente() {
@@ -168,72 +189,110 @@ public class EvaluacionPostulante extends Fragment {
 	protected void refreshLayout() {
 		TextView pregunta1Text = (TextView) rootView
 				.findViewById(R.id.pregunta1);
-		pregunta1Text.setText(numPagina
-				* PREGUNTAS_X_PAGINA
-				+ 1
-				+ ") "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
-						.getDescripcion());
 		TextView pregunta2Text = (TextView) rootView
 				.findViewById(R.id.pregunta2);
-		pregunta2Text.setText(numPagina
-				* PREGUNTAS_X_PAGINA
-				+ 2
-				+ ") "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 1)
-						.getDescripcion());
 		TextView pregunta3Text = (TextView) rootView
 				.findViewById(R.id.pregunta3);
-		pregunta3Text.setText(numPagina
-				* PREGUNTAS_X_PAGINA
-				+ 3
-				+ ") "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 2)
-						.getDescripcion());
 		TextView pregunta4Text = (TextView) rootView
 				.findViewById(R.id.pregunta4);
-		pregunta4Text.setText(numPagina
-				* PREGUNTAS_X_PAGINA
-				+ 4
-				+ ") "
-				+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 3)
-						.getDescripcion());
-
 		RatingBar ratingPregunta1 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta1);
-		ratingPregunta1.setRating(respuestas.get(
-				numPagina * PREGUNTAS_X_PAGINA + 0).getPuntaje());
 		RatingBar ratingPregunta2 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta2);
-		ratingPregunta2.setRating(respuestas.get(
-				numPagina * PREGUNTAS_X_PAGINA + 1).getPuntaje());
 		RatingBar ratingPregunta3 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta3);
-		ratingPregunta3.setRating(respuestas.get(
-				numPagina * PREGUNTAS_X_PAGINA + 2).getPuntaje());
 		RatingBar ratingPregunta4 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta4);
-		ratingPregunta4.setRating(respuestas.get(
-				numPagina * PREGUNTAS_X_PAGINA + 3).getPuntaje());
+
+		if (numPagina * PREGUNTAS_X_PAGINA < funciones.size()) {
+			pregunta1Text.setText(numPagina
+					* PREGUNTAS_X_PAGINA
+					+ 1
+					+ ") "
+					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
+							.getDescripcion());
+
+			ratingPregunta1.setRating(respuestas.get(
+					numPagina * PREGUNTAS_X_PAGINA + 0).getPuntaje());
+			ratingPregunta1.setVisibility(RatingBar.VISIBLE);
+		}
+
+		if (numPagina * PREGUNTAS_X_PAGINA + 1 < funciones.size()) {
+			pregunta2Text.setText(numPagina
+					* PREGUNTAS_X_PAGINA
+					+ 2
+					+ ") "
+					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 1)
+							.getDescripcion());
+
+			ratingPregunta2.setRating(respuestas.get(
+					numPagina * PREGUNTAS_X_PAGINA + 1).getPuntaje());
+			ratingPregunta2.setVisibility(RatingBar.VISIBLE);
+		} else {
+			pregunta2Text.setText(Constante.CADENA_VACIA);
+			ratingPregunta2.setVisibility(RatingBar.INVISIBLE);
+			return;
+		}
+
+		if (numPagina * PREGUNTAS_X_PAGINA + 2 < funciones.size()) {
+			pregunta3Text.setText(numPagina
+					* PREGUNTAS_X_PAGINA
+					+ 3
+					+ ") "
+					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 2)
+							.getDescripcion());
+			ratingPregunta3.setRating(respuestas.get(
+					numPagina * PREGUNTAS_X_PAGINA + 2).getPuntaje());
+			ratingPregunta3.setVisibility(RatingBar.VISIBLE);
+		} else {
+			pregunta3Text.setText(Constante.CADENA_VACIA);
+			ratingPregunta3.setVisibility(RatingBar.INVISIBLE);
+			return;
+		}
+
+		if (numPagina * PREGUNTAS_X_PAGINA + 3 < funciones.size()) {
+			pregunta4Text.setText(numPagina
+					* PREGUNTAS_X_PAGINA
+					+ 4
+					+ ") "
+					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 3)
+							.getDescripcion());
+			ratingPregunta4.setRating(respuestas.get(
+					numPagina * PREGUNTAS_X_PAGINA + 3).getPuntaje());
+			ratingPregunta4.setVisibility(RatingBar.VISIBLE);
+		} else {
+			pregunta4Text.setText(Constante.CADENA_VACIA);
+			ratingPregunta4.setVisibility(RatingBar.INVISIBLE);
+		}
 	}
 
 	protected void guardarRespuestas() {
-		RatingBar ratingPregunta1 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta1);
-		RatingBar ratingPregunta2 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta2);
-		RatingBar ratingPregunta3 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta3);
-		RatingBar ratingPregunta4 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta4);
-		respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 0).setPuntaje(
-				(int) ratingPregunta1.getRating());
-		respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 1).setPuntaje(
-				(int) ratingPregunta2.getRating());
-		respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 2).setPuntaje(
-				(int) ratingPregunta3.getRating());
-		respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 3).setPuntaje(
-				(int) ratingPregunta4.getRating());
+		if (numPagina * PREGUNTAS_X_PAGINA < funciones.size()) {
+			RatingBar ratingPregunta1 = (RatingBar) rootView
+					.findViewById(R.id.ratingPregunta1);
+			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 0).setPuntaje(
+					(int) ratingPregunta1.getRating());
+		}
+
+		if (numPagina * PREGUNTAS_X_PAGINA + 1 < funciones.size()) {
+			RatingBar ratingPregunta2 = (RatingBar) rootView
+					.findViewById(R.id.ratingPregunta2);
+			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 1).setPuntaje(
+					(int) ratingPregunta2.getRating());
+		}
+
+		if (numPagina * PREGUNTAS_X_PAGINA + 2 < funciones.size()) {
+			RatingBar ratingPregunta3 = (RatingBar) rootView
+					.findViewById(R.id.ratingPregunta3);
+			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 2).setPuntaje(
+					(int) ratingPregunta3.getRating());
+		}
+		if (numPagina * PREGUNTAS_X_PAGINA + 3 < funciones.size()) {
+			RatingBar ratingPregunta4 = (RatingBar) rootView
+					.findViewById(R.id.ratingPregunta4);
+			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 3).setPuntaje(
+					(int) ratingPregunta4.getRating());
+		}
 	}
 
 	private void llamarServicioObtenerEvaluacion() {
@@ -248,18 +307,8 @@ public class EvaluacionPostulante extends Fragment {
 				.findViewById(R.id.postulante_title);
 		tituloPostulanteText.setText("Postulante: " + postulante.toString());
 
-		TextView pregunta1Text = (TextView) rootView
-				.findViewById(R.id.pregunta1);
-		pregunta1Text.setText("1) " + funciones.get(0).getDescripcion());
-		TextView pregunta2Text = (TextView) rootView
-				.findViewById(R.id.pregunta2);
-		pregunta2Text.setText("2) " + funciones.get(1).getDescripcion());
-		TextView pregunta3Text = (TextView) rootView
-				.findViewById(R.id.pregunta3);
-		pregunta3Text.setText("3) " + funciones.get(2).getDescripcion());
-		TextView pregunta4Text = (TextView) rootView
-				.findViewById(R.id.pregunta4);
-		pregunta4Text.setText("4) " + funciones.get(3).getDescripcion());
+		numPagina = 0;
+		refreshLayout();
 	}
 
 	private boolean seCompletoEvaluacion() {
@@ -279,13 +328,18 @@ public class EvaluacionPostulante extends Fragment {
 		if (ConnectionManager.connect(getActivity())) {
 			String request = Servicio.ObtenerEvaluacionTerceraFase
 					+ "?idOfertaLaboral=" + oferta.getID();
-			new ObtencionEvaluacion().execute(request);
+			new ObtencionEvaluacion(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	public class ObtencionEvaluacion extends AsyncCall {
+
+		public ObtencionEvaluacion(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
@@ -308,14 +362,17 @@ public class EvaluacionPostulante extends Fragment {
 						funcion.setPuestoID(funcionObject.getString("PuestoID"));
 						funciones.add(funcion);
 					}
-					agregarFuncionesMock();
+					// agregarFuncionesMock();
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
@@ -338,15 +395,15 @@ public class EvaluacionPostulante extends Fragment {
 				31,
 				"Desarrollar el informe de cobertura / rentabilidad de zonas por campaña.",
 				puestoID);
-		Funcion funcion5 = new Funcion(
-				32,
-				"Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
-				puestoID);
+		// Funcion funcion5 = new Funcion(
+		// 32,
+		// "Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
+		// puestoID);
 		funciones.add(funcion1);
 		funciones.add(funcion2);
 		funciones.add(funcion3);
 		funciones.add(funcion4);
-		funciones.add(funcion5);
+		// funciones.add(funcion5);
 	}
 
 	public void prepararRespuestasYEvaluacion() {
@@ -364,7 +421,9 @@ public class EvaluacionPostulante extends Fragment {
 		formatoFecha.applyPattern("dd/MM/yyyy");
 		evaluacion.setFechaInicio(formatoFecha.format(actual));
 
-		totalPaginas = funciones.size() / PREGUNTAS_X_PAGINA;
+		// totalPaginas = funciones.size() / PREGUNTAS_X_PAGINA;
+		totalPaginas = (funciones.size() + PREGUNTAS_X_PAGINA - 1)
+				/ PREGUNTAS_X_PAGINA;
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {

@@ -22,12 +22,21 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
+    
+        <TextView
+        android:id="@+id/puntaje_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postulante_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Title"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/evaluacion_feedback_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/postulante_title"
+        android:layout_below="@+id/puntaje_title"
         android:layout_marginLeft="20dp"
         android:baselineAligned="false"
         android:orientation="vertical" >
@@ -51,13 +60,12 @@
             <EditText
                 android:id="@+id/editTextComentarios"
                 android:layout_width="0dip"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:ems="10"
                 android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
-                android:text="@string/registrar_evaluacion"
                 android:textColor="@android:color/black" >
 
                 <requestFocus />
@@ -83,13 +91,12 @@
             <EditText
                 android:id="@+id/editTextObservaciones"
                 android:layout_width="0dip"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:ems="10"
                 android:gravity="top|center_vertical"
                 android:inputType="textMultiLine"
-                android:text="@string/registrar_evaluacion"
                 android:textColor="@android:color/black" >
 
                 <requestFocus />
@@ -103,6 +110,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/evaluacion_feedback_layout"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:text="@string/registrar_evaluacion" />
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/finalizarEvaluacion"
+        android:paddingTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/Medium"
+        android:textStyle="bold" />
 
 </RelativeLayout>

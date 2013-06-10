@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
@@ -40,9 +42,12 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	int periodoSelec;
 	String titulo;
 	
+	ToggleButton botonModo;
+	
 	List<PeriodoDTO> listaPeriodos;
 	List<String> lista ;
-	
+	int modo ;
+	String nomArch;
 	
 	public ReporteObjetivosBSCPrincipal(){
 	
@@ -73,6 +78,8 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.reportebscspinner);
 		lista = new ArrayList<String>();
 		obtenerlistaPeriodos();
+		
+		botonModo = (ToggleButton) rootView.findViewById(R.id.reportebsctoggleButton);
 
 		btnSubmit = (Button) rootView.findViewById(R.id.reportebscbtnConsultar);
 		
@@ -86,25 +93,132 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
 					Toast.LENGTH_SHORT).show();
 			*/    
-				 // obtenerlistaPeriodos();
+				  
+				  //obtener reporte y grabar
+				  
+				  //poner validacion de modo seleccionado
+				  if (botonModo.isChecked()){
+					  modo=1;
+				  }
+				  else{
+					  modo=0;
+					  nomArch = "reporteRH" + periodoSelec +  ".txt";
+				  }
+					 
+				  
 
-			      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-			      
-			      Bundle argumentos = new Bundle();
-			      argumentos.putInt("PeriodoSelec", periodoSelec);
-			      argumentos.putString("titulo", titulo);
-			      fragment.setArguments(argumentos);
-			      
-				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-				  ft.replace(R.id.opcion_detail_container, fragment);
-				  ft.addToBackStack(null);
-				  ft.commit();
+				  if(modo==0){
+					  //MODO OFFLINE
+				  
+					  if( PersistentHandler.buscarArchivo(getActivity(), nomArch)){
+						 System.out.println("archivo actualizado encontrado!");
+						 //PersistentHandler.getObjFromFile(getActivity(), "reporteRH.txt");
+						 
+						 ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+					      
+					      Bundle argumentos = new Bundle();
+					      argumentos.putInt("PeriodoSelec", periodoSelec);
+					      argumentos.putString("titulo", titulo);
+					      //MODO 0:OFFLINE , 1=ONLINE
+					      argumentos.putInt("modo", modo);
+					      argumentos.putString("archivo", nomArch);
+					      fragment.setArguments(argumentos);
+					      
+						  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						  ft.replace(R.id.opcion_detail_container, fragment);
+						  ft.addToBackStack(null);
+						  ft.commit();
+						 
+					  }
+					  else{
+						 System.out.println("no encontre archivo actualizado ...grabando nuevo archivo");
+						 obtenerReporteOffline(periodoSelec);
+	
+					  }
+				  
+				  }
+				  else{
+					  //MODO ONLINE
+				  
+
+				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+				      
+				      Bundle argumentos = new Bundle();
+				      argumentos.putInt("PeriodoSelec", periodoSelec);
+				      argumentos.putString("titulo", titulo);
+				      //MODO 0:OFFLINE , 1=ONLINE
+				      argumentos.putInt("modo", modo);
+				      fragment.setArguments(argumentos);
+				      
+					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+					  ft.replace(R.id.opcion_detail_container, fragment);
+					  ft.addToBackStack(null);
+					  ft.commit();
+				  }
 				  
 			  }
 		 
 			});
 
 		return rootView;
+	}
+	
+	protected void obtenerReporteOffline(int idPeriodo){
+		
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			//String request = ReporteServices.obtenerReporteTotal + "?idperiodo=" + idPeriodo;
+			
+			String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarObjetivosXBSC?BSCId=1&idperiodo=1";
+
+			new getReportePeriodo().execute(request);
+			
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexción");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+		
+	}
+	
+	public class getReportePeriodo extends AsyncCall{
+		
+		@Override
+		protected void onPreExecute(){
+			pbarra.setVisibility(View.VISIBLE);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			System.out.println("Recibido: " + result.toString());
+			
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), nomArch);
+			
+			ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+		      
+		      Bundle argumentos = new Bundle();
+		      argumentos.putInt("PeriodoSelec", periodoSelec);
+		      argumentos.putString("titulo", titulo);
+		      //MODO 0:OFFLINE , 1=ONLINE
+		      argumentos.putInt("modo", modo);
+		      argumentos.putString("archivo", nomArch);
+		      fragment.setArguments(argumentos);
+		      
+			  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+			  ft.replace(R.id.opcion_detail_container, fragment);
+			  ft.addToBackStack(null);
+			  ft.commit();
+			
+		}
+		
 	}
 	
 	

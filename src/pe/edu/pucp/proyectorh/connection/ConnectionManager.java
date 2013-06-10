@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.connection;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,6 +8,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 
 import org.json.JSONException;
@@ -20,9 +22,11 @@ import android.util.Log;
 
 public class ConnectionManager {
 
-	public static int READ_TIME_OUT = 10000;
+	// public static int READ_TIME_OUT = 10000;
+	public static int READ_TIME_OUT = 15000;
 	public static int CONNECT_TIME_OUT = 15000;
-	public static int LENGTH = 50000;
+	// public static int LENGTH = 50000;
+	public static int LENGTH = 100000;
 
 	public static NetworkInfo getConnection(Activity activity) {
 		ConnectivityManager connMgr = (ConnectivityManager) activity
@@ -36,31 +40,35 @@ public class ConnectionManager {
 	}
 
 	public static String downloadUrl(String myurl) {
-
-		InputStream is = null;
-
+		InputStream inputStream = null;
 		int len = LENGTH;
 
 		try {
+			//Algo asi deberia ser para codificarlo al formato web... pero no me sale
+			//myurl = URLEncoder.encode(myurl, "UTF-8");
+			
+			//se cambia espacios por %20
+			myurl=myurl.replace(" ","%20");
+			
 			URL url = new URL(myurl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(READ_TIME_OUT);
-			conn.setConnectTimeout(CONNECT_TIME_OUT);
+			// conn.setReadTimeout(READ_TIME_OUT);
+			// conn.setConnectTimeout(CONNECT_TIME_OUT);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true);
 
 			conn.connect();
 			int response = conn.getResponseCode();
 			Log.d("DEBUG", "The response is " + response);
-			is = conn.getInputStream();
-			String contentAsString = readIt(is, len);
-			return contentAsString;
+			inputStream = conn.getInputStream();
+			String contenido = convertirStreamToString(inputStream);
+			return contenido;
 		} catch (IOException ex) {
 			return "ERROR: No se pudo bajar la pagina web solicitada. La URL puede ser invalida";
 		} finally {
-			if (is != null) {
+			if (inputStream != null) {
 				try {
-					is.close();
+					inputStream.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -94,5 +102,19 @@ public class ConnectionManager {
 		Arrays.fill(buffer, ' ');
 		reader.read(buffer);
 		return new String(buffer).trim();
+	}
+
+	private static String convertirStreamToString(InputStream is) {
+		String line = "";
+		StringBuilder total = new StringBuilder();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		try {
+			while ((line = rd.readLine()) != null) {
+				total.append(line);
+			}
+		} catch (Exception e) {
+			System.out.println("Stream Exception " + e.toString());
+		}
+		return total.toString();
 	}
 }

@@ -5,6 +5,7 @@ import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
+import pe.edu.pucp.proyectorh.reportes.Reporte360;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +49,15 @@ public class DetalleActivity extends FragmentActivity {
 				}			
 				
 			}
+			if (Modulo.MODULO_ACTUAL == Constante.REPORTES){
+				if ("1".equals(getIntent()
+						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
+					Reporte360 fragment = new Reporte360();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+			}			
 			if (Modulo.MODULO_ACTUAL == Constante.REPORTES){
 				if ("3".equals(getIntent()
 						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {

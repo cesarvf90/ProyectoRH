@@ -36,7 +36,6 @@ public class DetalleFragment extends Fragment {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

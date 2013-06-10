@@ -20,6 +20,7 @@ import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -58,11 +59,11 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.menu_ofertas_segunda_fase,
 				container, false);
-		llamarServicioOfertasLaboralesSegundaFase();
+		llamarServicioOfertasLaboralessegundaFase();
 		return rootView;
 	}
 
-	private void llamarServicioOfertasLaboralesSegundaFase() {
+	private void llamarServicioOfertasLaboralessegundaFase() {
 		obtenerOfertasPendientes(LoginActivity.getUsuario());
 	}
 
@@ -70,14 +71,18 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 		if (ConnectionManager.connect(getActivity())) {
 			// TODO cvasquez: enviar id del usuario para filtrar sus ofertas
 			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Aprobado%20Jefe";
-			new ObtencionOfertas().execute(request);
+					+ "?descripcionFase=" + "2daFase";
+			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	public class ObtencionOfertas extends AsyncCall {
+		public ObtencionOfertas(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
@@ -143,6 +148,7 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 						ofertas.add(oferta);
 					}
 					mostrarOfertas();
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
@@ -255,12 +261,6 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 									ft.replace(R.id.opcion_detail_container,
 											fragment, "detailFragment")
 											.addToBackStack("tag").commit();
-									// getActivity()
-									// .getSupportFragmentManager()
-									// .beginTransaction()
-									// .replace(
-									// R.id.opcion_detail_container,
-									// fragment).commit();
 								}
 							});
 					builder.create();

@@ -1,10 +1,8 @@
 package pe.edu.pucp.proyectorh.miinformacion;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,9 +18,13 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,7 +55,24 @@ public class ContactosFragment extends Fragment {
 		rootView = inflater.inflate(R.layout.mi_info_contactos, container,
 				false);
 		llamarServicioContactos();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void llamarServicioContactos() {
@@ -70,42 +89,25 @@ public class ContactosFragment extends Fragment {
 			// construir llamada al servicio
 			String request = Servicio.MisContactosService + "?id="
 					+ usuario.getID();
-			new ObtencionContactos().execute(request);
+			new ObtencionContactos(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
 		}
 	}
 
 	protected void mostrarContactoSeleccionado(Colaborador colaborador) {
-		SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		formatoFecha.applyPattern("dd/MM/yyyy");
-
-		TextView tituloContactoText = (TextView) rootView
-				.findViewById(R.id.detalleContacto_title);
-		tituloContactoText.setText(colaborador.toString());
-		TextView nombreText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_nombre);
-		nombreText.setText(colaborador.getNombres());
-		TextView apellidosText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_apellidos);
-		apellidosText.setText(colaborador.getApellidos());
-		TextView areaText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_area);
-		areaText.setText(colaborador.getArea());
-		TextView puestoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_puesto);
-		puestoText.setText(colaborador.getPuesto());
-		TextView fechaNacimientoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_fecnacimiento);
-		fechaNacimientoText.setText(formatoFecha.format(colaborador
-				.getFechaNacimiento().getTime()));
-		TextView fechaIngresoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_fecingreso);
-		fechaIngresoText.setText(formatoFecha.format(colaborador
-				.getFechaIngreso().getTime()));
-		TextView correoElectronicoText = (TextView) rootView
-				.findViewById(R.id.miinfo_contactos_correo);
-		correoElectronicoText.setText(colaborador.getCorreoElectronico());
+		mostrarTexto(R.id.detalleContacto_title, colaborador.toString());
+		mostrarTexto(R.id.miinfo_contactos_nombre, colaborador.getNombres());
+		mostrarTexto(R.id.miinfo_contactos_apellidos,
+				colaborador.getApellidos());
+		mostrarTexto(R.id.miinfo_contactos_area, colaborador.getArea());
+		mostrarTexto(R.id.miinfo_contactos_puesto, colaborador.getPuesto());
+		mostrarTexto(R.id.miinfo_contactos_fecnacimiento,
+				colaborador.getFechaNacimiento());
+		mostrarTexto(R.id.miinfo_contactos_fecingreso,
+				colaborador.getFechaIngreso());
+		mostrarTexto(R.id.miinfo_contactos_correo,
+				colaborador.getCorreoElectronico());
 	}
 
 	private void llamarContacto(String telefono) {
@@ -137,10 +139,13 @@ public class ContactosFragment extends Fragment {
 	}
 
 	public class ObtencionContactos extends AsyncCall {
+		public ObtencionContactos(Activity activity) {
+			super(activity);
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
-			// deserializando el json parte por parte
 			try {
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
@@ -161,39 +166,33 @@ public class ContactosFragment extends Fragment {
 								+ Constante.ESPACIO_VACIO
 								+ contactoObject.getString("ApellidoMaterno"));
 						contacto.setArea(contactoObject.getString("Area"));
-						contacto.setAreaID(contactoObject.getString("AreaID"));
 						contacto.setPuesto(contactoObject.getString("Puesto"));
-						contacto.setPuestoID(contactoObject
-								.getString("PuestoID"));
 						contacto.setTelefono(contactoObject
 								.getString("Telefono"));
 						contacto.setDireccion(contactoObject
 								.getString("Direccion"));
 						contacto.setPaisID(contactoObject.getString("PaisID"));
-						// TODO cvasquez: parsear de string a date
-						// contacto.setFechaNacimiento(contactoObject.getString("FechaNacimiento"));
-						contacto.setFechaNacimiento(new Date(2012, 3, 7));
-						// contacto.setFechaIngreso(contactoObject
-						// .getString("FechaIngreso"));
-						contacto.setFechaIngreso(new Date(2012, 3, 7));
-						contacto.setTipoDocumentoID(contactoObject
-								.getString("TipoDocumentoID"));
+						contacto.setFechaNacimiento(contactoObject
+								.getString("FechaNacimiento"));
+						contacto.setFechaIngreso(contactoObject
+								.getString("FechaIngreso"));
 						contacto.setCentroEstudios(contactoObject
 								.getString("CentroEstudios"));
 						contacto.setNumeroDocumento(contactoObject
 								.getString("NumeroDocumento"));
 						contacto.setCorreoElectronico(contactoObject
 								.getString("CorreoElectronico"));
-
 						contactos.add(contacto);
 					}
-
 					mostrarContactos();
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
@@ -257,6 +256,16 @@ public class ContactosFragment extends Fragment {
 					// TODO cvasquez: implementar llamada o envio de correo
 					// onItemLongClick
 				});
+	}
+
+	private void mostrarTexto(int idTextView, String texto) {
+		TextView textView = (TextView) rootView.findViewById(idTextView);
+		if ((texto != null) && (!Constante.CADENA_VACIA.equals(texto))
+				&& (!Constante.NULL.equals(texto))) {
+			textView.setText(texto);
+		} else {
+			textView.setText(Constante.ESPACIO_VACIO);
+		}
 	}
 
 }

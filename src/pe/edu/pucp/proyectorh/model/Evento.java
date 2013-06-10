@@ -19,6 +19,9 @@ public class Evento {
 	private Date dateInicio;
 	private Date dateFin;
 	private String lugar;
+	public final static String EVENTO_EMPRESA = "Evento Empresa";
+	public final static String EVENTO_PERSONAL = "Evento Personal";
+	public final static String EVENTO_ESPECIAL = "Evento Fechas Especiales";
 
 	public int getID() {
 		return ID;

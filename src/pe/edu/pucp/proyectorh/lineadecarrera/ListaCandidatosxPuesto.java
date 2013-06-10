@@ -37,7 +37,7 @@ public class ListaCandidatosxPuesto extends Fragment{
 	private Spinner spinnerRequisitos;
 	private Spinner spinnerCandidatos;
 	
-	List<OfertaLaboralMobilePostulanteDTO> listaConvC;
+	List<OfertaLaboralMobileJefeDTO> listaConvC;
 	List<String> listaNC;
 	//List<String> listaCand 
 	List<FuncionDTO> listaReqC;
@@ -73,6 +73,8 @@ public class ListaCandidatosxPuesto extends Fragment{
 		Sesion objetoSesion = new Sesion();
 		List<OfertaLaboralMobileJefeDTO> Convocatorias = objetoSesion.getConvocatorias();
 		
+		listaConvC = Convocatorias;
+		
 		String tituloconvc = getArguments().getString("titulo");
 		String descripc = getArguments().getString("desc");
 		//String usuario = getArguments().getString("IdUsuario");
@@ -92,7 +94,7 @@ public class ListaCandidatosxPuesto extends Fragment{
 		return rootView;
 	}
 	
-	protected void obtenerlistaRequisitos(){
+	/*protected void obtenerlistaRequisitos(){
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
@@ -108,9 +110,9 @@ public class ListaCandidatosxPuesto extends Fragment{
 				builder.create();
 				builder.show();
 			}
-		}
+		}*/
 	
-	public class getRequisitos extends AsyncCall {
+	/*public class getRequisitos extends AsyncCall {
 		
 		@Override
 		protected void onPostExecute(String result) {
@@ -136,6 +138,6 @@ public class ListaCandidatosxPuesto extends Fragment{
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinnerRequisitos.setAdapter(dataAdapter);
 		}
-	}
+	}*/
 	
 }
