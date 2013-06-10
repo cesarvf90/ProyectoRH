@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas.getObjetivos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
@@ -42,6 +44,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
 	List<PeriodoDTO> listaPeriodos;
 	List<String> lista ;
+	int modo ;
 	
 	
 	public ReporteObjetivosBSCPrincipal(){
@@ -86,25 +89,122 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
 					Toast.LENGTH_SHORT).show();
 			*/    
-				 // obtenerlistaPeriodos();
+				  
+				  //obtener reporte y grabar
+				  
+				  //poner validacion de modo seleccionado
+				  modo=1;
 
-			      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
-			      
-			      Bundle argumentos = new Bundle();
-			      argumentos.putInt("PeriodoSelec", periodoSelec);
-			      argumentos.putString("titulo", titulo);
-			      fragment.setArguments(argumentos);
-			      
-				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-				  ft.replace(R.id.opcion_detail_container, fragment);
-				  ft.addToBackStack(null);
-				  ft.commit();
+				  if(modo==0){
+					  //MODO OFFLINE
+				  
+					  if( PersistentHandler.buscarArchivo(getActivity(), "reporteRH.txt")){
+						 System.out.println("archivo actualizado encontrado!");
+						 //PersistentHandler.getObjFromFile(getActivity(), "reporteRH.txt");
+						 
+						 ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+					      
+					      Bundle argumentos = new Bundle();
+					      argumentos.putInt("PeriodoSelec", periodoSelec);
+					      argumentos.putString("titulo", titulo);
+					      //MODO 0:OFFLINE , 1=ONLINE
+					      argumentos.putInt("modo", modo);
+					      fragment.setArguments(argumentos);
+					      
+						  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						  ft.replace(R.id.opcion_detail_container, fragment);
+						  ft.addToBackStack(null);
+						  ft.commit();
+						 
+					  }
+					  else{
+						 System.out.println("no encontre archivo actualizado ...grabando nuevo archivo");
+						 obtenerReporteOffline(periodoSelec);
+	
+					  }
+				  
+				  }
+				  else{
+					  //MODO ONLINE
+				  
+
+				      ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+				      
+				      Bundle argumentos = new Bundle();
+				      argumentos.putInt("PeriodoSelec", periodoSelec);
+				      argumentos.putString("titulo", titulo);
+				      //MODO 0:OFFLINE , 1=ONLINE
+				      argumentos.putInt("modo", modo);
+				      fragment.setArguments(argumentos);
+				      
+					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+					  ft.replace(R.id.opcion_detail_container, fragment);
+					  ft.addToBackStack(null);
+					  ft.commit();
+				  }
 				  
 			  }
 		 
 			});
 
 		return rootView;
+	}
+	
+	protected void obtenerReporteOffline(int idPeriodo){
+		
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			//String request = ReporteServices.obtenerAvanceXBCS + "?idperiodo=" + idPeriodo;
+			
+			String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarObjetivosXBSC?BSCId=1&idperiodo=1";
+
+			new getReportePeriodo().execute(request);
+			
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexción");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+		
+	}
+	
+	public class getReportePeriodo extends AsyncCall{
+		
+		@Override
+		protected void onPreExecute(){
+			pbarra.setVisibility(View.VISIBLE);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			System.out.println("Recibido: " + result.toString());
+			
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+			PersistentHandler.agregarArchivoPersistente( currentDateTimeString + "\n" + result, getActivity(), "reporteRH.txt");
+			
+			ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
+		      
+		      Bundle argumentos = new Bundle();
+		      argumentos.putInt("PeriodoSelec", periodoSelec);
+		      argumentos.putString("titulo", titulo);
+		      //MODO 0:OFFLINE , 1=ONLINE
+		      argumentos.putInt("modo", modo);
+		      fragment.setArguments(argumentos);
+		      
+			  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+			  ft.replace(R.id.opcion_detail_container, fragment);
+			  ft.addToBackStack(null);
+			  ft.commit();
+			
+		}
+		
 	}
 	
 	

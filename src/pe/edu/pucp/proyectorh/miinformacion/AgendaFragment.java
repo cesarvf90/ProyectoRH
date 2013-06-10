@@ -2,7 +2,6 @@ package pe.edu.pucp.proyectorh.miinformacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +17,6 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
-import pe.edu.pucp.proyectorh.utils.Constante;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,7 +44,6 @@ public class AgendaFragment extends Fragment {
 	public ArrayList<String> items;
 	private ArrayList<Evento> eventos;
 	private View rootView;
-	private ArrayList<Colaborador> listaInvitados;
 
 	public AgendaFragment() {
 	}
@@ -286,60 +283,15 @@ public class AgendaFragment extends Fragment {
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
 		}
-	}
-
-	private void agregarEventosMock() {
-		Evento evento1 = new Evento();
-		evento1.setNombre("Evento 1");
-		evento1.setFechaInicio("05/06/2013");
-		evento1.setFechaFin("05/06/2013");
-		evento1.setDateInicio(new Date(2013, 5, 5, 15, 0));
-		evento1.setDateFin(new Date(2013, 5, 5, 18, 0));
-		evento1.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-		evento1.setInvitados(listaInvitados);
-
-		Evento evento2 = new Evento();
-		evento2.setNombre("Evento 2");
-		evento2.setFechaInicio("04/06/2013");
-		evento2.setFechaFin("04/06/2013");
-		evento2.setDateInicio(new Date(2013, 5, 4, 15, 0));
-		evento2.setDateFin(new Date(2013, 5, 4, 18, 0));
-		evento2.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-		evento2.setInvitados(listaInvitados);
-
-		Evento evento3 = new Evento();
-		evento3.setNombre("Evento 3");
-		evento3.setFechaInicio("08/06/2013");
-		evento3.setFechaFin("08/06/2013");
-		evento3.setDateInicio(new Date(2013, 5, 8, 15, 0));
-		evento3.setDateFin(new Date(2013, 5, 8, 18, 0));
-		evento3.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-		evento3.setInvitados(listaInvitados);
-
-		Evento evento4 = new Evento();
-		evento4.setNombre("Evento 4");
-		evento4.setFechaInicio("10/06/2013");
-		evento4.setFechaFin("10/06/2013");
-		evento4.setDateInicio(new Date(2013, 5, 10, 15, 0));
-		evento4.setDateFin(new Date(2013, 5, 10, 18, 0));
-		evento4.setCreador(new Colaborador("César", "Vásquez Flores",
-				"Tecnología", "Gerente"));
-		evento4.setInvitados(listaInvitados);
-
-		eventos.add(evento1);
-		eventos.add(evento2);
-		eventos.add(evento3);
-		eventos.add(evento4);
 	}
 
 	private ArrayList<Colaborador> generarInvitadosMock() {
