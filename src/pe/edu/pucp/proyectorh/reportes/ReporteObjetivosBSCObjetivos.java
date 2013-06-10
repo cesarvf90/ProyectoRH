@@ -72,6 +72,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		System.out.println("periodo: " + idPeriodo);
 		System.out.println("persp: " + idPersp);
 		System.out.println("padre: " + idPadre);
+		System.out.println("modo: " + modo);
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridObjetivos);
 		//llamar a WS
@@ -210,13 +211,30 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 					b.putInt("idPadre",listaObjetivos.get(position).getIdObjetivo());
 					b.putInt("modo", modo);
 					
-					ReporteObjetivosBSCPersonales fragment = new ReporteObjetivosBSCPersonales();
-					fragment.setArguments(b);
 					
-					FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-					ft.replace(R.id.opcion_detail_container, fragment);
-					ft.addToBackStack(null);
-					ft.commit();
+					
+					if(listaObjetivos.get(position).isEsIntermedio()){
+						ReporteObjetivosBSCPersonales fragment = new ReporteObjetivosBSCPersonales();
+						fragment.setArguments(b);
+						
+						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						ft.replace(R.id.opcion_detail_container, fragment);
+						ft.addToBackStack(null);
+						ft.commit();
+					}
+					else{
+						
+						ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
+						fragment.setArguments(b);
+						
+						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						ft.replace(R.id.opcion_detail_container, fragment);
+						ft.addToBackStack(null);
+						ft.commit();
+						
+					}
+					
+					
 					
 				}
 			   

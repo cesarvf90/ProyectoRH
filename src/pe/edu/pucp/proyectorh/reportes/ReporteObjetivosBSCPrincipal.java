@@ -13,7 +13,6 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPerspectivas.getObjetivos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
@@ -32,6 +31,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
@@ -41,6 +41,8 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
 	int periodoSelec;
 	String titulo;
+	
+	ToggleButton botonModo;
 	
 	List<PeriodoDTO> listaPeriodos;
 	List<String> lista ;
@@ -76,6 +78,8 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.reportebscspinner);
 		lista = new ArrayList<String>();
 		obtenerlistaPeriodos();
+		
+		botonModo = (ToggleButton) rootView.findViewById(R.id.reportebsctoggleButton);
 
 		btnSubmit = (Button) rootView.findViewById(R.id.reportebscbtnConsultar);
 		
@@ -93,7 +97,14 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				  //obtener reporte y grabar
 				  
 				  //poner validacion de modo seleccionado
-				  modo=1;
+				  if (botonModo.isChecked()){
+					  modo=1;
+				  }
+				  else{
+					  modo=0;
+				  }
+					 
+				  
 
 				  if(modo==0){
 					  //MODO OFFLINE

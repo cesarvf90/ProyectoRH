@@ -37,11 +37,12 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 	
 	int nivel;
 	String objpadre;
-	ArrayList<ObjetivoDTO> listaObjetivos;
+	ArrayList<PersonaXObjetivoDTO> listaObjetivosxPersona;
 	
 	int idPadre;
 	int idPersp;
 	int idPeriodo;
+	int modo;
 	
 	ExpandableListView expandObjetivos;
 	
@@ -68,10 +69,12 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 		idPeriodo = getArguments().getInt("idPeriodo");
 		idPersp = getArguments().getInt("idPerspectiva");
 		idPadre = getArguments().getInt("idPadre");
+		modo = getArguments().getInt("modo");
 		
 		System.out.println("periodo: " + idPeriodo);
 		System.out.println("persp: " + idPersp);
 		System.out.println("padre: " + idPadre);
+		System.out.println("modo: " + modo);
 
 		String titulo = getArguments().getString("objetivopadre");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscObjetivopadre2);
@@ -119,7 +122,7 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 			//conseguir por idPadre
 			if (ConnectionManager.connect(getActivity())) {
 				// construir llamada al servicio
-				String request = ReporteServices.obtenerObjetivosXPadre + "?PadreId=" + idobjPadre;
+				String request = ReporteServices.obtenerPersonasXObjetivo + "?idObjetivo=" + idobjPadre;
 
 
 				new getObjetivosPersonales().execute(request);
@@ -147,22 +150,25 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 			System.out.println("Recibido: " + result.toString());
 			
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			listaObjetivos = gson.fromJson(result,
-					new TypeToken<List<ObjetivoDTO>>(){}.getType());
+			listaObjetivosxPersona = gson.fromJson(result,
+					new TypeToken<List<PersonaXObjetivoDTO>>(){}.getType());
 			
 			System.out.println("pase gson :D");
 			
 			/*harcode!*/
 			
 			ArrayList<String> personas = new ArrayList<String>();
-			personas.add("andre");
-			personas.add("juan perez");
+			for (int i=0;i<listaObjetivosxPersona.size();i++){
+				
+				personas.add(listaObjetivosxPersona.get(i).getNombreColaborador());
+				
+			}
 			
-			ArrayList<ArrayList<ObjetivoDTO>> objetivos = new ArrayList<ArrayList<ObjetivoDTO>>();
+			ArrayList<List<ObjetivoDTO>> objetivos = new ArrayList<List<ObjetivoDTO>>();
 			
 			for (int i=0;i<personas.size();i++){
 				
-				objetivos.add(listaObjetivos);
+				objetivos.add(listaObjetivosxPersona.get(i).objetivos);
 			}
 
 			
@@ -179,13 +185,13 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 	
 	private ArrayList<String> personas;
-	private ArrayList<ArrayList<ObjetivoDTO>> objetivos;
+	private ArrayList<List<ObjetivoDTO>> objetivos;
 	private Context context;
-	ArrayList<ObjetivoDTO> objetivosPersonal;
+	List<ObjetivoDTO> objetivosPersonal;
 	
 	GridView gridView;
 	
-	public ObjetivoPersonalAdapter(Context contexto, ArrayList<String> personas, ArrayList<ArrayList<ObjetivoDTO>> objetivos) {
+	public ObjetivoPersonalAdapter(Context contexto, ArrayList<String> personas, ArrayList<List<ObjetivoDTO>> objetivos) {
 		this.context = contexto;
 		this.personas = personas;
 		this.objetivos = objetivos;
@@ -249,6 +255,7 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 						b.putString("objetivopadre", cadena);
 						
 						b.putInt("idPadre",objetivosPersonal.get(position).getIdObjetivo());
+						b.putInt("modo",modo);
 						
 						ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
 						fragment.setArguments(b);
@@ -286,7 +293,6 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(
-			// R.layout.expandablelistview_group, null);
 					R.layout.reportebscheaderpersona, null);
 		}
 
@@ -340,6 +346,51 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 	
 	
 
+	}
+
+	private class PersonaXObjetivoDTO
+	{
+	    private int avance;
+	   
+	    private String nombreColaborador;
+	
+	    private int idObjetivo;
+	
+	    private List<ObjetivoDTO> objetivos;
+
+		public int getAvance() {
+			return avance;
+		}
+
+		public void setAvance(int avance) {
+			this.avance = avance;
+		}
+
+		public String getNombreColaborador() {
+			return nombreColaborador;
+		}
+
+		public void setNombreColaborador(String nombreColaborador) {
+			this.nombreColaborador = nombreColaborador;
+		}
+
+		public int getIdObjetivo() {
+			return idObjetivo;
+		}
+
+		public void setIdObjetivo(int idObjetivo) {
+			this.idObjetivo = idObjetivo;
+		}
+
+		public List<ObjetivoDTO> getObjetivos() {
+			return objetivos;
+		}
+
+		public void setObjetivos(List<ObjetivoDTO> objetivos) {
+			this.objetivos = objetivos;
+		}
+	    
+	    
 	}
 
 	
