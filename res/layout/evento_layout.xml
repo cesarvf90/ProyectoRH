@@ -15,93 +15,103 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/layout_creador_evento"
+        android:id="@+id/layout_general_creador_evento"
         android:layout_width="500dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nombre_evento"
         android:layout_toRightOf="@+id/layout_evento"
         android:baselineAligned="false"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title_creador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1d943b"
+            android:paddingLeft="10px"
+            android:text="@string/creador_evento"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/Title" />
 
         <LinearLayout
-            android:id="@+id/titulos_creador_datos"
-            android:layout_width="wrap_content"
+            android:id="@+id/layout_creador_evento"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_below="@+id/nombre_evento"
+            android:layout_toRightOf="@+id/layout_evento"
             android:baselineAligned="false"
-            android:orientation="vertical"
-            android:paddingTop="10dp" >
+            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/title_creador"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#1d943b"
-                android:paddingLeft="10px"
-                android:text="@string/creador_evento"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/Title" />
-
-            <TextView
-                android:id="@+id/nombre_creador_title"
+            <LinearLayout
+                android:id="@+id/titulos_creador_datos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:text="@string/nombre_persona"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title" />
+                android:layout_weight="2"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                android:paddingTop="10dp" >
 
-            <TextView
-                android:id="@+id/area_creador_title"
+                <TextView
+                    android:id="@+id/nombre_creador_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:text="@string/nombre_persona"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
+
+                <TextView
+                    android:id="@+id/area_creador_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:text="@string/area_persona"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
+
+                <TextView
+                    android:id="@+id/puesto_creador_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:text="@string/puesto_persona"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/content_creador_datos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:text="@string/area_persona"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title" />
+                android:layout_weight="3"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                android:paddingTop="10dp" >
 
-            <TextView
-                android:id="@+id/puesto_creador_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:text="@string/puesto_persona"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/nombre_creador_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
 
-        <LinearLayout
-            android:id="@+id/content_creador_datos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:baselineAligned="false"
-            android:orientation="vertical"
-            android:paddingTop="10dp" >
+                <TextView
+                    android:id="@+id/area_creador_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
 
-            <TextView
-                android:id="@+id/nombre_creador_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title" />
-
-            <TextView
-                android:id="@+id/area_creador_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title" />
-
-            <TextView
-                android:id="@+id/puesto_creador_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/Title" />
+                <TextView
+                    android:id="@+id/puesto_creador_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/Title" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

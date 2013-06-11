@@ -89,9 +89,9 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
-			// TODO cvasquez: enviar id del usuario para filtrar sus ofertas
 			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Aprobado%20Jefe";
+					+ "?descripcionFase=" + "Aprobado%20Jefe" + "&"
+					+ "colaboradorID=" + LoginActivity.getUsuario().getID();
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
