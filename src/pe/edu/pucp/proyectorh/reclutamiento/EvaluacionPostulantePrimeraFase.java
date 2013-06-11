@@ -20,10 +20,13 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -37,7 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint({ "ValidFragment", "ValidFragment" })
-public class EvaluacionPostulanteSegundaFase extends Fragment {
+public class EvaluacionPostulantePrimeraFase extends Fragment {
 
 	private View rootView;
 	private Postulante postulante;
@@ -49,7 +52,7 @@ public class EvaluacionPostulanteSegundaFase extends Fragment {
 	private int totalPaginas;
 	private final int PREGUNTAS_X_PAGINA = 4;
 
-	public EvaluacionPostulanteSegundaFase(OfertaLaboral oferta, Postulante postulante) {
+	public EvaluacionPostulantePrimeraFase(OfertaLaboral oferta, Postulante postulante) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 	}
@@ -68,7 +71,24 @@ public class EvaluacionPostulanteSegundaFase extends Fragment {
 		activarBotonAtras();
 		activarBotonFinalizar();
 		activarBotonSiguiente();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void activarBotonSiguiente() {
@@ -306,7 +326,7 @@ public class EvaluacionPostulanteSegundaFase extends Fragment {
 
 	private void obtenerEvaluacionPostulante() {
 		if (ConnectionManager.connect(getActivity())) {
-			String request = Servicio.ObtenerEvaluacionSegundaFase
+			String request = Servicio.ObtenerEvaluacionPrimeraFase
 					+ "?idOfertaLaboral=" + oferta.getID();
 			new ObtencionEvaluacion(this.getActivity()).execute(request);
 		} else {
@@ -335,22 +355,24 @@ public class EvaluacionPostulanteSegundaFase extends Fragment {
 					for (int i = 0; i < competenciasListObject.length(); ++i) {
 						JSONObject funcionObject = competenciasListObject
 								.getJSONObject(i);
-						Funcion competencia = new Funcion();
-						competencia.setID(funcionObject.getInt("ID"));
-						competencia.setDescripcion(funcionObject
+						Funcion funcion = new Funcion();
+						funcion.setID(funcionObject.getInt("ID"));
+						funcion.setDescripcion(funcionObject
 								.getString("Nombre"));
-						competencia.setPuestoID(funcionObject.getString("PuestoID"));
-						competencias.add(competencia);
+						funcion.setPuestoID(funcionObject.getString("PuestoID"));
+						competencias.add(funcion);
 					}
-					agregarcompetenciasMock();
+					// agregarcompetenciasMock();
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
@@ -386,9 +408,9 @@ public class EvaluacionPostulanteSegundaFase extends Fragment {
 
 	public void prepararRespuestasYEvaluacion() {
 		respuestas = new ArrayList<Respuesta>();
-		for (Funcion competencia : competencias) {
+		for (Funcion funcion : competencias) {
 			Respuesta respuesta = new Respuesta();
-			respuesta.setFuncionID(competencia.getID());
+			respuesta.setFuncionID(funcion.getID());
 			respuesta.setPuntaje(0);
 			respuestas.add(respuesta);
 		}

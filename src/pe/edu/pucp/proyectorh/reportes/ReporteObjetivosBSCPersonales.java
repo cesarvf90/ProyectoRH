@@ -43,6 +43,7 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 	int idPersp;
 	int idPeriodo;
 	int modo;
+	String nomArch;
 	
 	ExpandableListView expandObjetivos;
 	
@@ -70,11 +71,13 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 		idPersp = getArguments().getInt("idPerspectiva");
 		idPadre = getArguments().getInt("idPadre");
 		modo = getArguments().getInt("modo");
+		nomArch = getArguments().getString("archivo");
 		
 		System.out.println("periodo: " + idPeriodo);
 		System.out.println("persp: " + idPersp);
 		System.out.println("padre: " + idPadre);
 		System.out.println("modo: " + modo);
+		if (modo==0) System.out.println("archivo: " + nomArch);
 
 		String titulo = getArguments().getString("objetivopadre");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscObjetivopadre2);
@@ -96,29 +99,8 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 	
 	public void cargarObjetivos (int idobjPadre, int idPeriodo, int idPerspectiva){
 		
-		if (idobjPadre == 0){
-			//NIVEL 0
-			
-			if (ConnectionManager.connect(getActivity())) {
-				// construir llamada al servicio
-				String request = ReporteServices.obtenerObjetivosXBCS + "?BSCId=" + idPerspectiva + "&idperiodo=" + idPeriodo;
-
-				new getObjetivosPersonales().execute(request);
-				
-			} else {
-				// Se muestra mensaje de error de conexion con el servicio
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle("Error de conexción");
-				builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
-				builder.create();
-				builder.show();
-			}
-			
-			
-		}
-		else {
+		if (modo==1){
+			//MODO ONLINE
 			//conseguir por idPadre
 			if (ConnectionManager.connect(getActivity())) {
 				// construir llamada al servicio
@@ -137,10 +119,48 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 				builder.create();
 				builder.show();
 			}
+		}
+		else{
+			//MODO OFFLINE
+			
+			ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+			ArrayList<List<ObjetivoDTO>> objetivos = new ArrayList<List<ObjetivoDTO>>();
+			ArrayList<String> personas = new ArrayList<String>();
+			
+			//obtener por padre
+			for (int i=0;i<objetivosArch.size();i++){
+				if (objetivosArch.get(i).getIdpadre()==idobjPadre){
+					
+					//este objetivo es el de personaxobjetivo, se muestran sus hijos
+					System.out.println(objetivosArch.get(i).getColaboradorNombre());
+					personas.add(objetivosArch.get(i).getColaboradorNombre());
+					
+					ArrayList<ObjetivoDTO> listaHijos = new ArrayList<ObjetivoDTO> (); 
+					
+					//obtener hijos
+					for (int j=0;j<objetivosArch.size();j++){
+						if (objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()){
+							listaHijos.add(objetivosArch.get(j));
+						}
+							
+					}
+					
+					objetivos.add(listaHijos);
+					
+				}
+			}
+			
+			ObjetivoPersonalAdapter adaptador = new ObjetivoPersonalAdapter(getActivity().getApplicationContext(), personas, objetivos);
+			expandObjetivos.setAdapter(adaptador);
+			
 			
 			
 			
 		}
+			
+			
+			
+		
 	}
 	
 	public class getObjetivosPersonales extends AsyncCall {
@@ -152,10 +172,6 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
 			listaObjetivosxPersona = gson.fromJson(result,
 					new TypeToken<List<PersonaXObjetivoDTO>>(){}.getType());
-			
-			System.out.println("pase gson :D");
-			
-			/*harcode!*/
 			
 			ArrayList<String> personas = new ArrayList<String>();
 			for (int i=0;i<listaObjetivosxPersona.size();i++){
@@ -171,8 +187,6 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 				objetivos.add(listaObjetivosxPersona.get(i).objetivos);
 			}
 
-			
-			/**/
 			ObjetivoPersonalAdapter adaptador = new ObjetivoPersonalAdapter(getActivity().getApplicationContext(), personas, objetivos);
 			expandObjetivos.setAdapter(adaptador);
 	
@@ -197,13 +211,6 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 		this.objetivos = objetivos;
 		System.out.println("entro a constructor");
 	}
-	
-	/*
-	@Override
-	public ArrayList<ObjetivoDTO> getChild(int groupPosition, int childPosition) {
-		return objetivos.get(groupPosition).get(childPosition);
-	}
-	*/
 	
 	
 	@Override
@@ -256,6 +263,7 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 						
 						b.putInt("idPadre",objetivosPersonal.get(position).getIdObjetivo());
 						b.putInt("modo",modo);
+						b.putString("archivo", nomArch);
 						
 						ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
 						fragment.setArguments(b);

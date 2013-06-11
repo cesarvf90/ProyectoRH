@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 
 import org.json.JSONException;
@@ -43,6 +44,12 @@ public class ConnectionManager {
 		int len = LENGTH;
 
 		try {
+			//Algo asi deberia ser para codificarlo al formato web... pero no me sale
+			//myurl = URLEncoder.encode(myurl, "UTF-8");
+			
+			//se cambia espacios por %20
+			myurl=myurl.replace(" ","%20");
+			
 			URL url = new URL(myurl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			// conn.setReadTimeout(READ_TIME_OUT);

@@ -192,8 +192,7 @@ public class AgendaFragment extends Fragment {
 		fechaActual = new Date();
 		String[] dateArr = dateFormat.format(fechaActual).split("/");
 		month.set(Integer.parseInt(dateArr[0]),
-				Integer.parseInt(dateArr[1]) - 1,
-				Integer.parseInt(dateArr[2]) - 1);
+				Integer.parseInt(dateArr[1]) - 1, Integer.parseInt(dateArr[2]));
 	}
 
 	public Runnable calendarUpdater = new Runnable() {

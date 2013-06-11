@@ -19,10 +19,13 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -36,7 +39,7 @@ import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 
-public class MenuOfertasLaboralesSegundaFase extends Fragment {
+public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 
 	private View rootView;
 	private ArrayList<OfertaLaboral> ofertas;
@@ -46,7 +49,7 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 	private int ofertaSeleccionadaPosicion = -1;
 	private int postulanteSeleccionadoPosicion = -1;
 
-	public MenuOfertasLaboralesSegundaFase() {
+	public MenuOfertasLaboralesPrimeraFase() {
 	}
 
 	@Override
@@ -57,21 +60,38 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.menu_ofertas_segunda_fase,
+		rootView = inflater.inflate(R.layout.menu_ofertas_primera_fase,
 				container, false);
-		llamarServicioOfertasLaboralessegundaFase();
+		llamarServicioOfertasLaboralesPrimeraFase();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
 	}
 
-	private void llamarServicioOfertasLaboralessegundaFase() {
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	private void llamarServicioOfertasLaboralesPrimeraFase() {
 		obtenerOfertasPendientes(LoginActivity.getUsuario());
 	}
 
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
-			// TODO cvasquez: enviar id del usuario para filtrar sus ofertas
+			
 			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "2daFase";
+					+ "?descripcionFase=" + "Aprobado%20RRHH";
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
@@ -151,9 +171,11 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
@@ -228,7 +250,7 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
 					builder.setTitle("Evaluar postulante");
-					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
+					builder.setMessage("¿Desea realizar la evaluación por competencias para este postulante?");
 					builder.setCancelable(false);
 					builder.setCancelable(false);
 					builder.setNegativeButton("Cancelar",
@@ -253,7 +275,7 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
-									EvaluacionPostulante fragment = new EvaluacionPostulante(
+									EvaluacionPostulantePrimeraFase fragment = new EvaluacionPostulantePrimeraFase(
 											oferta, postulante);
 									ft.setCustomAnimations(
 											android.R.anim.slide_in_left,
@@ -297,9 +319,6 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 	}
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
-		// SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		// formatoFecha.applyPattern("dd/MM/yyyy");
-
 		TextView tituloOfertaText = (TextView) rootView
 				.findViewById(R.id.detalleofertas_title);
 		tituloOfertaText.setText(oferta.toString());
@@ -314,8 +333,6 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 		solicitanteText.setText(oferta.getSolicitante());
 		TextView fechaSolicitudText = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_fechasolicitud);
-		// fechaSolicitudText.setText(formatoFecha.format(oferta
-		// .getFechaRequerimiento()));
 		fechaSolicitudText.setText(oferta.getFechaRequerimiento());
 		TextView faseActualText = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_faseactual);
@@ -326,8 +343,6 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 				.size()));
 		TextView fechaUltimaEntrevistaText = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_fecultentrevista);
-		// fechaUltimaEntrevistaText.setText(formatoFecha.format(oferta
-		// .getFechaUltimaEntrevista()));
 		fechaUltimaEntrevistaText.setText(oferta.getFechaUltimaEntrevista());
 	}
 
@@ -362,7 +377,7 @@ public class MenuOfertasLaboralesSegundaFase extends Fragment {
 			// Se muestra mensaje de servicio no disponible
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pueden obtener los ofertas laborales para evaluación. Intente nuevamente");
+			builder.setMessage("No se pueden obtener las ofertas laborales. Intente nuevamente");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();

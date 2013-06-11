@@ -184,8 +184,23 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				.findViewById(R.id.reclu_btn_Rechazar);
 
 		// System.out.println("solicitudes != NULL");
-		this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
-				android.R.layout.simple_list_item_1, puestosSolicitudes);
+		/*this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
+				android.R.layout.simple_list_item_1, puestosSolicitudes);*/
+		
+		this.solicitudesAdapter = new ArrayAdapter<String>(
+			    this.getActivity(), android.R.layout.simple_list_item_1,
+			    puestosSolicitudes) {
+			   @Override
+			   public View getView(int position, View convertView, ViewGroup parent) {
+			    TextView view = (TextView) super.getView(position, convertView,
+			      parent);
+			    ((TextView) view)
+			      .setTypeface(Typeface.createFromAsset(getActivity()
+			        .getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			    return view;
+			   }
+			  };
+		
 		listaSolicitudes.setAdapter(solicitudesAdapter);
 		listaSolicitudes
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {

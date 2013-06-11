@@ -29,10 +29,10 @@ public class Servicio {
 	public final static String MisContactosService = "http://dp2kendo.apphb.com/WSColaborador/getContactos";
 /*
 	/**
-	 * Servicio que devuelve las ofertas laborales en SEGUNDA fase cuya
+	 * Servicio que devuelve las ofertas laborales en PRIMERA fase cuya
 	 * evaluacion esta bajo la responsabilidad del usuario
 	 
-	public final static String OfertasLaboralesSegundaFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesSegundaFase";
+	public final static String OfertasLaboralesPrimeraFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesPrimeraFase";
 	*/
 	/**
 	 * Servicio que devuelve las ofertas laborales en TERCERA fase cuya
@@ -42,9 +42,9 @@ public class Servicio {
 	
 	/**
 	 * Servicio que retorna las preguntas de la evaluacion a rendir por el
-	 * postulante de SEGUNDA fase seleccionado
+	 * postulante de PRIMERA fase seleccionado
 	 */
-	public final static String ObtenerEvaluacionSegundaFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getCompetencias";
+	public final static String ObtenerEvaluacionPrimeraFase = "http://dp2kendo.apphb.com/WSOfertaLaboral/getCompetencias";
 
 	/**
 	 * Servicio que retorna las preguntas de la evaluacion a rendir por el
@@ -59,9 +59,9 @@ public class Servicio {
 
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
-	 * entrevista de SEGUNDAfase
+	 * entrevista de PRIMERA fase
 	 */
-	public final static String RegistrarRespuestasEvaluacionSegundaFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacionSegundaFase";
+	public final static String RegistrarRespuestasEvaluacionPrimeraFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacionPrimeraFase";
 	
 	/**
 	 * Servicio que registra las respuestas registradas por el evaluador de la
@@ -81,6 +81,7 @@ public class Servicio {
 
 	public final static String ActualizaObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/UpdateObjetivoEmpresa";
 
+	public final static String EliminarObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/Destroy";
 	
 	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/GetAllMisObjetivosSuperiores";
 
@@ -138,8 +139,7 @@ public class Servicio {
 	public static void mostrarErrorComunicacion(String excepcion,Activity miActividad) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(miActividad);
 		builder.setTitle("Error de servicio");
-		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE
-				+ excepcion.toString());
+		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE	+ excepcion.toString());
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();

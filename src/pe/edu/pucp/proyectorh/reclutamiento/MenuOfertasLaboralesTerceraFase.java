@@ -131,6 +131,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 								.getString("FechaRequerimiento"));
 						oferta.setNumeroPostulantes(ofertaObject
 								.getInt("NumeroPostulantes"));
+//						oferta.setEstado("Aprobado Jefe");
 						JSONArray postulantesListObject = ofertaObject
 								.getJSONArray("Postulantes");
 

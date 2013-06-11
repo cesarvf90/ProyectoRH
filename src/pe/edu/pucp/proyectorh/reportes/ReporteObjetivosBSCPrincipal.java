@@ -47,7 +47,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	List<PeriodoDTO> listaPeriodos;
 	List<String> lista ;
 	int modo ;
-	
+	String nomArch;
 	
 	public ReporteObjetivosBSCPrincipal(){
 	
@@ -102,6 +102,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				  }
 				  else{
 					  modo=0;
+					  nomArch = "reporteRH" + periodoSelec +  ".txt";
 				  }
 					 
 				  
@@ -109,7 +110,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 				  if(modo==0){
 					  //MODO OFFLINE
 				  
-					  if( PersistentHandler.buscarArchivo(getActivity(), "reporteRH.txt")){
+					  if( PersistentHandler.buscarArchivo(getActivity(), nomArch)){
 						 System.out.println("archivo actualizado encontrado!");
 						 //PersistentHandler.getObjFromFile(getActivity(), "reporteRH.txt");
 						 
@@ -120,6 +121,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 					      argumentos.putString("titulo", titulo);
 					      //MODO 0:OFFLINE , 1=ONLINE
 					      argumentos.putInt("modo", modo);
+					      argumentos.putString("archivo", nomArch);
 					      fragment.setArguments(argumentos);
 					      
 						  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
@@ -165,7 +167,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			//String request = ReporteServices.obtenerAvanceXBCS + "?idperiodo=" + idPeriodo;
+			//String request = ReporteServices.obtenerReporteTotal + "?idperiodo=" + idPeriodo;
 			
 			String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarObjetivosXBSC?BSCId=1&idperiodo=1";
 
@@ -198,7 +200,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			
 			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
-			PersistentHandler.agregarArchivoPersistente( currentDateTimeString + "\n" + result, getActivity(), "reporteRH.txt");
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), nomArch);
 			
 			ReporteObjetivosBSCPerspectivas fragment = new ReporteObjetivosBSCPerspectivas();
 		      
@@ -207,6 +209,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		      argumentos.putString("titulo", titulo);
 		      //MODO 0:OFFLINE , 1=ONLINE
 		      argumentos.putInt("modo", modo);
+		      argumentos.putString("archivo", nomArch);
 		      fragment.setArguments(argumentos);
 		      
 			  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
