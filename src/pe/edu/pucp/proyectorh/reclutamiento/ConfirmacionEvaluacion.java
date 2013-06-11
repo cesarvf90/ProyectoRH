@@ -18,14 +18,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Evaluacion;
 import pe.edu.pucp.proyectorh.model.Funcion;
 import pe.edu.pucp.proyectorh.model.OfertaLaboral;
 import pe.edu.pucp.proyectorh.model.Postulante;
 import pe.edu.pucp.proyectorh.model.Respuesta;
-import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
@@ -53,6 +51,7 @@ public class ConfirmacionEvaluacion extends Fragment {
 	private ArrayList<Funcion> funciones;
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
+	private int puntajeTotal = 0;
 
 	public ConfirmacionEvaluacion(OfertaLaboral oferta, Postulante postulante,
 			ArrayList<Funcion> funciones, ArrayList<Respuesta> respuestas,
@@ -132,8 +131,6 @@ public class ConfirmacionEvaluacion extends Fragment {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								// TODO cvasquez: coordinar servicio de enviar
-								// respuestas
 								new Thread(new Runnable() {
 									@Override
 									public void run() {
@@ -146,13 +143,11 @@ public class ConfirmacionEvaluacion extends Fragment {
 						});
 				builder.create();
 				builder.show();
-
 			}
 		});
 	}
 
 	private String obtenerPuntaje() {
-		int puntajeTotal = 0;
 		for (Respuesta respuesta : respuestas) {
 			puntajeTotal += respuesta.getPuntaje();
 		}
@@ -199,8 +194,22 @@ public class ConfirmacionEvaluacion extends Fragment {
 	}
 
 	private void manejarRespuesta(JSONObject resultadoRegistroJSON) {
-		// TODO cvasquez: manejar la repuestas del servidor con el exito al
-		// registrar la evaluacion
+		try {
+			String respuesta = resultadoRegistroJSON.getString("success");
+			if (procesaRespuesta(respuesta)) {
+				JSONObject datosObject = (JSONObject) resultadoRegistroJSON
+						.get("data");
+				JSONObject evaluacionObject = datosObject
+						.getJSONObject("evaluacion");
+				evaluacion.setID(evaluacionObject.getInt("ID"));
+				mostrarConfirmacion();
+			}
+		} catch (JSONException e) {
+			ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
+		} catch (NullPointerException ex) {
+			ErrorServicio
+					.mostrarErrorComunicacion(ex.toString(), getActivity());
+		}
 	}
 
 	private String convertStreamToString(InputStream is) {
@@ -227,18 +236,16 @@ public class ConfirmacionEvaluacion extends Fragment {
 		evaluacion.setObservaciones(observacionesText.getText().toString());
 		JSONObject registroObject = new JSONObject();
 		try {
-			registroObject.put("idPostulante", LoginActivity.getUsuario()
-					.getID());
-			registroObject.put("idOfertaLaboral", 2);
-			registroObject.put("descripcionFase", "Aprobado%20Jefe");
+			registroObject.put("idPostulante", postulante.getID());
+			registroObject.put("idOfertaLaboral", oferta.getID());
+			registroObject.put("descripcionFase", oferta.getEstado());
 			JSONObject evaluacionObject = new JSONObject();
 			evaluacionObject.put("FechaInicio", "02/06/2013 14:03:23");
 			evaluacionObject.put("FechaFin", "02/06/2013 14:33:54");
 			evaluacionObject.put("Comentarios", evaluacion.getComentarios());
 			evaluacionObject
 					.put("Observaciones", evaluacion.getObservaciones());
-			evaluacionObject.put("Puntaje", 20);
-			// evaluacionObject.put("ID", 0);
+			evaluacionObject.put("Puntaje", puntajeTotal);
 			registroObject.put("evaluacion", evaluacionObject);
 			JSONArray respuestasListObject = new JSONArray();
 			for (int i = 0; i < respuestas.size(); ++i) {
@@ -259,33 +266,12 @@ public class ConfirmacionEvaluacion extends Fragment {
 		return registroObject;
 	}
 
-	public class RegistroEvalaucion extends AsyncCall {
-		@Override
-		protected void onPostExecute(String result) {
-			manejarRespuestaRegistroEvaluacion(result);
-		}
-	}
-
 	private void mostrarConfirmacion() {
-		// TODO cvasquez: mostrar confirmacion de registro de evaluacion en la
-		// parte inferior de la vista
-	}
-
-	private void manejarRespuestaRegistroEvaluacion(String result) {
-		System.out.println("Recibido: " + result.toString());
-		try {
-			JSONObject jsonObject = new JSONObject(result);
-			String respuesta = jsonObject.getString("success");
-			if (procesaRespuesta(respuesta)) {
-				JSONObject datosObject = (JSONObject) jsonObject.get("data");
-				mostrarConfirmacion();
-			}
-		} catch (JSONException e) {
-			ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
-		} catch (NullPointerException ex) {
-			ErrorServicio
-					.mostrarErrorComunicacion(ex.toString(), getActivity());
-		}
+		TextView mensajeConfirmacionText = (TextView) rootView
+				.findViewById(R.id.mensaje_confirmacion_evaluacion);
+		mensajeConfirmacionText
+				.setText("Se registró la evaluación realizada. El código de la evaluación es "
+						+ evaluacion.getID());
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {

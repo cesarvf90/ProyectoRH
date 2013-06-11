@@ -1,7 +1,11 @@
 package pe.edu.pucp.proyectorh.miinformacion;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +48,7 @@ public class AgendaFragment extends Fragment {
 	public ArrayList<String> items;
 	private ArrayList<Evento> eventos;
 	private View rootView;
+	private Date fechaActual;
 
 	public AgendaFragment() {
 	}
@@ -115,14 +120,17 @@ public class AgendaFragment extends Fragment {
 				if (adapter.days[position] != "") {
 					int diaSelecccionado = Integer
 							.valueOf(adapter.days[position]);
-					// String fechaEscogida = diaSeleccionado + "/" + adapter.
-					Calendar diaEscogido = adapter.getSelectedDate();
-					SemanaFragment fragment = new SemanaFragment(eventos);
+					Calendar diaEscogido = new GregorianCalendar();
+					diaEscogido.set(month.get(Calendar.YEAR),
+							month.get(Calendar.MONTH) - 1, diaSelecccionado);
+					int primerDiaSemana = diaEscogido.getFirstDayOfWeek();
+					System.out.println(diaEscogido.toString());
+					SemanaFragment fragment = new SemanaFragment(eventos,
+							month, primerDiaSemana);
 					getActivity().getSupportFragmentManager()
 							.beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.addToBackStack("tag").commit();
-
 				}
 			}
 		});
@@ -132,7 +140,15 @@ public class AgendaFragment extends Fragment {
 			public boolean onItemLongClick(AdapterView<?> arg0, View view,
 					int position, long id) {
 				if (adapter.days[position] != "") {
-					SemanaFragment fragment = new SemanaFragment(eventos);
+					int diaSelecccionado = Integer
+							.valueOf(adapter.days[position]);
+					Calendar diaEscogido = new GregorianCalendar();
+					diaEscogido.set(month.get(Calendar.YEAR),
+							month.get(Calendar.MONTH) - 1, diaSelecccionado);
+					int primerDiaSemana = diaEscogido.getFirstDayOfWeek();
+					System.out.println(diaEscogido.toString());
+					SemanaFragment fragment = new SemanaFragment(eventos,
+							month, primerDiaSemana);
 					getActivity().getSupportFragmentManager()
 							.beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -167,30 +183,34 @@ public class AgendaFragment extends Fragment {
 
 		adapter.refreshDays();
 		adapter.notifyDataSetChanged();
-		handler.post(calendarUpdater); // generate some random calendar items
-
+		handler.post(calendarUpdater);
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
 	}
 
 	public void onNewIntent(Intent intent) {
-		intent.putExtra("date", "2013-5-2");
-		String date = intent.getStringExtra("date");
-		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
-		month.set(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]),
-				Integer.parseInt(dateArr[2]));
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		fechaActual = new Date();
+		String[] dateArr = dateFormat.format(fechaActual).split("/");
+		month.set(Integer.parseInt(dateArr[0]),
+				Integer.parseInt(dateArr[1]) - 1, Integer.parseInt(dateArr[2]));
 	}
 
 	public Runnable calendarUpdater = new Runnable() {
 
 		@Override
 		public void run() {
+			int mes = month.get(Calendar.MONTH);
+			int anio = month.get(Calendar.YEAR);
 			items.clear();
-			// se que genera una estructura a partir de los eventos recibidos en
-			// el servicio
+			// genera una estructura a partir de los eventos recibidos del
+			// servicio y que se deben mostrar en ese mes
 			for (Evento evento : eventos) {
-				// TODO cvasquez: validar las fechas que estan en el mes actual
+				// se valida las fechas que estan en el mes actual
 				String[] dateArr = evento.getFechaInicio().split("/");
-				items.add(dateArr[0]);
+				if (mes + 1 == Integer.valueOf(dateArr[1])
+						&& anio == Integer.valueOf(dateArr[2].substring(0, 4))) {
+					items.add(dateArr[0]);
+				}
 			}
 			adapter.setItems(items);
 			adapter.notifyDataSetChanged(); // refresca la vista
@@ -199,6 +219,9 @@ public class AgendaFragment extends Fragment {
 
 	private void llamarServicioEventos() {
 		if (ConnectionManager.connect(getActivity())) {
+			// TODO cvasquez obtener fecha inicial de un mes atras y final de un
+			// mes adelante
+			// String fechaDesde = fechaActual;
 			String fechaDesde = "28/05/2013%2000:00:00";
 			String fechaHasta = "30/07/2013%2023:59:59";
 			String request = Servicio.ObtenerEventos + "?colaboradorID="

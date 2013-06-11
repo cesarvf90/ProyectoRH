@@ -240,7 +240,17 @@ public class ContactosFragment extends Fragment {
 		});
 		final ArrayAdapter<Colaborador> colaboradoresAdapter = new ArrayAdapter<Colaborador>(
 				this.getActivity(), android.R.layout.simple_list_item_1,
-				contactos);
+				contactos) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				TextView view = (TextView) super.getView(position, convertView,
+						parent);
+				((TextView) view)
+						.setTypeface(Typeface.createFromAsset(getActivity()
+								.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+				return view;
+			}
+		};
 		listaContactos.setAdapter(colaboradoresAdapter);
 		listaContactos
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {

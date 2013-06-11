@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evento;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.content.Context;
@@ -30,9 +29,14 @@ public class SemanaFragment extends Fragment {
 	private static int UNA_HORA = 40;
 	private View rootView;
 	private ArrayList<Evento> eventos;
+	private Calendar month;
+	private int primerDiaSemana;
 
-	public SemanaFragment(ArrayList<Evento> eventos) {
+	public SemanaFragment(ArrayList<Evento> eventos, Calendar month,
+			int primerDiaSemana) {
 		this.eventos = eventos;
+		this.month = month;
+		this.primerDiaSemana = primerDiaSemana;
 	}
 
 	@Override
@@ -70,6 +74,11 @@ public class SemanaFragment extends Fragment {
 	 * muestra
 	 */
 	private void mostrarEventos() {
+		TextView semanaTitleText = (TextView) rootView
+				.findViewById(R.id.semana_title);
+		semanaTitleText.setText("Semana del " + primerDiaSemana + " de "
+				+ android.text.format.DateFormat.format("MMMM", month)
+				+ " del " + month.get(Calendar.YEAR));
 		for (final Evento evento : eventos) {
 			// Se evalua el dia para ubicarlo en un layout
 			RelativeLayout diaLayout = obtieneDiaLayout(evento);
@@ -200,20 +209,4 @@ public class SemanaFragment extends Fragment {
 		return diaLayout;
 	}
 
-	private Evento creaEventoMock() {
-		Evento evento = new Evento();
-		evento.setFechaInicio("04/06/2013");
-		evento.setFechaFin("05/06/2013");
-		evento.setNombre("Desayuno de la empresa");
-		evento.setTipoEvento("Evento de la empresa");
-		ArrayList<Colaborador> invitados = new ArrayList<Colaborador>();
-		invitados.add(new Colaborador("César", "Vásquez Flores", "Tecnología",
-				"Gerente"));
-		invitados.add(new Colaborador("Miguel", "Dávila Reyes", "Tecnología",
-				"Gerente"));
-		invitados.add(new Colaborador("Jessica", "Ramirez Amarillo",
-				"Tecnología", "Gerente"));
-		evento.setInvitados(invitados);
-		return evento;
-	}
 }

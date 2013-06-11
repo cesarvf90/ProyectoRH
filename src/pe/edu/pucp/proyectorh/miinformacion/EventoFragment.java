@@ -112,7 +112,17 @@ public class EventoFragment extends Fragment {
 		});
 		final ArrayAdapter<Colaborador> invitadosAdapter = new ArrayAdapter<Colaborador>(
 				this.getActivity(), android.R.layout.simple_list_item_1,
-				evento.getInvitados());
+				evento.getInvitados()) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				TextView view = (TextView) super.getView(position, convertView,
+						parent);
+				((TextView) view)
+						.setTypeface(Typeface.createFromAsset(getActivity()
+								.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+				return view;
+			}
+		};
 		listaInvitados.setAdapter(invitadosAdapter);
 		listaInvitados
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,8 +140,10 @@ public class EventoFragment extends Fragment {
 
 	private void pintarSegunTipoEvento(TextView nombreEventoText,
 			TextView creadorTituloText, TextView invitadosTituloText) {
-		int color = Color.CYAN;
-		if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
+		int color = 0;
+		if (Evento.EVENTO_EMPRESA.equals(evento.getTipoEvento())) {
+			color = Color.CYAN;
+		} else if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
 			color = Color.MAGENTA;
 		} else if (Evento.EVENTO_ESPECIAL.equals(evento.getTipoEvento())) {
 			color = Color.YELLOW;

@@ -112,13 +112,14 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
         android:text="@string/registrar_evaluacion" />
-
+
     <TextView
+        android:id="@+id/mensaje_confirmacion_evaluacion"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/finalizarEvaluacion"
-        android:paddingTop="60dp"
         android:layout_centerHorizontal="true"
+        android:paddingTop="60dp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/Medium"
         android:textStyle="bold" />

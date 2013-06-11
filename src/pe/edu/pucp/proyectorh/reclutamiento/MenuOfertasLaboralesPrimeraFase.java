@@ -91,7 +91,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 		if (ConnectionManager.connect(getActivity())) {
 			
 			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Evaluaciom%20Competencias";
+					+ "?descripcionFase=" + "Aprobado%20RRHH";
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());

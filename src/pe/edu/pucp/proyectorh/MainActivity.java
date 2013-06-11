@@ -15,7 +15,7 @@ import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
 import pe.edu.pucp.proyectorh.objetivos.RegistroAvance;
 import pe.edu.pucp.proyectorh.objetivos.VisualizacionAvance;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
-import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesSegundaFase;
+import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesPrimeraFase;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.reclutamiento.PostularOfertaLaboral;
 import pe.edu.pucp.proyectorh.reportes.*;
@@ -123,7 +123,7 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("4")) {// Evaluar Postulante 2da fase
-					MenuOfertasLaboralesSegundaFase fragment = new MenuOfertasLaboralesSegundaFase();
+					MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
