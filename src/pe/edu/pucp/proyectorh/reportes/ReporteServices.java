@@ -13,5 +13,7 @@ public class ReporteServices {
 	public final static String obtenerAvanceXPersona = "http://dp2kendo.apphb.com/Reportes/Reportes/ObjetivosxPersona";
 	
 	public final static String obtenerPuestos = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarPuestos";
+	
+	public final static String obtenerPersonasXObjetivo = "http://dp2kendo.apphb.com/Reportes/Reportes/PersonasXObjetivo";
 
 }

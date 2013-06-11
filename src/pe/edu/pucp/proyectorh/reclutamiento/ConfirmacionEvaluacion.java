@@ -102,6 +102,9 @@ public class ConfirmacionEvaluacion extends Fragment {
 		TextView tituloPostulanteText = (TextView) rootView
 				.findViewById(R.id.postulante_title);
 		tituloPostulanteText.setText("Postulante: " + postulante.toString());
+		TextView tituloPuntajeText = (TextView) rootView
+				.findViewById(R.id.puntaje_title);
+		tituloPuntajeText.setText("Puntaje: " + obtenerPuntaje());
 
 		Button botonRegistrarEvaluacion = (Button) rootView
 				.findViewById(R.id.finalizarEvaluacion);
@@ -148,6 +151,14 @@ public class ConfirmacionEvaluacion extends Fragment {
 		});
 	}
 
+	private String obtenerPuntaje() {
+		int puntajeTotal = 0;
+		for (Respuesta respuesta : respuestas) {
+			puntajeTotal += respuesta.getPuntaje();
+		}
+		return String.valueOf(puntajeTotal + "/" + 5 * respuestas.size());
+	}
+
 	private HttpResponse llamarServicioEnviarRespuestas() {
 		JSONObject registroEvaluacion = generaRegistroEvaluacionJSON();
 
@@ -175,19 +186,8 @@ public class ConfirmacionEvaluacion extends Fragment {
 					+ resultstring.toString());
 			inputstream.close();
 			resultstring = resultstring.substring(1, resultstring.length() - 1);
-			// recvdref.setText(resultstring + "\n\n"
-			// + httppostreq.toString().getBytes());
-			JSONObject recvdjson = new JSONObject(resultstring);
-			// recvdref.setText(recvdjson.toString(2));
-			// TODO cvasquez: manejar la repuestas del servidor con el exito al
-			// registrar la evaluacion
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Servicio no disponible");
-			builder.setMessage(recvdjson.toString());
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			JSONObject resultadoRegistroJSON = new JSONObject(resultstring);
+			manejarRespuesta(resultadoRegistroJSON);
 		} catch (ClientProtocolException e) {
 
 		} catch (IOException e) {
@@ -196,12 +196,11 @@ public class ConfirmacionEvaluacion extends Fragment {
 
 		}
 		return null;
-		// if (ConnectionManager.connect(getActivity())) {
-		// String request = Servicio.RegistrarRespuestasEvaluacionTerceraFase;
-		// new RegistroEvalaucion().execute(request);
-		// } else {
-		// ErrorServicio.mostrarErrorConexion(getActivity());
-		// }
+	}
+
+	private void manejarRespuesta(JSONObject resultadoRegistroJSON) {
+		// TODO cvasquez: manejar la repuestas del servidor con el exito al
+		// registrar la evaluacion
 	}
 
 	private String convertStreamToString(InputStream is) {

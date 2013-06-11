@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
@@ -37,6 +38,7 @@ public class ComparaCapacidadPersonal extends Fragment {
 	private WebView browser;
 	private Spinner spinnerRequisitos;
 	private Button btnDetalle;
+	private String usuario;
 	
 	
 	List<FuncionDTO> listaReq;
@@ -53,8 +55,8 @@ public class ComparaCapacidadPersonal extends Fragment {
 		//int[] avance = new int[] {100};
 		//int[] avance2 = new int[] {84}; 
 		
-		double match = getArguments().getDouble("match");
-		double[] arrmatch = new double[] {match};
+		int match = getArguments().getInt("match");
+		int[] arrmatch = new int[] {match};
 		
 	}
 	
@@ -112,8 +114,8 @@ public class ComparaCapacidadPersonal extends Fragment {
 		spinnerRequisitos = (Spinner) rootView.findViewById(R.id.comp_puesto_requi);
 		listaN = new ArrayList<String>();
 		
-		
-		obtenerlistaRequisitos();
+		usuario = LoginActivity.usuario.getUsername();
+		obtenerlistaRequisitos(usuario);
 		
 		
 		String tituloconv = getArguments().getString("titulo");
@@ -135,6 +137,10 @@ public class ComparaCapacidadPersonal extends Fragment {
 			  public void onClick(View v) {
 				
 				DetalleCompetencias fragment = new DetalleCompetencias();
+				
+				Bundle argumentos = new Bundle();
+				argumentos.putInt("ConvSelec", idConvocatoria);
+				fragment.setArguments(argumentos);
 				
 				FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
 				ft.replace(R.id.opcion_detail_container, fragment);
@@ -182,11 +188,11 @@ public class ComparaCapacidadPersonal extends Fragment {
 		return rootView;
 	}
 	
-	protected void obtenerlistaRequisitos(){
+	protected void obtenerlistaRequisitos(String usuario){
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			  String request = LineaCarServices.obtenerConvocatorias;
+			  String request = LineaCarServices.obtenerConvocatorias + "?userName=" + usuario;
 			  new getRequisitos().execute(request);
 			}else {
 				// Se muestra mensaje de error de conexion con el servicio

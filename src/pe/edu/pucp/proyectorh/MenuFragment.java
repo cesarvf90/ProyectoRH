@@ -40,6 +40,7 @@ public class MenuFragment extends ExpandableListFragment {
 	private static final String IS_EVEN = "Is even";
 	private ExpandableListView elv;
 	View lastColored;
+	private View rootView;
 
 	public interface Callbacks {
 		public void onItemSelected(String id);
@@ -68,7 +69,7 @@ public class MenuFragment extends ExpandableListFragment {
 			curGroupMap.put(NAME, modulo.getNombre());
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 6; i++) {
 			List<Map<String, String>> children = new ArrayList<Map<String, String>>();
 			List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 			switch (i + 1) {
@@ -76,21 +77,18 @@ public class MenuFragment extends ExpandableListFragment {
 				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
 				break;
 			case 2:
-				submodulos = Modulo.obtenerFuncionalidadesAdministracion();
-				break;
-			case 3:
 				submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
 				break;
-			case 4:
+			case 3:
 				submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
 				break;
-			case 5:
+			case 4:
 				submodulos = Modulo.obtenerFuncionalidadesObjetivos();
 				break;
-			case 6:
+			case 5:
 				submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
 				break;
-			case 7:
+			case 6:
 				submodulos = Modulo.obtenerFuncionalidadesReportes();
 				break;
 			}
@@ -111,7 +109,6 @@ public class MenuFragment extends ExpandableListFragment {
 				childData, R.layout.custom_simple_expandable_list_item_2,
 				new String[] { NAME, IS_EVEN }, new int[] { R.id.text1,
 						R.id.text2 });
-		customizarEstilos(getActivity(), getView());
 		setListAdapter(mAdapter);
 	}
 
@@ -173,21 +170,18 @@ public class MenuFragment extends ExpandableListFragment {
 			submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
 			break;
 		case 2:
-			submodulos = Modulo.obtenerFuncionalidadesAdministracion();
-			break;
-		case 3:
 			submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
 			break;
-		case 4:
+		case 3:
 			submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
 			break;
-		case 5:
+		case 4:
 			submodulos = Modulo.obtenerFuncionalidadesObjetivos();
 			break;
-		case 6:
+		case 5:
 			submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
 			break;
-		case 7:
+		case 6:
 			submodulos = Modulo.obtenerFuncionalidadesReportes();
 			break;
 		}

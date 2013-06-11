@@ -8,6 +8,82 @@ public class ObjetivoDTO {
 	private int avance;
 	private int hijos;
 	
+	private int peso;
+	private boolean esIntermedio;
+	private int idPuesto;
+	private int idpadre;
+	private int idperiodo;
+	private int BSCId;
+	 
+	private int ColaboradorID;
+	private String ColaboradorNombre;
+	
+      
+      
+	public int getColaboradorID() {
+		return ColaboradorID;
+	}
+
+	public void setColaboradorID(int colaboradorID) {
+		ColaboradorID = colaboradorID;
+	}
+
+	public String getColaboradorNombre() {
+		return ColaboradorNombre;
+	}
+
+	public void setColaboradorNombre(String colaboradorNombre) {
+		ColaboradorNombre = colaboradorNombre;
+	}
+
+	public int getPeso() {
+		return peso;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+
+	public boolean isEsIntermedio() {
+		return esIntermedio;
+	}
+
+	public void setEsIntermedio(boolean esIntermedio) {
+		this.esIntermedio = esIntermedio;
+	}
+
+	public int getIdPuesto() {
+		return idPuesto;
+	}
+
+	public void setIdPuesto(int idPuesto) {
+		this.idPuesto = idPuesto;
+	}
+
+	public int getIdpadre() {
+		return idpadre;
+	}
+
+	public void setIdpadre(int idpadre) {
+		this.idpadre = idpadre;
+	}
+
+	public int getIdperiodo() {
+		return idperiodo;
+	}
+
+	public void setIdperiodo(int idperiodo) {
+		this.idperiodo = idperiodo;
+	}
+
+	public int getBSCId() {
+		return BSCId;
+	}
+
+	public void setBSCId(int bSCId) {
+		BSCId = bSCId;
+	}
+
 	public int getHijos() {
 		return hijos;
 	}

@@ -42,6 +42,9 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 	int idPersp;
 	int idPeriodo;
 	
+	int modo;
+	String nomArch;
+	
 	public ReporteObjetivosBSCObjetivos(){
 		
 		
@@ -61,30 +64,22 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		View rootView = inflater.inflate(R.layout.reportebsc3objetivos,
 				container, false);
 		
-		/*b.putInt("idPeriodo", idPeriodo);
-				  b.putInt("idPerspectiva", 1);
-				  b.putInt("idPadre",0);*/
-		
 		//obtener argumentos
 		idPeriodo = getArguments().getInt("idPeriodo");
 		idPersp = getArguments().getInt("idPerspectiva");
 		idPadre = getArguments().getInt("idPadre");
+		modo = getArguments().getInt("modo");
+		nomArch = getArguments().getString("archivo");
 		
 		System.out.println("periodo: " + idPeriodo);
 		System.out.println("persp: " + idPersp);
 		System.out.println("padre: " + idPadre);
+		System.out.println("modo: " + modo);
+		if (modo==0) System.out.println("archivo: " + nomArch);
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridObjetivos);
 		//llamar a WS
 		cargarObjetivos(idPadre,idPeriodo,idPersp);
-		
-		//gridView.setAdapter(new ObjetivoAdapter(rootView.getContext(),objetivos));
-		
-		
-		//objpadre = getArguments().getString("objetivopadre");
-		//nivel = getArguments().getInt("nivel");
-		
-		//incrementar_nivel(nivel, objpadre);
 		
 		String titulo = getArguments().getString("objetivopadre");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscObjetivopadre);
@@ -100,27 +95,48 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 		
 		if (idobjPadre == 0){
 			//NIVEL 0
+			if (modo==1){
+				//ONLINE
 			
-			if (ConnectionManager.connect(getActivity())) {
-				// construir llamada al servicio
-				String request = ReporteServices.obtenerObjetivosXBCS + "?BSCId=" + idPerspectiva + "&idperiodo=" + idPeriodo;
-
-				new getObjetivos().execute(request);
+				if (ConnectionManager.connect(getActivity())) {
+					// construir llamada al servicio
+					String request = ReporteServices.obtenerObjetivosXBCS + "?BSCId=" + idPerspectiva + "&idperiodo=" + idPeriodo;
+	
+					new getObjetivos().execute(request);
+					
+				} else {
+					// Se muestra mensaje de error de conexion con el servicio
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setTitle("Error de conexción");
+					builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
+			}
+			else{
+				//MODO OFFLINE
+				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+				listaObjetivos = new ArrayList<ObjetivoDTO>();
 				
-			} else {
-				// Se muestra mensaje de error de conexion con el servicio
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle("Error de conexción");
-				builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
-				builder.create();
-				builder.show();
+				//obtener por bsc y idperiodo
+				for (int i=0;i<objetivosArch.size();i++){
+					if ((objetivosArch.get(i).getBSCId()==idPerspectiva) && (objetivosArch.get(i).getIdperiodo()==idPeriodo)){
+						listaObjetivos.add(objetivosArch.get(i));
+					}
+				}
+				setgridview();
+				
 			}
 			
 			
 		}
 		else {
+			
+			if (modo==1){
+				//MODO ONLINE
+			
 			//conseguir por idPadre
 			if (ConnectionManager.connect(getActivity())) {
 				// construir llamada al servicio
@@ -138,6 +154,23 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 				builder.setPositiveButton("Ok", null);
 				builder.create();
 				builder.show();
+			}
+			
+			}
+			else{
+				//MODO OFFLINE
+				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+				listaObjetivos = new ArrayList<ObjetivoDTO>();
+				
+				//obtener por padre
+				for (int i=0;i<objetivosArch.size();i++){
+					if (objetivosArch.get(i).getIdpadre()==idobjPadre){
+						listaObjetivos.add(objetivosArch.get(i));
+					}
+				}
+				setgridview();
+				
+				
 			}
 			
 			
@@ -159,31 +192,54 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			listaObjetivos = gson.fromJson(result,
 					new TypeToken<List<ObjetivoDTO>>(){}.getType());
 			
-			gridView.setAdapter(new ObjetivoAdapter(getActivity(),listaObjetivos));
+			setgridview();
 			
 			
-			gridView.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
+		}
+	
+	}
+	
+	public void setgridview(){
+		gridView.setAdapter(new ObjetivoAdapter(getActivity(),listaObjetivos));
+		
+		
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v,
+				int position, long id) {
+				
+				if (listaObjetivos.get(position).getHijos()==0) {
 					
-					if (listaObjetivos.get(position).getHijos()==0) {
+					Toast.makeText(v.getContext(),
+							"Objetivo de último nivel", Toast.LENGTH_SHORT).show();
+				}
+				else{
+					
+					
+					Bundle b = new Bundle();
+					b.putInt("nivel",nivel + 1);
+					//String cadena = "" + ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
+					String cadena = listaObjetivos.get(position).getDescripcion();
+					b.putString("objetivopadre", cadena);
+					
+					b.putInt("idPadre",listaObjetivos.get(position).getIdObjetivo());
+					b.putInt("modo", modo);
+					b.putString("archivo", nomArch);
+					
+					
+					
+					if(listaObjetivos.get(position).isEsIntermedio()){
+						ReporteObjetivosBSCPersonales fragment = new ReporteObjetivosBSCPersonales();
+						fragment.setArguments(b);
 						
-						Toast.makeText(v.getContext(),
-								"Objetivo de último nivel", Toast.LENGTH_SHORT).show();
+						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						ft.replace(R.id.opcion_detail_container, fragment);
+						ft.addToBackStack(null);
+						ft.commit();
 					}
 					else{
 						
-						
-						Bundle b = new Bundle();
-						b.putInt("nivel",nivel + 1);
-						//String cadena = "" + ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-						String cadena = listaObjetivos.get(position).getDescripcion();
-						b.putString("objetivopadre", cadena);
-						
-						b.putInt("idPadre",listaObjetivos.get(position).getIdObjetivo());
-						
-						ReporteObjetivosBSCPersonales fragment = new ReporteObjetivosBSCPersonales();
+						ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
 						fragment.setArguments(b);
 						
 						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
@@ -192,63 +248,43 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 						ft.commit();
 						
 					}
-				   
-				}
-			});
-			
-			gridView.setOnItemLongClickListener(new OnItemLongClickListener() {
-						
-						@Override
-						public boolean onItemLongClick(AdapterView<?> parent, View v,
-							int position, long id) {
-			
-							
-							Bundle b = new Bundle();
-							String cadena = "" +  ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-							b.putString("titulo", cadena);
-							b.putInt("idObjetivo",listaObjetivos.get(position).getIdObjetivo());
-							
-							ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
-							fragment.setArguments(b);
-							
-							FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-							ft.replace(R.id.opcion_detail_container, fragment);
-							ft.addToBackStack(null);
-							ft.commit();
-								
-							
-							return true;
-						   
-						}
-			
-					});
-			
-			
-		}
-	
-	}
-	
-	/*
-	
-	public void incrementar_nivel(int n, String padre){
-			
-			String cadena="";
-				
-			for (int j=0;j<10;j++){
-				
-				if (n == 0){
-					cadena = (j+1) + "";
-					objetivos[j] = objetivos[j] + cadena;
+					
+					
 					
 				}
-				else{
-					cadena = padre + "." + (j+1);
-					objetivos[j] = cadena;
-				}
-	
-				
+			   
 			}
-
+		});
+		
+		gridView.setOnItemLongClickListener(new OnItemLongClickListener() {
+					
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent, View v,
+						int position, long id) {
+		
+						
+						Bundle b = new Bundle();
+						String cadena = "" +  ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
+						b.putString("titulo", cadena);
+						b.putInt("idObjetivo",listaObjetivos.get(position).getIdObjetivo());
+						b.putInt("modo", modo);
+						b.putString("archivo", nomArch);
+						
+						ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
+						fragment.setArguments(b);
+						
+						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						ft.replace(R.id.opcion_detail_container, fragment);
+						ft.addToBackStack(null);
+						ft.commit();
+							
+						
+						return true;
+					   
+					}
+		
+				});
 	}
-	*/
+	
+	
 }

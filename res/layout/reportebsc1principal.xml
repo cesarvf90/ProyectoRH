@@ -12,9 +12,9 @@
         android:gravity="left"
         android:text="Reporte de Objetivos BSC"
         android:textSize="30sp"
-android:layout_marginLeft="30dp"
-android:layout_marginTop="10dp"
-android:id="@+id/reportebsc1titulo"/>
+		android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp"
+		android:id="@+id/reportebsc1titulo"/>
     
     
     <RelativeLayout 
@@ -38,29 +38,55 @@ android:id="@+id/reportebsc1titulo"/>
     
      </RelativeLayout>
      
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:textSize="20sp"
-        android:text="Seleccione periodo"
-        android:layout_marginTop="120dp"/>
+     <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginTop="120dp"
+	    android:layout_marginLeft="30dp" >
+     
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="Seleccione periodo"
+	        />
+	    
+	    <Spinner
+	        android:id="@+id/reportebscspinner"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="30dp"
+	        android:layout_marginRight="30dp"
+	         />
+     </LinearLayout>
+     
+      <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginTop="170dp"
+	    android:layout_marginLeft="30dp" >
     
-    <Spinner
-        android:id="@+id/reportebscspinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp" />
-    
-    <Button
+	     <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="Modo online" />
+	     
+	     <ToggleButton
+	         android:id="@+id/reportebsctoggleButton"
+	        android:layout_height="wrap_content"
+	        android:layout_width="120dp"
+	        android:layout_marginLeft="88dp"
+	        android:checked="true"/>
+     </LinearLayout>
+     
+     <Button
         android:id="@+id/reportebscbtnConsultar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Consultar"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="210dp" />
+        android:layout_marginTop="250dp" />
 
     <ProgressBar
         android:id="@+id/reportebscprogressbar"

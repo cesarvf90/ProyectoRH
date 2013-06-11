@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	
 	int idPeriodo;
 	GridView gridView;
+	int modo;
+	String nomArch;
 	 
 	static final String[] perspectivas = new String[] { 
 			"Financiera", "Formación", "Cliente", "Interno"};
@@ -55,12 +58,16 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				container, false);
 
 		
-		String titulo = getArguments().getString("titulo") + " - Objetivos de la Empresa";
+		String titulo = getArguments().getString("titulo");
 		idPeriodo = getArguments().getInt("PeriodoSelec");
 		TextView textView = (TextView)rootView.findViewById(R.id.reportebscPeriodoselec);
 		textView.setText(titulo);
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
 		textView.setTypeface(font);
+		
+		modo = getArguments().getInt("modo");
+		nomArch = getArguments().getString("archivo");
+		if (modo==0) System.out.println("archivo: " + nomArch);
 		
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
@@ -73,22 +80,87 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	
 	public void cargarAvances(int idperiodo){
 		
-		if (ConnectionManager.connect(getActivity())) {
-			// construir llamada al servicio
-			String request = ReporteServices.obtenerAvanceXBCS + "?idperiodo=" + idperiodo;
-
-			new getObjetivos().execute(request);
+		 if(modo==0){
+			  //MODO OFFLINE
+			  ArrayList<ObjetivoDTO> objetivos = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+			  ArrayList<ObjetivoDTO> objetivosEmpresa = new ArrayList<ObjetivoDTO>();
+			  
+			  for (int i=0;i<objetivos.size();i++){
+				 
+				  // if (objetivos.get(i).g)
+			  }
+			  
+			  int [] arregloAvance = new int[4];
+			  
+			  for (int i=0;i<4;i++){
+				  int promedio = 0;
+				  int suma = 0;
+				  for (int j=0;j<objetivosEmpresa.size();j++){
+					    
+				  }
+				  arregloAvance[0]=promedio;
+			  }
+				
+				gridView.setAdapter(new PerspectivaAdapter(getActivity(), perspectivas, arregloAvance));
+				
+				gridView.setOnItemClickListener(new OnItemClickListener() {
+					
+					
+					@Override
+					public void onItemClick (AdapterView<?> parent, View v,
+							int position, long id) {
+						/*
+					   Toast.makeText(v.getContext(),
+						((TextView) v.findViewById(R.id.reportebscPerspectivalabel)).getText(), Toast.LENGTH_SHORT).show();
+						*/
+						
+						  ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
+					      
+						  Bundle b = new Bundle();
+						  b.putInt("nivel",0);
+						  b.putString("objetivopadre", "Perspectiva " + ((TextView) v.findViewById(R.id.reportebscPerspectivalabel)).getText()  + " - Objetivos de la Empresa");
+						  
+						  b.putInt("idPeriodo", idPeriodo);
+						  b.putInt("idPerspectiva", (position +1));
+						  b.putInt("idPadre",0);
+						  b.putInt("modo", modo);
+						  b.putString("archivo", nomArch);
+						  
+						  fragment.setArguments(b);
+						  
+					      
+						  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						  ft.replace(R.id.opcion_detail_container, fragment);
+						  ft.addToBackStack(null);
+						  ft.commit();
+					}
+				});
+				
+		
 			
-		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Error de conexción");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-		}
+		 }
+		 else{
+			 //MODO ONLINE
+			 
+			 if (ConnectionManager.connect(getActivity())) {
+					// construir llamada al servicio
+					String request = ReporteServices.obtenerAvanceXBCS + "?idperiodo=" + idperiodo;
+		
+					new getObjetivos().execute(request);
+					
+				} else {
+					// Se muestra mensaje de error de conexion con el servicio
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setTitle("Error de conexión");
+					builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
+			 
+			 
+		 }
 		
 		
 		
@@ -134,6 +206,7 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 					  b.putInt("idPeriodo", idPeriodo);
 					  b.putInt("idPerspectiva", (position +1));
 					  b.putInt("idPadre",0);
+					  b.putInt("modo", modo);
 					  
 					  fragment.setArguments(b);
 					  

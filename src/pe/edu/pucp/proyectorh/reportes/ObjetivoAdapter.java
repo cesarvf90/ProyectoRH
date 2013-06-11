@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pe.edu.pucp.proyectorh.R;
 import android.content.Context;
@@ -21,6 +22,15 @@ public class ObjetivoAdapter extends BaseAdapter {
 	public ObjetivoAdapter(Context context, ArrayList<ObjetivoDTO> objetivos) {
 		this.context = context;
 		this.objetivos = objetivos;
+	}
+	
+	public ObjetivoAdapter(Context context, List<ObjetivoDTO> objetivos) {
+		this.context = context;
+		this.objetivos = new ArrayList<ObjetivoDTO>();
+		for(int i=0;i<objetivos.size();i++){
+			this.objetivos.add(objetivos.get(i));
+		}
+
 	}
  
 	@Override

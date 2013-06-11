@@ -49,12 +49,11 @@ public class Modulo {
 
 	static {
 		addItem(new ModuloItem("1", "Mi información"));
-		addItem(new ModuloItem("2", "Administración"));
-		addItem(new ModuloItem("3", "Reclutamiento"));
-		addItem(new ModuloItem("4", "Evaluación 360"));
-		addItem(new ModuloItem("5", "Objetivos"));
-		addItem(new ModuloItem("6", "Línea de carrera"));
-		addItem(new ModuloItem("7", "Reportes"));
+		addItem(new ModuloItem("2", "Reclutamiento"));
+		addItem(new ModuloItem("3", "Evaluación 360"));
+		addItem(new ModuloItem("4", "Objetivos"));
+		addItem(new ModuloItem("5", "Línea de carrera"));
+		addItem(new ModuloItem("6", "Reportes"));
 		MODULOS_MOSTRADOS_ACTUAL = MODULOS;
 	}
 
@@ -69,12 +68,6 @@ public class Modulo {
 		submodulos.add(new ModuloItem("2", "Mi equipo de trabajo"));
 		submodulos.add(new ModuloItem("3", "Mis contactos"));
 		submodulos.add(new ModuloItem("4", "Agenda"));
-		return submodulos;
-	}
-
-	public static List<ModuloItem> obtenerFuncionalidadesAdministracion() {
-		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Administrar empleados"));
 		return submodulos;
 	}
 
@@ -94,7 +87,9 @@ public class Modulo {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Mis evaluaciones"));
 		submodulos.add(new ModuloItem("2", "Rol evaluador"));
-		submodulos.add(new ModuloItem("3", "Mis subordinados"));
+		submodulos.add(new ModuloItem("3", "Rol de Evaluado"));
+//		submodulos.add(new ModuloItem("3", "Mis subordinados"));
+		submodulos.add(new ModuloItem("4", "Mis subordinados"));
 		return submodulos;
 	}
 

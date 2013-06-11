@@ -10,6 +10,7 @@ import pe.edu.pucp.proyectorh.utils.Constante;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -90,6 +91,13 @@ public class EventoFragment extends Fragment {
 				.findViewById(R.id.puesto_creador_content);
 		puestoCreadorText.setText(evento.getCreador().getPuesto());
 
+		TextView creadorTituloText = (TextView) rootView
+				.findViewById(R.id.title_creador);
+		TextView invitadosTituloText = (TextView) rootView
+				.findViewById(R.id.title_invitados);
+		pintarSegunTipoEvento(nombreEventoText, creadorTituloText,
+				invitadosTituloText);
+
 		ListView listaInvitados = (ListView) rootView
 				.findViewById(R.id.lista_invitados_evento);
 		Collections.sort(evento.getInvitados(), new Comparator<Colaborador>() {
@@ -118,6 +126,19 @@ public class EventoFragment extends Fragment {
 						invitadosAdapter.notifyDataSetChanged();
 					}
 				});
+	}
+
+	private void pintarSegunTipoEvento(TextView nombreEventoText,
+			TextView creadorTituloText, TextView invitadosTituloText) {
+		int color = Color.CYAN;
+		if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
+			color = Color.MAGENTA;
+		} else if (Evento.EVENTO_ESPECIAL.equals(evento.getTipoEvento())) {
+			color = Color.YELLOW;
+		}
+		nombreEventoText.setBackgroundColor(color);
+		creadorTituloText.setBackgroundColor(color);
+		invitadosTituloText.setBackgroundColor(color);
 	}
 
 	protected void mostrarInvitadoSeleccionado(Colaborador invitado) {
