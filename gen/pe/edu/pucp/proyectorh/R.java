@@ -382,7 +382,7 @@ public final class R {
         public static final int fragment_opcion_detail=0x7f03001a;
         public static final int layout_vacio_para_errores=0x7f03001b;
         public static final int listar_objetivos=0x7f03001c;
-        public static final int menu_ofertas_segunda_fase=0x7f03001d;
+        public static final int menu_ofertas_primera_fase=0x7f03001d;
         public static final int menu_ofertas_tercera_fase=0x7f03001e;
         public static final int mi_info_agenda=0x7f03001f;
         public static final int mi_info_contactos=0x7f030020;
