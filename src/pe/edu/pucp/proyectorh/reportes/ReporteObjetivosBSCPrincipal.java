@@ -167,16 +167,15 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			//String request = ReporteServices.obtenerReporteTotal + "?idperiodo=" + idPeriodo;
 			
-			String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarObjetivosXBSC?BSCId=1&idperiodo=1";
+			String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ObjetivosOffline?idperiodo=" + idPeriodo;
 
 			new getReportePeriodo().execute(request);
 			
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Error de conexción");
+			builder.setTitle("Error de conexión");
 			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
