@@ -34,10 +34,10 @@
                         },
                         series: [{
                             name: "Puesto",
-                            data: [80, 95, 70, 100, 68, 73]
+                            data: arrAvance.porccomp
                         }, {
                         	name: "Empleado",
-                            data: [75, 90, 50, 87, 70, 70]
+                            data: arrAvance.porcemp
                         }],
                         valueAxis: {
                         	max: 100,
@@ -50,7 +50,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: ["Competencia 1", "Competencia 2", "Competencia 3", "Competencia 4", "Competencia 5", "Competencia 6"],
+                            categories: arrAvance.competencias,
                             line: {
                                 visible: false
                             }

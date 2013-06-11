@@ -20,13 +20,10 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
-import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -40,19 +37,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint({ "ValidFragment", "ValidFragment" })
-public class EvaluacionPostulante extends Fragment {
+public class EvaluacionPostulanteSegundaFase extends Fragment {
 
 	private View rootView;
 	private Postulante postulante;
 	private OfertaLaboral oferta;
-	private ArrayList<Funcion> funciones;
+	private ArrayList<Funcion> competencias; //para fines practicas, FUNCION = COMPENTENCIA en cuanto a estructura
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
 	private int numPagina;
 	private int totalPaginas;
 	private final int PREGUNTAS_X_PAGINA = 4;
 
-	public EvaluacionPostulante(OfertaLaboral oferta, Postulante postulante) {
+	public EvaluacionPostulanteSegundaFase(OfertaLaboral oferta, Postulante postulante) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 	}
@@ -71,24 +68,7 @@ public class EvaluacionPostulante extends Fragment {
 		activarBotonAtras();
 		activarBotonFinalizar();
 		activarBotonSiguiente();
-		customizarEstilos(getActivity(), rootView);
 		return rootView;
-	}
-
-	private void customizarEstilos(Context context, View view) {
-		try {
-			if (view instanceof ViewGroup) {
-				ViewGroup vg = (ViewGroup) view;
-				for (int i = 0; i < vg.getChildCount(); i++) {
-					View child = vg.getChildAt(i);
-					customizarEstilos(context, child);
-				}
-			} else if (view instanceof TextView) {
-				((TextView) view).setTypeface(Typeface.createFromAsset(
-						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
-			}
-		} catch (Exception e) {
-		}
 	}
 
 	private void activarBotonSiguiente() {
@@ -164,7 +144,7 @@ public class EvaluacionPostulante extends Fragment {
 											.getSupportFragmentManager()
 											.beginTransaction();
 									ConfirmacionEvaluacion fragment = new ConfirmacionEvaluacion(
-											oferta, postulante, funciones,
+											oferta, postulante, competencias,
 											respuestas, evaluacion);
 									ft.setCustomAnimations(
 											android.R.anim.slide_in_left,
@@ -204,12 +184,12 @@ public class EvaluacionPostulante extends Fragment {
 		RatingBar ratingPregunta4 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta4);
 
-		if (numPagina * PREGUNTAS_X_PAGINA < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA < competencias.size()) {
 			pregunta1Text.setText(numPagina
 					* PREGUNTAS_X_PAGINA
 					+ 1
 					+ ") "
-					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 0)
+					+ competencias.get(numPagina * PREGUNTAS_X_PAGINA + 0)
 							.getDescripcion());
 
 			ratingPregunta1.setRating(respuestas.get(
@@ -217,12 +197,12 @@ public class EvaluacionPostulante extends Fragment {
 			ratingPregunta1.setVisibility(RatingBar.VISIBLE);
 		}
 
-		if (numPagina * PREGUNTAS_X_PAGINA + 1 < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA + 1 < competencias.size()) {
 			pregunta2Text.setText(numPagina
 					* PREGUNTAS_X_PAGINA
 					+ 2
 					+ ") "
-					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 1)
+					+ competencias.get(numPagina * PREGUNTAS_X_PAGINA + 1)
 							.getDescripcion());
 
 			ratingPregunta2.setRating(respuestas.get(
@@ -234,12 +214,12 @@ public class EvaluacionPostulante extends Fragment {
 			return;
 		}
 
-		if (numPagina * PREGUNTAS_X_PAGINA + 2 < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA + 2 < competencias.size()) {
 			pregunta3Text.setText(numPagina
 					* PREGUNTAS_X_PAGINA
 					+ 3
 					+ ") "
-					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 2)
+					+ competencias.get(numPagina * PREGUNTAS_X_PAGINA + 2)
 							.getDescripcion());
 			ratingPregunta3.setRating(respuestas.get(
 					numPagina * PREGUNTAS_X_PAGINA + 2).getPuntaje());
@@ -250,12 +230,12 @@ public class EvaluacionPostulante extends Fragment {
 			return;
 		}
 
-		if (numPagina * PREGUNTAS_X_PAGINA + 3 < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA + 3 < competencias.size()) {
 			pregunta4Text.setText(numPagina
 					* PREGUNTAS_X_PAGINA
 					+ 4
 					+ ") "
-					+ funciones.get(numPagina * PREGUNTAS_X_PAGINA + 3)
+					+ competencias.get(numPagina * PREGUNTAS_X_PAGINA + 3)
 							.getDescripcion());
 			ratingPregunta4.setRating(respuestas.get(
 					numPagina * PREGUNTAS_X_PAGINA + 3).getPuntaje());
@@ -267,27 +247,27 @@ public class EvaluacionPostulante extends Fragment {
 	}
 
 	protected void guardarRespuestas() {
-		if (numPagina * PREGUNTAS_X_PAGINA < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA < competencias.size()) {
 			RatingBar ratingPregunta1 = (RatingBar) rootView
 					.findViewById(R.id.ratingPregunta1);
 			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 0).setPuntaje(
 					(int) ratingPregunta1.getRating());
 		}
 
-		if (numPagina * PREGUNTAS_X_PAGINA + 1 < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA + 1 < competencias.size()) {
 			RatingBar ratingPregunta2 = (RatingBar) rootView
 					.findViewById(R.id.ratingPregunta2);
 			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 1).setPuntaje(
 					(int) ratingPregunta2.getRating());
 		}
 
-		if (numPagina * PREGUNTAS_X_PAGINA + 2 < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA + 2 < competencias.size()) {
 			RatingBar ratingPregunta3 = (RatingBar) rootView
 					.findViewById(R.id.ratingPregunta3);
 			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 2).setPuntaje(
 					(int) ratingPregunta3.getRating());
 		}
-		if (numPagina * PREGUNTAS_X_PAGINA + 3 < funciones.size()) {
+		if (numPagina * PREGUNTAS_X_PAGINA + 3 < competencias.size()) {
 			RatingBar ratingPregunta4 = (RatingBar) rootView
 					.findViewById(R.id.ratingPregunta4);
 			respuestas.get(numPagina * PREGUNTAS_X_PAGINA + 3).setPuntaje(
@@ -326,7 +306,7 @@ public class EvaluacionPostulante extends Fragment {
 
 	private void obtenerEvaluacionPostulante() {
 		if (ConnectionManager.connect(getActivity())) {
-			String request = Servicio.ObtenerEvaluacionTerceraFase
+			String request = Servicio.ObtenerEvaluacionSegundaFase
 					+ "?idOfertaLaboral=" + oferta.getID();
 			new ObtencionEvaluacion(this.getActivity()).execute(request);
 		} else {
@@ -349,38 +329,36 @@ public class EvaluacionPostulante extends Fragment {
 				if (procesaRespuesta(respuesta)) {
 					JSONObject datosObject = (JSONObject) jsonObject
 							.get("data");
-					JSONArray funcionesListObject = (JSONArray) datosObject
-							.get("funciones");
-					funciones = new ArrayList<Funcion>();
-					for (int i = 0; i < funcionesListObject.length(); ++i) {
-						JSONObject funcionObject = funcionesListObject
+					JSONArray competenciasListObject = (JSONArray) datosObject
+							.get("competencias");
+					competencias = new ArrayList<Funcion>();
+					for (int i = 0; i < competenciasListObject.length(); ++i) {
+						JSONObject funcionObject = competenciasListObject
 								.getJSONObject(i);
-						Funcion funcion = new Funcion();
-						funcion.setID(funcionObject.getInt("ID"));
-						funcion.setDescripcion(funcionObject
+						Funcion competencia = new Funcion();
+						competencia.setID(funcionObject.getInt("ID"));
+						competencia.setDescripcion(funcionObject
 								.getString("Nombre"));
-						funcion.setPuestoID(funcionObject.getString("PuestoID"));
-						funciones.add(funcion);
+						competencia.setPuestoID(funcionObject.getString("PuestoID"));
+						competencias.add(competencia);
 					}
-					// agregarFuncionesMock();
+					agregarcompetenciasMock();
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
-				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
-				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
 		}
 	}
 
-	private void agregarFuncionesMock() {
-		String puestoID = funciones.get(0).getPuestoID();
+	private void agregarcompetenciasMock() {
+		String puestoID = competencias.get(0).getPuestoID();
 		Funcion funcion1 = new Funcion(28,
 				"Desarrollar proyecciones de variables por campaña y anual.",
 				puestoID);
@@ -399,18 +377,18 @@ public class EvaluacionPostulante extends Fragment {
 		// 32,
 		// "Realizar análisis que soporte el diagnóstico de desempeño de tácticas comerciales del país.",
 		// puestoID);
-		funciones.add(funcion1);
-		funciones.add(funcion2);
-		funciones.add(funcion3);
-		funciones.add(funcion4);
-		// funciones.add(funcion5);
+		competencias.add(funcion1);
+		competencias.add(funcion2);
+		competencias.add(funcion3);
+		competencias.add(funcion4);
+		// competencias.add(funcion5);
 	}
 
 	public void prepararRespuestasYEvaluacion() {
 		respuestas = new ArrayList<Respuesta>();
-		for (Funcion funcion : funciones) {
+		for (Funcion competencia : competencias) {
 			Respuesta respuesta = new Respuesta();
-			respuesta.setFuncionID(funcion.getID());
+			respuesta.setFuncionID(competencia.getID());
 			respuesta.setPuntaje(0);
 			respuestas.add(respuesta);
 		}
@@ -421,8 +399,8 @@ public class EvaluacionPostulante extends Fragment {
 		formatoFecha.applyPattern("dd/MM/yyyy");
 		evaluacion.setFechaInicio(formatoFecha.format(actual));
 
-		// totalPaginas = funciones.size() / PREGUNTAS_X_PAGINA;
-		totalPaginas = (funciones.size() + PREGUNTAS_X_PAGINA - 1)
+		// totalPaginas = competencias.size() / PREGUNTAS_X_PAGINA;
+		totalPaginas = (competencias.size() + PREGUNTAS_X_PAGINA - 1)
 				/ PREGUNTAS_X_PAGINA;
 	}
 

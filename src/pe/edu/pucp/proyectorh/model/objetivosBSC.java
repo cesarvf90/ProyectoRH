@@ -18,6 +18,8 @@ public class ObjetivosBSC{
 	public int ObjetivoPadreID;
 	public int BSCID;	
 	
+	public boolean seElimina=true;
+	
 	public ObjetivosBSC() {
 	
 	}

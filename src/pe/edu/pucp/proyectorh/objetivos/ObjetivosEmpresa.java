@@ -1,13 +1,21 @@
 package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +30,7 @@ import android.widget.TabHost.OnTabChangeListener;
 public class ObjetivosEmpresa extends Fragment {
 	View rootView;
 	Context contexto;
+	FragmentActivity actv;
 	
 	private Spinner spinnerPeriodo;
 	private Button btnDescCambios;
@@ -40,7 +49,7 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	int perspectivaActual;
 	
-	ArrayList<Integer> objetivosIDS;
+	ArrayList<ObjetivosBSC> objetivosLeidos;
 	
 	public ObjetivosEmpresa(){
 		
@@ -52,7 +61,7 @@ public class ObjetivosEmpresa extends Fragment {
 	}
 	
 	public void actualizaTabs(){
-		objetivosIDS= new ArrayList<Integer>();
+		objetivosLeidos= new ArrayList<ObjetivosBSC>();
 		layoutTab1.removeAllViews();
 		layoutTab2.removeAllViews();
 		layoutTab3.removeAllViews();
@@ -64,45 +73,148 @@ public class ObjetivosEmpresa extends Fragment {
 		AgregaDatosTab(4);
 	}
 	
-	public void validaCambios(ObjetivosBSC obj){
-		for(int i=0;i<objetivosIDS.size();i++){
-			if(objetivosIDS.get(i)==obj.ID){
-				creaObjetivo(obj);
+	public ObjetivosBSC getObjLeido(int id){
+		ObjetivosBSC obj = new ObjetivosBSC();
+		for(int i=0;i<objetivosLeidos.size();i++){
+			if(objetivosLeidos.get(i).ID==id){
+				objetivosLeidos.get(i).seElimina=false;
+				obj=objetivosLeidos.get(i);
 				break;
-			}else{
-				actualizaObjetivo(obj);
+			}
+		}
+		return obj;
+	}
+	
+	public boolean comparaObjs(ObjetivosBSC obj1, ObjetivosBSC obj2){
+		boolean rpta=true;
+		
+		if(obj1.Nombre.compareTo(obj2.Nombre)!=0){
+			rpta=false;
+		}
+		
+		if(obj1.Peso!=obj2.Peso){
+			rpta=false;
+		}
+		
+		return rpta;
+	}
+	
+	public void validaCambios(ObjetivosBSC obj, int contFila, int numLay){
+		System.out.println("validara de objID="+obj.ID+ " n="+obj.Nombre+" y p="+obj.Peso+ " -tP="+obj.TipoObjetivoBSCID);
+		if(obj.ID==-1){
+			creaObjetivo(obj,contFila, numLay);
+		}else{			
+			if(comparaObjs(obj,getObjLeido(obj.ID))==false){
+				actualizaObjetivo(obj,contFila);	
 			}
 		}
 	}
 	
-	public void creaObjetivo(ObjetivosBSC obj){
-		CreadoObjetivos co = new CreadoObjetivos();
-		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&CreadorID="+obj.CreadorID+"&TipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
-		System.out.println("EMF-rutaCrear="+rutaLlamada);
+	public void creaObjetivo(ObjetivosBSC obj, int contFila, int numLayout){
+		System.out.println("--->Creara");
+		AddObjetivo co = new AddObjetivo();
+		co.obj= obj;
+		co.contFila = contFila;
+		co.numLay = numLayout;
+		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual;
+		System.out.println("------->EMF-rutaCrear="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
 	}
 	
-	public void actualizaObjetivo(ObjetivosBSC obj){
-		CreadoObjetivos co = new CreadoObjetivos();
-		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&CreadorID="+obj.CreadorID+"&TipoObjetivoBSCID="+perspectivaActual+"&BSCID="+periodoBSCActual;
-		System.out.println("EMF-rutaCrear="+rutaLlamada);
+	public void actualizaObjetivo(ObjetivosBSC obj,int contFila){
+		System.out.println("-->Actualizar");
+		UpdateObjetivo co = new UpdateObjetivo();
+		String rutaLlamada = Servicio.ActualizaObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual+"&ID="+obj.ID;
+		System.out.println("------->EMF-rutaActualizar="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
 	}
 	
-	public class ActualizadoObjetivos extends AsyncCall {
-		@Override
-		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
+	public void eliminaObjetivos(){
+		for(int i=0;i<objetivosLeidos.size();i++){
+			if(objetivosLeidos.get(i).seElimina){
+				ObjetivosBSC obj = objetivosLeidos.get(i);
+				System.out.println("--->Eliminara Obj="+obj.Nombre);
+				DeleteObjetivo co = new DeleteObjetivo();
+				String rutaLlamada = Servicio.EliminarObjetivoBSC+"?objetivoID="+obj.ID;
+				System.out.println("------->EMF-rutaCrear="+rutaLlamada);
+				Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
+			}
 		}
 	}
 	
-	public class CreadoObjetivos extends AsyncCall {
+	public class AddObjetivo extends AsyncCall {
+		ObjetivosBSC obj;
+		int contFila;
+		int numLay;
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
+			System.out.println("RecibidoAddObj: " + result.toString());
+			try {
+				System.out.println("recibio ok");
+				JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+					System.out.println("agregara");
+					int idRecibido = jsonObject.getInt("ID");
+					obj.ID = idRecibido;
+					objetivosLeidos.add(obj);
+					System.out.println("agregado obj con id="+obj.ID);
+					
+					if(numLay==1){
+						((TableFila)layoutTab1.getChildAt(contFila)).idObjetivo=idRecibido;
+					}else if (numLay==2){
+						((TableFila)layoutTab2.getChildAt(contFila)).idObjetivo=idRecibido;
+					}else if (numLay==3){
+						((TableFila)layoutTab3.getChildAt(contFila)).idObjetivo=idRecibido;
+					}else if (numLay==4){
+						((TableFila)layoutTab4.getChildAt(contFila)).idObjetivo=idRecibido;
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("SE CAYO ADD");
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
+	public class UpdateObjetivo extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("RecibidoUpdateObj: " + result.toString());
+			try {
+				System.out.println("recibio ok");
+				/*JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+					System.out.println("-->correcto");
+				}
+				*/
+			} catch (Exception e) {
+				System.out.println("SE CAYO ACT");
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
+		}
+	}
+	
+	public class DeleteObjetivo extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("RecibidoDeleteObj: " + result.toString());
+			JSONObject jsonObject;
+			try {
+				System.out.println("recibio ok");
+				/*jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+					System.out.println("-->correcto");
+				}
+				*/
+			} catch (Exception e) {
+				System.out.println("SE CAYO DEL");
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
+		}
+	}
 	
 	public class ListadoObjetivos extends AsyncCall {
 		int auxPerspectiva = perspectivaActual;
@@ -115,7 +227,7 @@ public class ObjetivosEmpresa extends Fragment {
 			for(int i=0;i<listObjetivosBSC.size();i++){
 				int flagUltimo = 0;
 				ObjetivosBSC objBSC = listObjetivosBSC.get(i);
-				objetivosIDS.add(objBSC.BSCID);
+				objetivosLeidos.add(objBSC);
 				if ((i+1) == listObjetivosBSC.size()){
 					flagUltimo=1;
 				}
@@ -143,29 +255,32 @@ public class ObjetivosEmpresa extends Fragment {
 			for(int i=0; i<listaPeriodos.size(); i++){
 				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
 			}
-				
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-				
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoBSCActual = listaPeriodos.get(pos).BSCID;
-					System.out.println("periodo seleccionado="+periodoBSCActual);
-					actualizaTabs();
-				}
-				
-				@Override
-				  public void onNothingSelected(AdapterView<?> arg0) {
-			    	// TODO Auto-generated method stub
-				  }
-			});
+			
+			if(listaPeriodos!=null){				
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerPeriodo.setAdapter(dataAdapter);
+					
+				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						periodoBSCActual = listaPeriodos.get(pos).BSCID;
+						System.out.println("periodo seleccionado="+periodoBSCActual);
+						actualizaTabs();
+					}
+					
+					@Override
+					  public void onNothingSelected(AdapterView<?> arg0) {
+				    	// TODO Auto-generated method stub
+					  }
+				});
+			}
 		}
 	}
 	
 	class TableFila extends TableRow {
 		int flagUlt = 0;
+		int idObjetivo = -1;
 		
 		public TableFila(Context context) {
 			super(context);
@@ -211,6 +326,15 @@ public class ObjetivosEmpresa extends Fragment {
 	    return separador_cabecera;
 	}
 	
+	class EditTextObjetivo extends EditText{
+		int idObj;
+
+		public EditTextObjetivo(Context context) {
+			super(context);
+			// TODO Auto-generated constructor stub
+		}
+	}
+	
 	public TableFila agregaFila(final int numLayout,ObjetivosBSC objBSC, final int flagUltimo){
 			final TableFila fila = new TableFila(contexto);
 			fila.flagUlt=flagUltimo;
@@ -221,6 +345,7 @@ public class ObjetivosEmpresa extends Fragment {
 			if(objBSC != null){
 				szNombre=objBSC.Nombre;
 				szPeso = Integer.toString(objBSC.Peso);
+				fila.idObjetivo = objBSC.ID;
 				//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
 			}
 			
@@ -350,9 +475,9 @@ public class ObjetivosEmpresa extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			rootView  = inflater.inflate(R.layout.objetivosbsc,container, false);
+			actv = getActivity();
 			contexto = rootView.getContext();
 			rootView.findViewById(R.layout.objetivosbsc);
-			
 			Resources res = getResources();
 			
 			/*
@@ -419,16 +544,40 @@ public class ObjetivosEmpresa extends Fragment {
 				});
 			 
 			 Button guardarCambios = (Button) rootView.findViewById(R.id.ObjEmpGuardarCambios);
-			 descartarCambios.setOnClickListener(new OnClickListener() {
+			 	guardarCambios.setOnClickListener(new OnClickListener() {
 					  @Override
 					  public void onClick(View v) {
 						  System.out.println("guarda cambios");
 						  //VALIDAR TODOS LOS OBJETIVOS
-						  ObjetivosBSC obj = new ObjetivosBSC();
-						  validaCambios(obj);
+						  guardaLayouts(layoutTab1,1);
+						  guardaLayouts(layoutTab2,2);
+						  guardaLayouts(layoutTab3,3);
+						  guardaLayouts(layoutTab4,4);
+						  eliminaObjetivos();
 					  }
 				});
 		return rootView;
+	}
+
+	
+	public void guardaLayouts(TableLayout lay,int tipoObjetivo){
+		System.out.println("analiza lay="+tipoObjetivo);
+		for( int i = 0; i < lay.getChildCount(); i++ ){
+			  if( lay.getChildAt(i) instanceof TableFila ){
+				  TableFila fila = (TableFila)lay.getChildAt(i);
+				  System.out.println("encontro lay de obj="+fila.idObjetivo);
+				  ObjetivosBSC myObj = new ObjetivosBSC();
+				  myObj.ID= fila.idObjetivo;
+				  myObj.Nombre=((EditText)fila.getChildAt(0)).getText().toString();
+				  try{
+					 myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
+				  }catch(Exception e){
+					  myObj.Peso=0;
+				  }
+				  myObj.TipoObjetivoBSCID = tipoObjetivo;
+				  validaCambios(myObj,i, tipoObjetivo);
+				}
+		  }
 	}
 
 }

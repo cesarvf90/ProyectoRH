@@ -19,10 +19,13 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import pe.edu.pucp.proyectorh.utils.OfertasAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -60,7 +63,24 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		rootView = inflater.inflate(R.layout.menu_ofertas_tercera_fase,
 				container, false);
 		llamarServicioOfertasLaboralesTerceraFase();
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void llamarServicioOfertasLaboralesTerceraFase() {
@@ -151,9 +171,11 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
+				ocultarMensajeProgreso();
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}
@@ -297,9 +319,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
-		// SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		// formatoFecha.applyPattern("dd/MM/yyyy");
-
 		TextView tituloOfertaText = (TextView) rootView
 				.findViewById(R.id.detalleofertas_title);
 		tituloOfertaText.setText(oferta.toString());
@@ -314,8 +333,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		solicitanteText.setText(oferta.getSolicitante());
 		TextView fechaSolicitudText = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_fechasolicitud);
-		// fechaSolicitudText.setText(formatoFecha.format(oferta
-		// .getFechaRequerimiento()));
 		fechaSolicitudText.setText(oferta.getFechaRequerimiento());
 		TextView faseActualText = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_faseactual);
@@ -326,8 +343,6 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 				.size()));
 		TextView fechaUltimaEntrevistaText = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_fecultentrevista);
-		// fechaUltimaEntrevistaText.setText(formatoFecha.format(oferta
-		// .getFechaUltimaEntrevista()));
 		fechaUltimaEntrevistaText.setText(oferta.getFechaUltimaEntrevista());
 	}
 

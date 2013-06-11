@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh;
 
+import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluado;
@@ -19,17 +20,23 @@ import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.reclutamiento.PostularOfertaLaboral;
 import pe.edu.pucp.proyectorh.reportes.*;
 import pe.edu.pucp.proyectorh.utils.Constante;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Actividad principal
@@ -56,6 +63,22 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(29, 148, 59)));
 		bar.setTitle("RH++");
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	@Override
@@ -120,6 +143,13 @@ public class MainActivity extends FragmentActivity implements
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.REPORTES) {
 
+				if ("1".equals(id)) {
+					Reporte360 fragment = new Reporte360();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
+
 				if ("3".equals(id)) {
 					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
 					getSupportFragmentManager().beginTransaction()
@@ -168,7 +198,10 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("2")) {// Candidatos por puesto
-
+					CandidatosxPuesto fragment = new CandidatosxPuesto();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 				}
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
@@ -197,17 +230,20 @@ public class MainActivity extends FragmentActivity implements
 
 				if (id.equals("4")) {// Registrar Avance
 					RegistroAvance fragment = new RegistroAvance();
-					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
-						.commit();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 
 				}
 				if (id.equals("5")) {// Mis Avances
 					VisualizacionAvance fragment = new VisualizacionAvance();
-					getSupportFragmentManager().beginTransaction().replace(R.id.opcion_detail_container, fragment)
-						.commit();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
 
 				}
-				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE MIS SUBORDINADOS -  CARLOS)
+				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE
+										// MIS SUBORDINADOS - CARLOS)
 					MisSubordinados fragment = new MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)

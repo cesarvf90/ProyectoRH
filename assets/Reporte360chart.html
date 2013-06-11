@@ -20,7 +20,7 @@
         			var arrAvance = JSON.parse(jsonString);
         			
                 
-                    $("#chart").kendoChart({
+                    var mychart = $("#chart").kendoChart({
                     	theme:"metro",
                         title: {
                             visible: false
@@ -30,19 +30,21 @@
                             position: "top"
                         },
                         seriesDefaults: {
-                            type: "bar"
+                            type: "column"
                         },
                         series: [{
-                            name: "Puesto",
-                            data: [100]
+                            name: "Requerido",
+                            data: arrAvance.requerido
                         }, {
-                        	name: "Empleado",
-                            data: arrAvance.arrmatch
+                        	name: "360",
+                            data: arrAvance.dato360
+                        }, {
+                        	name: "Ponderado",
+                            data: arrAvance.ponderado
                         }],
                         valueAxis: {
-                            max: 100,
                             labels: {
-                                format: "{0}%"
+                                format: "{0}"
                             },
                             line: {
                                 visible: false
@@ -50,7 +52,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: ["Ponderado"],
+                            categories: arrAvance.periodo,
                             line: {
                                 visible: false
                             }
@@ -63,6 +65,30 @@
                     });
                 }
 
+				function repaint( constumSeries ){
+			    $("#chart").kendoChart({
+                theme:"metro",
+			     title: {
+                            visible: false
+                        },
+                        legend: {
+                         	//visible: false
+                            position: "top"
+                        },
+                        seriesDefaults: {
+                            type: "column"
+                        },
+			    series: constumSeries,
+			    categoryAxis: {
+                            categories: arrAvance.periodo,
+                            line: {
+                                visible: false
+                            }
+                        },
+			}).data("kendoChart");
+			}
+				
+
                 $(document).ready(function() {
                     setTimeout(function() {
                         // Initialize the chart with a delay to make sure
@@ -70,7 +96,33 @@
                         createChart();
 
                         $("#example").bind("kendo:skinChange", function(e) {
-                            createChart();
+                            console.log(mychart);
+						    var costumSeries = [];
+						    // pushea lo que selecciona en tu toggle será lo mismo
+						    if ($("input:first:checked","#toggleButton1").length == 1) {
+						        costumSeries.push({
+						            name: "Requerido",
+                           			data: arrAvance.requerido
+						        });
+						    }
+						
+						    if ($("input:last:checked","#toggleButton2).length == 1) {
+						        costumSeries.push({
+						            name: "360",
+                            data: arrAvance.dato360
+						        });
+						    }
+						    
+						    if ($("input:last:checked","#toggleButton3).length == 1) {
+						        costumSeries.push({
+						            name: "Ponderado",
+                            		data: arrAvance.ponderado
+						        });
+						    }
+						    
+						    repaint(costumSeries);
+                                                     
+                            //createChart();
                         });
                     }, 400);
                 });

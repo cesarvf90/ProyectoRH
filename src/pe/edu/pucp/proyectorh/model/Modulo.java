@@ -49,12 +49,11 @@ public class Modulo {
 
 	static {
 		addItem(new ModuloItem("1", "Mi información"));
-		addItem(new ModuloItem("2", "Administración"));
-		addItem(new ModuloItem("3", "Reclutamiento"));
-		addItem(new ModuloItem("4", "Evaluación 360"));
-		addItem(new ModuloItem("5", "Objetivos"));
-		addItem(new ModuloItem("6", "Línea de carrera"));
-		addItem(new ModuloItem("7", "Reportes"));
+		addItem(new ModuloItem("2", "Reclutamiento"));
+		addItem(new ModuloItem("3", "Evaluación 360"));
+		addItem(new ModuloItem("4", "Objetivos"));
+		addItem(new ModuloItem("5", "Línea de carrera"));
+		addItem(new ModuloItem("6", "Reportes"));
 		MODULOS_MOSTRADOS_ACTUAL = MODULOS;
 	}
 
@@ -72,19 +71,13 @@ public class Modulo {
 		return submodulos;
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesAdministracion() {
-		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Administrar empleados"));
-		return submodulos;
-	}
-
 	public static List<ModuloItem> obtenerFuncionalidadesReclutamiento() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Aprobar postulante"));
 		submodulos
 				.add(new ModuloItem("2", "Aprobar solicitudes de oferta laboral"));
 		submodulos.add(new ModuloItem("3", "Aprobar solicitudes de promoción laboral"));
-		submodulos.add(new ModuloItem("4", "Evaluar postulantes 2da fase"));
+		submodulos.add(new ModuloItem("4", "Evaluar postulantes 1ra fase"));
 		submodulos.add(new ModuloItem("5", "Evaluar postulantes 3ra fase"));
 		submodulos.add(new ModuloItem("6", "Postular a oferta laboral"));
 		return submodulos;

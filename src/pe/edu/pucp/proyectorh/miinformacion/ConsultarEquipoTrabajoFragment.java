@@ -12,7 +12,11 @@ import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -54,8 +58,25 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
+		customizarEstilos(getActivity(), rootView);
 		llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
 		return rootView;
+	}
+	
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+				((TextView) view).setTypeface(Typeface.createFromAsset(
+						context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	private void llamarServicioConsultarEquipoTrabajo(String idUsuario) {
@@ -64,15 +85,21 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			String request = Servicio.getEquipoTrabajo + "?colaboradorID="
 					+ idUsuario;
 			System.out.println("pagina: " + request);
-			new deserializarJSON().execute(request);
+			new deserializarJSON(this.getActivity()).execute(request);
 		}
 	}
 
 	public class deserializarJSON extends AsyncCall {
+		
+		public deserializarJSON(Activity activity) {
+			super(activity);
+		}		
+		
 		@Override
 		protected void onPostExecute(String result) {
 			// MISMA LOGICA QUE probarDeserializacionGSON
 			probarDeserializacionJSON(result);
+			ocultarMensajeProgreso();
 		}
 	}
 
