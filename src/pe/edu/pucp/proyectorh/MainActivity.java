@@ -3,6 +3,7 @@ package pe.edu.pucp.proyectorh;
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
+import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluado;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
@@ -14,7 +15,7 @@ import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
 import pe.edu.pucp.proyectorh.objetivos.RegistroAvance;
 import pe.edu.pucp.proyectorh.objetivos.VisualizacionAvance;
 import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral;
-import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesSegundaFase;
+import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesPrimeraFase;
 import pe.edu.pucp.proyectorh.reclutamiento.MenuOfertasLaboralesTerceraFase;
 import pe.edu.pucp.proyectorh.reclutamiento.PostularOfertaLaboral;
 import pe.edu.pucp.proyectorh.reportes.*;
@@ -122,7 +123,7 @@ public class MainActivity extends FragmentActivity implements
 
 				}
 				if (id.equals("4")) {// Evaluar Postulante 2da fase
-					MenuOfertasLaboralesSegundaFase fragment = new MenuOfertasLaboralesSegundaFase();
+					MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
@@ -174,7 +175,14 @@ public class MainActivity extends FragmentActivity implements
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Mis subordinados
+				if (id.equals("3")) {// Rol de Evaluado
+					RolEvaluado fragment = new RolEvaluado();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}				
+//				if (id.equals("3")) {// Mis subordinados
+				if (id.equals("4")) {// Mis subordinados
 					pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados fragment = new pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)

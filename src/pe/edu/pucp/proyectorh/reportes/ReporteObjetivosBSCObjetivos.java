@@ -122,7 +122,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 				
 				//obtener por bsc y idperiodo
 				for (int i=0;i<objetivosArch.size();i++){
-					if ((objetivosArch.get(i).getBSCId()==idPerspectiva) && (objetivosArch.get(i).getIdperiodo()==idPeriodo)){
+					if ((objetivosArch.get(i).getBSCId()==idPerspectiva) && (objetivosArch.get(i).getIdperiodo()==idPeriodo) &&  (objetivosArch.get(i).getIdpadre()==-1)){
 						listaObjetivos.add(objetivosArch.get(i));
 					}
 				}
@@ -261,23 +261,26 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent, View v,
 						int position, long id) {
+						//opcion solo para objetivos intermedios
+						if ((listaObjetivos.get(position).isEsIntermedio()) && (modo==0)){
 		
 						
-						Bundle b = new Bundle();
-						String cadena = "" +  ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-						b.putString("titulo", cadena);
-						b.putInt("idObjetivo",listaObjetivos.get(position).getIdObjetivo());
-						b.putInt("modo", modo);
-						b.putString("archivo", nomArch);
-						
-						ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
-						fragment.setArguments(b);
-						
-						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-						ft.replace(R.id.opcion_detail_container, fragment);
-						ft.addToBackStack(null);
-						ft.commit();
+							Bundle b = new Bundle();
+							String cadena = "" +  ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
+							b.putString("titulo", cadena);
+							b.putInt("idObjetivo",listaObjetivos.get(position).getIdObjetivo());
+							b.putInt("modo", modo);
+							b.putString("archivo", nomArch);
 							
+							ReporteObjetivosBSCGrafico fragment = new ReporteObjetivosBSCGrafico();
+							fragment.setArguments(b);
+							
+							FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+							ft.replace(R.id.opcion_detail_container, fragment);
+							ft.addToBackStack(null);
+							ft.commit();
+						}
+						
 						
 						return true;
 					   

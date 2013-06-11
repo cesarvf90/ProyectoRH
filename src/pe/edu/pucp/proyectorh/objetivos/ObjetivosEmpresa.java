@@ -99,27 +99,29 @@ public class ObjetivosEmpresa extends Fragment {
 		return rpta;
 	}
 	
-	public void validaCambios(ObjetivosBSC obj){
+	public void validaCambios(ObjetivosBSC obj, int contFila, int numLay){
 		System.out.println("validara de objID="+obj.ID+ " n="+obj.Nombre+" y p="+obj.Peso+ " -tP="+obj.TipoObjetivoBSCID);
 		if(obj.ID==-1){
-			creaObjetivo(obj);
+			creaObjetivo(obj,contFila, numLay);
 		}else{			
 			if(comparaObjs(obj,getObjLeido(obj.ID))==false){
-				actualizaObjetivo(obj);	
+				actualizaObjetivo(obj,contFila);	
 			}
 		}
 	}
 	
-	public void creaObjetivo(ObjetivosBSC obj){
+	public void creaObjetivo(ObjetivosBSC obj, int contFila, int numLayout){
 		System.out.println("--->Creara");
 		AddObjetivo co = new AddObjetivo();
 		co.obj= obj;
+		co.contFila = contFila;
+		co.numLay = numLayout;
 		String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual;
 		System.out.println("------->EMF-rutaCrear="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
 	}
 	
-	public void actualizaObjetivo(ObjetivosBSC obj){
+	public void actualizaObjetivo(ObjetivosBSC obj,int contFila){
 		System.out.println("-->Actualizar");
 		UpdateObjetivo co = new UpdateObjetivo();
 		String rutaLlamada = Servicio.ActualizaObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual+"&ID="+obj.ID;
@@ -132,28 +134,41 @@ public class ObjetivosEmpresa extends Fragment {
 			if(objetivosLeidos.get(i).seElimina){
 				ObjetivosBSC obj = objetivosLeidos.get(i);
 				System.out.println("--->Eliminara Obj="+obj.Nombre);
-				//ModificaObjetivo co = new ModificaObjetivo();
-				//String rutaLlamada = Servicio.CrearObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual;
-				//System.out.println("------->EMF-rutaCrear="+rutaLlamada);
-				//Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
+				DeleteObjetivo co = new DeleteObjetivo();
+				String rutaLlamada = Servicio.EliminarObjetivoBSC+"?objetivoID="+obj.ID;
+				System.out.println("------->EMF-rutaCrear="+rutaLlamada);
+				Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
 			}
 		}
 	}
 	
 	public class AddObjetivo extends AsyncCall {
-		ObjetivosBSC obj;		
+		ObjetivosBSC obj;
+		int contFila;
+		int numLay;
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoAddObj: " + result.toString());
-			JSONObject jsonObject;
 			try {
 				System.out.println("recibio ok");
-				jsonObject = new JSONObject(result);
+				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+					System.out.println("agregara");
 					int idRecibido = jsonObject.getInt("ID");
 					obj.ID = idRecibido;
 					objetivosLeidos.add(obj);
+					System.out.println("agregado obj con id="+obj.ID);
+					
+					if(numLay==1){
+						((TableFila)layoutTab1.getChildAt(contFila)).idObjetivo=idRecibido;
+					}else if (numLay==2){
+						((TableFila)layoutTab2.getChildAt(contFila)).idObjetivo=idRecibido;
+					}else if (numLay==3){
+						((TableFila)layoutTab3.getChildAt(contFila)).idObjetivo=idRecibido;
+					}else if (numLay==4){
+						((TableFila)layoutTab4.getChildAt(contFila)).idObjetivo=idRecibido;
+					}
 				}
 			} catch (Exception e) {
 				System.out.println("SE CAYO ADD");
@@ -166,10 +181,9 @@ public class ObjetivosEmpresa extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoUpdateObj: " + result.toString());
-			JSONObject jsonObject;
 			try {
 				System.out.println("recibio ok");
-				/*jsonObject = new JSONObject(result);
+				/*JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
 					System.out.println("-->correcto");
@@ -182,6 +196,25 @@ public class ObjetivosEmpresa extends Fragment {
 		}
 	}
 	
+	public class DeleteObjetivo extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("RecibidoDeleteObj: " + result.toString());
+			JSONObject jsonObject;
+			try {
+				System.out.println("recibio ok");
+				/*jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+					System.out.println("-->correcto");
+				}
+				*/
+			} catch (Exception e) {
+				System.out.println("SE CAYO DEL");
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
+		}
+	}
 	
 	public class ListadoObjetivos extends AsyncCall {
 		int auxPerspectiva = perspectivaActual;
@@ -536,10 +569,14 @@ public class ObjetivosEmpresa extends Fragment {
 				  ObjetivosBSC myObj = new ObjetivosBSC();
 				  myObj.ID= fila.idObjetivo;
 				  myObj.Nombre=((EditText)fila.getChildAt(0)).getText().toString();
-				  myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
+				  try{
+					 myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
+				  }catch(Exception e){
+					  myObj.Peso=0;
+				  }
 				  myObj.TipoObjetivoBSCID = tipoObjetivo;
-				  validaCambios(myObj);
-			  }
+				  validaCambios(myObj,i, tipoObjetivo);
+				}
 		  }
 	}
 
