@@ -11,6 +11,7 @@ import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivos;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivosChild;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoPeriodos;
+import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
@@ -74,49 +75,64 @@ public class RegistroAvance extends Fragment {
 			loadData(listObjetivosBSC);
 		}
 	}
+	
+	public LinearLayout cargaDataAvance(final ArrayList<String> listaObjetivos){
+		LinearLayout layAux = new LinearLayout(contexto);
+		layAux.setOrientation(LinearLayout.VERTICAL);
+		
+		LinearLayout lay1 = new LinearLayout(contexto);
+		lay1.setOrientation(LinearLayout.HORIZONTAL);
+		
+		TextView nombreObj = new TextView(contexto);
+		nombreObj.setText("Objetivo:");
+		lay1.addView(nombreObj);
+		
+		Spinner spinnerObjetivos = new Spinner(contexto);
+		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaObjetivos);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerObjetivos.setAdapter(dataAdapter);
+		spinnerObjetivos.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+		lay1.addView(spinnerObjetivos);
+		
+		EditText porcentaje = new EditText(contexto);
+		porcentaje.setText("0%");
+		porcentaje.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+		lay1.addView(porcentaje);
+		
+		Button botonMas = new Button(contexto);
+		botonMas.setText("+");
+		botonMas.setOnClickListener(new OnClickListener() {
+			  @Override
+			  public void onClick(View v) {
+				  lay.addView(cargaDataAvance(listaObjetivos));
+			  }
+		});
+		layAux.addView(botonMas);
+		
+		layAux.addView(lay1);
+		
+		LinearLayout lay2 = new LinearLayout(contexto);
+		lay2.setOrientation(LinearLayout.HORIZONTAL);
+		
+		TextView nombreDesc = new TextView(contexto);
+		nombreDesc.setText("Descripcion:");
+		lay2.addView(nombreDesc);
+		
+		EditText descrip = new EditText(contexto);
+		descrip.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,80));
+		lay2.addView(descrip);
+		
+		layAux.addView(lay2);
+		return layAux;
+	}
 
 	public void loadData(ArrayList<ObjetivosBSC> listObjetivosBSC){
 		ArrayList<String> listaObjetivos = new ArrayList<String>();
 		for(int i=0;i<listObjetivosBSC.size();i++){	
 			listaObjetivos.add(listObjetivosBSC.get(i).Nombre);
 		}
-		for(int i=0;i<listObjetivosBSC.size();i++){	
-			
-			LinearLayout lay1 = new LinearLayout(contexto);
-			lay1.setOrientation(LinearLayout.HORIZONTAL);
-			
-			TextView nombreObj = new TextView(contexto);
-			nombreObj.setText("Objetivo:");
-			lay1.addView(nombreObj);
-			
-			Spinner spinnerObjetivos = new Spinner(contexto);
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaObjetivos);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerObjetivos.setAdapter(dataAdapter);
-			spinnerObjetivos.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-			lay1.addView(spinnerObjetivos);
-			
 
-			EditText porcentaje = new EditText(contexto);
-			porcentaje.setText("0%");
-			porcentaje.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
-			lay1.addView(porcentaje);
-			
-			lay.addView(lay1);
-			
-			LinearLayout lay2 = new LinearLayout(contexto);
-			lay2.setOrientation(LinearLayout.HORIZONTAL);
-			
-			TextView nombreDesc = new TextView(contexto);
-			nombreDesc.setText("Descripcion:");
-			lay2.addView(nombreDesc);
-			
-			EditText descrip = new EditText(contexto);
-			descrip.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,80));
-			lay2.addView(descrip);
-			
-			lay.addView(lay2);
-		}
+		lay.addView(cargaDataAvance(listaObjetivos));
 	}
 	
 	public class ListadoPeriodos extends AsyncCall {

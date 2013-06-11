@@ -14,6 +14,7 @@ import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -77,8 +78,18 @@ public class ObjetivosEmpresa extends Fragment {
 		ObjetivosBSC obj = new ObjetivosBSC();
 		for(int i=0;i<objetivosLeidos.size();i++){
 			if(objetivosLeidos.get(i).ID==id){
-				objetivosLeidos.get(i).seElimina=false;
 				obj=objetivosLeidos.get(i);
+				break;
+			}
+		}
+		return obj;
+	}
+	
+	public ObjetivosBSC cambiaEstadoNoEliminar(int id){
+		ObjetivosBSC obj = new ObjetivosBSC();
+		for(int i=0;i<objetivosLeidos.size();i++){
+			if(objetivosLeidos.get(i).ID==id){
+				objetivosLeidos.get(i).seElimina=false;
 				break;
 			}
 		}
@@ -87,6 +98,12 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public boolean comparaObjs(ObjetivosBSC obj1, ObjetivosBSC obj2){
 		boolean rpta=true;
+		if(obj1.Nombre==null){
+			obj1.Nombre= "";
+		}
+		if(obj2.Nombre==null){
+			obj2.Nombre= "";
+		}
 		
 		if(obj1.Nombre.compareTo(obj2.Nombre)!=0){
 			rpta=false;
@@ -100,7 +117,9 @@ public class ObjetivosEmpresa extends Fragment {
 	}
 	
 	public void validaCambios(ObjetivosBSC obj, int contFila, int numLay){
-		System.out.println("validara de objID="+obj.ID+ " n="+obj.Nombre+" y p="+obj.Peso+ " -tP="+obj.TipoObjetivoBSCID);
+		System.out.println("valida de objID="+obj.ID+ " n="+obj.Nombre+" y p="+obj.Peso+ " -tP="+obj.TipoObjetivoBSCID);
+		obj.seElimina=false;
+		cambiaEstadoNoEliminar(obj.ID);
 		if(obj.ID==-1){
 			creaObjetivo(obj,contFila, numLay);
 		}else{			
@@ -124,17 +143,21 @@ public class ObjetivosEmpresa extends Fragment {
 	public void actualizaObjetivo(ObjetivosBSC obj,int contFila){
 		System.out.println("-->Actualizar");
 		UpdateObjetivo co = new UpdateObjetivo();
+		co.obj= obj;
 		String rutaLlamada = Servicio.ActualizaObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual+"&ID="+obj.ID;
 		System.out.println("------->EMF-rutaActualizar="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
 	}
 	
 	public void eliminaObjetivos(){
+		System.out.println("eliminar objs");
 		for(int i=0;i<objetivosLeidos.size();i++){
+			System.out.println("-Analiza obj="+objetivosLeidos.get(i).Nombre + " con estado="+objetivosLeidos.get(i).seElimina);
 			if(objetivosLeidos.get(i).seElimina){
 				ObjetivosBSC obj = objetivosLeidos.get(i);
 				System.out.println("--->Eliminara Obj="+obj.Nombre);
 				DeleteObjetivo co = new DeleteObjetivo();
+				co.numObj=i;
 				String rutaLlamada = Servicio.EliminarObjetivoBSC+"?objetivoID="+obj.ID;
 				System.out.println("------->EMF-rutaCrear="+rutaLlamada);
 				Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
@@ -150,7 +173,6 @@ public class ObjetivosEmpresa extends Fragment {
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoAddObj: " + result.toString());
 			try {
-				System.out.println("recibio ok");
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
@@ -171,46 +193,48 @@ public class ObjetivosEmpresa extends Fragment {
 					}
 				}
 			} catch (Exception e) {
-				System.out.println("SE CAYO ADD");
+				System.out.println("SE CAYO ADD="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
 	}
 	
 	public class UpdateObjetivo extends AsyncCall {
+		ObjetivosBSC obj;
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoUpdateObj: " + result.toString());
 			try {
-				System.out.println("recibio ok");
-				/*JSONObject jsonObject = new JSONObject(result);
+				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					System.out.println("-->correcto");
+					System.out.println("modificara");
+					getObjLeido(obj.ID).Nombre = obj.Nombre;
+					getObjLeido(obj.ID).Peso = obj.Peso;
+					System.out.println("mod->obj="+getObjLeido(obj.ID).Nombre+" con p="+getObjLeido(obj.ID).Peso);
 				}
-				*/
 			} catch (Exception e) {
-				System.out.println("SE CAYO ACT");
+				System.out.println("SE CAYO ACT="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
 	}
 	
 	public class DeleteObjetivo extends AsyncCall {
+		int numObj;
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoDeleteObj: " + result.toString());
-			JSONObject jsonObject;
 			try {
 				System.out.println("recibio ok");
-				/*jsonObject = new JSONObject(result);
+				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					System.out.println("-->correcto");
+					System.out.println("eliminara");
+					objetivosLeidos.remove(numObj);
 				}
-				*/
 			} catch (Exception e) {
-				System.out.println("SE CAYO DEL");
+				System.out.println("SE CAYO DEL="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
@@ -223,6 +247,18 @@ public class ObjetivosEmpresa extends Fragment {
 			System.out.println("Recibido: " + result.toString());
 			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);
 				
+			if (listObjetivosBSC.size()==0){
+				TableFila fila=agregaFila(auxPerspectiva,null, 1);
+				if (auxPerspectiva==1){
+					layoutTab1.addView(fila);
+				}else if(auxPerspectiva==2){
+					layoutTab2.addView(fila);					
+				}else if(auxPerspectiva==3){
+					layoutTab3.addView(fila);
+				}else if(auxPerspectiva==4){
+					layoutTab4.addView(fila);
+				}
+			}
 			//FILAS
 			for(int i=0;i<listObjetivosBSC.size();i++){
 				int flagUltimo = 0;
@@ -245,8 +281,7 @@ public class ObjetivosEmpresa extends Fragment {
 			}
 		}
 	}
-	
-	
+		
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
@@ -339,7 +374,7 @@ public class ObjetivosEmpresa extends Fragment {
 			final TableFila fila = new TableFila(contexto);
 			fila.flagUlt=flagUltimo;
 			String szNombre ="";
-			String szPeso ="";
+			String szPeso ="0";
 			//String szCreador=LoginActivity.getUsuario().getUsername();
 			
 			if(objBSC != null){
@@ -549,16 +584,62 @@ public class ObjetivosEmpresa extends Fragment {
 					  public void onClick(View v) {
 						  System.out.println("guarda cambios");
 						  //VALIDAR TODOS LOS OBJETIVOS
-						  guardaLayouts(layoutTab1,1);
-						  guardaLayouts(layoutTab2,2);
-						  guardaLayouts(layoutTab3,3);
-						  guardaLayouts(layoutTab4,4);
-						  eliminaObjetivos();
+						  for(int k=0;k<objetivosLeidos.size();k++){
+								objetivosLeidos.get(k).seElimina=true;
+						  }
+						  if(validaSumas()){
+							  guardaLayouts(layoutTab1,1);
+							  guardaLayouts(layoutTab2,2);
+							  guardaLayouts(layoutTab3,3);
+							  guardaLayouts(layoutTab4,4);
+							  eliminaObjetivos();
+						  }
 					  }
 				});
 		return rootView;
 	}
 
+	public boolean validaSumas(){
+		return validaSumaLay(layoutTab1,1) && validaSumaLay(layoutTab2,2) && validaSumaLay(layoutTab3,3)&&validaSumaLay(layoutTab4,4);
+	}
+	
+	public boolean validaSumaLay(TableLayout lay, int tipoObjetivo){
+		int pesoFinal=0;
+		for( int i = 0; i < lay.getChildCount(); i++ ){
+			  if( lay.getChildAt(i) instanceof TableFila ){
+				  TableFila fila = (TableFila)lay.getChildAt(i);
+				  ObjetivosBSC myObj = new ObjetivosBSC();
+				  try{
+					 myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
+				  }catch(Exception e){
+					  myObj.Peso=0;
+				  }
+				  pesoFinal=pesoFinal+myObj.Peso;
+			  }
+		}
+		
+		System.out.println("peso final="+pesoFinal+" en perspectiva="+tipoObjetivo);
+		if(pesoFinal==100||pesoFinal==0){
+			return true;
+		}else{
+			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+			builder.setTitle("Error en Suma de Pesos");
+			builder.setMessage("La suma de pesos es "+pesoFinal+" y debería ser 100.\nCorregir la pestaña "+getNombrePerspectiva(tipoObjetivo));
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+	  }
+		return false;
+	}
+	
+	public String getNombrePerspectiva(int id){
+		if(id==1) return "Financiero";
+		if(id==2) return "Aprendizaje y Crecimiento";
+		if(id==3) return "Cliente";
+		if(id==4) return "Procesos Internos";
+		return "";
+	}
 	
 	public void guardaLayouts(TableLayout lay,int tipoObjetivo){
 		System.out.println("analiza lay="+tipoObjetivo);
@@ -575,7 +656,10 @@ public class ObjetivosEmpresa extends Fragment {
 					  myObj.Peso=0;
 				  }
 				  myObj.TipoObjetivoBSCID = tipoObjetivo;
-				  validaCambios(myObj,i, tipoObjetivo);
+				  System.out.println("----->Nombre="+myObj.Nombre);
+				  if(!(myObj.Nombre==null || myObj.Nombre=="" || myObj.Nombre.isEmpty())){
+					  validaCambios(myObj,i, tipoObjetivo);
+				  }
 				}
 		  }
 	}
