@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	
 	private WebView browser;
 	int objSelec;
-	
+	int modo;
+	String nomArch;
 
 	
 	public ReporteObjetivosBSCGrafico(){
@@ -38,10 +40,8 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	public class DataObject {
 		String[] personas;
 		
-		/*= new String[] { 
-				"Juan", "Pedro", "Gustavo", "Gabriel"};*/
 		
-		int[] avance; // = new int[] { 10, 15, 18, 25 };
+		int[] avance; 
 		
 		public DataObject(String[] personas , int[] avance){
 			this.personas = personas;
@@ -107,27 +107,99 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
 		textView.setTypeface(font);
 		objSelec= getArguments().getInt("idObjetivo");
+		
+		modo = getArguments().getInt("modo");
+		nomArch = getArguments().getString("archivo");
+		
+		System.out.println("objetivo: " + objSelec);
+		System.out.println("modo: " + modo);
+		if (modo==0) System.out.println("archivo: " + nomArch);
+		
 		cargarPersonasAvance(objSelec);
 		
 		return rootView;
 	}
 	
 	public void cargarPersonasAvance(int idObj){
-		if (ConnectionManager.connect(getActivity())) {
-			// construir llamada al servicio
-			String request = ReporteServices.obtenerAvanceXPersona + "?idObjetivo=" + idObj;
-
-			new getAvances().execute(request);
+		
+		if (modo==1){
+			//MODO ONLINE
+		
+			if (ConnectionManager.connect(getActivity())) {
+				// construir llamada al servicio
+				String request = ReporteServices.obtenerAvanceXPersona + "?idObjetivo=" + idObj;
+	
+				new getAvances().execute(request);
+				
+			} else {
+				// Se muestra mensaje de error de conexion con el servicio
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de conexión");
+				builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			}
+		}
+		else{
+			//MODO OFFLINE
+			ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+			List<ObjetivosXPersonaRDTO> Personas = new ArrayList<ObjetivosXPersonaRDTO>();
+			for (int i=0;i<objetivosArch.size();i++){
+				if (objetivosArch.get(i).getIdpadre()==idObj){
+					
+					//este objetivo es el de personaxobjetivo, se muestran sus hijos
+					
+					//validacion si colaborador es null no mostrar
+					if (objetivosArch.get(i).getColaboradorNombre()!=null){
+						ObjetivosXPersonaRDTO persona = new ObjetivosXPersonaRDTO();
+						
+						System.out.println(objetivosArch.get(i).getColaboradorNombre());
+						persona.setNombreColaborador(objetivosArch.get(i).getColaboradorNombre());
+						
+						int promedio=0;
+						int cantidad=0;
+						
+						//obtener avance de hijos
+						for (int j=0;j<objetivosArch.size();j++){
+							if (objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()){
+								promedio += objetivosArch.get(j).getAvance();
+								cantidad++;
+							}
+								
+						}
+						
+						if (cantidad>0) promedio =promedio /cantidad;
+						persona.setAvance(promedio);
+						Personas.add(persona);
+						
+					}
+					
+				}
+			}
 			
-		} else {
-			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Error de conexción");
-			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			String [] nombres = new String[Personas.size()];
+			int[] avances = new int[Personas.size()];
+			
+			for (int i=0;i<Personas.size();i++){
+				nombres[i] = Personas.get(i).getNombreColaborador();
+				avances[i] = Personas.get(i).getAvance();
+			}
+			
+			//habilitamos javascript y flash
+			browser.getSettings().setJavaScriptEnabled(true);
+			browser.getSettings().setPluginsEnabled(true);
+			
+			DataObject data = new DataObject(nombres, avances);
+			
+			InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);
+			
+			browser.addJavascriptInterface(intface, "Android");
+			
+			
+			browser.loadUrl("file:///android_asset/ReporteBSCperspectivabarchart.html");
+			
 		}
 	}
 	

@@ -92,9 +92,9 @@ public class Reporte360Grafico extends Fragment{
 		String[] periodo = new String[] { 
 				"Periodo 1", "Periodo 2", "Periodo 3", "Periodo 4"};
 		
-		int[] requerido = new int[] { 18, 20, 10, 15 };
-		int[] dato360 = new int[] { 8, 5, 8, 2 };
-		int[] ponderado = new int[] { 3, 2, 4, 2 };
+		int[] requerido = new int[] { 10, 12, 14, 16 };
+		int[] dato360 = new int[] { 13, 15, 18, 20 };
+		int[] ponderado = new int[] { 30, 33, 36, 39 };
 
 	}
 	
