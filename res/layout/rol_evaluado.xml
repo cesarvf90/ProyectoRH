@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp">    
+    
+		<TextView 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="15dp"
+			android:text="Resultados de mis exámenes" />
+    
+	</LinearLayout>           
+    
+    
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp">    
+    
+        <ExpandableListView
+	        android:id="@+id/examenes"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" >
+	    </ExpandableListView>
+    
+	</LinearLayout>   
+	
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp">    
+    
+		<TextView 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="15dp"
+			android:text=" * 0 a 20 Muy mal - 21 a 40 Mal - 41 a 60 Regular - 61 a 80 Bien - 81 a 100 Muy bien" />
+    
+	</LinearLayout>       
+	
+</LinearLayout>
+
+
+    
