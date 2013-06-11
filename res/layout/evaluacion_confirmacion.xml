@@ -22,8 +22,8 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
-    
-        <TextView
+
+    <TextView
         android:id="@+id/puntaje_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,10 +112,10 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
         android:text="@string/registrar_evaluacion" />
-
+
     <TextView
         android:id="@+id/mensaje_confirmacion_evaluacion"
-        android:layout_width="240dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/finalizarEvaluacion"
         android:layout_centerHorizontal="true"

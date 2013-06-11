@@ -29,6 +29,7 @@ import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
@@ -52,6 +53,8 @@ public class ConfirmacionEvaluacion extends Fragment {
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
 	private int puntajeTotal = 0;
+
+	// private ProgressDialog progressDialog = null;
 
 	public ConfirmacionEvaluacion(OfertaLaboral oferta, Postulante postulante,
 			ArrayList<Funcion> funciones, ArrayList<Respuesta> respuestas,
@@ -104,6 +107,10 @@ public class ConfirmacionEvaluacion extends Fragment {
 		TextView tituloPuntajeText = (TextView) rootView
 				.findViewById(R.id.puntaje_title);
 		tituloPuntajeText.setText("Puntaje: " + obtenerPuntaje());
+		TextView mensajeConfirmacionText = (TextView) rootView
+				.findViewById(R.id.mensaje_confirmacion_evaluacion);
+		mensajeConfirmacionText
+				.setText("La evaluación aún no ha sido registrada, complete los campos y realice el registro.");
 
 		Button botonRegistrarEvaluacion = (Button) rootView
 				.findViewById(R.id.finalizarEvaluacion);
@@ -155,8 +162,10 @@ public class ConfirmacionEvaluacion extends Fragment {
 	}
 
 	private HttpResponse llamarServicioEnviarRespuestas() {
+		// progressDialog = new ProgressDialog(getActivity());
+		// progressDialog.setMessage("Registrando evaluación...");
+		// progressDialog.show();
 		JSONObject registroEvaluacion = generaRegistroEvaluacionJSON();
-
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(
 				Servicio.RegistrarRespuestasEvaluacionTerceraFase);
@@ -184,11 +193,14 @@ public class ConfirmacionEvaluacion extends Fragment {
 			JSONObject resultadoRegistroJSON = new JSONObject(resultstring);
 			manejarRespuesta(resultadoRegistroJSON);
 		} catch (ClientProtocolException e) {
-
+			// progressDialog.dismiss();
+			System.out.println("Excepcion al registrar " + e.toString());
 		} catch (IOException e) {
-
+			// progressDialog.dismiss();
+			System.out.println("Excepcion al registrar " + e.toString());
 		} catch (JSONException e) {
-
+			// progressDialog.dismiss();
+			System.out.println("Excepcion al registrar " + e.toString());
 		}
 		return null;
 	}
@@ -205,8 +217,10 @@ public class ConfirmacionEvaluacion extends Fragment {
 				mostrarConfirmacion();
 			}
 		} catch (JSONException e) {
+			// progressDialog.dismiss();
 			ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
 		} catch (NullPointerException ex) {
+			// progressDialog.dismiss();
 			ErrorServicio
 					.mostrarErrorComunicacion(ex.toString(), getActivity());
 		}
@@ -238,7 +252,7 @@ public class ConfirmacionEvaluacion extends Fragment {
 		try {
 			registroObject.put("idPostulante", postulante.getID());
 			registroObject.put("idOfertaLaboral", oferta.getID());
-			registroObject.put("descripcionFase", oferta.getEstado());
+			registroObject.put("descripcionFase", "Aprobado Jefe");
 			JSONObject evaluacionObject = new JSONObject();
 			evaluacionObject.put("FechaInicio", "02/06/2013 14:03:23");
 			evaluacionObject.put("FechaFin", "02/06/2013 14:33:54");
