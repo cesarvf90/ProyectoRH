@@ -19,8 +19,7 @@
 					var jsonString = Android.getData();
         			var arrAvance = JSON.parse(jsonString);
         			
-                
-                    var mychart = $("#chart").kendoChart({
+                    $("#chart").kendoChart({
                     	theme:"metro",
                         title: {
                             visible: false
@@ -65,29 +64,7 @@
                     });
                 }
 
-				function repaint( constumSeries ){
-			    $("#chart").kendoChart({
-                theme:"metro",
-			     title: {
-                            visible: false
-                        },
-                        legend: {
-                         	//visible: false
-                            position: "top"
-                        },
-                        seriesDefaults: {
-                            type: "column"
-                        },
-			    series: constumSeries,
-			    categoryAxis: {
-                            categories: arrAvance.periodo,
-                            line: {
-                                visible: false
-                            }
-                        },
-			}).data("kendoChart");
-			}
-				
+					
 
                 $(document).ready(function() {
                     setTimeout(function() {
@@ -95,34 +72,9 @@
                         // the initial animation is visible
                         createChart();
 
-                        $("#example").bind("kendo:skinChange", function(e) {
-                            console.log(mychart);
-						    var costumSeries = [];
-						    // pushea lo que selecciona en tu toggle será lo mismo
-						    if ($("input:first:checked","#toggleButton1").length == 1) {
-						        costumSeries.push({
-						            name: "Requerido",
-                           			data: arrAvance.requerido
-						        });
-						    }
-						
-						    if ($("input:last:checked","#toggleButton2).length == 1) {
-						        costumSeries.push({
-						            name: "360",
-                            data: arrAvance.dato360
-						        });
-						    }
-						    
-						    if ($("input:last:checked","#toggleButton3).length == 1) {
-						        costumSeries.push({
-						            name: "Ponderado",
-                            		data: arrAvance.ponderado
-						        });
-						    }
-						    
-						    repaint(costumSeries);
-                                                     
-                            //createChart();
+                        $("#example").bind("kendo:skinChange", function(e) {		    
+						                        
+                           createChart();
                         });
                     }, 400);
                 });

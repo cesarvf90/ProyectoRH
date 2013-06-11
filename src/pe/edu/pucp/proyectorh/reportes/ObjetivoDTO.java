@@ -15,8 +15,27 @@ public class ObjetivoDTO {
 	private int idperiodo;
 	private int BSCId;
 	 
-	 
+	private int ColaboradorID;
+	private String ColaboradorNombre;
 	
+      
+      
+	public int getColaboradorID() {
+		return ColaboradorID;
+	}
+
+	public void setColaboradorID(int colaboradorID) {
+		ColaboradorID = colaboradorID;
+	}
+
+	public String getColaboradorNombre() {
+		return ColaboradorNombre;
+	}
+
+	public void setColaboradorNombre(String colaboradorNombre) {
+		ColaboradorNombre = colaboradorNombre;
+	}
+
 	public int getPeso() {
 		return peso;
 	}
