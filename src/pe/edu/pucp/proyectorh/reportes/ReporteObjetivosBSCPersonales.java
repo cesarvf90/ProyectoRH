@@ -132,8 +132,8 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 				if (objetivosArch.get(i).getIdpadre()==idobjPadre){
 					
 					//este objetivo es el de personaxobjetivo, se muestran sus hijos
-					//personas.add(objetivosArch.get(i).getColaboradorId());
-					personas.add("colaborador " + i);
+					System.out.println(objetivosArch.get(i).getColaboradorNombre());
+					personas.add(objetivosArch.get(i).getColaboradorNombre());
 					
 					ArrayList<ObjetivoDTO> listaHijos = new ArrayList<ObjetivoDTO> (); 
 					
