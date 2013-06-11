@@ -62,9 +62,27 @@ public class ObjetivoAdapter extends BaseAdapter {
 			int avance = (objetivos.get(position).getAvance());
 			textAvance.setText(avance + "%");
  
+			
 			TextView textNumPer = (TextView) gridView
 					.findViewById(R.id.reportebscObjetivoNumPersonas);
-			textNumPer.setText(objetivos.get(position).getNumPersonas() + " personas");
+
+			if (!(objetivos.get(position).isEsIntermedio())){
+				textNumPer.setText("1 persona(s)");
+			}
+			//textNumPer.setText(objetivos.get(position).getNumPersonas() + " personas");
+			
+			if (objetivos.get(position).getHijos()>0){
+				TextView textNumSub = (TextView) gridView
+						.findViewById(R.id.reportebscObjetivoNumSubObj);
+				textNumSub.setText(objetivos.get(position).getHijos() + " sub-objetivos");
+			}
+			
+			if (objetivos.get(position).isEsIntermedio()){
+				TextView textGraf = (TextView) gridView
+						.findViewById(R.id.reportebscObjetivoGrafico);
+				textGraf.setText("Ver grafico");
+				
+			}
 			
 			setColor(avance, gridView );
 			

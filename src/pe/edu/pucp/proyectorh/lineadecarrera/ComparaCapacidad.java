@@ -133,6 +133,9 @@ public class ComparaCapacidad extends Fragment{
 			List<OfertaLaboralMobilePostulanteDTO> Convocatorias = gson.fromJson(result,
 					new TypeToken<List<OfertaLaboralMobilePostulanteDTO>>(){}.getType());
 			
+			Sesion objetoSesion = new Sesion();
+			objetoSesion.setOfertas(Convocatorias);
+			
 			listaConv = Convocatorias;
 			
 			for(int i =0; i<listaConv.size();i++){
