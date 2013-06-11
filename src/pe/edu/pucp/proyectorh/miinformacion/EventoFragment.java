@@ -142,11 +142,14 @@ public class EventoFragment extends Fragment {
 			TextView creadorTituloText, TextView invitadosTituloText) {
 		int color = 0;
 		if (Evento.EVENTO_EMPRESA.equals(evento.getTipoEvento())) {
-			color = Color.CYAN;
+			// color = Color.CYAN;
+			color = Color.parseColor("#0B6121");
 		} else if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
-			color = Color.MAGENTA;
+			// color = Color.MAGENTA;
+			color = Color.parseColor("#0B0B61");
 		} else if (Evento.EVENTO_ESPECIAL.equals(evento.getTipoEvento())) {
-			color = Color.YELLOW;
+			// color = Color.YELLOW;
+			color = Color.parseColor("#5F04B4");
 		}
 		nombreEventoText.setBackgroundColor(color);
 		creadorTituloText.setBackgroundColor(color);

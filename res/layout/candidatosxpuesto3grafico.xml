@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<TextView
+        android:id="@+id/DetalleCompCanxPuestoTitulografico"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Detalle por competencias"
+        android:gravity="left"
+        android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp" >
+    </TextView>
+    
+<TextView
+        android:id="@+id/DetalleCompCanxPuestoNombreColab"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:layout_below="@+id/DetalleCompCanxPuestoTitulografico"
+        android:layout_marginLeft="30dp"
+		android:layout_marginTop="20dp" >
+    </TextView>
+    
+ <WebView
+	    android:id="@+id/CanxPuestodetalleComp1WebkitGLineal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_marginTop="30dp"
+	    android:layout_below="@+id/DetalleCompCanxPuestoNombreColab"/> 
+    
+ <Button
+        android:id="@+id/CanxPuestobtnDetalle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Detalle"
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentBottom="true"
+        /> 
+        
+
+</RelativeLayout>
