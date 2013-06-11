@@ -320,6 +320,7 @@ public class CandidatosxPuesto extends Fragment {
 		private int IdPostulante;
 		private String Nombre;
 		private List<CompetenciaConPonderadoDTO> CompetenciasPostulante;
+		private int MatchLevel;
 		
 		public int getIdPostulante() {
 			return IdPostulante;
@@ -344,6 +345,14 @@ public class CandidatosxPuesto extends Fragment {
 
 		public void setCompetenciasPostulante(List<CompetenciaConPonderadoDTO> competenciaspostulante) {
 			CompetenciasPostulante = competenciaspostulante;
+		}
+		
+		public int getMatchLevel() {
+			return MatchLevel;
+		}
+
+		public void setMatchLevel(int matchlevel) {
+			MatchLevel = matchlevel;
 		}
 	}
 }

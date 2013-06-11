@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto.OfertaLaboralMobileJefeDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
@@ -55,8 +56,8 @@ public class ComparaCapacidadPersonal extends Fragment {
 		//int[] avance = new int[] {100};
 		//int[] avance2 = new int[] {84}; 
 		
-		int match = getArguments().getInt("match");
-		int[] arrmatch = new int[] {match};
+		int matchlevel = getArguments().getInt("match");
+		int[] arrmatch = new int[] {matchlevel};
 		
 	}
 	
@@ -115,8 +116,25 @@ public class ComparaCapacidadPersonal extends Fragment {
 		listaN = new ArrayList<String>();
 		
 		usuario = LoginActivity.usuario.getUsername();
-		obtenerlistaRequisitos(usuario);
+		//obtenerlistaRequisitos(usuario);
 		
+		Sesion objetoSesion = new Sesion();
+		List<OfertaLaboralMobilePostulanteDTO> Convocatorias = objetoSesion.getOfertas();
+		
+		listaConv = Convocatorias;
+		
+		for(int i =0; i<listaConv.size();i++){
+			
+			if (listaConv.get(i).getID() == idConvocatoria){
+				listaReq = listaConv.get(i).getFunciones(); 
+				for (int j=0; j<listaReq.size();j++){
+					listaN.add(listaReq.get(j).getNombre());
+				}	
+			}
+		}
+		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaN);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerRequisitos.setAdapter(dataAdapter);
 		
 		String tituloconv = getArguments().getString("titulo");
 		String descrip = getArguments().getString("desc");
