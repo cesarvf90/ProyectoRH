@@ -3,6 +3,7 @@ package pe.edu.pucp.proyectorh.objetivos;
 import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.model.AvanceDTO;
 import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter.TableFila;
@@ -24,7 +25,7 @@ public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
 	
 	private ArrayList<ObjetivosBSC> groups;
 	 
-    private ArrayList<ArrayList<AvanceDeObjetivo>> children;
+    private ArrayList<ArrayList<AvanceDTO>> children;
 
     private ArrayList<Integer> contadorImpresionHijos;
     
@@ -34,18 +35,13 @@ public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
 	boolean flagMostrar;
 	boolean primeraVez=true;
 
-	public AvanceExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<AvanceDeObjetivo>> children) {
+	public AvanceExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<AvanceDTO>> children) {
         this.contexto = contexto;
         this.groups = groups;
         this.children = children;
-		contadorImpresionHijos = new ArrayList<Integer>();
-		
-		for(int i=0;i<groups.size();i++){
-			contadorImpresionHijos.add(0);
-		}
 	}
 	
-	public void actualizaHijos(ArrayList<ArrayList<AvanceDeObjetivo>> children){
+	public void actualizaHijos(ArrayList<ArrayList<AvanceDTO>> children){
 		this.children = children;
 	}
 	 
@@ -58,7 +54,7 @@ public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
 
 
     @Override
-    public AvanceDeObjetivo getChild(int groupPosition, int childPosition) {
+    public AvanceDTO getChild(int groupPosition, int childPosition) {
         return children.get(groupPosition).get(childPosition);
     }
 
@@ -76,9 +72,12 @@ public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.avances_expandablelist_child, null);           
         }
         
-   	    AvanceDeObjetivo avance = getChild(groupPosition, childPosition);
-		TextView alcance = (EditText) convertView.findViewById(R.id.alcanceLogrado);
-		alcance.setText(avance.getLogroAlcanzado());
+   	    AvanceDTO avance = getChild(groupPosition, childPosition);
+   	    TextView alcance = (TextView) convertView.findViewById(R.id.alcanceLogrado);
+		alcance.setText("GG");
+		
+   	    TextView alcanceDesc = (TextView) convertView.findViewById(R.id.alcanceDesc);
+   		alcanceDesc.setText("22");
 			
 	    return convertView;       
     }

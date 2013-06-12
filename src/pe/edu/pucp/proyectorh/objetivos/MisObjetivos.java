@@ -90,12 +90,6 @@ public class MisObjetivos extends Fragment {
 				@Override
 				public boolean onGroupClick(ExpandableListView parent, View v,
 						int groupPosition, long id) {
-				/*	System.out.println("Grupo " + (groupPosition));
-					if (groupPosition != ofertaSeleccionadaPosicion) {
-						mostrarOfertaSeleccionada(ofertasList.get(groupPosition));
-						mostrarPostulanteVacio();
-						ofertaSeleccionadaPosicion = groupPosition;
-					}*/
 					return false;
 				}
 			});
@@ -105,26 +99,7 @@ public class MisObjetivos extends Fragment {
 				@Override
 				public boolean onChildClick(ExpandableListView parent, View v,
 						int groupPosition, int childPosition, long id) {
-			/*		if (groupPosition != ofertaSeleccionadaPosicion) {
-						// Si se selecciono un postulante de una oferta distinta a
-						// la que se esta mostrando se refresca tambien el detalle
-						// de la oferta
-						mostrarOfertaSeleccionada(ofertasList.get(groupPosition));
-						mostrarPostulanteSeleccionado(ofertasList
-								.get(groupPosition).getPostulantes()
-								.get(childPosition));
-						postulanteSeleccionadoPosicion = childPosition;
-						ofertaSeleccionadaPosicion = groupPosition;
-					} else if ((childPosition != postulanteSeleccionadoPosicion)
-							&& (groupPosition == ofertaSeleccionadaPosicion)) {
-						// Si se selecciono un postulante de la misma oferta que se
-						// esta mostrando solo se refresca el detalle del postulante
-						mostrarPostulanteSeleccionado(ofertasList
-								.get(groupPosition).getPostulantes()
-								.get(childPosition));
-						postulanteSeleccionadoPosicion = childPosition;
-					}*/
-					return false;
+						return false;
 				}
 			});
 
@@ -132,35 +107,6 @@ public class MisObjetivos extends Fragment {
 			listaObjs.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> arg0, View view,int position, long id) {
-					/*AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					builder.setTitle("Evaluar postulante");
-					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
-					builder.setCancelable(false);
-					builder.setCancelable(false);
-					builder.setNegativeButton("Cancelar",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									dialog.cancel();
-								}
-							});
-					builder.setPositiveButton("Evaluar",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
-									getActivity()
-											.getSupportFragmentManager()
-											.beginTransaction()
-											.replace(R.id.opcion_detail_container,
-													fragment).commit();
-								}
-							});
-					builder.create();
-					builder.show();*/
 					return false;
 				}
 			});
