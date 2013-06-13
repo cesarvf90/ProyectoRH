@@ -111,9 +111,9 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 
 				InfoColaborador infoColaborador = new InfoColaborador();
 				infoColaborador.setNombres(colaborador.getString("Nombre") == "null" ? " * no disponible" : colaborador.getString("Nombre"));
-				infoColaborador.setApellidos(colaborador.getString("ApellidoPaterno") == "null" ? " * no disponible" : colaborador.getString("ApellidoPaterno")
+				infoColaborador.setApellidos((colaborador.getString("ApellidoPaterno") == "null" ? " * no disponible" : colaborador.getString("ApellidoPaterno"))
 						+ " "
-						+ colaborador.getString("ApellidoMaterno") == "null" ? " * no disponible" : colaborador.getString("ApellidoMaterno"));
+						+ (colaborador.getString("ApellidoMaterno") == "null" ? " * no disponible" : colaborador.getString("ApellidoMaterno")));
 				infoColaborador.setArea(area.getString("Nombre") == "null" ? " * no disponible" : area.getString("Nombre"));
 				infoColaborador.setPuesto(puesto.getString("Nombre") == "null" ? " * no disponible" : puesto.getString("Nombre"));
 				infoColaborador.setEmail(colaborador

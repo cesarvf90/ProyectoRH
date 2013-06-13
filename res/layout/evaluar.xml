@@ -7,7 +7,7 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
        >
         
@@ -30,13 +30,15 @@
 	                android:text="Programador Senior"
 	                android:layout_width="wrap_content"
 	       			android:layout_height="wrap_content"
-	       			android:gravity="left"/>
+	       			android:gravity="left"
+	       			android:textSize="25sp"/>
 	            
 	             <TextView 
 	                android:text="22 años"
 	                android:layout_width="wrap_content"
 	       			android:layout_height="wrap_content"
-	       			android:gravity="right"/>
+	       			android:gravity="right"
+	       			android:textSize="25sp"/>
 	            
 	    	</TableLayout>
 	    	
@@ -46,16 +48,16 @@
 	        android:orientation="horizontal">
 	             
 	        	 <TextView 
-	                android:text="Área:"
+	                android:text="Área:   "
 	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="left"/>
+	       			android:layout_height="wrap_content" 
+	       			android:textSize="25sp"/>
 	        	 
 	        	 <TextView 
 	                android:text="Desarrollo"
 	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="right"/>
+	       			android:layout_height="wrap_content" 
+	       			android:textSize="25sp"/>
 	        	 
 	    	</TableLayout>
 	    	
@@ -66,26 +68,115 @@
 	        android:orientation="horizontal">
 	             
 	        	 <TextView 
-	                android:text="Fecha de Ingreso:"
+	                android:text="Fecha de Ingreso:    "
 	                android:layout_width="wrap_content"
 	       			android:layout_height="wrap_content"
-	       			android:gravity="left"/>
+	       			android:textSize="25sp"/>
 	        	 
 	        	 <TextView 
 	                android:text="04/06/2013"
 	                android:layout_width="wrap_content"
 	       			android:layout_height="wrap_content"
-	       			android:gravity="right"/>
+	       			android:textSize="25sp"/>
 	        	 
 	    	</TableLayout>	        
 	        
 	    </TableLayout>
 	    
     </TableLayout>
-     <TableLayout
-        android:id="@+id/layEvaluacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+     
+          <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:baselineAligned="false"
+            android:orientation="vertical">
 
- 
+            <TextView
+                android:id="@+id/pregunta1Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/Question" 
+                />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta1Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp" />
+
+            <TextView
+                android:id="@+id/pregunta2Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta2Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp" />
+
+            <TextView
+                android:id="@+id/pregunta3Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta3Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingBottom="22dp" />
+
+            <TextView
+                android:id="@+id/pregunta4Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/Question" />
+
+            <RatingBar
+                android:id="@+id/ratingPregunta4Eva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingBottom="22dp" />
+        </LinearLayout>
+
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/atrasEvaluacionEva"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="Atrás" />
+
+        <Button
+            android:id="@+id/finalizarEva"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".4"
+            android:text="Finalizar evaluación" />
+        
+        <Button
+            android:id="@+id/siguienteEvaluacionEva"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".3"
+            android:text="Siguiente" />
+
+    </LinearLayout>
 </LinearLayout>

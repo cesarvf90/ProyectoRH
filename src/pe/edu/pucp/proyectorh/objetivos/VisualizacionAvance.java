@@ -34,7 +34,7 @@ public class VisualizacionAvance extends Fragment {
 	View rootView;
 	Context contexto;
 	
-	ExpandableListView listaProcesos;
+	ExpandableListView listaObjs;
 	
 	private Spinner spinnerPeriodo;
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
@@ -42,7 +42,7 @@ public class VisualizacionAvance extends Fragment {
 	int periodoBSCActual;	
 	TableLayout lay;
 	private ArrayList<ObjetivosBSC> groups;
-	private ArrayList<ArrayList<AvanceDeObjetivo>> childs;
+	private ArrayList<ArrayList<AvanceDTO>> childs;
 	AvanceExpandableAdapter adapter;
 	
 	public VisualizacionAvance(){
@@ -91,17 +91,17 @@ public class VisualizacionAvance extends Fragment {
     	
     	rutaLlamada = Servicio.ListarMisObjetivos+"?idUsuario="+LoginActivity.getUsuario().getID()+"&idPeriodo="+periodoBSCActual; 
     	
-    	System.out.println("Ruta="+rutaLlamada);
+    	System.out.println("RutaListarObj="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada);
 	}
 	
 	public class ListadoObjetivos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
+			System.out.println("RecibidoListadoObj: " + result.toString());
 			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);	
 			groups = new ArrayList<ObjetivosBSC>();
-			childs = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+			childs = new ArrayList<ArrayList<AvanceDTO>>();
 			loadData(listObjetivosBSC);
 		}
 	}
@@ -110,17 +110,12 @@ public class VisualizacionAvance extends Fragment {
 	    	for(int i=0;i<listObjetivosPadre.size();i++){
 	    		System.out.println("agrega obj="+listObjetivosPadre.get(i).Nombre);
 	    		groups.add(listObjetivosPadre.get(i));
-	      	}
+	    		childs.add(listObjetivosPadre.get(i).LosProgresos);
+	    	}
 	    	
-	    	//ListadoObjetivosChild lo = new ListadoObjetivosChild();
-	    	String rutaLlamada ="";
-	
-	    	System.out.println("Ruta-Hijos="+rutaLlamada);
-			//Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
-		
 	    	System.out.println("new adapter");
 	    	adapter = new AvanceExpandableAdapter(contexto, groups, childs);
-	    	//listaObjs.setAdapter(adapter);
+	    	listaObjs.setAdapter(adapter);
 	    }
 	
 	
@@ -140,7 +135,35 @@ public class VisualizacionAvance extends Fragment {
 		ListadoPeriodos lp = new ListadoPeriodos();
 		Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
 
+		listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
+		listaObjs.setLongClickable(true);
 
+		// Se muestra la informacion de la oferta
+		listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v,
+					int groupPosition, long id) {
+				return false;
+			}
+		});
+
+		// Se muestra la informacion de el postulante
+		listaObjs.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+					return false;
+			}
+		});
+
+		// Se dirige a la evaluacion del postulante
+		listaObjs.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view,int position, long id) {
+				return false;
+			}
+		});
+		
 		return rootView;
 	}
 

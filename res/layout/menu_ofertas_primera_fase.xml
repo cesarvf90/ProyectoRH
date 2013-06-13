@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:paddingLeft="10px"
-            android:text="Evaluaciones Pendientes - 2da Fase"
+            android:text="Evaluaciones Pendientes - 1ra Fase"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />

@@ -79,4 +79,13 @@
         android:paddingBottom="10px"/>
     </TableRow>
     
+    <RelativeLayout>
+    <Button
+        android:id="@+id/ColaboradorSelecbtnConsultar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consultar"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="2dp"  />
+    </RelativeLayout>
 </TableLayout>

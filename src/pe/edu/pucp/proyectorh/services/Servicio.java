@@ -71,25 +71,50 @@ public class Servicio {
 
 	public final static String ListarPeriodos = "http://dp2kendo.apphb.com/WSPeriodos/ListarPeriodos";
 
+	//PARA OBJETIVOS DEL BSC
 	public final static String ListarObjetivosBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/ListarObjetivosEmpresa";
 
 	public final static String ListarAllObjetivosBSC = "http://dp2kendo.apphb.com/WSObjetivosEmpresa/GetAllObjetivosEmpresa";
 	
-	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivos";
-
 	public final static String CrearObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/CrearObjetivoEmpresa";
 
 	public final static String ActualizaObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/UpdateObjetivoEmpresa";
 
 	public final static String EliminarObjetivoBSC = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosEmpresa/Destroy";
+
+	//PARA MIS PROPIOS OBJETIVOS
+	public final static String ListarMisObjetivos = "http://dp2kendo.apphb.com/WSMisObjetivos/GetAllMisObjetivos";
+
+	public final static String CrearObjetivoPropio = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/Create";
+
+	public final static String ActualizaObjetivoPropio = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/Update";
+
+	public final static String EliminarObjetivoPropio = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/Destroy";
 	
 	public final static String ListarMisObjetivosSuperiores = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/GetAllMisObjetivosSuperiores";
-
+	
+	//PARA OBJETIVOS PARA MIS SUBORDINADOS (EQUIPO DE TRABAJO)
 	public final static String ListarObjetivosParaSubordinados = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/ListarObjetivosDeSubordinados";
 	
+	public final static String CrearObjetivoSub = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/Create";
+
+	public final static String ActualizaObjetivoSub = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/Update";
+
+	public final static String EliminarObjetivoSub = "http://dp2kendo.apphb.com/Objetivos/WSObjetivosSubordinados/Destroy";
+	
+	//PARA MANEJO DE AVANCES DE OBJETIVOS
+	public final static String CrearAvance = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/RegistrarAvance";
+	
+	public final static String ModificarAvance = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/ModificarAvance";	
+	
+	
+	//PARA EVALUACION 360
 	public final static String ListarProcesosEvaluacion360 = "";
 	
 	public final static String ListarMisEvaluados360 = "";
+	
+	
+	
 	
 	
 	

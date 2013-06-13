@@ -253,8 +253,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 										String comments = comentarios.getText()
 												.toString();
 										comments = comments.trim();
-										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");
+										//comments = comments.replace(" ", "_");
+										//comments = comments.replace("&", "_");
 										actualizarEstadoSolicitudOfertaLaboral(
 												IDSolicitudSeleccionada,
 												"Aprobado", comments);
@@ -302,8 +302,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 										String comments = comentarios.getText()
 												.toString();
 										comments = comments.trim();
-										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");
+										//comments = comments.replace(" ", "_");
+										//comments = comments.replace("&", "_");
 										actualizarEstadoSolicitudOfertaLaboral(
 												IDSolicitudSeleccionada,
 												"Rechazado", comments);
