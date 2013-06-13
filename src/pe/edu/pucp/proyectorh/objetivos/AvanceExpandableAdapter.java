@@ -73,12 +73,16 @@ public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
         }
         
    	    AvanceDTO avance = getChild(groupPosition, childPosition);
+   	    System.out.println("avance="+avance.datos());
    	    TextView alcance = (TextView) convertView.findViewById(R.id.alcanceLogrado);
-		alcance.setText("GG");
+   	    alcance.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+		alcance.setText(String.valueOf(avance.Valor));
 		
    	    TextView alcanceDesc = (TextView) convertView.findViewById(R.id.alcanceDesc);
-   		alcanceDesc.setText("22");
+   	    alcanceDesc.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+   		alcanceDesc.setText(avance.Comentario);  
 			
+   		
 	    return convertView;       
     }
 

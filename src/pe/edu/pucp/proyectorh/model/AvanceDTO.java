@@ -10,4 +10,7 @@ public class AvanceDTO {
 	public int ValorDelJefe;
 	public String Comentario;
 
+	public String datos(){
+		return "ID="+ID+",Valor="+Valor+",Comentario="+Comentario;
+	}
 }
