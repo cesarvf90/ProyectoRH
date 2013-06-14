@@ -114,7 +114,7 @@ public class Servicio {
 	public final static String ListarMisEvaluados360 = "";
 	
 	
-	
+	public final static String ConsultarSubordinados = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo";
 	
 	
 	

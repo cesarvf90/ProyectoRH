@@ -1,9 +1,6 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.DataObject;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.InterfaceChartLineal;
-
 import com.google.gson.Gson;
 
 import android.content.Context;

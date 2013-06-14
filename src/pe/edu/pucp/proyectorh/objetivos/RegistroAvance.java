@@ -9,11 +9,6 @@ import org.json.JSONObject;
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivos;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivosChild;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoPeriodos;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa.TableFila;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
@@ -21,18 +16,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 
 
 public class RegistroAvance extends Fragment {

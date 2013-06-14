@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.AvanceDTO;
-import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
 import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter.TableFila;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;

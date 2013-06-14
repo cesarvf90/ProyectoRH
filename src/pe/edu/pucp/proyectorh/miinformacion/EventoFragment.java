@@ -117,7 +117,7 @@ public class EventoFragment extends Fragment {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				TextView view = (TextView) super.getView(position, convertView,
 						parent);
-				((TextView) view)
+				view
 						.setTypeface(Typeface.createFromAsset(getActivity()
 								.getAssets(), EstiloApp.FORMATO_LETRA_APP));
 				return view;
