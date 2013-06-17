@@ -64,8 +64,11 @@ public class Objetivo {
 			
 			List<AvanceDeObjetivo> avanceDeParticiparEnTalleres = new ArrayList<AvanceDeObjetivo>();
 			
-			avanceDeParticiparEnTalleres.add(new AvanceDeObjetivo("10", new SimpleDateFormat("dd/MM/yyyy").parse("11/01/2013"), 10));
-			avanceDeParticiparEnTalleres.add(new AvanceDeObjetivo("20", new SimpleDateFormat("dd/MM/yyyy").parse("21/01/2013"), 20));
+//			avanceDeParticiparEnTalleres.add(new AvanceDeObjetivo("10", new SimpleDateFormat("dd/MM/yyyy").parse("11/01/2013"), 10));
+//			avanceDeParticiparEnTalleres.add(new AvanceDeObjetivo("20", new SimpleDateFormat("dd/MM/yyyy").parse("21/01/2013"), 20));
+//			
+			avanceDeParticiparEnTalleres.add(new AvanceDeObjetivo("10", "11/01/2013", 10));
+			avanceDeParticiparEnTalleres.add(new AvanceDeObjetivo("20", "21/01/2013", 20));
 			
 			objetivosDataDePrueba.add(new Objetivo(
 					"1", "Participar en talleres de gestión de la innovación", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2013"),
@@ -99,6 +102,10 @@ public class Objetivo {
 	}
 
 
+
+	public Objetivo() {
+		super();
+	}
 
 	public String getID() {
 		return ID;
@@ -153,9 +160,15 @@ public class Objetivo {
 				+ dueño + "]";
 	}	
 	
+//	public String descritoBrevemente()
+//	{
+//		return descripcion + " (Valor de " + peso +  "%): Lo alcanzaré el " + new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")).format(fechaFin);
+//	}
+//	
 	public String descritoBrevemente()
 	{
-		return descripcion + " (Valor de " + peso +  "%): Lo alcanzaré el " + new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")).format(fechaFin);
-	}
+//		return descripcion + " (Valor de " + peso +  "%): Lo alcanzaré el " + new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES")).format(fechaFin);
+		return descripcion + " (Valor de " + peso +  "%)";
+	}	
 	
 }

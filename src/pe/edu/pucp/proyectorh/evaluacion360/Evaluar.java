@@ -1,31 +1,15 @@
 package pe.edu.pucp.proyectorh.evaluacion360;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
-import pe.edu.pucp.proyectorh.objetivos.ObjetivosExpandableAdapter;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivosChild;
-import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoPeriodos;
-import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 
 
 public class Evaluar extends Fragment {
@@ -38,7 +22,8 @@ public class Evaluar extends Fragment {
 	private ArrayList<ArrayList<Evaluados360>> childs;
 	
 	Evaluacion360ExpandableAdapater adapter;
-	
+	private int numPagina;
+	private int totalPaginas;
 	int modoPrueba=1;
 	
 	public Evaluar(){
@@ -48,6 +33,47 @@ public class Evaluar extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	private void activarBotonSiguiente() {
+		Button botonSiguiente = (Button) rootView
+				.findViewById(R.id.siguienteEvaluacionEva);
+		botonSiguiente.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (numPagina < totalPaginas - 1) {
+					//guardarRespuestas();
+					numPagina++;
+					//refreshLayout();
+				} else {
+					Toast.makeText(getActivity(),
+							"Estas son las últimas preguntas de la evaluación",
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
+
+	private void activarBotonAtras() {
+		Button botonAtras = (Button) rootView
+				.findViewById(R.id.atrasEvaluacionEva);
+		botonAtras.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (numPagina > 0) {
+					//guardarRespuestas();
+					numPagina--;
+					//refreshLayout();
+				} else {
+					Toast.makeText(
+							getActivity(),
+							"Estas son las primeras preguntas de la evaluación",
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
 
 	
@@ -63,19 +89,30 @@ public class Evaluar extends Fragment {
 		 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 		 */
 		QuickContactBadge imagen = (QuickContactBadge) rootView.findViewById(R.id.evaluacionImagenContacto);
-		TableLayout lay = (TableLayout)rootView.findViewById(R.id.layEvaluacion);
-		TableLayout lay2 = new TableLayout(contexto);
-    	for (int i=0;i<10;i++){
-    		String texto = "capacidad "+i;
-    		TextView txt = new TextView(contexto);
-    		txt.setText(texto);
+		
+		TextView p1 = (TextView)rootView.findViewById(R.id.pregunta1Eva);
+		p1.setText("¿Cuenta con la capacidad 1?");
+		TextView p2 = (TextView)rootView.findViewById(R.id.pregunta2Eva);
+		p2.setText("¿Cuenta con la capacidad 2?");
+		TextView p3 = (TextView)rootView.findViewById(R.id.pregunta3Eva);
+		p3.setText("¿Cuenta con la capacidad 3?");
+		TextView p4 = (TextView)rootView.findViewById(R.id.pregunta4Eva);
+		p4.setText("¿Cuenta con la capacidad 4?");
+		
+		
+		//TableLayout lay = (TableLayout)rootView.findViewById(R.id.layEvaluacion);
+		//TableLayout lay2 = new TableLayout(contexto);
+    	//for (int i=0;i<10;i++){
+    		//String texto = "capacidad "+i;
+    		//TextView txt = new TextView(contexto);
+    		//txt.setText(texto);
     		
-    		RatingBar estrellitas = new RatingBar(contexto);
+    		//RatingBar estrellitas = new RatingBar(contexto);
     		
-    		lay2.addView(txt);
-    		lay2.addView(estrellitas);
-    	}
-    	lay.addView(lay2);
+    		//lay2.addView(txt);
+    		//lay2.addView(estrellitas);
+    	//}
+    	//lay.addView(lay2);
 
 		return rootView;
 	}

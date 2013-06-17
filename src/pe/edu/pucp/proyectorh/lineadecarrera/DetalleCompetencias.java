@@ -10,15 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto.OfertaLaboralMobileJefeDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.CompetenciaConPonderadoDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteServices;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.DataObject;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.InterfaceChartLineal;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.ObjetivosXPersonaRDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.getAvances;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
@@ -30,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetalleCompetencias extends Fragment  {

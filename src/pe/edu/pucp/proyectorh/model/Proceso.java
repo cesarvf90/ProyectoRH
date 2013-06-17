@@ -1,7 +1,6 @@
 package pe.edu.pucp.proyectorh.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Proceso {
 

@@ -36,6 +36,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Funcionalidad para que el usuario consulte sus contactos 
+ *
+ */
 public class ContactosFragment extends Fragment {
 
 	private View rootView;
@@ -124,18 +128,15 @@ public class ContactosFragment extends Fragment {
 		/* Create the Intent */
 		final Intent emailIntent = new Intent(
 				android.content.Intent.ACTION_SEND);
-
 		/* Fill it with Data */
 		emailIntent.setType("plain/text");
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
 				new String[] { "to@email.com" });
 		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
 		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
-
 		/* Send it off to the Activity-Chooser */
 		getActivity().startActivity(
 				Intent.createChooser(emailIntent, "Send mail..."));
-
 	}
 
 	public class ObtencionContactos extends AsyncCall {
@@ -245,9 +246,8 @@ public class ContactosFragment extends Fragment {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				TextView view = (TextView) super.getView(position, convertView,
 						parent);
-				((TextView) view)
-						.setTypeface(Typeface.createFromAsset(getActivity()
-								.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+				view.setTypeface(Typeface.createFromAsset(getActivity()
+						.getAssets(), EstiloApp.FORMATO_LETRA_APP));
 				return view;
 			}
 		};
