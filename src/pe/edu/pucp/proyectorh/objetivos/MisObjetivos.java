@@ -13,10 +13,12 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.FocusFinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -82,15 +84,30 @@ public class MisObjetivos extends Fragment {
 			System.out.println("setea a cero");
 	    	groups= new ArrayList<ObjetivosBSC>();
 	    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
-			listaObjs.setLongClickable(true);
-
+			//listaObjs.setLongClickable(true);
+	    	listaObjs.setFocusable(false);
+	    	listaObjs.setFocusableInTouchMode(false);
 	        
 			// Se muestra la informacion de la oferta
 			listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
 				@Override
 				public boolean onGroupClick(ExpandableListView parent, View v,
 						int groupPosition, long id) {
+					System.out.println("------------>Clickeo papa gp="+groupPosition);
+
 					return false;
+				}
+			});
+			
+			
+			listaObjs.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					System.out.println("------------>Clickeo item");
+					
+					// TODO Auto-generated method stub
+					
 				}
 			});
 
@@ -99,17 +116,11 @@ public class MisObjetivos extends Fragment {
 				@Override
 				public boolean onChildClick(ExpandableListView parent, View v,
 						int groupPosition, int childPosition, long id) {
+						System.out.println("------------>Clickeo hijo gp="+groupPosition+ " y chp="+childPosition);
 						return false;
 				}
 			});
 
-			// Se dirige a la evaluacion del postulante
-			listaObjs.setOnItemLongClickListener(new OnItemLongClickListener() {
-				@Override
-				public boolean onItemLongClick(AdapterView<?> arg0, View view,int position, long id) {
-					return false;
-				}
-			});
 		return rootView;
 	}
 	
