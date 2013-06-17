@@ -139,6 +139,7 @@ public class ContactosFragment extends Fragment {
 				colaborador.getFechaIngreso());
 		mostrarTexto(R.id.miinfo_contactos_correo,
 				colaborador.getCorreoElectronico());
+		mostrarTexto(R.id.miinfo_contactos_telefono, colaborador.getTelefono());
 	}
 
 	private void llamarContacto(String telefono) {

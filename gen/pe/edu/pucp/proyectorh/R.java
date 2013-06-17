@@ -449,6 +449,7 @@ public final class R {
         public static final int agenda_title=0x7f06002b;
         public static final int app_name=0x7f060000;
         public static final int area_persona=0x7f06003d;
+        public static final int cadena_vacia=0x7f060043;
         public static final int comentarios=0x7f060034;
         public static final int contactos_title=0x7f06000c;
         public static final int correo_persona=0x7f060040;
