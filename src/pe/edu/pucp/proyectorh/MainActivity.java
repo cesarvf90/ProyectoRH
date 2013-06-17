@@ -150,6 +150,13 @@ public class MainActivity extends FragmentActivity implements
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
+				
+				if ("2".equals(id)) {
+					ReportePersonalBSCPrincipal fragment = new ReportePersonalBSCPrincipal();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
 
 				if ("3".equals(id)) {
 					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();

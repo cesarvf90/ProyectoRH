@@ -76,12 +76,7 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 	    	return json;
 	    }
 
-	    
-	    public String getTitulo(){
 
-	    	return "Cumplimiento";
-	    }
-	    
 	}
 	
 	@Override
