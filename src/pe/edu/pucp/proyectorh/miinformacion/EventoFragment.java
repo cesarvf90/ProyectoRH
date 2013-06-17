@@ -89,7 +89,7 @@ public class EventoFragment extends Fragment {
 		// Datos del creador
 		TextView nombreCreadorText = (TextView) rootView
 				.findViewById(R.id.nombre_creador_content);
-		nombreCreadorText.setText(evento.getCreador().getNombres());
+		nombreCreadorText.setText(evento.getCreador().getNombreCompleto());
 		TextView areaCreadorText = (TextView) rootView
 				.findViewById(R.id.area_creador_content);
 		areaCreadorText.setText(evento.getCreador().getArea());

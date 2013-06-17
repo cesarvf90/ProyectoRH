@@ -96,6 +96,7 @@ public class SemanaFragment extends Fragment {
 			Button eventoButton = new Button(rootView.getContext());
 
 			eventoButton.setText(evento.getNombre());
+			eventoButton.setTextColor(Color.WHITE);
 			eventoButton.setTag(evento.getID());
 			pintarEvento(eventoView, evento);
 			diaLayout.addView(eventoView);
@@ -124,13 +125,10 @@ public class SemanaFragment extends Fragment {
 
 	private void pintarEvento(View eventoButton, Evento evento) {
 		if (Evento.EVENTO_EMPRESA.equals(evento.getTipoEvento())) {
-			// eventoButton.setBackgroundColor(Color.CYAN);
 			eventoButton.setBackgroundColor(Color.parseColor("#0B6121"));
 		} else if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
-			// eventoButton.setBackgroundColor(Color.MAGENTA);
 			eventoButton.setBackgroundColor(Color.parseColor("#0B0B61"));
 		} else if (Evento.EVENTO_ESPECIAL.equals(evento.getTipoEvento())) {
-			// eventoButton.setBackgroundColor(Color.YELLOW);
 			eventoButton.setBackgroundColor(Color.parseColor("#5F04B4"));
 		}
 	}

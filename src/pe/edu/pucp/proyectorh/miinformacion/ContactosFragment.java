@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.miinformacion;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.connection.DataBaseContactosConnection;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
@@ -37,13 +39,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Funcionalidad para que el usuario consulte sus contactos 
- *
+ * Funcionalidad para que el usuario consulte sus contactos
+ * 
  */
 public class ContactosFragment extends Fragment {
 
 	private View rootView;
 	private ArrayList<Colaborador> contactos;
+	private DataBaseContactosConnection dbConnection;
 
 	public ContactosFragment() {
 	}
@@ -58,9 +61,21 @@ public class ContactosFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.mi_info_contactos, container,
 				false);
-		llamarServicioContactos();
+		if (LoginActivity.getUsuario().isSeTrajoContactos()) {
+			obtenerContactosBDInterna();
+		} else {
+			llamarServicioContactos();
+		}
 		customizarEstilos(getActivity(), rootView);
 		return rootView;
+	}
+
+	private void obtenerContactosBDInterna() {
+		createBBDD();
+		dbConnection.openDataBase();
+		contactos = dbConnection.obtenerContactos();
+		dbConnection.close();
+		mostrarContactos();
 	}
 
 	private void customizarEstilos(Context context, View view) {
@@ -81,6 +96,18 @@ public class ContactosFragment extends Fragment {
 
 	private void llamarServicioContactos() {
 		obtenerContactos(LoginActivity.getUsuario());
+	}
+
+	/**
+	 * Se crea la base de datos en las carpetas de la aplicacion
+	 */
+	public void createBBDD() {
+		dbConnection = new DataBaseContactosConnection(this.getActivity());
+		try {
+			dbConnection.createDataBase();
+		} catch (IOException ioe) {
+			throw new Error("Unable to create database");
+		}
 	}
 
 	/**
@@ -185,8 +212,10 @@ public class ContactosFragment extends Fragment {
 								.getString("CorreoElectronico"));
 						contactos.add(contacto);
 					}
+					LoginActivity.getUsuario().setSeTrajoContactos(true);
 					mostrarContactos();
 					ocultarMensajeProgreso();
+					persistirContactosBDInterna();
 				}
 			} catch (JSONException e) {
 				ocultarMensajeProgreso();
@@ -224,6 +253,13 @@ public class ContactosFragment extends Fragment {
 			builder.show();
 			return false;
 		}
+	}
+
+	public void persistirContactosBDInterna() {
+		createBBDD();
+		dbConnection.openDataBase();
+		dbConnection.insertarContactos(contactos);
+		dbConnection.close();
 	}
 
 	private void mostrarContactos() {
