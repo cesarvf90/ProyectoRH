@@ -1,15 +1,7 @@
 package pe.edu.pucp.proyectorh.evaluacion360;
 
-import java.util.ArrayList;
-
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador.ListadoProcesos;
-import pe.edu.pucp.proyectorh.model.Evaluados360;
-import pe.edu.pucp.proyectorh.model.ProcesoEvaluacion360;
-import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.MisEvaluacionesAdaptador;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

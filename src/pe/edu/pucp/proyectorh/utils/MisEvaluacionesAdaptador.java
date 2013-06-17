@@ -1,18 +1,9 @@
 package pe.edu.pucp.proyectorh.utils;
 
-import java.util.ArrayList;
-
-import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
-import pe.edu.pucp.proyectorh.model.Objetivo;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MisEvaluacionesAdaptador extends BaseExpandableListAdapter {

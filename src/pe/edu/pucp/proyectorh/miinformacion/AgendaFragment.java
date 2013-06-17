@@ -21,6 +21,7 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
+import pe.edu.pucp.proyectorh.utils.Constante;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -241,9 +242,10 @@ public class AgendaFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
+			Colaborador colaboradorCreador;
+			ArrayList<Colaborador> listaInvitados;
 			System.out.println("Recibido: " + result.toString());
 			try {
-				ArrayList<Colaborador> invitadosMock = generarInvitadosMock();
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
 				if (procesaRespuesta(respuesta)) {
@@ -260,48 +262,46 @@ public class AgendaFragment extends Fragment {
 						evento.setNombre(eventoObject.getString("Nombre"));
 						evento.setFechaInicio(eventoObject.getString("Inicio"));
 						evento.setFechaFin(eventoObject.getString("Fin"));
-						evento.setEstadoID(eventoObject.getInt("EstadoID"));
 						evento.setEstado(eventoObject.getString("Estado"));
-						evento.setCreadorID(eventoObject.getInt("CreadorID"));
-						// evento.setCreador(eventoObject.getString("Creador"));
-						evento.setCreador(new Colaborador("César",
-								"Vásquez Flores", "Tecnología", "Gerente"));
-						evento.setTipoEventoID(eventoObject
-								.getInt("TipoEventoID"));
+						colaboradorCreador = new Colaborador();
+						colaboradorCreador.setNombreCompleto(eventoObject
+								.getString("Creador"));
+						colaboradorCreador.setArea(eventoObject
+								.getString("Area"));
+						colaboradorCreador.setPuesto(eventoObject
+								.getString("Puesto"));
+						evento.setCreador(colaboradorCreador);
 						evento.setTipoEvento(eventoObject
 								.getString("TipoEvento"));
-						// JSONArray invitadosListObject = eventoObject
-						// .getJSONArray("Invitados");
-						//
-						// listaInvitados = new ArrayList<Colaborador>();
-						// for (int j = 0; j < invitadosListObject.length();
-						// ++j) {
-						// JSONObject invitadoObject = invitadosListObject
-						// .getJSONObject(j);
-						// Colaborador invitado = new Colaborador();
-						// invitado.setNombreCompleto(invitadoObject
-						// .getString("NombreCompleto"));
-						// invitado.setNombres(invitadoObject
-						// .getString("Nombre"));
-						// invitado.setApellidos(invitadoObject
-						// .getString("ApellidoPaterno")
-						// + Constante.ESPACIO_VACIO
-						// + invitadoObject
-						// .getString("ApellidoMaterno"));
-						// invitado.setArea(invitadoObject.getString("Area"));
-						// invitado.setPuesto(invitadoObject
-						// .getString("Puesto"));
-						// invitado.setTelefono(invitadoObject
-						// .getString("Telefono"));
-						// invitado.setCorreoElectronico(invitadoObject
-						// .getString("CorreoElectronico"));
-						// listaInvitados.add(invitado);
-						// }
-						// evento.setInvitados(listaInvitados);
-						evento.setInvitados(invitadosMock);
+						JSONArray invitadosListObject = eventoObject
+								.getJSONArray("Invitados");
+
+						listaInvitados = new ArrayList<Colaborador>();
+						for (int j = 0; j < invitadosListObject.length(); ++j) {
+							JSONObject invitadoObject = invitadosListObject
+									.getJSONObject(j);
+							Colaborador invitado = new Colaborador();
+							invitado.setNombreCompleto(invitadoObject
+									.getString("NombreCompleto"));
+							invitado.setNombres(invitadoObject
+									.getString("Nombre"));
+							invitado.setApellidos(invitadoObject
+									.getString("ApellidoPaterno")
+									+ Constante.ESPACIO_VACIO
+									+ invitadoObject
+											.getString("ApellidoMaterno"));
+							invitado.setArea(invitadoObject.getString("Area"));
+							invitado.setPuesto(invitadoObject
+									.getString("Puesto"));
+							invitado.setTelefono(invitadoObject
+									.getString("Telefono"));
+							invitado.setCorreoElectronico(invitadoObject
+									.getString("CorreoElectronico"));
+							listaInvitados.add(invitado);
+						}
+						evento.setInvitados(listaInvitados);
 						eventos.add(evento);
 					}
-					// agregarEventosMock();
 					handler.post(calendarUpdater);
 					ocultarMensajeProgreso();
 				}
@@ -315,21 +315,6 @@ public class AgendaFragment extends Fragment {
 						getActivity());
 			}
 		}
-	}
-
-	private ArrayList<Colaborador> generarInvitadosMock() {
-		ArrayList<Colaborador> invitados = new ArrayList<Colaborador>();
-		invitados.add(new Colaborador("César", "Vásquez Flores", "Tecnología",
-				"Gerente"));
-		invitados.add(new Colaborador("Karina", "Sotil Retamoso",
-				"Contabilidad", "Analista"));
-		invitados.add(new Colaborador("Claudio", "Pizarro Guerrero", "RRHH",
-				"Evaluador"));
-		invitados.add(new Colaborador("Jessica", "Rojas Romero", "Operaciones",
-				"Gerente"));
-		invitados.add(new Colaborador("Joel", "Flores Copa", "Operaciones",
-				"Analista"));
-		return invitados;
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {

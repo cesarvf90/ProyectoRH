@@ -1,17 +1,11 @@
 package pe.edu.pucp.proyectorh.evaluacion360;
 
-import java.util.ArrayList;
-
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evaluador;
-import pe.edu.pucp.proyectorh.model.Objetivo;
 import pe.edu.pucp.proyectorh.model.Proceso;
-import pe.edu.pucp.proyectorh.utils.AdaptadorDeObjetivos;
 import pe.edu.pucp.proyectorh.utils.EvaluacionesAdaptador;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

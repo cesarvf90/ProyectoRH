@@ -22,6 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Funcionalidad para observar el detalle de un evento y sus invitados
+ * 
+ * @author cvasquez
+ * 
+ */
 @SuppressLint({ "ValidFragment", "ValidFragment", "ValidFragment" })
 public class EventoFragment extends Fragment {
 
@@ -83,7 +89,7 @@ public class EventoFragment extends Fragment {
 		// Datos del creador
 		TextView nombreCreadorText = (TextView) rootView
 				.findViewById(R.id.nombre_creador_content);
-		nombreCreadorText.setText(evento.getCreador().getNombres());
+		nombreCreadorText.setText(evento.getCreador().getNombreCompleto());
 		TextView areaCreadorText = (TextView) rootView
 				.findViewById(R.id.area_creador_content);
 		areaCreadorText.setText(evento.getCreador().getArea());
@@ -117,9 +123,8 @@ public class EventoFragment extends Fragment {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				TextView view = (TextView) super.getView(position, convertView,
 						parent);
-				((TextView) view)
-						.setTypeface(Typeface.createFromAsset(getActivity()
-								.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+				view.setTypeface(Typeface.createFromAsset(getActivity()
+						.getAssets(), EstiloApp.FORMATO_LETRA_APP));
 				return view;
 			}
 		};
@@ -142,13 +147,10 @@ public class EventoFragment extends Fragment {
 			TextView creadorTituloText, TextView invitadosTituloText) {
 		int color = 0;
 		if (Evento.EVENTO_EMPRESA.equals(evento.getTipoEvento())) {
-			// color = Color.CYAN;
 			color = Color.parseColor("#0B6121");
 		} else if (Evento.EVENTO_PERSONAL.equals(evento.getTipoEvento())) {
-			// color = Color.MAGENTA;
 			color = Color.parseColor("#0B0B61");
 		} else if (Evento.EVENTO_ESPECIAL.equals(evento.getTipoEvento())) {
-			// color = Color.YELLOW;
 			color = Color.parseColor("#5F04B4");
 		}
 		nombreEventoText.setBackgroundColor(color);

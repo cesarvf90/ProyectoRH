@@ -214,7 +214,7 @@ public class EvaluacionPostulante extends Fragment {
 
 			ratingPregunta1.setRating(respuestas.get(
 					numPagina * PREGUNTAS_X_PAGINA + 0).getPuntaje());
-			ratingPregunta1.setVisibility(RatingBar.VISIBLE);
+			ratingPregunta1.setVisibility(View.VISIBLE);
 		}
 
 		if (numPagina * PREGUNTAS_X_PAGINA + 1 < funciones.size()) {
@@ -227,10 +227,10 @@ public class EvaluacionPostulante extends Fragment {
 
 			ratingPregunta2.setRating(respuestas.get(
 					numPagina * PREGUNTAS_X_PAGINA + 1).getPuntaje());
-			ratingPregunta2.setVisibility(RatingBar.VISIBLE);
+			ratingPregunta2.setVisibility(View.VISIBLE);
 		} else {
 			pregunta2Text.setText(Constante.CADENA_VACIA);
-			ratingPregunta2.setVisibility(RatingBar.INVISIBLE);
+			ratingPregunta2.setVisibility(View.INVISIBLE);
 			return;
 		}
 
@@ -243,10 +243,10 @@ public class EvaluacionPostulante extends Fragment {
 							.getDescripcion());
 			ratingPregunta3.setRating(respuestas.get(
 					numPagina * PREGUNTAS_X_PAGINA + 2).getPuntaje());
-			ratingPregunta3.setVisibility(RatingBar.VISIBLE);
+			ratingPregunta3.setVisibility(View.VISIBLE);
 		} else {
 			pregunta3Text.setText(Constante.CADENA_VACIA);
-			ratingPregunta3.setVisibility(RatingBar.INVISIBLE);
+			ratingPregunta3.setVisibility(View.INVISIBLE);
 			return;
 		}
 
@@ -259,10 +259,10 @@ public class EvaluacionPostulante extends Fragment {
 							.getDescripcion());
 			ratingPregunta4.setRating(respuestas.get(
 					numPagina * PREGUNTAS_X_PAGINA + 3).getPuntaje());
-			ratingPregunta4.setVisibility(RatingBar.VISIBLE);
+			ratingPregunta4.setVisibility(View.VISIBLE);
 		} else {
 			pregunta4Text.setText(Constante.CADENA_VACIA);
-			ratingPregunta4.setVisibility(RatingBar.INVISIBLE);
+			ratingPregunta4.setVisibility(View.INVISIBLE);
 		}
 	}
 

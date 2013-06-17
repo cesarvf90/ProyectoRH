@@ -10,10 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.model.Objetivo;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCObjetivos.getObjetivos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.utils.AdaptadorDeObjetivos;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -291,6 +288,7 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 
 	}
 	
+	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		System.out.println("entro a groupview");

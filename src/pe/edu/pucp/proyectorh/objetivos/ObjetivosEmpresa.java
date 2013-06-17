@@ -2,10 +2,8 @@ package pe.edu.pucp.proyectorh.objetivos;
 
 import java.util.ArrayList;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
@@ -16,7 +14,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;

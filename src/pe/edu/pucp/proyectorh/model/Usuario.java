@@ -16,6 +16,7 @@ public class Usuario {
 	private ArrayList<ColaboradorEquipoTrabajo> padres;
 	private ArrayList<ArrayList<ArrayList<ColaboradorEquipoTrabajo>>> hijos;
 	private ColaboradorEquipoTrabajo jefe;
+	private boolean seTrajoContactos = false;
 
 	public Usuario(String iD, String username, String password) {
 		super();
@@ -72,7 +73,13 @@ public class Usuario {
 	public void setJefe(ColaboradorEquipoTrabajo jefe) {
 		this.jefe = jefe;
 	}
-	
-	
+
+	public boolean isSeTrajoContactos() {
+		return seTrajoContactos;
+	}
+
+	public void setSeTrajoContactos(boolean seTrajoContactos) {
+		this.seTrajoContactos = seTrajoContactos;
+	}
 
 }

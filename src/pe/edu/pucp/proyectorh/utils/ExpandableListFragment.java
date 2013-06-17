@@ -110,7 +110,7 @@ public class ExpandableListFragment extends Fragment implements
 
 		TextView tv = new TextView(getActivity());
 		/**/
-		((TextView) tv).setTypeface(Typeface.createFromAsset(
+		tv.setTypeface(Typeface.createFromAsset(
 				context.getAssets(), EstiloApp.FORMATO_LETRA_APP));
 		/**/
 		tv.setId(INTERNAL_EMPTY_ID);

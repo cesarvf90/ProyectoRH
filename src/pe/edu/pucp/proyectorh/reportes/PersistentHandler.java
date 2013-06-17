@@ -1,6 +1,5 @@
 package pe.edu.pucp.proyectorh.reportes;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +11,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 public class PersistentHandler {
 
