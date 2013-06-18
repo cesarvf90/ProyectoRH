@@ -111,13 +111,24 @@ public class ReportePersonalBSCGrafico extends Fragment {
 		protected void onPostExecute(String result) {
 			
 			System.out.println("Recibido: " + result.toString());
-			
-			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			historico = gson.fromJson(result,new TypeToken<List<HistoricoBSC>>(){}.getType());
+			try{
+				Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+				historico = gson.fromJson(result,new TypeToken<List<HistoricoBSC>>(){}.getType());
+			}
+			catch(Exception e){
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de datos");
+				builder.setMessage("No se pudo recuperar la información.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				return;
+			}
 			
 			ArrayList<String> listaPeriodos = new ArrayList<String> ();  
 			for (int i=0; i<historico.size();i++ ){
-				listaPeriodos.add(historico.get(i).idperiodo + "");
+				listaPeriodos.add(historico.get(i).getNombrePeriodo());
 			}
 			
 			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaPeriodos);
@@ -237,10 +248,22 @@ public class ReportePersonalBSCGrafico extends Fragment {
 	public class HistoricoBSC
 	{
 	        private int idperiodo;
+	        
+	        private String nombrePeriodo;
 
 	        private String nombreColaborador;
 
 	        private List<ObjetivoDTO> objetivos;
+	        
+	        
+
+			public String getNombrePeriodo() {
+				return nombrePeriodo;
+			}
+
+			public void setNombrePeriodo(String nombrePeriodo) {
+				this.nombrePeriodo = nombrePeriodo;
+			}
 
 			public int getIdperiodo() {
 				return idperiodo;

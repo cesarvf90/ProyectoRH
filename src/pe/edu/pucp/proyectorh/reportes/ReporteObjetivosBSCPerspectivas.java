@@ -157,6 +157,8 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		 if(modo==0){
 			  //MODO OFFLINE
 			  ArrayList<ObjetivoDTO> objetivos = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+			  if (objetivos != null){ 
+			  
 			  ArrayList<ObjetivoDTO> objetivosEmpresa = new ArrayList<ObjetivoDTO>();
 			  
 			  String fechaarch = PersistentHandler.getFechaReporte(getActivity(), nomArch);
@@ -220,7 +222,10 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 					}
 				});
 				
-		
+		 }
+			  else{
+				  displayFecha.setText("No se puede recuperar la información");
+			  }
 			
 		 }
 		 else{

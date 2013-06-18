@@ -67,14 +67,17 @@ public class ObjetivoAdapter extends BaseAdapter {
 					.findViewById(R.id.reportebscObjetivoNumPersonas);
 
 			if (!(objetivos.get(position).isEsIntermedio())){
-				textNumPer.setText("1 persona(s)");
+				if (objetivos.get(position).getColaboradorID()>0) textNumPer.setText("1 persona(s)");
+				else textNumPer.setText(objetivos.get(position).getNumPersonas() + " persona(s)");
 			}
-			//textNumPer.setText(objetivos.get(position).getNumPersonas() + " personas");
+			else textNumPer.setText(objetivos.get(position).getHijos() + " persona(s)"); //objs clones
 			
 			if (objetivos.get(position).getHijos()>0){
 				TextView textNumSub = (TextView) gridView
 						.findViewById(R.id.reportebscObjetivoNumSubObj);
-				textNumSub.setText(objetivos.get(position).getHijos() + " sub-objetivos");
+				if (!(objetivos.get(position).isEsIntermedio())){
+					textNumSub.setText(objetivos.get(position).getHijos() + " sub-objetivo(s)");
+				}
 			}
 			
 			if (objetivos.get(position).isEsIntermedio()){

@@ -14,6 +14,15 @@
 		android:layout_marginTop="10dp" >
     </TextView>
     
+    <TextView
+        android:id="@+id/reportecubDisplayFechagrafico"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:layout_marginLeft="30dp">
+    </TextView>
+    
     <WebView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/reportecubWebkit"

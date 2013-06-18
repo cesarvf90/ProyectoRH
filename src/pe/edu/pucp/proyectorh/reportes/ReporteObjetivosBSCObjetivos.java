@@ -118,6 +118,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			else{
 				//MODO OFFLINE
 				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+				if (objetivosArch!=null){
 				listaObjetivos = new ArrayList<ObjetivoDTO>();
 				
 				//obtener por bsc y idperiodo
@@ -127,7 +128,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 					}
 				}
 				setgridview();
-				
+				}
 			}
 			
 			
@@ -160,6 +161,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 			else{
 				//MODO OFFLINE
 				ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+				if (objetivosArch!=null){
 				listaObjetivos = new ArrayList<ObjetivoDTO>();
 				
 				//obtener por padre
@@ -170,7 +172,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 				}
 				setgridview();
 				
-				
+				}
 			}
 			
 			
