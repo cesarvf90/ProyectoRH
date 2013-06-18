@@ -109,7 +109,7 @@ public class ConfirmacionEvaluacion extends Fragment {
 		TextView mensajeConfirmacionText = (TextView) rootView
 				.findViewById(R.id.mensaje_confirmacion_evaluacion);
 		mensajeConfirmacionText
-				.setText("La evaluación aún no ha sido registrada, complete los campos y realice el registro.");
+				.setText("Complete los campos para registrar la evaluación.");
 
 		Button botonRegistrarEvaluacion = (Button) rootView
 				.findViewById(R.id.finalizarEvaluacion);
