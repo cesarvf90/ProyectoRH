@@ -89,9 +89,9 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
-			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Aprobado%20Jefe" + "&"
-					+ "colaboradorID=" + LoginActivity.getUsuario().getID();
+			String request = Servicio.OfertasLaborales + "?descripcionFase="
+					+ "Aprobado%20RRHH" + "&" + "colaboradorID="
+					+ LoginActivity.getUsuario().getID();
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
@@ -276,7 +276,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
-									EvaluacionPostulante fragment = new EvaluacionPostulante(
+									EvaluacionPostulanteTerceraFase fragment = new EvaluacionPostulanteTerceraFase(
 											oferta, postulante);
 									ft.setCustomAnimations(
 											android.R.anim.slide_in_left,

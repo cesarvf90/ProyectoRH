@@ -20,6 +20,7 @@ public class ReporteServices {
 	
 	public final static String obtenerHistoricoObjetivos = "http://dp2kendo.apphb.com/Reportes/Reportes/HistoricoObjetivos";
 	
+	public final static String obtenerAreas = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarAreas";
 	
 
 }

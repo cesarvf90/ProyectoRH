@@ -126,8 +126,9 @@ public class PersistentHandler {
 					new TypeToken<List<ObjetivoDTO>>(){}.getType());
 		    return objetivos;
 		    
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Error al leer archivo  " + e);
+			
 		}
 		return null;
 		

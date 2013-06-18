@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -31,18 +36,21 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
 public class ReporteCubrimientoPrincipal extends Fragment {
 	
 	private Spinner spinnerPuesto;
 	private Spinner spinnerArea;
 	private Button btnSubmit;
-	List<String> lista ;
+	List<String> listaArea ;
+	List<String> listaPuestos;
 	
+	int areaSelec;
 	int puestoSelec;
 	String titulo;
 	
-	List<PuestoDTO> puestos;
+	List<AreaRDTO> areas;
 	
 	private Button btnDesde;
 	private Button btnHasta;
@@ -82,14 +90,15 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		spinnerArea = (Spinner) rootView.findViewById(R.id.reportecubspinnerArea);
 		
 		spinnerPuesto = (Spinner) rootView.findViewById(R.id.reportecubspinnerPuesto);
-		lista = new ArrayList<String>();
+		listaArea = new ArrayList<String>();
+		listaPuestos = new ArrayList<String>();
 
 		obtenerlistaPuestos();
 		
 		//fecha de hoy
 		Calendar c = Calendar.getInstance();
 		anho = anhofin = c.get(Calendar.YEAR);
-		mes = mesfin = c.get(Calendar.MONTH);
+		mes = mesfin = c.get(Calendar.MONTH) + 1;
 		dia = diafin = c.get(Calendar.DAY_OF_MONTH);
 
 		
@@ -97,12 +106,12 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		txtdesde = (TextView) rootView.findViewById(R.id.reportecubdesde); 
 		txtdesde.setText(new StringBuilder()
 		// Month is 0 based, just add 1
-		.append(dia).append("/").append(mes + 1).append("/")
+		.append(dia).append("/").append(mes).append("/")
 		.append(anho).append(" "));
 		txthasta = (TextView) rootView.findViewById(R.id.reportecubhasta);
 		txthasta.setText(new StringBuilder()
 		// Month is 0 based, just add 1
-		.append(dia).append("/").append(mes + 1).append("/")
+		.append(dia).append("/").append(mes).append("/")
 		.append(anho).append(" "));
 		
 		btnDesde = (Button) rootView.findViewById(R.id.reportecubbtndesde);
@@ -136,31 +145,43 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 			  @Override
 			  public void onClick(View v) {
 				  
-				  ReporteCubrimientoGrafico fragment = new ReporteCubrimientoGrafico();
-				  Bundle argumentos = new Bundle();
-			      argumentos.putInt("PuestoSelec", puestoSelec);
-			      argumentos.putString("titulo", titulo);
+				  String dateString1 = "" + anho;
+			      if (mes<10) dateString1 = dateString1 + "/" + "0" + mes + "/" +  dia;
+			      else dateString1  = dateString1 +  "/" + mes + "/" +  dia;
 			      
-			      /*fechaini*/
-			      String fechadesde = "" + dia;
-			      if (mes<10) fechadesde = fechadesde + "0" + mes + anho;
-			      else fechadesde  = fechadesde + mes + anho;
-			      
-			      /*fechafin*/
-			      String fechahasta = "" + diafin;
-			      if (mesfin<10) fechahasta = fechahasta + "0" + mesfin + anhofin;
-			      else fechahasta  = fechahasta + mesfin + anhofin;
-			      
-			      argumentos.putString("fechaini", fechadesde);
-			      argumentos.putString("fechafin", fechahasta);
-			      fragment.setArguments(argumentos);
-			      
-				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-				  ft.replace(R.id.opcion_detail_container, fragment);
-				  ft.addToBackStack(null);
-				  ft.commit();
+			      String dateString2 = "" + anhofin;
+			      if (mesfin<10) dateString2 = dateString2 + "/" + "0" + mesfin + "/" +  diafin;
+			      else dateString2  = dateString2 +  "/" + mesfin + "/" +  diafin;
 				  
+				  if (dateString1.compareTo(dateString2) >0){
+					  Toast.makeText(getActivity(), "La fecha inicial debe ser menor a la fecha final", Toast.LENGTH_SHORT).show(); 
+				  }
+				  else{
+					  ReporteCubrimientoGrafico fragment = new ReporteCubrimientoGrafico();
+					  Bundle argumentos = new Bundle();
+				      argumentos.putInt("PuestoSelec", puestoSelec);
+				      argumentos.putString("titulo", titulo);
+				      
+				      /*fechaini*/
+				      String fechadesde = "" + dia;
+				      if (mes<10) fechadesde = fechadesde + "/" + "0" + mes + "/" + anho;
+				      else fechadesde  = fechadesde + "/" + mes + "/" + anho;
+				      
+				      /*fechafin*/
+				      String fechahasta = "" + diafin;
+				      if (mesfin<10) fechahasta = fechahasta + "/" + "0" + mesfin + "/" + anhofin;
+				      else fechahasta  = fechahasta + "/" + mesfin + "/" +  anhofin;
+				      
+				      argumentos.putString("fechaini", fechadesde);
+				      argumentos.putString("fechafin", fechahasta);
+				      fragment.setArguments(argumentos);
+				      
+					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+					  ft.replace(R.id.opcion_detail_container, fragment);
+					  ft.addToBackStack(null);
+					  ft.commit();
 				  
+				  }
 				  
 			  }
 		});
@@ -222,7 +243,7 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			String request = ReporteServices.obtenerPuestos;
+			String request = ReporteServices.obtenerAreas;
 
 			new getPuestos().execute(request);
 			
@@ -250,33 +271,42 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		protected void onPostExecute(String result) {
 
 			System.out.println("Recibido: " + result.toString());
-
+			try{
 			Gson gson = new GsonBuilder().create();
-			puestos = gson.fromJson(result,
-					new TypeToken<List<PuestoDTO>>(){}.getType());
-			
+			areas = gson.fromJson(result,
+					new TypeToken<List<AreaRDTO>>(){}.getType());
+			}
+			catch(Exception e){
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de datos");
+				builder.setMessage("No se pudo recuperar la información.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				return;
+			}
 
-			for(int i = 0; i<puestos.size();i++){
+			for(int i = 0; i<areas.size();i++){
 				
-				lista.add(puestos.get(i).getNombre());
+				listaArea.add(areas.get(i).getNombreArea());
 				
 			}
 			
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaArea);
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPuesto.setAdapter(dataAdapter);
-			spinnerPuesto.setOnItemSelectedListener(new OnItemSelectedListener(){
+			spinnerArea.setAdapter(dataAdapter);
+			spinnerArea.setOnItemSelectedListener(new OnItemSelectedListener(){
 				
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 					
-				/*	Toast.makeText(parent.getContext(), 
-						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
-						Toast.LENGTH_SHORT).show(); */
-					
-					puestoSelec = puestos.get(pos).getID(); //aqui idobjetivo selec
-					titulo = parent.getItemAtPosition(pos).toString();
-
+					areaSelec=pos;
+				    ArrayList<String> puestos = new ArrayList<String>();
+				    for (int i=0;i<areas.get(areaSelec).getPuestos().size();i++){
+				    	puestos.add(areas.get(areaSelec).getPuestos().get(i).getNombrePuesto());
+				    }
+				    cargarPuestos(puestos);
 				  }
 				
 			
@@ -285,51 +315,89 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 					// TODO Auto-generated method stub
 				  }
 				
-			});
+			 });
+			
+			
 			
 			
 		}
 	}
 	
-	 public class PuestoDTO
-	    {
+	public void cargarPuestos(ArrayList<String> lista){
+		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerPuesto.setAdapter(dataAdapter);
+		spinnerPuesto.setOnItemSelectedListener(new OnItemSelectedListener(){
+			
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+				
+			/*	Toast.makeText(parent.getContext(), 
+					"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+					Toast.LENGTH_SHORT).show(); */
+				
+				puestoSelec = areas.get(areaSelec).getPuestos().get(pos).getIdPuesto(); 
+				titulo = parent.getItemAtPosition(pos).toString();
 
-	        public int ID;
-	        public String Nombre;
-	        public String Descripcion;       
-	        public int getID() {
-				return ID;
-			}
-			public void setID(int iD) {
-				ID = iD;
-			}
-			public String getNombre() {
-				return Nombre;
-			}
-			public void setNombre(String nombre) {
-				Nombre = nombre;
-			}
-			public String getDescripcion() {
-				return Descripcion;
-			}
-			public void setDescripcion(String descripcion) {
-				Descripcion = descripcion;
-			}
-			public int getAreaID() {
-				return AreaID;
-			}
-			public void setAreaID(int areaID) {
-				AreaID = areaID;
-			}
-			public int getPuestoSuperiorID() {
-				return PuestoSuperiorID;
-			}
-			public void setPuestoSuperiorID(int puestoSuperiorID) {
-				PuestoSuperiorID = puestoSuperiorID;
-			}
-			public int AreaID;
-	        public int PuestoSuperiorID;
+			  }
+			
+		
+			@Override
+			  public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+			  }
+			
+		 });
 	}
+	
+	public class PuestoDTO {
+
+		private int idPuesto;
+		private String nombrePuesto;
+		public int getIdPuesto() {
+			return idPuesto;
+		}
+		public void setIdPuesto(int idPuesto) {
+			this.idPuesto = idPuesto;
+		}
+		public String getNombrePuesto() {
+			return nombrePuesto;
+		}
+		public void setNombrePuesto(String nombrePuesto) {
+			this.nombrePuesto = nombrePuesto;
+		}
+	     
+	      
+	     
+	}
+	
+	public class AreaRDTO
+    {
+        private int idArea;
+        private String nombreArea;
+        private List<PuestoDTO> Puestos;
+		public int getIdArea() {
+			return idArea;
+		}
+		public void setIdArea(int idArea) {
+			this.idArea = idArea;
+		}
+		public String getNombreArea() {
+			return nombreArea;
+		}
+		public void setNombreArea(String nombreArea) {
+			this.nombreArea = nombreArea;
+		}
+		public List<PuestoDTO> getPuestos() {
+			return Puestos;
+		}
+		public void setPuestos(List<PuestoDTO> puestos) {
+			Puestos = puestos;
+		}
+         
+         
+         
+    }
 	
 	 private void customizarEstilos(Context context, View view) {
 			try {
@@ -346,8 +414,6 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 			} catch (Exception e) {
 			}
 		}
-	
-	
 	
 	
 

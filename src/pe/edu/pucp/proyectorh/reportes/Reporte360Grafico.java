@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import com.google.gson.Gson;
 
@@ -37,9 +38,12 @@ public class Reporte360Grafico extends Fragment{
 		View rootView = inflater.inflate(R.layout.reporte360grafico,
 				container, false);
 		
+		TextView nombre = (TextView)rootView.findViewById(R.id.nombreUsuarioRep);
+		nombre.setText(LoginActivity.getUsuario().getUsername());
 		
 		browser = (WebView)rootView.findViewById(R.id.reporte360WebkitGLineal);
-		 
+		
+		
         //habilitamos javascript y flash
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.getSettings().setPluginsEnabled(true);
