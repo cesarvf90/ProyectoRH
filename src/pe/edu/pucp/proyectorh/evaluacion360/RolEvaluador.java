@@ -27,7 +27,7 @@ public class RolEvaluador extends Fragment {
 	
 	Evaluacion360ExpandableAdapater adapter;
 	
-	int modoPrueba=1;
+	int modoPrueba=0;
 	
 	public RolEvaluador(){
 		

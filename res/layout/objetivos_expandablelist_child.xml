@@ -7,7 +7,6 @@
 	<EditText
         android:id="@+id/nombreObj"        
         android:inputType="text"
-        android:descendantFocusability="afterDescendants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >					
     </EditText>
@@ -15,21 +14,18 @@
 	<EditText
         android:id="@+id/pesoObj"
         android:inputType="number"
-        android:descendantFocusability="afterDescendants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >					
     </EditText>
     
 	<Button
         android:id="@+id/buttonMenos"
-        android:descendantFocusability="afterDescendants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >					
     </Button>
     
 	<Button
         android:id="@+id/buttonMas"
-        android:descendantFocusability="afterDescendants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >					
     </Button>

@@ -109,10 +109,11 @@ public class Servicio {
 	
 	
 	//PARA EVALUACION 360
-	public final static String ListarProcesosEvaluacion360 = "";
+	public final static String ListarProcesosEvaluacion360 = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluador/Read";
+
+	public final static String ListarMisEvaluados360 = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluador/ReadEvaluados";
 	
-	public final static String ListarMisEvaluados360 = "";
-	
+	public final static String ListarMisEvaluaciones = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluado/Read";
 	
 	public final static String ConsultarSubordinados = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo";
 	
