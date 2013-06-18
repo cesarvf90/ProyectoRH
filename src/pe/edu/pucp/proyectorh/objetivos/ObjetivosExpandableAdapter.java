@@ -7,10 +7,13 @@ import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +34,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	private Context contexto;
 	boolean flagMostrar;
 	boolean primeraVez=true;
+	ObjetivosExpandableAdapter este = this;
 
 	public ObjetivosExpandableAdapter(Context contexto, ArrayList<ObjetivosBSC> groups, ArrayList<ArrayList<ObjetivosBSC>> children) {
         this.contexto = contexto;
@@ -43,6 +47,8 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		}
 	}
 	
+	
+	
 	public void actualizaHijos(ArrayList<ArrayList<ObjetivosBSC>> children){
 		this.children = children;
 	}
@@ -51,13 +57,20 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	@Override
     public boolean areAllItemsEnabled()
     {
-        return true;
+        return false;
     }
-
 
     @Override
     public ObjetivosBSC getChild(int groupPosition, int childPosition) {
         return children.get(groupPosition).get(childPosition);
+    }
+    
+    public void eliminaHijo(int groupPosition, int childPosition){
+    	children.get(groupPosition).remove(childPosition);
+    }
+    public void aumentaHijo(int groupPosition){
+    	ObjetivosBSC objetivo = new ObjetivosBSC();
+    	children.get(groupPosition).add(objetivo);
     }
 
     @Override
@@ -67,7 +80,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 
    
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
 
     	System.out.println("vere gpos="+groupPosition+ " y cpos="+childPosition + " isLastChild="+isLastChild);
     	
@@ -89,7 +102,8 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 			EditText descripObj = (EditText) convertView.findViewById(R.id.nombreObj);
 			descripObj.setText(szNombre);
 			descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
-				
+			//descripObj
+			
 		    EditText peso = (EditText) convertView.findViewById(R.id.pesoObj);
 		    peso.setText(szPeso);
 		    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
@@ -97,10 +111,27 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 		    Button btnEliminar = (Button) convertView.findViewById(R.id.buttonMenos);
 		    btnEliminar.setText("X");
 		    btnEliminar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-        
+		    btnEliminar.setOnClickListener(new OnClickListener() {
+				  @Override
+				  public void onClick(View v) {
+					  System.out.println("--> elimina");
+					  eliminaHijo(groupPosition, childPosition);
+					  este.notifyDataSetChanged();
+				  }
+			});
+		    
+		    this.notifyDataSetChanged();
 		    Button btnAumentar = (Button) convertView.findViewById(R.id.buttonMas);
 		    btnAumentar.setText("+");
 		    btnAumentar.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+		    btnAumentar.setOnClickListener(new OnClickListener() {
+				  @Override
+				  public void onClick(View v) {
+					  System.out.println("--> aumenta");
+					  aumentaHijo(groupPosition);
+					  este.notifyDataSetChanged();
+				  }
+			});
 		    if(!isLastChild){
 		    	btnAumentar.setVisibility(View.INVISIBLE);
 		    }else{
@@ -184,6 +215,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 
 	    EditText descripObj = new EditText(contexto);
 	    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
+
 	  
 	    descripObj.setText(szNombre);
 	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
@@ -200,7 +232,8 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 	    eliminarObj.setOnClickListener(new OnClickListener() {
 			  @Override
 			  public void onClick(View v) {
-				  lay.removeView(fila);
+				  System.out.println("--> elimina");
+				  fila.removeAllViews();
 			  }
 		});
 	    fila.addView(eliminarObj);	
@@ -213,6 +246,7 @@ public class ObjetivosExpandableAdapter extends BaseExpandableListAdapter {
 			  public void onClick(View v) {	
 				  aumentarObj.setVisibility(View.INVISIBLE); //elimina el boton
 				  TableFila fila = agregaFila(null,1);
+				  System.out.println("--> aumenta");
 				  lay.addView(fila);
 			  }
 		});

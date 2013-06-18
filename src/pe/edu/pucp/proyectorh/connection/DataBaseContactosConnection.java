@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.connection;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,29 +9,28 @@ import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.model.Colaborador;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DataBaseConnection extends SQLiteOpenHelper {
+public class DataBaseContactosConnection extends SQLiteOpenHelper {
 
-	private static String DB_NAME = "contactos.s3db";
-	private static String DB_PATH = "data/data/pe.edu.pucp.proyectorh/databases";
+	private static String DB_NAME = "rhcontactos.s3db";
+	private static String DB_PATH = "data/data/pe.edu.pucp.proyectorh/databases/";
 	private SQLiteDatabase dataBase;
 	private final Context myContext;
 
-	/* Valores utilizados */
-
-	public DataBaseConnection(Context context) {
+	public DataBaseContactosConnection(Context context) {
 		super(context, DB_NAME, null, 1);
 		this.myContext = context;
 	}
 
 	/**
-	 * Crea una base de datos vacía en el sistema y la sobreescribe con la que
-	 * hemos puesto en Assets
+	 * Crea una base de datos vacia en el sistema y la sobreescribe con la que
+	 * se ha puesto en Assets
 	 * 
 	 * @throws IOException
 	 */
@@ -55,25 +55,27 @@ public class DataBaseConnection extends SQLiteOpenHelper {
 	 * @return
 	 */
 	private boolean checkDataBase() {
-		SQLiteDatabase checkDB = null;
-		try {
-			String myPath = DB_PATH + DB_NAME;
-			checkDB = SQLiteDatabase.openDatabase(myPath, null,
-					SQLiteDatabase.OPEN_READWRITE);
-		} catch (SQLiteException e) {
-			throw new Error("Error al comprobar si la Base de Datos existe");
-		}
-
-		if (checkDB != null) {
-			checkDB.close();
-		}
-
-		return checkDB != null ? true : false;
+		// SQLiteDatabase checkDB = null;
+		// try {
+		// String myPath = DB_PATH + DB_NAME;
+		// checkDB = SQLiteDatabase.openDatabase(myPath, null,
+		// SQLiteDatabase.OPEN_READWRITE);
+		// } catch (SQLiteException e) {
+		// throw new Error("Error al comprobar si la Base de Datos existe");
+		// }
+		//
+		// if (checkDB != null) {
+		// checkDB.close();
+		// }
+		//
+		// return checkDB != null ? true : false;
+		File dbFile = new File(DB_PATH + DB_NAME);
+		return dbFile.exists();
 	}
 
 	/**
 	 * Copia la base de datos desde la carpeta Assets sobre la base de datos
-	 * vacía recién creada en la carpeta del sistema desde donde es accesible
+	 * vacia recien creada en la carpeta del sistema desde donde es accesible
 	 * 
 	 * @throws IOException
 	 */
@@ -125,18 +127,17 @@ public class DataBaseConnection extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * A continuación se crearán los métodos de lectura, inserción,
-	 * actualización y borrado de la base de datos.
+	 * A continuación se crearan los mtétodos de lectura, insercion,
+	 * actualizacion y borrado de la base de datos.
 	 */
 
 	/**
-	 * Obtiene los equipos ordenados por puntos y diferencia de goles para ser
-	 * insertados en la tabla de posiciones
+	 * Obtiene los contactos que ya se encuentran en la base de datos interna
 	 */
-	public ArrayList<Colaborador> getTeamsOrderByPointsEarned() {
+	public ArrayList<Colaborador> obtenerContactos() {
 		ArrayList<Colaborador> contactos = new ArrayList<Colaborador>();
 
-		Cursor c = dataBase.query("CONTACTOS", new String[] { "Nombres",
+		Cursor c = dataBase.query("CONTACTO", new String[] { "Nombres",
 				"Apellidos", "Area", "Puesto", "FechaNacimiento",
 				"FechaIngreso", "Correo", "Telefono" }, null, null, null, null,
 				null);
@@ -160,18 +161,24 @@ public class DataBaseConnection extends SQLiteOpenHelper {
 		return contactos;
 	}
 
-	/**
-	 * Actualiza toda la información de los equipos de acuerdo al resultado que
-	 * obtuvieron en su partido en esa fecha, esta es la información que
-	 * posteriormente llena la tabla de posiciones (resultados).
-	 * 
-	 * @param stage
-	 */
-	public void SaveContactosData(ArrayList<Colaborador> contactos) {
+	public void insertarContactos(ArrayList<Colaborador> contactos) {
 		for (Colaborador contacto : contactos) {
-
+			ContentValues valuesToInsert = new ContentValues();
+			valuesToInsert.put("Nombres", contacto.getNombres());
+			valuesToInsert.put("Apellidos", contacto.getApellidos());
+			valuesToInsert.put("Area", contacto.getArea());
+			valuesToInsert.put("Puesto", contacto.getPuesto());
+			valuesToInsert
+					.put("FechaNacimiento", contacto.getFechaNacimiento());
+			valuesToInsert.put("FechaIngreso", contacto.getFechaIngreso());
+			valuesToInsert.put("Correo", contacto.getCorreoElectronico());
+			valuesToInsert.put("Telefono", contacto.getTelefono());
+			dataBase.insert("CONTACTO", null, valuesToInsert);
 		}
+	}
 
+	public static String obtenerNombre() {
+		return DB_NAME;
 	}
 
 }
