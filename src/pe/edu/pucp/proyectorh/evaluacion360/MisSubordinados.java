@@ -105,11 +105,13 @@ public class MisSubordinados extends Fragment {
 		hespinoza.setNombreCompleto("Hans Espinoza");
 		
 		ProcesoEvaluacion360 unProceso = new ProcesoEvaluacion360();
-		unProceso.idProceso = 1;
+//		unProceso.idProceso = 1;
+		unProceso.ID = 1;
 		unProceso.Nombre = "Un proceso";
 		
 		ProcesoEvaluacion360 otroProceso = new ProcesoEvaluacion360();
-		otroProceso.idProceso = 2;
+//		otroProceso.idProceso = 2;
+		otroProceso.ID = 2;
 		otroProceso.Nombre = "Otro proceso";
 		
 		String estadoPendiente = "Pendiente";
@@ -218,7 +220,7 @@ public class MisSubordinados extends Fragment {
 					
 
 					JSONObject elProcesoRespuesta = (JSONObject) pxexeRespuesta.getJSONObject("Proceso");
-					proceso.idProceso = Integer.parseInt(elProcesoRespuesta.getString("ID"));
+					proceso./*idProceso */ID= Integer.parseInt(elProcesoRespuesta.getString("ID"));
 					proceso.Nombre = elProcesoRespuesta.getString("Nombre");
 					
 					ProcesoXEvaluadorXEvaluado pxexe = new ProcesoXEvaluadorXEvaluado();
@@ -237,7 +239,7 @@ public class MisSubordinados extends Fragment {
 							pxexe.setEvaluador(pxexeBusqueda.getEvaluador());
 						}
 						
-						if (pxexeBusqueda.getElProcesoEnQueParticipan().idProceso == proceso.idProceso) {
+						if (pxexeBusqueda.getElProcesoEnQueParticipan()./*idProceso*/ID == proceso./*idProceso*/ID) {
 							pxexe.setElProcesoEnQueParticipan(pxexeBusqueda.getElProcesoEnQueParticipan());
 						}
 						

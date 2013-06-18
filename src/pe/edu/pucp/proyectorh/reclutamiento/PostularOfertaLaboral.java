@@ -316,6 +316,28 @@ public class PostularOfertaLaboral extends Fragment {
 
 		TextView puesto = (TextView) rootView
 				.findViewById(R.id.reclut_cargo_input);
+		TextView puestolabel = (TextView) rootView
+				.findViewById(R.id.reclut_cargo_label);
+		
+		if (solicitudOfertaLaboral.getPuesto() != null) {
+			int cantidadCaracteresPuestoOferta = solicitudOfertaLaboral
+					.getPuesto().length();
+			if (cantidadCaracteresPuestoOferta >= 35) {
+				puesto.setHeight(60);
+				puestolabel.setHeight(60);
+			} else {
+				// puesto.setLayoutParams(new
+				// LayoutParams(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT));
+				// puestolabel.setLayoutParams(new
+				// LayoutParams(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT));
+				puesto.setHeight(30);
+				puestolabel.setHeight(30);
+			}
+			System.out.println(cantidadCaracteresPuestoOferta);
+		}
+		
 		puesto.setText(solicitudOfertaLaboral.getPuesto() == "null" ? " - "
 				: solicitudOfertaLaboral.getPuesto());
 

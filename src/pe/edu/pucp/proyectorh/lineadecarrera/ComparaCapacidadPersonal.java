@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.webkit.WebView;
 
 
@@ -100,6 +101,10 @@ public class ComparaCapacidadPersonal extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.comparacap2per,
 				container, false);
+		
+		TextView txt = (TextView) rootView.findViewById(R.id.comparacap2pertitulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
 		
 		browser = (WebView)rootView.findViewById(R.id.comparaCap1WebkitGLineal);
 		

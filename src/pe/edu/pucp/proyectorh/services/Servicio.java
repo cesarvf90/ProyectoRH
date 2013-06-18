@@ -67,7 +67,7 @@ public class Servicio {
 	 * Servicio que registra las respuestas registradas por el evaluador de la
 	 * entrevista de TERCERA fase
 	 */
-	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacion";
+	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSEvalua/setRespuestasXEvaluacion";
 
 	public final static String ListarPeriodos = "http://dp2kendo.apphb.com/WSPeriodos/ListarPeriodos";
 
@@ -109,10 +109,15 @@ public class Servicio {
 	
 	
 	//PARA EVALUACION 360
-	public final static String ListarProcesosEvaluacion360 = "";
+	public final static String ListarProcesosEvaluacion360 = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluador/Read";
+
+	public final static String ListarMisEvaluados360 = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluador/ReadEvaluados";
 	
-	public final static String ListarMisEvaluados360 = "";
+	public final static String ListarMisEvaluaciones = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluado/Read";
 	
+	public final static String ListarPreguntas = "http://dp2kendo.apphb.com/Evaluacion360/WSEvaluacion/ReadPreguntas";
+	
+	public final static String EnviarRespuestas = "http://dp2kendo.apphb.com/Evaluacion360/WSEvaluacion/ResponderPreguntas";
 	
 	public final static String ConsultarSubordinados = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo";
 	

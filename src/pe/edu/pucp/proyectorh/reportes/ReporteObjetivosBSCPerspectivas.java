@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh.reportes;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getReportePeriodo;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
@@ -21,8 +23,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
@@ -33,6 +38,9 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 	GridView gridView;
 	int modo;
 	String nomArch;
+	TextView displayFecha;
+	Button btnRefrescar;
+	ProgressBar pbarra;
 	 
 	static final String[] perspectivas = new String[] { 
 			"Financiera", "Formación", "Cliente", "Interno"};
@@ -65,9 +73,27 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
 		textView.setTypeface(font);
 		
+		displayFecha = (TextView)rootView.findViewById(R.id.reportebscsDisplayfecha);
+		pbarra = (ProgressBar) rootView.findViewById(R.id.reportebscprogressbarRef);
+		
+		
 		modo = getArguments().getInt("modo");
 		nomArch = getArguments().getString("archivo");
 		if (modo==0) System.out.println("archivo: " + nomArch);
+		
+		btnRefrescar = (Button)rootView.findViewById(R.id.reportebscsActualizar);
+		
+		btnRefrescar.setOnClickListener(new OnClickListener() {
+			 
+			  @Override
+			  public void onClick(View v) {
+				  
+				  obtenerReporteOffline(idPeriodo);
+				  
+				  
+			  }
+		});
+		
 		
 		
 		gridView = (GridView) rootView.findViewById(R.id.reportebscgridPerspectivas);
@@ -78,6 +104,54 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 		return rootView;
 	}
 	
+	protected void obtenerReporteOffline(int idPeriodo){
+			
+			if (ConnectionManager.connect(getActivity())) {
+				// construir llamada al servicio
+				
+				String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ObjetivosOffline?idperiodo=" + idPeriodo;
+	
+				new getReportePeriodoRef().execute(request);
+				
+			} else {
+				// Se muestra mensaje de error de conexion con el servicio
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de conexión");
+				builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			}
+			
+	}
+	
+	public class getReportePeriodoRef extends AsyncCall{
+		
+		@Override
+		protected void onPreExecute(){
+			pbarra.setVisibility(View.VISIBLE);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			System.out.println("Recibido: " + result.toString());
+			
+			pbarra.setVisibility(View.INVISIBLE);
+			
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), nomArch);
+			
+			//actualizar gridview
+			cargarAvances(idPeriodo);
+			
+			
+		}
+		
+	}
+	
 	public void cargarAvances(int idperiodo){
 		
 		 if(modo==0){
@@ -85,20 +159,30 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 			  ArrayList<ObjetivoDTO> objetivos = PersistentHandler.getObjFromFile(getActivity(), nomArch);
 			  ArrayList<ObjetivoDTO> objetivosEmpresa = new ArrayList<ObjetivoDTO>();
 			  
+			  String fechaarch = PersistentHandler.getFechaReporte(getActivity(), nomArch);
+			  displayFecha.setText("Fecha de reporte: " + fechaarch);
+			  
+			  
+			  
+			  
+			  
 			  for (int i=0;i<objetivos.size();i++){
 				 
-				  // if (objetivos.get(i).g)
+				  if (objetivos.get(i).getIdpadre()==-1){
+					  objetivosEmpresa.add(objetivos.get(i));
+				  }
 			  }
 			  
 			  int [] arregloAvance = new int[4];
 			  
-			  for (int i=0;i<4;i++){
-				  int promedio = 0;
-				  int suma = 0;
-				  for (int j=0;j<objetivosEmpresa.size();j++){
-					    
+			  for (int i=0;i<objetivosEmpresa.size();i++){
+				  
+				  int bsc = objetivosEmpresa.get(i).getBSCId() -1;
+				  if ((bsc>=0) && (bsc<=3)){
+					  arregloAvance[bsc]= arregloAvance[bsc] +  ( objetivosEmpresa.get(i).getAvance()* objetivosEmpresa.get(i).getPeso() / 100);
 				  }
-				  arregloAvance[0]=promedio;
+				  
+				  
 			  }
 				
 				gridView.setAdapter(new PerspectivaAdapter(getActivity(), perspectivas, arregloAvance));

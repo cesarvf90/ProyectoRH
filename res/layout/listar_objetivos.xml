@@ -4,11 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-   	<Spinner
-		android:id="@+id/spinnerMisObjsPeriodo"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" />
-    
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Seleccione Período: " />
+	
+	   	<Spinner
+			android:id="@+id/spinnerMisObjsPeriodo"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" />
+	</LinearLayout>   	
+  	
+  	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Seleccione Objetivo: " />
+    	
+	    <Spinner
+			android:id="@+id/spinnerMisObjsObjetivo"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" />
+	</LinearLayout>
+   	
     <ExpandableListView
         android:id="@+id/listaObjetivos"
         android:layout_width="match_parent"

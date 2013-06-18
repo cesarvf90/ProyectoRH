@@ -109,7 +109,7 @@ public class ConfirmacionEvaluacion extends Fragment {
 		TextView mensajeConfirmacionText = (TextView) rootView
 				.findViewById(R.id.mensaje_confirmacion_evaluacion);
 		mensajeConfirmacionText
-				.setText("La evaluación aún no ha sido registrada, complete los campos y realice el registro.");
+				.setText("Complete los campos para registrar la evaluación.");
 
 		Button botonRegistrarEvaluacion = (Button) rootView
 				.findViewById(R.id.finalizarEvaluacion);
@@ -251,7 +251,7 @@ public class ConfirmacionEvaluacion extends Fragment {
 		try {
 			registroObject.put("idPostulante", postulante.getID());
 			registroObject.put("idOfertaLaboral", oferta.getID());
-			registroObject.put("descripcionFase", "Aprobado Jefe");
+			registroObject.put("descripcionFase", "Aprobado RRHH");
 			JSONObject evaluacionObject = new JSONObject();
 			evaluacionObject.put("FechaInicio", "02/06/2013 14:03:23");
 			evaluacionObject.put("FechaFin", "02/06/2013 14:33:54");
@@ -265,7 +265,7 @@ public class ConfirmacionEvaluacion extends Fragment {
 				JSONObject respuestaObject = new JSONObject();
 				respuestaObject.put("Comentario", "");
 				respuestaObject.put("Puntaje", respuestas.get(i).getPuntaje());
-				respuestaObject.put("FuncionID", respuestas.get(i)
+				respuestaObject.put("CompetenciaID", respuestas.get(i)
 						.getFuncionID());
 				respuestasListObject.put(respuestaObject);
 			}
