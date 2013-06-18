@@ -73,6 +73,8 @@ public class ReportePersonalBSCGrafico extends Fragment {
 		TextView textView = (TextView)rootView.findViewById(R.id.reporteperbscTitulografico);
 		textView.setText(titulo);
 		
+		historico = new ArrayList<HistoricoBSC>();
+		
 		cargarGraficoHistorico(idcolaborador);
 		
 		customizarEstilos(getActivity(), rootView);
@@ -165,6 +167,8 @@ public class ReportePersonalBSCGrafico extends Fragment {
 				  @Override
 				  public void onClick(View v) {
 					  
+					  if (historico.size()>0){
+					  
 					  	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 						builder.setTitle("Detalle del periodo");
 						String cadena = "Avan.  Objetivo\n";
@@ -181,7 +185,7 @@ public class ReportePersonalBSCGrafico extends Fragment {
 						builder.setPositiveButton("Ok", null);
 						builder.create();
 						builder.show();
-				  
+					  }
 				  }
 			});
 			

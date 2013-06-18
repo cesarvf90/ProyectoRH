@@ -6,7 +6,11 @@ import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
 import pe.edu.pucp.proyectorh.reportes.Reporte360;
+<<<<<<< HEAD
+import pe.edu.pucp.proyectorh.reportes.Reporte360Grafico;
+=======
 import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCPrincipal;
+>>>>>>> bedf90948a1b8cb5053342b11c6faea2d4d93d4b
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,7 +57,7 @@ public class DetalleActivity extends FragmentActivity {
 			if (Modulo.MODULO_ACTUAL == Constante.REPORTES){
 				if ("1".equals(getIntent()
 						.getStringExtra(DetalleFragment.ARG_ITEM_ID))) {
-					Reporte360 fragment = new Reporte360();
+					Reporte360Grafico fragment = new Reporte360Grafico();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();

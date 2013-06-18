@@ -32,14 +32,17 @@
                             type: "column"
                         },
                         series: [{
-                            name: "Requerido",
-                            data: arrAvance.requerido
+                            name: "Jefe",
+                            data: arrAvance.jefe
                         }, {
-                        	name: "360",
-                            data: arrAvance.dato360
+                        	name: "Compañeros Pares",
+                            data: arrAvance.compañerosPares
                         }, {
-                        	name: "Ponderado",
-                            data: arrAvance.ponderado
+                        	name: "Subordinados",
+                            data: arrAvance.subordinados
+                        }, {
+                        	name: "Nota final",
+                            data: arrAvance.notafinal
                         }],
                         valueAxis: {
                             labels: {
@@ -51,7 +54,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: arrAvance.periodo,
+                            categories: arrAvance.procesoEval,
                             line: {
                                 visible: false
                             }

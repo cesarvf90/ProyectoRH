@@ -67,7 +67,7 @@ public class Servicio {
 	 * Servicio que registra las respuestas registradas por el evaluador de la
 	 * entrevista de TERCERA fase
 	 */
-	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSEvaluacion/setRespuestasXEvaluacion";
+	public final static String RegistrarRespuestasEvaluacionTerceraFase = "http://dp2kendo.apphb.com/WSEvalua/setRespuestasXEvaluacion";
 
 	public final static String ListarPeriodos = "http://dp2kendo.apphb.com/WSPeriodos/ListarPeriodos";
 
