@@ -1,6 +1,8 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -145,20 +147,57 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 			String request = Servicio.getEquipoTrabajo + "?colaboradorID="
 					+ idUsuario;
 			System.out.println("pagina: " + request);
-			new deserializarJSON(this.getActivity()).execute(request);
+			new deserializarJSON().execute(request);
+		}
+		else{
+			//offline
+			String trama = PersistentHandler.getColaboradorFromFile(getActivity(), "colabReporte.txt");
+			probarDeserializacionJSON(trama);
+			//colaboradores
+			for (int i=0;i<colaboradores.size();i++){
+				lista.add(colaboradores.get(i).getNombres() + " " + colaboradores.get(i).getApellidoPaterno());
+			}
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerColaborador.setAdapter(dataAdapter);
+			spinnerColaborador.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					
+				/*	Toast.makeText(parent.getContext(), 
+						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+						Toast.LENGTH_SHORT).show(); */
+					
+					colaboradorSelec = Integer.parseInt(colaboradores.get(pos).getId());
+					titulo = parent.getItemAtPosition(pos).toString();
+
+				  }
+				
+			
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			});
+			
 		}
 	}
 
 	public class deserializarJSON extends AsyncCall {
-		
-		public deserializarJSON(Activity activity) {
-			super(activity);
-		}		
+	
 		
 		@Override
 		protected void onPostExecute(String result) {
 			// MISMA LOGICA QUE probarDeserializacionGSON
+			
+			String trama=result;
+			
 			probarDeserializacionJSON(result);
+			
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + trama, getActivity(), "colabReporte.txt");
 			
 			//colaboradores
 			for (int i=0;i<colaboradores.size();i++){
@@ -190,13 +229,15 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 			});
 			
 			
-			ocultarMensajeProgreso();
+			//ocultarMensajeProgreso();
 		}
 	}
 	
 
 	 public void probarDeserializacionJSON(String str) {
 			String result;
+			 
+			
 			// "{\"respuesta\":\"1\",\"jefeEquipo\":{\"nombreCompleto\":\"CHRISTIAN MENDEZ\",\"area\":\"Logistica y Operaciones\",\"puesto\":\"Subgerente de Análisis\",\"anexo\":\"2891\",\"email\":\"jperez@rhpp.com\",\"cantidadSubordinados\":\"3\",\"listaSubordinados\":{\"colaborador1\":{\"nombreCompleto\":\"Carla Sanchez\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"2\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}},\"subcolaborador2\":{\"nombreCompleto\":\"practicante2A\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador2\":{\"nombreCompleto\":\"Mateo Soto\",	\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"1\",\"listaSubordinados\":{\"subcolaborador1\":{\"nombreCompleto\":\"practicante1B\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}},\"colaborador3\":{\"nombreCompleto\":\"Diego Bernal\",\"area\":\"xxxxx\",\"puesto\":\"xxxxx\",\"anexo\":\"xxxxx\",\"email\":\"xxxxx\",\"cantidadSubordinados\":\"0\",\"listaSubordinados\":{}}}}}";
 			if (str != "")
 				result = str;
@@ -239,7 +280,9 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 
 					// Para cada uno de los subordinados del jefe de todos
 					JSONObject subordinadoNivel1Object;
-
+					
+					
+					
 					colaboradores.add(jefe);
 					for (int i = 0; i < listaSubordinadosNivel1.length(); i++) {
 						subordinadoNivel1Object = listaSubordinadosNivel1

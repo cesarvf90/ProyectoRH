@@ -1,7 +1,9 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -15,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -249,13 +252,49 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 			
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
+			/*
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Error de conexción");
 			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();
-			builder.show();
+			builder.show();*/
+			
+			//obtener los de offline
+			areas = PersistentHandler.getAreasFromFile(getActivity(), "areasReporte.txt");
+			for(int i = 0; i<areas.size();i++){
+				
+				listaArea.add(areas.get(i).getNombreArea());
+				
+			}
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaArea);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerArea.setAdapter(dataAdapter);
+			spinnerArea.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					
+					areaSelec=pos;
+				    ArrayList<String> puestos = new ArrayList<String>();
+				    for (int i=0;i<areas.get(areaSelec).getPuestos().size();i++){
+				    	puestos.add(areas.get(areaSelec).getPuestos().get(i).getNombrePuesto());
+				    }
+				    cargarPuestos(puestos);
+				  }
+				
+			
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			 });
+			
+			
+			
 		}
 
 	}
@@ -284,7 +323,15 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 				builder.setPositiveButton("Ok", null);
 				builder.create();
 				builder.show();
+				
 				return;
+			}
+			
+			if (areas.size()>0){
+				
+				String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+				PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), "areasReporte.txt");
+				
 			}
 
 			for(int i = 0; i<areas.size();i++){
