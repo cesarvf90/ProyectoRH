@@ -16,6 +16,7 @@ import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import pe.edu.pucp.proyectorh.LoginActivity;
 
 public class ComparaCapacidad extends Fragment{
@@ -60,6 +62,11 @@ public class ComparaCapacidad extends Fragment{
 		
 		View rootView = inflater.inflate(R.layout.comparacap1principal,
 				container, false);
+		
+		TextView txt = (TextView) rootView.findViewById(R.id.comparacap1principaltitulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
+		
 		pbarra = (ProgressBar) rootView.findViewById(R.id.comparacapprogressbar);
 		
 		spinnerConvocatoria = (Spinner) rootView.findViewById(R.id.comparacapspinner);
@@ -132,6 +139,9 @@ public class ComparaCapacidad extends Fragment{
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
 			List<OfertaLaboralMobilePostulanteDTO> Convocatorias = gson.fromJson(result,
 					new TypeToken<List<OfertaLaboralMobilePostulanteDTO>>(){}.getType());
+			
+			Sesion objetoSesion = new Sesion();
+			objetoSesion.setOfertas(Convocatorias);
 			
 			listaConv = Convocatorias;
 			

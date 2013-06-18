@@ -85,11 +85,9 @@ public class Modulo {
 
 	public static List<ModuloItem> obtenerFuncionalidadesEvaluacion360() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Mis evaluaciones"));
-		submodulos.add(new ModuloItem("2", "Rol evaluador"));
-		submodulos.add(new ModuloItem("3", "Rol de Evaluado"));
-//		submodulos.add(new ModuloItem("3", "Mis subordinados"));
-		submodulos.add(new ModuloItem("4", "Mis subordinados"));
+		submodulos.add(new ModuloItem("1", "Mis Pendientes"));
+		submodulos.add(new ModuloItem("2", "Rol de Evaluado"));
+		submodulos.add(new ModuloItem("3", "Mis subordinados"));
 		return submodulos;
 	}
 
@@ -115,7 +113,7 @@ public class Modulo {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Reporte de Evaluación 360"));
 		submodulos
-				.add(new ModuloItem("2", "Reporte de Evaluación de Objetivos"));
+				.add(new ModuloItem("2", "Reporte histórico de Objetivos"));
 		submodulos.add(new ModuloItem("3", "Reporte de Cubrimiento de Puestos"));
 		submodulos.add(new ModuloItem("4", "Reporte de Objetivos BSC"));
 		return submodulos;

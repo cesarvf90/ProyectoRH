@@ -1,6 +1,5 @@
 package pe.edu.pucp.proyectorh.reportes;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +11,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 public class PersistentHandler {
 
@@ -135,6 +132,28 @@ public class PersistentHandler {
 		return null;
 		
 		
+		
+	}
+	
+	public static String getFechaReporte(Context whereIAm, String fileName){
+		
+		String state = Environment.getExternalStorageState();
+
+		File file = new File(whereIAm.getFilesDir(), fileName);
+		try {
+			InputStream is = new FileInputStream(file);
+			InputStreamReader isr = new InputStreamReader(is);
+		    BufferedReader br = new BufferedReader(isr);
+
+		    String s;
+		    s = br.readLine(); //fecha
+		    
+		    return s;
+		    
+		} catch (IOException e) {
+			System.out.println("Error al leer archivo  " + e);
+		}
+		return "";
 		
 	}
 }

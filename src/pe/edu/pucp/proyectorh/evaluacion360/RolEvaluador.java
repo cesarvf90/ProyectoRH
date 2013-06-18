@@ -8,8 +8,6 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.text.InputType;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -29,7 +27,7 @@ public class RolEvaluador extends Fragment {
 	
 	Evaluacion360ExpandableAdapater adapter;
 	
-	int modoPrueba=1;
+	int modoPrueba=0;
 	
 	public RolEvaluador(){
 		
@@ -62,9 +60,11 @@ public class RolEvaluador extends Fragment {
 		ArrayList<Evaluados360> hijos = new ArrayList<Evaluados360>();
 		System.out.println("obtiene hijos para padre="+idProceso);
     	for(int i=0;i<listEvals.size();i++){
-    		System.out.println("esta en eval="+i + "con idProc="+listEvals.get(i).idProceso);
-    		if(listEvals.get(i).idProceso==idProceso){
+    		System.out.println("esta en eval="+i + "con idProc="+listEvals.get(i).ProcesoEnElQueParticipanID);
+    		if(listEvals.get(i).ProcesoEnElQueParticipanID==idProceso){
     			System.out.println("--->si cumple :)");
+
+    			System.out.println("-->add->"+listEvals.get(i).toText());
     			hijos.add(listEvals.get(i));
     		}
     	}
@@ -75,7 +75,7 @@ public class RolEvaluador extends Fragment {
 	public void loadDataChild(ArrayList<Evaluados360> misEvaluados){
 		for(int i=0;i<groups.size();i++){
 			ArrayList<Evaluados360> hijitos = new ArrayList<Evaluados360>();
-			hijitos = obtenerHijos(groups.get(i).idProceso,misEvaluados);
+			hijitos = obtenerHijos(groups.get(i).ID,misEvaluados);
     		childs.add(hijitos);
     		System.out.println("se agrego data a childs para group="+groups.get(i).Nombre);
     	}
@@ -89,13 +89,13 @@ public class RolEvaluador extends Fragment {
 		for(int i=0;i<2;i++){
 			ProcesoEvaluacion360 eval = new ProcesoEvaluacion360();
 			eval.Nombre = "procesos prueba "+i;
-			eval.fecha = "04/06/2013";
+			eval.FechaCierre = "04/06/2013";
 			if (i  == 0){
-				eval.estado = "Finalizado";
-				eval.idProceso = 1;
+				eval.EstadoNombre = "Finalizado";
+				eval.ID = 1;
 			}else{
-				eval.estado = "Pendiente";
-				eval.idProceso = 2;
+				eval.EstadoNombre = "Pendiente";
+				eval.ID = 2;
 			}
 			listProcesos.add(eval);
 		}
@@ -106,13 +106,13 @@ public class RolEvaluador extends Fragment {
 		ArrayList<Evaluados360> evaluados = new ArrayList<Evaluados360>();
 		for(int i=0;i<5;i++){
 			Evaluados360 eval = new Evaluados360();
-			eval.Nombre = "procesos prueba "+i;
+			eval.evaluado.NombreCompleto = "procesos prueba "+i;
 			if (i % 2 == 0){
-				eval.estado = "Evaluar";
-				eval.idProceso = 1;
+				eval.Estado = "Evaluar";
+				eval.ID = 1;
 			}else{
-				eval.estado = "Evaluado";
-				eval.idProceso = 2;
+				eval.Estado = "Evaluado";
+				eval.ID = 2;
 			}
 			evaluados.add(eval);
 		}

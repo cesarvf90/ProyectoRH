@@ -89,9 +89,9 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
-			
 			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Aprobado%20RRHH";
+					+ "?descripcionFase=" + "Registrado"+ "&"
+					+ "colaboradorID=" + LoginActivity.getUsuario().getID();
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
@@ -131,6 +131,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 								.getString("FechaRequerimiento"));
 						oferta.setNumeroPostulantes(ofertaObject
 								.getInt("NumeroPostulantes"));
+//						oferta.setEstado("Aprobado Jefe");
 						JSONArray postulantesListObject = ofertaObject
 								.getJSONArray("Postulantes");
 
@@ -250,7 +251,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
 					builder.setTitle("Evaluar postulante");
-					builder.setMessage("¿Desea realizar la evaluación por competencias para este postulante?");
+					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
 					builder.setCancelable(false);
 					builder.setCancelable(false);
 					builder.setNegativeButton("Cancelar",
@@ -377,7 +378,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 			// Se muestra mensaje de servicio no disponible
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pueden obtener las ofertas laborales. Intente nuevamente");
+			builder.setMessage("No se pueden obtener los ofertas laborales para evaluación. Intente nuevamente");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();

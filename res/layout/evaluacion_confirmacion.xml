@@ -22,8 +22,8 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/Title"
         android:textStyle="bold" />
-    
-        <TextView
+
+    <TextView
         android:id="@+id/puntaje_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +39,8 @@
         android:layout_below="@+id/puntaje_title"
         android:layout_marginLeft="20dp"
         android:baselineAligned="false"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="20dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,16 +111,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/evaluacion_feedback_layout"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"
         android:text="@string/registrar_evaluacion" />
-
+
     <TextView
         android:id="@+id/mensaje_confirmacion_evaluacion"
-        android:layout_width="240dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/finalizarEvaluacion"
         android:layout_centerHorizontal="true"
-        android:paddingTop="60dp"
+        android:gravity="center"
+        android:paddingTop="40dp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/Medium"
         android:textStyle="bold" />

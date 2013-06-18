@@ -34,21 +34,92 @@
         android:layout_marginTop="5dp" />
     
      </RelativeLayout>
+     
+    <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginTop="120dp"
+	    android:layout_marginLeft="30dp" >
+    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="Seleccione Area" />
+	    
+	    <Spinner
+	        android:id="@+id/reportecubspinnerArea"
+	        android:layout_width="200dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="30dp" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="Seleccione puesto" 
+	        android:layout_marginLeft="30dp"/>
+	    
+	    <Spinner
+	        android:id="@+id/reportecubspinnerPuesto"
+	        android:layout_width="250dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="30dp" />
+    
+    </LinearLayout>
 
-    <TextView
+
+    
+     <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginTop="180dp"
+	    android:layout_marginLeft="30dp" >
+    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="Desde" />
+	    <TextView
+	        android:id="@+id/reportecubdesde"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:layout_marginLeft="30dp"
+	        android:text="17/06/2013" />
+	    
+	    <Button
+        android:id="@+id/reportecubbtndesde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="120dp"
-        android:textSize="20sp"
-        android:text="Seleccione puesto" />
-    
-    <Spinner
-        android:id="@+id/reportecubspinner"
-        android:layout_width="match_parent"
+        android:text="Sel."
+        android:layout_marginLeft="30dp" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="Hasta" 
+	        android:layout_marginLeft="120dp"/>
+	    <TextView
+	        android:id="@+id/reportecubhasta"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:layout_marginLeft="30dp"
+	        android:text="17/06/2013" />
+	    
+	    <Button
+        android:id="@+id/reportecubbtnhasta"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="150dp" />
+        android:text="Sel."
+        android:layout_marginLeft="30dp" />
+    
+    </LinearLayout>
+    
+    
     
     <Button
         android:id="@+id/reportecubbtnConsultar"
@@ -56,7 +127,7 @@
         android:layout_height="wrap_content"
         android:text="Consultar"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="210dp"  />
+        android:layout_marginTop="250dp"  />
 
     
 </RelativeLayout>

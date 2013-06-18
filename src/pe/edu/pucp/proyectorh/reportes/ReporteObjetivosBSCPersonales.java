@@ -10,10 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.model.Objetivo;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCObjetivos.getObjetivos;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.utils.AdaptadorDeObjetivos;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -132,20 +129,24 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 				if (objetivosArch.get(i).getIdpadre()==idobjPadre){
 					
 					//este objetivo es el de personaxobjetivo, se muestran sus hijos
-					System.out.println(objetivosArch.get(i).getColaboradorNombre());
-					personas.add(objetivosArch.get(i).getColaboradorNombre());
 					
-					ArrayList<ObjetivoDTO> listaHijos = new ArrayList<ObjetivoDTO> (); 
-					
-					//obtener hijos
-					for (int j=0;j<objetivosArch.size();j++){
-						if (objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()){
-							listaHijos.add(objetivosArch.get(j));
+					//validacion si colaborador es null no mostrar
+					if (objetivosArch.get(i).getColaboradorNombre()!=null){
+						System.out.println(objetivosArch.get(i).getColaboradorNombre());
+						personas.add(objetivosArch.get(i).getColaboradorNombre());
+						
+						ArrayList<ObjetivoDTO> listaHijos = new ArrayList<ObjetivoDTO> (); 
+						
+						//obtener hijos
+						for (int j=0;j<objetivosArch.size();j++){
+							if (objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()){
+								listaHijos.add(objetivosArch.get(j));
+							}
+								
 						}
-							
+						
+						objetivos.add(listaHijos);
 					}
-					
-					objetivos.add(listaHijos);
 					
 				}
 			}
@@ -174,18 +175,15 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 					new TypeToken<List<PersonaXObjetivoDTO>>(){}.getType());
 			
 			ArrayList<String> personas = new ArrayList<String>();
-			for (int i=0;i<listaObjetivosxPersona.size();i++){
-				
-				personas.add(listaObjetivosxPersona.get(i).getNombreColaborador());
-				
-			}
-			
 			ArrayList<List<ObjetivoDTO>> objetivos = new ArrayList<List<ObjetivoDTO>>();
-			
-			for (int i=0;i<personas.size();i++){
+			for (int i=0;i<listaObjetivosxPersona.size();i++){
+				if (listaObjetivosxPersona.get(i).getNombreColaborador()!= null){
+					personas.add(listaObjetivosxPersona.get(i).getNombreColaborador());
+					objetivos.add(listaObjetivosxPersona.get(i).getObjetivos());
+				}
 				
-				objetivos.add(listaObjetivosxPersona.get(i).objetivos);
 			}
+			
 
 			ObjetivoPersonalAdapter adaptador = new ObjetivoPersonalAdapter(getActivity().getApplicationContext(), personas, objetivos);
 			expandObjetivos.setAdapter(adaptador);
@@ -290,6 +288,7 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 
 	}
 	
+	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		System.out.println("entro a groupview");

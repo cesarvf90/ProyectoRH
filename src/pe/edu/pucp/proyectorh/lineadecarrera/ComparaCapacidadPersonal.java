@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.webkit.WebView;
 
 
@@ -55,8 +56,8 @@ public class ComparaCapacidadPersonal extends Fragment {
 		//int[] avance = new int[] {100};
 		//int[] avance2 = new int[] {84}; 
 		
-		int match = getArguments().getInt("match");
-		int[] arrmatch = new int[] {match};
+		int matchlevel = getArguments().getInt("match");
+		int[] arrmatch = new int[] {matchlevel};
 		
 	}
 	
@@ -101,6 +102,10 @@ public class ComparaCapacidadPersonal extends Fragment {
 		View rootView = inflater.inflate(R.layout.comparacap2per,
 				container, false);
 		
+		TextView txt = (TextView) rootView.findViewById(R.id.comparacap2pertitulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
+		
 		browser = (WebView)rootView.findViewById(R.id.comparaCap1WebkitGLineal);
 		
 		//habilitamos javascript y flash
@@ -115,8 +120,25 @@ public class ComparaCapacidadPersonal extends Fragment {
 		listaN = new ArrayList<String>();
 		
 		usuario = LoginActivity.usuario.getUsername();
-		obtenerlistaRequisitos(usuario);
+		//obtenerlistaRequisitos(usuario);
 		
+		Sesion objetoSesion = new Sesion();
+		List<OfertaLaboralMobilePostulanteDTO> Convocatorias = objetoSesion.getOfertas();
+		
+		listaConv = Convocatorias;
+		
+		for(int i =0; i<listaConv.size();i++){
+			
+			if (listaConv.get(i).getID() == idConvocatoria){
+				listaReq = listaConv.get(i).getFunciones(); 
+				for (int j=0; j<listaReq.size();j++){
+					listaN.add(listaReq.get(j).getNombre());
+				}	
+			}
+		}
+		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaN);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerRequisitos.setAdapter(dataAdapter);
 		
 		String tituloconv = getArguments().getString("titulo");
 		String descrip = getArguments().getString("desc");

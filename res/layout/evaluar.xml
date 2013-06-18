@@ -7,9 +7,8 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal"
-       >
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
         
 	    <QuickContactBadge
 	        android:id="@+id/evaluacionImagenContacto"
@@ -19,73 +18,80 @@
 	    <TableLayout
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
+	        android:orientation="vertical"
+	        android:gravity="center_horizontal">
 	        
-	        <TableLayout
+            <TextView 
+                android:id="@+id/evaluacion360Nombre"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+       			android:textSize="25sp"/>
+	    	
+	        <LinearLayout
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
-	        
-	            <TextView 
-	                android:text="Programador Senior"
-	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="left"/>
-	            
+	        android:orientation="horizontal"
+	        android:gravity="center_horizontal">
 	             <TextView 
-	                android:text="22 años"
+	                android:text="Área: "
 	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="right"/>
+	       			android:layout_height="wrap_content" 
+	       			android:textSize="25sp"/>
 	            
-	    	</TableLayout>
+	        	 <TextView 
+	                android:id="@+id/evaluacion360Area"
+	                android:layout_width="wrap_content"
+	       			android:layout_height="wrap_content" 
+	       			android:textSize="25sp"/>        	 
+	    	</LinearLayout>     
 	    	
-	        <TableLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
-	             
-	        	 <TextView 
-	                android:text="Área:"
-	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="left"/>
-	        	 
-	        	 <TextView 
-	                android:text="Desarrollo"
-	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="right"/>
-	        	 
-	    	</TableLayout>
-	    	
-	    	
-	        <TableLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
-	             
-	        	 <TextView 
-	                android:text="Fecha de Ingreso:"
-	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="left"/>
-	        	 
-	        	 <TextView 
-	                android:text="04/06/2013"
-	                android:layout_width="wrap_content"
-	       			android:layout_height="wrap_content"
-	       			android:gravity="right"/>
-	        	 
-	    	</TableLayout>	        
 	        
+	        <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="center_horizontal">
+	             
+	             <TextView 
+	                android:text="Puesto: "
+	                android:layout_width="wrap_content"
+	       			android:layout_height="wrap_content" 
+	       			android:textSize="25sp"/>
+
+	        	 <TextView 
+	                android:id="@+id/evaluacion360Puesto"
+	                android:layout_width="wrap_content"
+	       			android:layout_height="wrap_content" 
+	       			android:textSize="25sp"/>
+	        	 
+	    	</LinearLayout>   
+	    	
 	    </TableLayout>
 	    
     </TableLayout>
-     <TableLayout
-        android:id="@+id/layEvaluacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+     
+          <LinearLayout
+            android:id="@+id/layEvaluacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:baselineAligned="false"
+            android:orientation="vertical">
+        </LinearLayout>
 
- 
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/finalizarEva360"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finalizar Evaluación" />
+
+    </LinearLayout>
 </LinearLayout>

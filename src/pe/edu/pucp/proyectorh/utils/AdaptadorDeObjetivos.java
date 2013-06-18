@@ -3,17 +3,20 @@ package pe.edu.pucp.proyectorh.utils;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
+import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Objetivo;
 
 public class AdaptadorDeObjetivos extends BaseExpandableListAdapter {
@@ -26,6 +29,114 @@ public class AdaptadorDeObjetivos extends BaseExpandableListAdapter {
 		this.context = contexto;
 		this.objetivos = objetivos;
 		this.avances = avances;
+	}
+	
+//	public AdaptadorDeObjetivos(this.getActivity().getApplicationContext(), losEmpleados);
+//	public AdaptadorDeObjetivos(Context contexto, ArrayList<Colaborador> losEmpleados) {
+	public AdaptadorDeObjetivos(Context contexto, Colaborador elEmpleado) {
+		this.context = contexto;
+		
+//		rootView  = inflater.inflate(R.layout.mis_subordinados,container, false);
+//		Context contexto = rootView.getContext();
+//		rootView.findViewById(R.layout.mis_subordinados);
+		
+//		Resources res = getResources();
+		
+//		final ArrayList<Objetivo> objetivosSubordinado = Objetivo.tomarPrestadoDataDePrueba();
+//		final ArrayList<AvanceDeObjetivo> avancesDeObjetivos = AvanceDeObjetivo.tomarPrestadoDataDePrueba(); 
+//		final ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>> avancesHastaHoy = new ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>>();
+//		
+		final ArrayList<Objetivo> objetivosSubordinado =new ArrayList<Objetivo>();
+//		new ArrayList<Objetivo>();
+//		final ArrayList<AvanceDeObjetivo> avancesDeObjetivos = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+//		final ArrayList<AvanceDeObjetivo> avancesDeObjetivos = new ArrayList<AvanceDeObjetivo>();
+		final ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>> avancesHastaHoy = new ArrayList<ArrayList<ArrayList<AvanceDeObjetivo>>>();
+			
+//		avancesHastaHoy.add(new ArrayList<ArrayList<AvanceDeObjetivo>>()); //El primer objetivo no presenta progreso
+//		avancesHastaHoy.add(new ArrayList<ArrayList<AvanceDeObjetivo>>()); //El segundo tampoco
+		
+//		fpr
+//		for (Colaborador empleado : losEmpleados)
+//		{
+//			Objetivo unObjetivo = new Objetivo();
+//			Objetivo unoDeSusObjetivos = new Objetivo();
+//			for (Objetivo objetivo in empleado.getO)
+//			for (Objetivo objetivo : empleado.getO)
+		
+		for (Objetivo objetivo : elEmpleado.getSusObjetivos())
+		{
+//			avancesHastaHoy.add(object);
+//			avancesHastaHoy.add(new ArrayList<ArrayList<AvanceDeObjetivo>>());
+			
+//			avancesHastaHoy.get(avancesHastaHoy.size() - 1) = new ArrayList<Ava>
+//			avancesHastaHoy.get(avancesHastaHoy.size() - 1) = new ArrayList<AvanceDeObjetivo>();
+			
+			ArrayList<ArrayList<AvanceDeObjetivo>> losAvances = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+//			losAvances.
+//			losAvances
+//			for (AvanceDeObjetivo avance : objetivo)
+			for (AvanceDeObjetivo avance : objetivo.getSusAvances())
+			{
+//				ArrayList<AvanceDeObjetivo> n
+				ArrayList<AvanceDeObjetivo> unGrupoDeUno = new ArrayList<AvanceDeObjetivo>();
+				unGrupoDeUno.add(avance);
+				losAvances.add(unGrupoDeUno);
+//			}
+			}
+			avancesHastaHoy.add(losAvances);
+		}
+		
+		
+			
+			
+			
+//			unObjetivo
+			
+			
+//		}
+		
+//		ArrayList<AvanceDeObjetivo> grupoDeUno = new ArrayList<AvanceDeObjetivo>();
+//		
+//		grupoDeUno.add(avancesDeObjetivos.get(2));
+//		
+//		ArrayList<AvanceDeObjetivo> otroGrupoDeUno = new ArrayList<AvanceDeObjetivo>();
+//		
+//		otroGrupoDeUno.add(avancesDeObjetivos.get(1));	
+//		
+//		ArrayList<ArrayList<AvanceDeObjetivo>> parDeAvancesTercerObjetivo = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+//		
+//		parDeAvancesTercerObjetivo.add(grupoDeUno);
+//		parDeAvancesTercerObjetivo.add(otroGrupoDeUno);
+//		
+//		avancesHastaHoy.add(parDeAvancesTercerObjetivo);
+//		
+//		//El primer y segundo objetivo están sin comenzar
+//		
+//		ArrayList<AvanceDeObjetivo> elAvanceDelCeroPorCiento = new ArrayList<AvanceDeObjetivo>();
+//		
+//		elAvanceDelCeroPorCiento.add(avancesDeObjetivos.get(0));
+//		
+//		ArrayList<ArrayList<AvanceDeObjetivo>> elUnicoAvanceDelObjetivo = new ArrayList<ArrayList<AvanceDeObjetivo>>();
+//		
+//		elUnicoAvanceDelObjetivo.add(elAvanceDelCeroPorCiento);
+//		
+//		avancesHastaHoy.add(0, elUnicoAvanceDelObjetivo);
+//		avancesHastaHoy.add(0, elUnicoAvanceDelObjetivo);
+		
+		//Coloca la data en los cajones de la vista
+		
+//		ExpandableListView listaDeObjetivos = (ExpandableListView) rootView.findViewById(R.id.AquiSupervisoSusObjetivos);
+//		AdaptadorDeObjetivos adaptador = new AdaptadorDeObjetivos(this.getActivity().getApplicationContext(), objetivosSubordinado, avancesHastaHoy);
+//		listaDeObjetivos.setAdapter(adaptador);
+//		listaDeObjetivos.setLongClickable(true);
+//		
+//		
+//		
+	
+//		this.avances
+//		this.onb
+		this.objetivos = elEmpleado.getSusObjetivos();
+		this.avances = avancesHastaHoy;
 	}
 	
 	@Override

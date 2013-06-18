@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -67,7 +68,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		llamarServiciosAprobarSolicitudOfertaLaboral("Pendiente");
 		return rootView;
 	}
-	
+
 	private void customizarEstilos(Context context, View view) {
 		try {
 			if (view instanceof ViewGroup) {
@@ -95,11 +96,11 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 	}
 
 	public class deserializarJSON extends AsyncCall {
-		
+
 		public deserializarJSON(Activity activity) {
 			super(activity);
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("result: " + result);
@@ -153,6 +154,15 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 					puestosSolicitudes.add(solicitud.getPuesto());
 				}
 				mostrarSolicitudes();
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						this.getActivity());
+				builder.setTitle("Mensaje del servidor");
+				builder.setMessage("Todavía no existen ofertas laborales pendientes de aprobar.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
@@ -184,23 +194,24 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				.findViewById(R.id.reclu_btn_Rechazar);
 
 		// System.out.println("solicitudes != NULL");
-		/*this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
-				android.R.layout.simple_list_item_1, puestosSolicitudes);*/
-		
-		this.solicitudesAdapter = new ArrayAdapter<String>(
-			    this.getActivity(), android.R.layout.simple_list_item_1,
-			    puestosSolicitudes) {
-			   @Override
-			   public View getView(int position, View convertView, ViewGroup parent) {
-			    TextView view = (TextView) super.getView(position, convertView,
-			      parent);
-			    ((TextView) view)
-			      .setTypeface(Typeface.createFromAsset(getActivity()
-			        .getAssets(), EstiloApp.FORMATO_LETRA_APP));
-			    return view;
-			   }
-			  };
-		
+		/*
+		 * this.solicitudesAdapter = new
+		 * ArrayAdapter<String>(this.getActivity(),
+		 * android.R.layout.simple_list_item_1, puestosSolicitudes);
+		 */
+
+		this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
+				android.R.layout.simple_list_item_1, puestosSolicitudes) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				TextView view = (TextView) super.getView(position, convertView,
+						parent);
+				view.setTypeface(Typeface.createFromAsset(getActivity()
+						.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+				return view;
+			}
+		};
+
 		listaSolicitudes.setAdapter(solicitudesAdapter);
 		listaSolicitudes
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -253,8 +264,10 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 										String comments = comentarios.getText()
 												.toString();
 										comments = comments.trim();
-										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");
+										// comments = comments.replace(" ",
+										// "_");
+										// comments = comments.replace("&",
+										// "_");
 										actualizarEstadoSolicitudOfertaLaboral(
 												IDSolicitudSeleccionada,
 												"Aprobado", comments);
@@ -302,8 +315,10 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 										String comments = comentarios.getText()
 												.toString();
 										comments = comments.trim();
-										comments = comments.replace(" ", "_");
-										comments = comments.replace("&", "_");
+										// comments = comments.replace(" ",
+										// "_");
+										// comments = comments.replace("&",
+										// "_");
 										actualizarEstadoSolicitudOfertaLaboral(
 												IDSolicitudSeleccionada,
 												"Rechazado", comments);
@@ -371,6 +386,29 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 
 		TextView puesto = (TextView) rootView
 				.findViewById(R.id.reclut_cargo_input);
+
+		TextView puestolabel = (TextView) rootView
+				.findViewById(R.id.reclut_cargo_label);
+
+		if (solicitudOfertaLaboral.getPuesto() != null) {
+			int cantidadCaracteresPuestoOferta = solicitudOfertaLaboral
+					.getPuesto().length();
+			if (cantidadCaracteresPuestoOferta >= 35) {
+				puesto.setHeight(60);
+				puestolabel.setHeight(60);
+			} else {
+				// puesto.setLayoutParams(new
+				// LayoutParams(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT));
+				// puestolabel.setLayoutParams(new
+				// LayoutParams(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT));
+				puesto.setHeight(30);
+				puestolabel.setHeight(30);
+			}
+			System.out.println(cantidadCaracteresPuestoOferta);
+		}
+
 		puesto.setText(solicitudOfertaLaboral.getPuesto() == "null" ? " - "
 				: solicitudOfertaLaboral.getPuesto());
 

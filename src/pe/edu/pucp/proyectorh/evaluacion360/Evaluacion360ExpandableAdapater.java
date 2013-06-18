@@ -5,25 +5,16 @@ import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Evaluados360;
-import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
-import pe.edu.pucp.proyectorh.model.OfertaLaboral;
-import pe.edu.pucp.proyectorh.model.Postulante;
 import pe.edu.pucp.proyectorh.model.ProcesoEvaluacion360;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulante;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -68,10 +59,13 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
 
    
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
-    	String texto = getChild(groupPosition, childPosition).Nombre;
-    	String estado = getChild(groupPosition, childPosition).estado;
-    	
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild,View convertView, ViewGroup parent) {
+    	String texto = getChild(groupPosition, childPosition).evaluado.NombreCompleto;
+    	String estado ="Evaluar";
+    	if (getChild(groupPosition, childPosition).Estado.compareTo("Terminado")==0){
+    		estado="Evaluado";
+    	}
+    	System.out.println("t="+texto+" e="+estado);
     	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.evaluacion_expandablelist_child, null);           
@@ -84,20 +78,15 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
   	    TextView childTxtEstado = (TextView) convertView.findViewById(R.id.evaluadoEstado);
   	    childTxtEstado.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
   	    childTxtEstado.setText(estado);
-  	    if(estado.compareTo("Evaluar")==0){
+  	    if(estado!=null && estado.compareTo("Evaluar")==0){
 	  	    childTxtEstado.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					FragmentTransaction ft = act
-							.getSupportFragmentManager()
-							.beginTransaction();
+					FragmentTransaction ft = act.getSupportFragmentManager().beginTransaction();
 					Evaluar fragment = new Evaluar();
-					ft.setCustomAnimations(
-							android.R.anim.slide_in_left,
-							android.R.anim.slide_out_right);
-					ft.replace(R.id.opcion_detail_container,
-							fragment, "detailFragment")
-							.addToBackStack("tag").commit();
+					fragment.evaluado = getChild(groupPosition, childPosition);
+					ft.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+					ft.replace(R.id.opcion_detail_container,fragment, "detailFragment").addToBackStack("tag").commit();
 				}
 			});
   	    }
@@ -127,7 +116,7 @@ public class Evaluacion360ExpandableAdapater extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-    	String group = getGroup(groupPosition).Nombre;
+    	String group = getGroup(groupPosition).Nombre +" ("+getGroup(groupPosition).EstadoNombre+")";
     	System.out.println("vista de = "+group);
     	
     	if (convertView == null) {

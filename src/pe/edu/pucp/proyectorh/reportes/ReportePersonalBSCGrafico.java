@@ -1,0 +1,290 @@
+package pe.edu.pucp.proyectorh.reportes;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import pe.edu.pucp.proyectorh.R;
+import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.DataObject;
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.InterfaceChartLineal;
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.ROfertasLaborales;
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.getAvances;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
+
+public class ReportePersonalBSCGrafico extends Fragment {
+	
+	int idcolaborador;
+	WebView browser;
+	Spinner spinnerPeriodo;
+	List<HistoricoBSC> historico;
+	Button btnDetalle;
+	int posicion=0;
+	
+	public ReportePersonalBSCGrafico(){
+		
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		View rootView = inflater.inflate(R.layout.reportepersonalbsc2grafico,
+				container, false);
+		
+		idcolaborador = getArguments().getInt("ColaboradorSelec");
+		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.reporteperbscspinnerGraf);
+		btnDetalle = (Button) rootView.findViewById(R.id.reporteperbscbtnDetalle);
+		
+		browser = (WebView)rootView.findViewById(R.id.reporteperbscWebkit);
+		
+		
+		String titulo = getArguments().getString("titulo");
+		// set value into textview
+		TextView textView = (TextView)rootView.findViewById(R.id.reporteperbscTitulografico);
+		textView.setText(titulo);
+		
+		historico = new ArrayList<HistoricoBSC>();
+		
+		cargarGraficoHistorico(idcolaborador);
+		
+		customizarEstilos(getActivity(), rootView);
+		
+		return rootView;
+	}
+	
+	public void cargarGraficoHistorico(int idcolab){
+		
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			String request = ReporteServices.obtenerHistoricoObjetivos + "?idColaborador=" + idcolab;
+
+			new getAvances().execute(request);
+			
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexión");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+		
+		
+	}
+	
+	
+	public class getAvances extends AsyncCall {
+
+		@Override
+		protected void onPostExecute(String result) {
+			
+			System.out.println("Recibido: " + result.toString());
+			
+			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+			historico = gson.fromJson(result,new TypeToken<List<HistoricoBSC>>(){}.getType());
+			
+			ArrayList<String> listaPeriodos = new ArrayList<String> ();  
+			for (int i=0; i<historico.size();i++ ){
+				listaPeriodos.add(historico.get(i).idperiodo + "");
+			}
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaPeriodos);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					posicion = pos;
+				   
+					
+					int [] objetivos = new int[3];
+					
+					for(int i=0;i<historico.get(pos).getObjetivos().size();i++){
+						
+						if (historico.get(pos).getObjetivos().get(i).getAvance() == 100) objetivos[0] = objetivos[0] + 1; 
+						else if (historico.get(pos).getObjetivos().get(i).getAvance() > 75) objetivos[1] = objetivos[1] + 1;
+						else objetivos[2] = objetivos[2] + 1; 
+					}
+					
+					//habilitamos javascript y flash
+					browser.getSettings().setJavaScriptEnabled(true);
+					browser.getSettings().setPluginsEnabled(true);
+
+					DataObject data = new DataObject(objetivos);
+					
+					InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);
+					
+					browser.addJavascriptInterface(intface, "Android");
+					
+					
+					browser.loadUrl("file:///android_asset/ReporteBSCpersonal.html");
+
+				  }
+				
+			
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			});
+			
+			btnDetalle.setOnClickListener(new OnClickListener() {
+				 
+				  @Override
+				  public void onClick(View v) {
+					  
+					  if (historico.size()>0){
+					  
+					  	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setTitle("Detalle del periodo");
+						String cadena = "Avan.  Objetivo\n";
+						for(int i=0;i<historico.get(posicion).getObjetivos().size();i++){
+							cadena = cadena + historico.get(posicion).getObjetivos().get(i).getAvance() + "%";
+							if (historico.get(posicion).getObjetivos().get(i).getAvance() < 10) cadena = cadena + "   ";
+							else if (historico.get(posicion).getObjetivos().get(i).getAvance() < 100) cadena = cadena + "  ";
+							
+							cadena = cadena + "\t\t" + historico.get(posicion).getObjetivos().get(i).getDescripcion() + "\n";
+						}
+						
+						builder.setMessage(cadena);
+						builder.setCancelable(false);
+						builder.setPositiveButton("Ok", null);
+						builder.create();
+						builder.show();
+					  }
+				  }
+			});
+			
+			
+		}
+	}
+	
+	public class DataObject {
+		
+		int[] objetivos; 
+		
+		public DataObject(int[] objetivos){
+			this.objetivos = objetivos;
+		}
+
+	}
+	
+	public class InterfaceChartLineal {
+	    Context mContext;
+	    DataObject obj;
+	    /** Instantiate the interface and set the context */
+	    InterfaceChartLineal(Context c, DataObject o) {
+	        mContext = c;
+	        obj = o;
+	    }
+
+	    /* Show a toast from the web page 
+	    public void showToast(String toast) {
+	        Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+	    }*/
+	    
+	    public String getData(){
+	    	
+	    	
+	    	Gson gson = new Gson();
+	    	 
+	    	// convert java object to JSON format,
+	    	// and returned as JSON formatted string
+	    	String json = gson.toJson(obj);
+	    	System.out.println(json);
+	    	return json;
+	    }
+
+
+	}
+	
+	
+	
+	public class HistoricoBSC
+	{
+	        private int idperiodo;
+
+	        private String nombreColaborador;
+
+	        private List<ObjetivoDTO> objetivos;
+
+			public int getIdperiodo() {
+				return idperiodo;
+			}
+
+			public void setIdperiodo(int idperiodo) {
+				this.idperiodo = idperiodo;
+			}
+
+			public String getNombreColaborador() {
+				return nombreColaborador;
+			}
+
+			public void setNombreColaborador(String nombreColaborador) {
+				this.nombreColaborador = nombreColaborador;
+			}
+
+			public List<ObjetivoDTO> getObjetivos() {
+				return objetivos;
+			}
+
+			public void setObjetivos(List<ObjetivoDTO> objetivos) {
+				this.objetivos = objetivos;
+			}
+	         
+	         
+	}
+	
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+			((TextView) view).setTypeface(Typeface.createFromAsset(
+			context.getAssets(), "OpenSans-Light.ttf"));
+		}
+		} catch (Exception e) {
+		}
+	}
+		
+	
+
+}

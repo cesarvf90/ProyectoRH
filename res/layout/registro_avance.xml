@@ -23,4 +23,23 @@
 		        android:layout_height="wrap_content" />
 		</LinearLayout>
 	</TableLayout>
+	
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+	    
+	    <Button
+	        android:id="@+id/AvanceDescCambios"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Descartar Cambios" />
+	    
+	     <Button
+	        android:id="@+id/AvanceGuardarCambios"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Guardar Cambios" />
+	</LinearLayout>
 </TableLayout>

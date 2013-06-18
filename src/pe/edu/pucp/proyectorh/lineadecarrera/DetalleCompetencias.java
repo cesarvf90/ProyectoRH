@@ -11,13 +11,7 @@ import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.CompetenciaConPonderadoDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteServices;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.DataObject;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.InterfaceChartLineal;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.ObjetivosXPersonaRDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCGrafico.getAvances;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
@@ -29,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetalleCompetencias extends Fragment  {
@@ -122,7 +115,40 @@ public class DetalleCompetencias extends Fragment  {
 		idConvocatoria = getArguments().getInt("ConvSelec");
 		
 		//ListView listaNombreCompetencia = (ListView) rootView.findViewById(R.id.lista_nombre_competencias);
-		cargarArreglos(usuario);
+		//cargarArreglos(usuario);
+		
+		Sesion objetoSesion = new Sesion();
+		List<OfertaLaboralMobilePostulanteDTO> Convocatorias = objetoSesion.getOfertas();
+		
+		listaConv = Convocatorias;
+		for(int i =0; i<listaConv.size();i++){
+			
+			if (listaConv.get(i).getID() == idConvocatoria){
+				
+				listaPuesto = listaConv.get(i).getCompetenciasPonderadasPuesto();
+				listaColab = listaConv.get(i).getCompetenciasPonderadasColaborador();
+				
+				comp = new String[listaPuesto.size()];
+				porpu = new int[listaPuesto.size()];
+				poremp = new int[listaColab.size()];
+				
+				for (int j=0; j<listaPuesto.size();j++){
+					
+					comp[j] = listaPuesto.get(j).getCompetenciaNombre();
+					porpu[j]= listaPuesto.get(j).getPorcentaje();
+					poremp[j]= listaColab.get(j).getPorcentaje();
+				}
+			}
+		}
+		
+		browser.getSettings().setJavaScriptEnabled(true);
+		browser.getSettings().setPluginsEnabled(true);
+		DataObject data = new DataObject(comp,porpu,poremp);
+		
+		InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);
+		browser.addJavascriptInterface(intface, "Android");
+		
+		browser.loadUrl("file:///android_asset/DetalleCompPerbarchart.html");
 		
 		//habilitamos javascript y flash
 		//browser.getSettings().setJavaScriptEnabled(true);

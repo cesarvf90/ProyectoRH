@@ -3,6 +3,7 @@ package pe.edu.pucp.proyectorh;
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
+import pe.edu.pucp.proyectorh.connection.DataBaseContactosConnection;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluado;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
@@ -62,7 +63,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(29, 148, 59)));
-		bar.setTitle("RH++");
+		bar.setTitle("RH++ " + LoginActivity.getUsuario().getUsername());
 	}
 
 	private void customizarEstilos(Context context, View view) {
@@ -149,6 +150,13 @@ public class MainActivity extends FragmentActivity implements
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
+				
+				if ("2".equals(id)) {
+					ReportePersonalBSCPrincipal fragment = new ReportePersonalBSCPrincipal();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
 
 				if ("3".equals(id)) {
 					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
@@ -165,24 +173,20 @@ public class MainActivity extends FragmentActivity implements
 				}
 			}
 
-			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) {
-				if (id.equals("1")) { // Mis evaluaciones
-
-				}
-				if (id.equals("2")) {// Rol evaluadores
+			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) { //SE ACTUALIZO
+				if (id.equals("1")) {// Rol evaluadores
 					RolEvaluador fragment = new RolEvaluador();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Rol de Evaluado
+				if (id.equals("2")) {// Rol de Evaluado
 					RolEvaluado fragment = new RolEvaluado();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
-				}				
-//				if (id.equals("3")) {// Mis subordinados
-				if (id.equals("4")) {// Mis subordinados
+				}
+				if (id.equals("3")) {// Mis subordinados
 					pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados fragment = new pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -314,6 +318,11 @@ public class MainActivity extends FragmentActivity implements
 
 	protected void cerrarSesion() {
 		NAVEGACION = 1;
+		borrarDatosPersistidos();
 		finish();
+	}
+
+	private void borrarDatosPersistidos() {
+		deleteDatabase(DataBaseContactosConnection.obtenerNombre());
 	}
 }

@@ -8,20 +8,31 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:gravity="left"
         android:text="Datos de Convocatoria"
-        android:textSize="20sp" />
+        android:textSize="30sp"
+        android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp"
+		android:id="@+id/comparacap2pertitulo" />
     
-    
+    <RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="35dp"
+    android:background="@color/verde_menubar"
+    android:layout_marginTop="40dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:inputType="textMultiLine"
         android:id="@+id/CompCapConvSelec"
-        android:textSize="15sp" />
-    
+        android:textSize="20sp" 
+        android:textColor="@color/white"/>
+    </RelativeLayout>
 
 	<TableRow>
         <TextView
@@ -30,7 +41,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:inputType="textMultiLine"
-        android:text="Descripción del Puesto" />
+        android:text="Descripción del Puesto" 
+        android:textSize="20sp"/>
         
         <TextView
         android:layout_width="wrap_content"
@@ -38,7 +50,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:inputType="textMultiLine"
-        android:text="Requisitos" />
+        android:text="Requisitos"
+        android:textSize="20sp" />
     </TableRow>   
     	
     	
@@ -66,7 +79,7 @@
 	    
     </TableRow>
     
-	<TableRow>
+	
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,8 +87,9 @@
         android:layout_marginTop="50dp"
         android:inputType="textMultiLine"
         android:text="Job Match"
-        android:textSize="15sp" />
-    </TableRow>
+        android:textSize="20sp" 
+        />
+    
     
 	<RelativeLayout >
 	<WebView

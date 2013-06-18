@@ -12,7 +12,6 @@ import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.SolicitudOfertaLaboral;
-import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral.deserializarJSON;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
@@ -195,7 +194,7 @@ public class PostularOfertaLaboral extends Fragment {
 			   public View getView(int position, View convertView, ViewGroup parent) {
 			    TextView view = (TextView) super.getView(position, convertView,
 			      parent);
-			    ((TextView) view)
+			    view
 			      .setTypeface(Typeface.createFromAsset(getActivity()
 			        .getAssets(), EstiloApp.FORMATO_LETRA_APP));
 			    return view;
@@ -317,6 +316,28 @@ public class PostularOfertaLaboral extends Fragment {
 
 		TextView puesto = (TextView) rootView
 				.findViewById(R.id.reclut_cargo_input);
+		TextView puestolabel = (TextView) rootView
+				.findViewById(R.id.reclut_cargo_label);
+		
+		if (solicitudOfertaLaboral.getPuesto() != null) {
+			int cantidadCaracteresPuestoOferta = solicitudOfertaLaboral
+					.getPuesto().length();
+			if (cantidadCaracteresPuestoOferta >= 35) {
+				puesto.setHeight(60);
+				puestolabel.setHeight(60);
+			} else {
+				// puesto.setLayoutParams(new
+				// LayoutParams(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT));
+				// puestolabel.setLayoutParams(new
+				// LayoutParams(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT));
+				puesto.setHeight(30);
+				puestolabel.setHeight(30);
+			}
+			System.out.println(cantidadCaracteresPuestoOferta);
+		}
+		
 		puesto.setText(solicitudOfertaLaboral.getPuesto() == "null" ? " - "
 				: solicitudOfertaLaboral.getPuesto());
 

@@ -13,10 +13,12 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.FocusFinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -36,18 +38,19 @@ public class MisObjetivos extends Fragment {
 	ArrayList<ObjetivosBSC> objsHijos;
 	
 	private Spinner spinnerPeriodo;
+	private Spinner spinnerObjetivos;
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
 	List<String> listaNombrePer;
+	ArrayList<ObjetivosBSC> listaObjetivosPadre;
+	ArrayList<ArrayList<ObjetivosBSC>> listaObjetivosHijo;
+	List<String> listaNombreObj;
 	int periodoBSCActual;
+	int objetivoActual;
 	
 	ExpandableListView listaObjs;
 	
 	Context contexto;
-	ObjetivosExpandableAdapter adapter;
-	
-	private ArrayList<ObjetivosBSC> groups;
-	private ArrayList<ArrayList<ObjetivosBSC>> childs;
-	
+	ObjetivosExpandableAdapter adapter;	
 	
 	public MisObjetivos(){
 		
@@ -73,107 +76,42 @@ public class MisObjetivos extends Fragment {
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerMisObjsPeriodo);
+			spinnerObjetivos = (Spinner) rootView.findViewById(R.id.spinnerMisObjsObjetivo);
 			listaNombrePer = new ArrayList<String>();
 			ListadoPeriodos lp = new ListadoPeriodos();
 			Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
 
-			
-			listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
-			System.out.println("setea a cero");
-	    	groups= new ArrayList<ObjetivosBSC>();
-	    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
-			listaObjs.setLongClickable(true);
-
-	        
-			// Se muestra la informacion de la oferta
-			listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
-				@Override
-				public boolean onGroupClick(ExpandableListView parent, View v,
-						int groupPosition, long id) {
-				/*	System.out.println("Grupo " + (groupPosition));
-					if (groupPosition != ofertaSeleccionadaPosicion) {
-						mostrarOfertaSeleccionada(ofertasList.get(groupPosition));
-						mostrarPostulanteVacio();
-						ofertaSeleccionadaPosicion = groupPosition;
-					}*/
-					return false;
-				}
-			});
-
-			// Se muestra la informacion de el postulante
-			listaObjs.setOnChildClickListener(new OnChildClickListener() {
-				@Override
-				public boolean onChildClick(ExpandableListView parent, View v,
-						int groupPosition, int childPosition, long id) {
-			/*		if (groupPosition != ofertaSeleccionadaPosicion) {
-						// Si se selecciono un postulante de una oferta distinta a
-						// la que se esta mostrando se refresca tambien el detalle
-						// de la oferta
-						mostrarOfertaSeleccionada(ofertasList.get(groupPosition));
-						mostrarPostulanteSeleccionado(ofertasList
-								.get(groupPosition).getPostulantes()
-								.get(childPosition));
-						postulanteSeleccionadoPosicion = childPosition;
-						ofertaSeleccionadaPosicion = groupPosition;
-					} else if ((childPosition != postulanteSeleccionadoPosicion)
-							&& (groupPosition == ofertaSeleccionadaPosicion)) {
-						// Si se selecciono un postulante de la misma oferta que se
-						// esta mostrando solo se refresca el detalle del postulante
-						mostrarPostulanteSeleccionado(ofertasList
-								.get(groupPosition).getPostulantes()
-								.get(childPosition));
-						postulanteSeleccionadoPosicion = childPosition;
-					}*/
-					return false;
-				}
-			});
-
-			// Se dirige a la evaluacion del postulante
-			listaObjs.setOnItemLongClickListener(new OnItemLongClickListener() {
-				@Override
-				public boolean onItemLongClick(AdapterView<?> arg0, View view,int position, long id) {
-					/*AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					builder.setTitle("Evaluar postulante");
-					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
-					builder.setCancelable(false);
-					builder.setCancelable(false);
-					builder.setNegativeButton("Cancelar",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									dialog.cancel();
-								}
-							});
-					builder.setPositiveButton("Evaluar",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									EvaluacionPostulanteFragment fragment = new EvaluacionPostulanteFragment();
-									getActivity()
-											.getSupportFragmentManager()
-											.beginTransaction()
-											.replace(R.id.opcion_detail_container,
-													fragment).commit();
-								}
-							});
-					builder.create();
-					builder.show();*/
-					return false;
-				}
-			});
 		return rootView;
 	}
 	
 	
     private void loadData(ArrayList<ObjetivosBSC> listObjetivosPadre){
+    	listaObjetivosPadre = new ArrayList<ObjetivosBSC>();
+    	listaNombreObj = new ArrayList<String>();
+    	
     	for(int i=0;i<listObjetivosPadre.size();i++){
     		System.out.println("agrega obj="+listObjetivosPadre.get(i).Nombre);
-    		groups.add(listObjetivosPadre.get(i));
+    		listaObjetivosPadre.add(listObjetivosPadre.get(i));
+    		listaNombreObj.add(listObjetivosPadre.get(i).Nombre);	
       	}
     	
+    	ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombreObj);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerObjetivos.setAdapter(dataAdapter);
+		spinnerObjetivos.setOnItemSelectedListener(new OnItemSelectedListener(){
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+				objetivoActual = listaObjetivosPadre.get(pos).ID;
+				System.out.println("objetivo seleccionado="+objetivoActual);
+				mostrarHijos();
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+			}
+		});
+		
     	ListadoObjetivosChild lo = new ListadoObjetivosChild();
     	String rutaLlamada ="";
 
@@ -187,10 +125,10 @@ public class MisObjetivos extends Fragment {
     	
     	System.out.println("Ruta-Hijos="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
-	
-    	System.out.println("new adapter");
-    	adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
-    	listaObjs.setAdapter(adapter);
+    }
+    
+    public void mostrarHijos(){
+    	System.out.println("mostrar hijos de obj="+objetivoActual);
     }
     
     private ArrayList<ObjetivosBSC> obtenerHijos(int idPadre, ArrayList<ObjetivosBSC> listObjetivosBSC){
@@ -204,10 +142,10 @@ public class MisObjetivos extends Fragment {
     }
     
     private void loadDataChild(ArrayList<ObjetivosBSC> listObjetivosHijos){
-    	for(int i=0;i<groups.size();i++){
-    		childs.add(obtenerHijos(groups.get(i).ID,listObjetivosHijos));
+    	listaObjetivosHijo = new ArrayList<ArrayList<ObjetivosBSC>>();
+    	for(int i=0;i<listaObjetivosPadre.size();i++){
+    		listaObjetivosHijo.add(obtenerHijos(listaObjetivosPadre.get(i).ID,listObjetivosHijos));
     	}
-    	adapter.actualizaHijos(childs);
     }
     
     public boolean isAdmin(){
@@ -215,11 +153,9 @@ public class MisObjetivos extends Fragment {
     }
 	
 	public  void listarObjetivos(){
-    	groups= new ArrayList<ObjetivosBSC>();
-    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
 
     	ListadoObjetivos lo = new ListadoObjetivos();
-    	String rutaLlamada ="";
+    	String rutaLlamada =""; 
     	
     	if(indicador==IND_MISOBJS){
     		System.out.println("MIS OBJETIVOS");

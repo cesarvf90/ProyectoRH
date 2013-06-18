@@ -11,15 +11,12 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.CompetenciaConPonderadoDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.getConvocatorias;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import pe.edu.pucp.proyectorh.LoginActivity;
 
 public class CandidatosxPuesto extends Fragment {
@@ -63,6 +61,10 @@ public class CandidatosxPuesto extends Fragment {
 		
 		View rootView = inflater.inflate(R.layout.candidatosxpuesto1,
 				container, false);
+		
+		TextView txt = (TextView) rootView.findViewById(R.id.candidatosxpuesto1titulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
 		
 		pbarra = (ProgressBar) rootView.findViewById(R.id.candxpuestoprogressbar);
 		spinnerConvocatoria = (Spinner) rootView.findViewById(R.id.candxpuestospinner);
@@ -320,6 +322,7 @@ public class CandidatosxPuesto extends Fragment {
 		private int IdPostulante;
 		private String Nombre;
 		private List<CompetenciaConPonderadoDTO> CompetenciasPostulante;
+		private int MatchLevel;
 		
 		public int getIdPostulante() {
 			return IdPostulante;
@@ -344,6 +347,14 @@ public class CandidatosxPuesto extends Fragment {
 
 		public void setCompetenciasPostulante(List<CompetenciaConPonderadoDTO> competenciaspostulante) {
 			CompetenciasPostulante = competenciaspostulante;
+		}
+		
+		public int getMatchLevel() {
+			return MatchLevel;
+		}
+
+		public void setMatchLevel(int matchlevel) {
+			MatchLevel = matchlevel;
 		}
 	}
 }

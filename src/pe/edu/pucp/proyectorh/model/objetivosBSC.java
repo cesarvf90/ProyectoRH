@@ -17,6 +17,7 @@ public class ObjetivosBSC{
 	public int TipoObjetivoBSCID;
 	public int ObjetivoPadreID;
 	public int BSCID;	
+	public ArrayList<AvanceDTO> LosProgresos;
 	
 	public boolean seElimina=true;
 	
