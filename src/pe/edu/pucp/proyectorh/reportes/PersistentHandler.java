@@ -134,5 +134,27 @@ public class PersistentHandler {
 		
 		
 	}
+	
+	public static String getFechaReporte(Context whereIAm, String fileName){
+		
+		String state = Environment.getExternalStorageState();
+
+		File file = new File(whereIAm.getFilesDir(), fileName);
+		try {
+			InputStream is = new FileInputStream(file);
+			InputStreamReader isr = new InputStreamReader(is);
+		    BufferedReader br = new BufferedReader(isr);
+
+		    String s;
+		    s = br.readLine(); //fecha
+		    
+		    return s;
+		    
+		} catch (IOException e) {
+			System.out.println("Error al leer archivo  " + e);
+		}
+		return "";
+		
+	}
 }
 

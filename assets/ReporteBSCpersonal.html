@@ -8,216 +8,70 @@
     <script src="js/kendo.all.min.js"></script>
 </head>
 <body>
-
-    <div id="example" class="k-content" style="opacity: 1, visibility:visible; ">
-    <div class="chart-wrapper">
-        <table id="stats" class="stats">
-            <thead>
-                <tr>
-                    <th class="fila1"><font face="Arial">Periodo 1</font></th>
-                    <th class="fila2"><font face="Arial">Periodo 2</font></th>
-                    <th class="fila1"><font face="Arial">Periodo 3</font></th>
-                    <th class="fila2"><font face="Arial">Periodo 4</font></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-
-    <script id="template" type="text/x-kendo-template">
-        <tr class="rows">
-
-            <td class="fila1"><span class="bar-hourly" style="width: 130px;"></span></td>
-            <td class="fila2"><span class="bar-change" style="width: 130px;"></span></td>
-            <td class="fila1"><span class="bar-direct" style="width: 130px;"></span></td>
-            <td class="fila2"><span class="bar-benefits" style="width: 130px;"></span></td>
-        </tr>
-    </script>
-
-    <script>
-        function createSparklines() {
-            // Create a row template using the above definition
-            var template = kendo.template($("#template").html());
-
-            $("#stats tbody").empty();
-            // "data" is declared at the end of the page
-            for (var i = 0; i < data.length; i++) {
-                var rowData = data[i];
-
-                var row = $("#stats tbody")
-                    .append(template(rowData))
-                    .find("tr:last");
-                    
-                    //en vez de append filas haremos append columnas
-
-                $(".bar-hourly", row).kendoSparkline({
-                    seriesColors: ["#8CBF26","#e8be1b","#B51F3C" ], 
-                    theme:"metro",
-                    chartArea: {
-		               background: "transparent"
-		               //,width: 300 
-		            },
-                    type: "pie",
-                    dataSource: {
-                        data: rowData.hourly,
-                        group: {
-                            field: "type",
-                            dir: "asc"
+    
+        <div id="example" class="k-content">
+            <div class="chart-wrapper">
+                <div id="chart" ></div>
+            </div>
+            <script>
+                function createChart() {
+                	var jsonString = Android.getData();
+        			var arrAvance = JSON.parse(jsonString);
+        			
+                    $("#chart").kendoChart({
+                        title: {
+                            visible: false
+                        },
+                        legend: {
+                            visible: false
+                        },
+                        chartArea: {
+                            background: ""
+                        },
+                        seriesDefaults: {
+                            labels: {
+                                visible: true,
+                                background: "transparent",
+                                template: "#= category #: #= value#"
+                            }
+                        },
+                        series: [{
+                            type: "pie",
+                            startAngle: 150,
+                            data: [{
+                                category: "Avance al 100%",
+                                value: arrAvance.objetivos[0],
+                                color: "#8CBF26"
+                            },{
+                                category: "Avance > 75%",
+                                value: arrAvance.objetivos[1],
+                                color: "#e8be1b"
+                            },{
+                                category: "Avance < 75%",
+                                value: arrAvance.objetivos[2],
+                                color: "#B51F3C"
+                            }]
+                        }],
+                        tooltip: {
+                            visible: true,
+                            format: "{0}"
                         }
-                    },
-                    series: [{
-                        field: "value"
-                        //,size:500 
-                    }],
-                    valueAxis: {
-                        max: 10
-                        //,majorTicks:{size:100}
-                    },
-                    plotArea: {
-					  margin: -70
-					}
+                    });
+                }
+
+                $(document).ready(function() {
+                    setTimeout(function() {
+                        // Initialize the chart with a delay to make sure
+                        // the initial animation is visible
+                        createChart();
+
+                        $("#example").bind("kendo:skinChange", function(e) {
+                            createChart();
+                        });
+                    }, 400);
                 });
-
-                $(".bar-change", row).kendoSparkline({
-                   seriesColors: ["#8CBF26","#e8be1b","#B51F3C" ],
-                   theme:"metro",
-                    chartArea: {
-		               background: "transparent"
-		            },
-                    type: "pie",
-                    dataSource: {
-                        data: rowData.change,
-                        group: {
-                            field: "type",
-                            dir: "asc"
-                        }
-                    },
-                    series: [{
-                        field: "value"
-
-                    }],
-                    valueAxis: {
-                        max: 10
-                    },
-                    plotArea: {
-					  margin: -70
-					}
-                });
-
-                $(".bar-direct", row).kendoSparkline({
-                    seriesColors: ["#8CBF26","#e8be1b","#B51F3C" ],
-                    theme:"metro",
-                    chartArea: {
-		               background: "transparent"
-		            },
-                    type: "pie",
-                    dataSource: {
-                        data: rowData.direct,
-                        group: {
-                            field: "type",
-                            dir: "asc"
-                        }
-                    },
-                    series: [{
-                        field: "value"
-                    }],
-                    valueAxis: {
-                        max: 10
-                    },
-                    plotArea: {
-					  margin: -70
-					}
-                });
-
-                $(".bar-benefits", row).kendoSparkline({
-                    seriesColors: ["#8CBF26","#e8be1b","#B51F3C" ],
-                    theme:"metro",
-                    chartArea: {
-		               background: "transparent"
-		            },
-                    type: "pie",
-                    dataSource: {
-                        data: rowData.benefits,
-                        group: {
-                            field: "type",
-                            dir: "asc"
-                        }
-                    },
-                    series: [{
-                        field: "value"
-                    }],
-                    valueAxis: {
-                        max: 10
-                    },
-                    plotArea: {
-					  margin: -70
-					}
-                });
-            }
-        }
-
-        var data = [{
-            hourly: [1, 3,7],
-            change: [2, 6,3],
-            direct: [5, 5,1],
-            benefits: [9, 2,0]
-        }];
-
-        $(document).ready(createSparklines);
-        $("#example").bind("kendo:skinChange", createSparklines);
-    </script>
-
-    <style scoped>
-        .chart-wrapper {
-            padding: 10px 0;
-            height: 700px;
-        }
-        .stats {
-            border-collapse: collapse;
-            line-height: 2em;
-            width: 100%;
-            border: 0;
-            border-top: 1px solid rgba(128,128,128,.3);
-            border-bottom: 1px solid rgba(128,128,128,.3);
-        }
-        .stats td, .stats th {
-            padding: 0 10px;
-            width: 100px;
-            line-height: 50px;
-            
-        }
-        .stats th {
-            border-bottom: 1px solid rgba(128,128,128,.3);
-            text-align: center;
-            
-        }
-        .stats tr.rows {
-            -moz-transition: background .6s;
-            -webkit-transition: background .6s;
-            transition: background .6s;
-            height: 200px;
-        }
-        .stats tr.rows:hover {
-            -moz-transition: background-color .3s;
-            -webkit-transition: background-color .3s;
-            transition: background-color .3s;
-            background-color: rgba(128,128,128,.2);
-        }
-
-        .stats th.fila1, .fila1 {
-            text-align: center;
-        }
-        .stats th.fila2, .fila2 {
-            text-align: center;
-            background-color: rgba(128,128,128,.1);
-        }
-        .title {
-            margin: 5px 0 15px;
-            text-align: center;
-        }
-    </style>
-</div>
+            </script>
+        </div>
 
 
 </body>
