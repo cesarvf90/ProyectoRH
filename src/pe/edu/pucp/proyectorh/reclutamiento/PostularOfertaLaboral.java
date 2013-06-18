@@ -12,7 +12,6 @@ import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.SolicitudOfertaLaboral;
-import pe.edu.pucp.proyectorh.reclutamiento.AprobarSolicitudOfertaLaboral.deserializarJSON;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
@@ -195,7 +194,7 @@ public class PostularOfertaLaboral extends Fragment {
 			   public View getView(int position, View convertView, ViewGroup parent) {
 			    TextView view = (TextView) super.getView(position, convertView,
 			      parent);
-			    ((TextView) view)
+			    view
 			      .setTypeface(Typeface.createFromAsset(getActivity()
 			        .getAssets(), EstiloApp.FORMATO_LETRA_APP));
 			    return view;

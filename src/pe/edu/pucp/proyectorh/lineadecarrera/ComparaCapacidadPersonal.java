@@ -11,7 +11,6 @@ import com.google.gson.reflect.TypeToken;
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto.OfertaLaboralMobileJefeDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
 import pe.edu.pucp.proyectorh.services.AsyncCall;

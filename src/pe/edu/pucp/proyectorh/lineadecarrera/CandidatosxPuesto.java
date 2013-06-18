@@ -11,10 +11,6 @@ import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.CompetenciaConPonderadoDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.getConvocatorias;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;

@@ -3,10 +3,8 @@ package pe.edu.pucp.proyectorh.utils;
 import java.util.ArrayList;
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.model.AvanceDeObjetivo;
 import pe.edu.pucp.proyectorh.model.Colaborador;
 import pe.edu.pucp.proyectorh.model.Evaluador;
-import pe.edu.pucp.proyectorh.model.Objetivo;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

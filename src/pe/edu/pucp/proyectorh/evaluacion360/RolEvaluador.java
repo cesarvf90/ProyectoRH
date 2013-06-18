@@ -8,8 +8,6 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.text.InputType;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -29,7 +27,7 @@ public class RolEvaluador extends Fragment {
 	
 	Evaluacion360ExpandableAdapater adapter;
 	
-	int modoPrueba=1;
+	int modoPrueba=0;
 	
 	public RolEvaluador(){
 		

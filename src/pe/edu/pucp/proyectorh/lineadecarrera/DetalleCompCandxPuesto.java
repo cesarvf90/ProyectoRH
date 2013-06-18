@@ -2,32 +2,20 @@ package pe.edu.pucp.proyectorh.lineadecarrera;
 
 import android.support.v4.app.Fragment;
 
-import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto.CompetenciaConPonderadoDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto.OfertaLaboralMobileJefeDTO;
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto.PostulanteConCompetenciasDTO;
-import pe.edu.pucp.proyectorh.reportes.ReporteServices;
-import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetalleCompCandxPuesto extends Fragment{

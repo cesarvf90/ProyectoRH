@@ -75,9 +75,10 @@
     </TabHost>
     
     <LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-	    android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
 	    
 	    <Button
 	        android:id="@+id/ObjEmpDescCambios"

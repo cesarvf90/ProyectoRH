@@ -38,6 +38,9 @@ public class Colaborador {
 	private String Sueldo;
 	private String resumenEjecutivo;
 	private String estadoColaboradorID;
+	
+//	private List<Objetivo> susObjetivos;
+	private ArrayList<Objetivo> susObjetivos;
 
 	public static ArrayList<String> consultarColaboradoresDelServidorDeProduccion() {
 		// String direccionDeDestino =
@@ -371,12 +374,26 @@ public class Colaborador {
 		this.estadoColaboradorID = estadoColaboradorID;
 	}
 
+	public ArrayList<Objetivo> getSusObjetivos() {
+		return susObjetivos;
+	}
+
+	public void setSusObjetivos(ArrayList<Objetivo> susObjetivos) {
+		this.susObjetivos = susObjetivos;
+	}
+	
 	@Override
 	public String toString() {
 		return nombres + Constante.ESPACIO_VACIO + apellidos;
 	}
 
+//	public String retornarPresentacionBreve() {
+//		return nombres + " - " + puesto;
+//	}
+	
 	public String retornarPresentacionBreve() {
-		return nombres + " - " + puesto;
-	}
+		return nombres;
+	}	
+
+
 }

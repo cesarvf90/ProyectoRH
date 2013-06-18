@@ -3,6 +3,7 @@ package pe.edu.pucp.proyectorh;
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
+import pe.edu.pucp.proyectorh.connection.DataBaseContactosConnection;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluado;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
@@ -62,7 +63,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(29, 148, 59)));
-		bar.setTitle("RH++");
+		bar.setTitle("RH++ " + LoginActivity.getUsuario().getUsername());
 	}
 
 	private void customizarEstilos(Context context, View view) {
@@ -149,6 +150,13 @@ public class MainActivity extends FragmentActivity implements
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
+				
+				if ("2".equals(id)) {
+					ReportePersonalBSCPrincipal fragment = new ReportePersonalBSCPrincipal();
+					getSupportFragmentManager().beginTransaction()
+							.replace(R.id.opcion_detail_container, fragment)
+							.commit();
+				}
 
 				if ("3".equals(id)) {
 					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
@@ -180,8 +188,8 @@ public class MainActivity extends FragmentActivity implements
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
-				}				
-//				if (id.equals("3")) {// Mis subordinados
+				}
+				// if (id.equals("3")) {// Mis subordinados
 				if (id.equals("4")) {// Mis subordinados
 					pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados fragment = new pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
@@ -314,6 +322,11 @@ public class MainActivity extends FragmentActivity implements
 
 	protected void cerrarSesion() {
 		NAVEGACION = 1;
+		borrarDatosPersistidos();
 		finish();
+	}
+
+	private void borrarDatosPersistidos() {
+		deleteDatabase(DataBaseContactosConnection.obtenerNombre());
 	}
 }

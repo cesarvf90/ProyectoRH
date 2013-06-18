@@ -2,35 +2,16 @@ package pe.edu.pucp.proyectorh.lineadecarrera;
 
 import android.support.v4.app.Fragment;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.FuncionDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad.OfertaLaboralMobilePostulanteDTO;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidadPersonal.DataObject;
-import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidadPersonal.InterfaceChartLineal;
-import pe.edu.pucp.proyectorh.services.AsyncCall;
-import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.webkit.WebView;
 

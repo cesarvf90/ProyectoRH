@@ -77,5 +77,6 @@
     <string name="correo_persona">Correo:</string>
     <string name="lugar_evento">Lugar:</string>
     <string name="creador_evento">Creador:</string>
+    <string name="cadena_vacia">" "</string>
 
 </resources>
