@@ -6,11 +6,8 @@ import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal;
 import pe.edu.pucp.proyectorh.reportes.Reporte360;
-<<<<<<< HEAD
 import pe.edu.pucp.proyectorh.reportes.Reporte360Grafico;
-=======
 import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCPrincipal;
->>>>>>> bedf90948a1b8cb5053342b11c6faea2d4d93d4b
 import pe.edu.pucp.proyectorh.utils.Constante;
 import android.content.Intent;
 import android.os.Bundle;
