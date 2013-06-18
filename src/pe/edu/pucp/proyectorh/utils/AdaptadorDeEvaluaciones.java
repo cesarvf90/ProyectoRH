@@ -105,10 +105,11 @@ public class AdaptadorDeEvaluaciones extends BaseExpandableListAdapter {
 		TextView elMensaje = (TextView) convertView.findViewById(R.id.TextViewChild01);
 		
 		
-		if (pxexe.getEstado() == "Pendiente") {
+//		if (pxexe.getEstado() == "Pendiente") {
+		if (pxexe.getEstado().compareTo("Pendiente") == 0) {
 			elMensaje.setText(pxexe.getEvaluador().getNombreCompleto() + " lo evalúa. Su exámen esta pendiente.");
 		} else {
-			elMensaje.setText(pxexe.getEvaluador().getNombreCompleto() + "lo evaluó. Su nota final es " + pxexe.getLaCalificacion());
+			elMensaje.setText(pxexe.getEvaluador().getNombreCompleto() + " lo evaluó. Su nota final es " + pxexe.getLaCalificacion());
 			
 		}
 		
