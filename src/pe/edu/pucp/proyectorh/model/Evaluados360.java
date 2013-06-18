@@ -8,9 +8,21 @@ import org.json.JSONException;
 import com.google.gson.Gson;
 
 public class Evaluados360 {
-	public String Nombre;
-	public String estado;
-	public int idProceso;
+	public persona evaluado;
+	public String Estado;
+	public int ID;
+	public int ProcesoEnElQueParticipanID;
+	
+	public class persona{
+		public String NombreCompleto;
+		public int ID;
+		public String Area;
+		public String Puesto;
+	}
+	
+	public String toText(){
+		return "p="+evaluado.NombreCompleto+ " del a="+evaluado.Area+" y p="+evaluado.Puesto+" con proc="+ProcesoEnElQueParticipanID+" estado="+Estado;
+	}
 
 	  public static ArrayList<Evaluados360> getEvaluadosByResult(String result){
 	    	ArrayList<Evaluados360> listaEvaluados = new ArrayList<Evaluados360>();

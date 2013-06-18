@@ -173,24 +173,20 @@ public class MainActivity extends FragmentActivity implements
 				}
 			}
 
-			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) {
-				if (id.equals("1")) { // Mis evaluaciones
-
-				}
-				if (id.equals("2")) {// Rol evaluadores
+			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) { //SE ACTUALIZO
+				if (id.equals("1")) {// Rol evaluadores
 					RolEvaluador fragment = new RolEvaluador();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Rol de Evaluado
+				if (id.equals("2")) {// Rol de Evaluado
 					RolEvaluado fragment = new RolEvaluado();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				// if (id.equals("3")) {// Mis subordinados
-				if (id.equals("4")) {// Mis subordinados
+				if (id.equals("3")) {// Mis subordinados
 					pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados fragment = new pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
