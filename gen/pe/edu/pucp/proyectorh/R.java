@@ -76,32 +76,18 @@ public final class R {
         public static final int textview_backred=0x7f02002c;
     }
     public static final class id {
-<<<<<<< HEAD
-        public static final int AquiSupervisoSusObjetivos=0x7f0a009f;
-=======
         public static final int AquiSupervisoSusObjetivos=0x7f0a00a1;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
         public static final int CandxPuestoConvSelec=0x7f0a0028;
         public static final int CompCapConvSelec=0x7f0a002f;
         public static final int DeseoVisitar=0x7f0a009f;
         public static final int DetalleCompTitulografico=0x7f0a0042;
-<<<<<<< HEAD
-        public static final int ObjEmpDescCambios=0x7f0a00aa;
-        public static final int ObjEmpGuardarCambios=0x7f0a00ab;
-        public static final int ObjEmpPeriodo=0x7f0a00a4;
-        public static final int TextViewChild01=0x7f0a0077;
-        public static final int TextViewGroup=0x7f0a0078;
-        public static final int UnoDeEstosSubordinados=0x7f0a009e;
-        public static final int about=0x7f0a0111;
-=======
         public static final int ObjEmpDescCambios=0x7f0a00ac;
         public static final int ObjEmpGuardarCambios=0x7f0a00ad;
         public static final int ObjEmpPeriodo=0x7f0a00a6;
         public static final int TextViewChild01=0x7f0a0079;
         public static final int TextViewGroup=0x7f0a007a;
         public static final int UnoDeEstosSubordinados=0x7f0a00a0;
-        public static final int about=0x7f0a0114;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
+        public static final int about=0x7f0a0113;
         public static final int accordion_list=0x7f0a0000;
         public static final int agenda_title=0x7f0a001d;
         public static final int alcanceLogrado=0x7f0a001b;
@@ -128,33 +114,22 @@ public final class R {
         public static final int contrasenaText=0x7f0a0006;
         public static final int date=0x7f0a0023;
         public static final int date_icon=0x7f0a0024;
-<<<<<<< HEAD
-        public static final int datos_evento=0x7f0a005b;
-        public static final int datos_evento_content=0x7f0a0061;
-        public static final int descripcion_evaluacion=0x7f0a00ae;
-=======
         public static final int datos_evento=0x7f0a005d;
         public static final int datos_evento_content=0x7f0a0063;
         public static final int descripcion_evaluacion=0x7f0a00b0;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
         public static final int detalleComp1WebkitGLineal=0x7f0a0043;
         public static final int detalleCompbtnConsultar=0x7f0a0033;
         public static final int detalleContacto_title=0x7f0a0094;
         public static final int detalle_invitado=0x7f0a006d;
         public static final int detalle_invitado_content=0x7f0a0073;
         public static final int detalleofertas_title=0x7f0a0081;
-        public static final int diasLayout=0x7f0a010a;
-        public static final int diasLinearLayout=0x7f0a010b;
-        public static final int domingoLayout=0x7f0a010c;
+        public static final int diasLayout=0x7f0a0109;
+        public static final int diasLinearLayout=0x7f0a010a;
+        public static final int domingoLayout=0x7f0a010b;
         public static final int editTextComentarios=0x7f0a0048;
         public static final int editTextObservaciones=0x7f0a0049;
-<<<<<<< HEAD
-        public static final int elEventoDeEvaluacion=0x7f0a00df;
-        public static final int elNombre=0x7f0a00e0;
-=======
-        public static final int elEventoDeEvaluacion=0x7f0a00e1;
-        public static final int elNombre=0x7f0a00e2;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
+        public static final int elEventoDeEvaluacion=0x7f0a00e0;
+        public static final int elNombre=0x7f0a00e1;
         public static final int eliminarAlcance=0x7f0a001c;
         public static final int equipo_trabajo_anexo=0x7f0a003d;
         public static final int equipo_trabajo_area_value=0x7f0a003b;
@@ -172,7 +147,7 @@ public final class R {
         public static final int evaluadoEstado=0x7f0a004d;
         public static final int evaluadoNombre=0x7f0a004c;
         public static final int evaluar_lista_ofertas=0x7f0a0082;
-        public static final int examenes=0x7f0a00df;
+        public static final int examenes=0x7f0a00de;
         public static final int expandable_view=0x7f0a007b;
         public static final int fecha_fin_content=0x7f0a0066;
         public static final int fecha_fin_title=0x7f0a0061;
@@ -183,35 +158,8 @@ public final class R {
         public static final int funcionesscroll=0x7f0a00b1;
         public static final int gridview=0x7f0a0022;
         public static final int header=0x7f0a001e;
-<<<<<<< HEAD
-        public static final int help=0x7f0a0112;
-        public static final int horasLayout=0x7f0a0105;
-        public static final int infopostulante_title=0x7f0a0088;
-        public static final int invitado_area_content=0x7f0a0073;
-        public static final int invitado_area_title=0x7f0a006d;
-        public static final int invitado_correo_content=0x7f0a0076;
-        public static final int invitado_correo_title=0x7f0a0070;
-        public static final int invitado_nombre_content=0x7f0a0072;
-        public static final int invitado_nombre_title=0x7f0a006c;
-        public static final int invitado_puesto_content=0x7f0a0074;
-        public static final int invitado_puesto_title=0x7f0a006e;
-        public static final int invitado_telefono_content=0x7f0a0075;
-        public static final int invitado_telefono_title=0x7f0a006f;
-        public static final int juevesLayout=0x7f0a010d;
-        public static final int laSupervisionDeEvaluaciones=0x7f0a00e1;
-        public static final int layAvance=0x7f0a00ac;
-        public static final int layEvaluacion=0x7f0a004e;
-        public static final int layout_creador_evento=0x7f0a0050;
-        public static final int layout_detalle_invitado=0x7f0a006a;
-        public static final int layout_evento=0x7f0a0051;
-        public static final int layout_lista=0x7f0a0067;
-        public static final int layout_lista_invitados=0x7f0a0066;
-        public static final int linearLayout1=0x7f0a0002;
-        public static final int listaObjetivos=0x7f0a007c;
-        public static final int listaProcesos=0x7f0a00de;
-=======
-        public static final int help=0x7f0a0115;
-        public static final int horasLayout=0x7f0a0108;
+        public static final int help=0x7f0a0114;
+        public static final int horasLayout=0x7f0a0107;
         public static final int infopostulante_title=0x7f0a008a;
         public static final int invitado_area_content=0x7f0a0075;
         public static final int invitado_area_title=0x7f0a006f;
@@ -223,8 +171,8 @@ public final class R {
         public static final int invitado_puesto_title=0x7f0a0070;
         public static final int invitado_telefono_content=0x7f0a0077;
         public static final int invitado_telefono_title=0x7f0a0071;
-        public static final int juevesLayout=0x7f0a0110;
-        public static final int laSupervisionDeEvaluaciones=0x7f0a00e3;
+        public static final int juevesLayout=0x7f0a010f;
+        public static final int laSupervisionDeEvaluaciones=0x7f0a00e2;
         public static final int layAvance=0x7f0a00ae;
         public static final int layEvaluacion=0x7f0a004f;
         public static final int layout_creador_evento=0x7f0a0054;
@@ -235,47 +183,46 @@ public final class R {
         public static final int layout_lista_invitados=0x7f0a0068;
         public static final int linearLayout1=0x7f0a0002;
         public static final int listaObjetivos=0x7f0a007e;
-        public static final int listaProcesos=0x7f0a00e0;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
+        public static final int listaProcesos=0x7f0a00df;
         public static final int lista_cand_x_puesto=0x7f0a002b;
         public static final int lista_invitados_evento=0x7f0a006b;
         public static final int loginButton=0x7f0a0007;
         public static final int lugar_evento_content=0x7f0a0067;
         public static final int lugar_evento_title=0x7f0a0062;
-        public static final int lunesLayout=0x7f0a010d;
-        public static final int martesLayout=0x7f0a010e;
+        public static final int lunesLayout=0x7f0a010c;
+        public static final int martesLayout=0x7f0a010d;
         public static final int mensaje_confirmacion_evaluacion=0x7f0a004b;
         public static final int menu_segunda_fase_title_layout=0x7f0a007f;
-        public static final int menu_settings=0x7f0a0113;
+        public static final int menu_settings=0x7f0a0112;
         public static final int menu_tercera_fase_title_layout=0x7f0a0090;
         public static final int menuofertas_title=0x7f0a0080;
         public static final int mi_info_contactos_title_layout=0x7f0a0092;
         public static final int mi_info_detalle_contacto_part=0x7f0a0096;
-        public static final int mi_info_input_apellidos=0x7f0a00eb;
-        public static final int mi_info_input_area=0x7f0a00ee;
-        public static final int mi_info_input_email=0x7f0a00f4;
-        public static final int mi_info_input_fechaingreso=0x7f0a00fa;
-        public static final int mi_info_input_nombres=0x7f0a00e8;
-        public static final int mi_info_input_puesto=0x7f0a00f1;
-        public static final int mi_info_input_telefono=0x7f0a00f7;
-        public static final int mi_info_lbl_apellidos=0x7f0a00ea;
-        public static final int mi_info_lbl_area=0x7f0a00ed;
-        public static final int mi_info_lbl_email=0x7f0a00f3;
-        public static final int mi_info_lbl_fechaingreso=0x7f0a00f9;
-        public static final int mi_info_lbl_nombres=0x7f0a00e7;
-        public static final int mi_info_lbl_puesto=0x7f0a00f0;
-        public static final int mi_info_lbl_telefono=0x7f0a00f6;
+        public static final int mi_info_input_apellidos=0x7f0a00ea;
+        public static final int mi_info_input_area=0x7f0a00ed;
+        public static final int mi_info_input_email=0x7f0a00f3;
+        public static final int mi_info_input_fechaingreso=0x7f0a00f9;
+        public static final int mi_info_input_nombres=0x7f0a00e7;
+        public static final int mi_info_input_puesto=0x7f0a00f0;
+        public static final int mi_info_input_telefono=0x7f0a00f6;
+        public static final int mi_info_lbl_apellidos=0x7f0a00e9;
+        public static final int mi_info_lbl_area=0x7f0a00ec;
+        public static final int mi_info_lbl_email=0x7f0a00f2;
+        public static final int mi_info_lbl_fechaingreso=0x7f0a00f8;
+        public static final int mi_info_lbl_nombres=0x7f0a00e6;
+        public static final int mi_info_lbl_puesto=0x7f0a00ef;
+        public static final int mi_info_lbl_telefono=0x7f0a00f5;
         public static final int mi_info_lista_contactos=0x7f0a0095;
-        public static final int mi_info_tableLayout1=0x7f0a00e5;
-        public static final int mi_info_tableRow1=0x7f0a00e6;
-        public static final int mi_info_tableRow10=0x7f0a00f2;
-        public static final int mi_info_tableRow11=0x7f0a00ec;
-        public static final int mi_info_tableRow12=0x7f0a00ef;
-        public static final int mi_info_tableRow13=0x7f0a00f8;
-        public static final int mi_info_tableRow2=0x7f0a00e9;
-        public static final int mi_info_tableRow9=0x7f0a00f5;
-        public static final int mi_info_title_layout=0x7f0a00e4;
-        public static final int miercolesLayout=0x7f0a010f;
+        public static final int mi_info_tableLayout1=0x7f0a00e4;
+        public static final int mi_info_tableRow1=0x7f0a00e5;
+        public static final int mi_info_tableRow10=0x7f0a00f1;
+        public static final int mi_info_tableRow11=0x7f0a00eb;
+        public static final int mi_info_tableRow12=0x7f0a00ee;
+        public static final int mi_info_tableRow13=0x7f0a00f7;
+        public static final int mi_info_tableRow2=0x7f0a00e8;
+        public static final int mi_info_tableRow9=0x7f0a00f4;
+        public static final int mi_info_title_layout=0x7f0a00e3;
+        public static final int miercolesLayout=0x7f0a010e;
         public static final int miinfo_contactos_apellidos=0x7f0a0098;
         public static final int miinfo_contactos_area=0x7f0a0099;
         public static final int miinfo_contactos_correo=0x7f0a009d;
@@ -285,17 +232,6 @@ public final class R {
         public static final int miinfo_contactos_puesto=0x7f0a009a;
         public static final int miinfo_contactos_telefono=0x7f0a009e;
         public static final int next=0x7f0a0021;
-<<<<<<< HEAD
-        public static final int nombreObj=0x7f0a00a0;
-        public static final int nombre_creador_content=0x7f0a0058;
-        public static final int nombre_creador_title=0x7f0a0054;
-        public static final int nombre_evento=0x7f0a004f;
-        public static final int objEmpTab1=0x7f0a00a6;
-        public static final int objEmpTab2=0x7f0a00a7;
-        public static final int objEmpTab3=0x7f0a00a8;
-        public static final int objEmpTab4=0x7f0a00a9;
-        public static final int opcion_detail=0x7f0a007a;
-=======
         public static final int nombreObj=0x7f0a00a2;
         public static final int nombre_creador_content=0x7f0a005a;
         public static final int nombre_creador_title=0x7f0a0056;
@@ -305,7 +241,6 @@ public final class R {
         public static final int objEmpTab3=0x7f0a00aa;
         public static final int objEmpTab4=0x7f0a00ab;
         public static final int opcion_detail=0x7f0a007c;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
         public static final int opcion_detail_container=0x7f0a0008;
         public static final int opcion_list=0x7f0a0009;
         public static final int password_textview=0x7f0a0005;
@@ -353,100 +288,57 @@ public final class R {
         public static final int reclut_responsable_input=0x7f0a0018;
         public static final int reclut_sueldo_tentativo_input=0x7f0a0014;
         public static final int reclut_title_layout=0x7f0a000a;
-<<<<<<< HEAD
-        public static final int relativeLayout1=0x7f0a00f9;
-        public static final int relativeLayout242=0x7f0a0103;
-        public static final int reporte3601titulo=0x7f0a00bc;
-        public static final int reporte360Titulografico=0x7f0a00c2;
-        public static final int reporte360WebkitGLineal=0x7f0a00c3;
-        public static final int reporte360btnConsultar=0x7f0a00c1;
-        public static final int reporte360spinner=0x7f0a00bd;
-        public static final int reportebsc1titulo=0x7f0a00c4;
-        public static final int reportebscObjetivoAvance=0x7f0a00d5;
-        public static final int reportebscObjetivoNumPersonas=0x7f0a00d4;
-        public static final int reportebscObjetivolabel=0x7f0a00d3;
-        public static final int reportebscObjetivopadre=0x7f0a00cb;
-        public static final int reportebscObjetivopadre2=0x7f0a00cd;
-        public static final int reportebscPeriodoselec=0x7f0a00c9;
-        public static final int reportebscPerspectivaAvance=0x7f0a00d7;
-        public static final int reportebscPerspectivalabel=0x7f0a00d6;
-        public static final int reportebscTextViewGroup=0x7f0a00d2;
-        public static final int reportebscTitulografico=0x7f0a00cf;
-        public static final int reportebscWebkitGLineal=0x7f0a00d0;
-        public static final int reportebscbtnConsultar=0x7f0a00c7;
-        public static final int reportebscexpandable=0x7f0a00ce;
-        public static final int reportebscgridObjetivos=0x7f0a00cc;
-        public static final int reportebscgridObjetivosPersonales=0x7f0a00d1;
-        public static final int reportebscgridPerspectivas=0x7f0a00ca;
-        public static final int reportebscprogressbar=0x7f0a00c8;
-        public static final int reportebscspinner=0x7f0a00c5;
-        public static final int reportebsctoggleButton=0x7f0a00c6;
-        public static final int reportecub1titulo=0x7f0a00d8;
-        public static final int reportecubTitulografico=0x7f0a00db;
-        public static final int reportecubWebkit=0x7f0a00dc;
-        public static final int reportecubbtnConsultar=0x7f0a00da;
-        public static final int reportecubspinner=0x7f0a00d9;
-        public static final int sabadoLayout=0x7f0a010f;
-        public static final int scrollView1=0x7f0a0102;
-        public static final int semanaContenidoLayout=0x7f0a0104;
-        public static final int siguienteEvaluacion=0x7f0a00bb;
-        public static final int spinnerMisObjsPeriodo=0x7f0a007b;
-        public static final int spinnerObjEmpPeriodo=0x7f0a00a5;
-        public static final int spinnerRegistroPeriodo=0x7f0a00ad;
-=======
-        public static final int relativeLayout1=0x7f0a00fc;
-        public static final int relativeLayout242=0x7f0a0106;
+        public static final int relativeLayout1=0x7f0a00fb;
+        public static final int relativeLayout242=0x7f0a0105;
         public static final int reporte3601titulo=0x7f0a00be;
-        public static final int reporte360Titulografico=0x7f0a00c4;
-        public static final int reporte360WebkitGLineal=0x7f0a00c5;
+        public static final int reporte360WebkitGLineal=0x7f0a00c4;
         public static final int reporte360btnConsultar=0x7f0a00c3;
         public static final int reporte360spinner=0x7f0a00bf;
-        public static final int reportebsc1titulo=0x7f0a00c6;
-        public static final int reportebscObjetivoAvance=0x7f0a00d7;
-        public static final int reportebscObjetivoNumPersonas=0x7f0a00d6;
-        public static final int reportebscObjetivolabel=0x7f0a00d5;
-        public static final int reportebscObjetivopadre=0x7f0a00cd;
-        public static final int reportebscObjetivopadre2=0x7f0a00cf;
-        public static final int reportebscPeriodoselec=0x7f0a00cb;
-        public static final int reportebscPerspectivaAvance=0x7f0a00d9;
-        public static final int reportebscPerspectivalabel=0x7f0a00d8;
-        public static final int reportebscTextViewGroup=0x7f0a00d4;
-        public static final int reportebscTitulografico=0x7f0a00d1;
-        public static final int reportebscWebkitGLineal=0x7f0a00d2;
-        public static final int reportebscbtnConsultar=0x7f0a00c9;
-        public static final int reportebscexpandable=0x7f0a00d0;
-        public static final int reportebscgridObjetivos=0x7f0a00ce;
-        public static final int reportebscgridObjetivosPersonales=0x7f0a00d3;
-        public static final int reportebscgridPerspectivas=0x7f0a00cc;
-        public static final int reportebscprogressbar=0x7f0a00ca;
-        public static final int reportebscspinner=0x7f0a00c7;
-        public static final int reportebsctoggleButton=0x7f0a00c8;
-        public static final int reportecub1titulo=0x7f0a00da;
-        public static final int reportecubTitulografico=0x7f0a00dd;
-        public static final int reportecubWebkit=0x7f0a00de;
-        public static final int reportecubbtnConsultar=0x7f0a00dc;
-        public static final int reportecubspinner=0x7f0a00db;
-        public static final int sabadoLayout=0x7f0a0112;
-        public static final int scrollView1=0x7f0a0105;
-        public static final int semanaContenidoLayout=0x7f0a0107;
-        public static final int semana_title=0x7f0a00fb;
+        public static final int reportebsc1titulo=0x7f0a00c5;
+        public static final int reportebscObjetivoAvance=0x7f0a00d6;
+        public static final int reportebscObjetivoNumPersonas=0x7f0a00d5;
+        public static final int reportebscObjetivolabel=0x7f0a00d4;
+        public static final int reportebscObjetivopadre=0x7f0a00cc;
+        public static final int reportebscObjetivopadre2=0x7f0a00ce;
+        public static final int reportebscPeriodoselec=0x7f0a00ca;
+        public static final int reportebscPerspectivaAvance=0x7f0a00d8;
+        public static final int reportebscPerspectivalabel=0x7f0a00d7;
+        public static final int reportebscTextViewGroup=0x7f0a00d3;
+        public static final int reportebscTitulografico=0x7f0a00d0;
+        public static final int reportebscWebkitGLineal=0x7f0a00d1;
+        public static final int reportebscbtnConsultar=0x7f0a00c8;
+        public static final int reportebscexpandable=0x7f0a00cf;
+        public static final int reportebscgridObjetivos=0x7f0a00cd;
+        public static final int reportebscgridObjetivosPersonales=0x7f0a00d2;
+        public static final int reportebscgridPerspectivas=0x7f0a00cb;
+        public static final int reportebscprogressbar=0x7f0a00c9;
+        public static final int reportebscspinner=0x7f0a00c6;
+        public static final int reportebsctoggleButton=0x7f0a00c7;
+        public static final int reportecub1titulo=0x7f0a00d9;
+        public static final int reportecubTitulografico=0x7f0a00dc;
+        public static final int reportecubWebkit=0x7f0a00dd;
+        public static final int reportecubbtnConsultar=0x7f0a00db;
+        public static final int reportecubspinner=0x7f0a00da;
+        public static final int sabadoLayout=0x7f0a0111;
+        public static final int scrollView1=0x7f0a0104;
+        public static final int semanaContenidoLayout=0x7f0a0106;
+        public static final int semana_title=0x7f0a00fa;
         public static final int siguienteEvaluacion=0x7f0a00bd;
         public static final int spinnerMisObjsPeriodo=0x7f0a007d;
         public static final int spinnerObjEmpPeriodo=0x7f0a00a7;
         public static final int spinnerRegistroPeriodo=0x7f0a00af;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
         public static final int text1=0x7f0a0040;
         public static final int text2=0x7f0a0041;
         public static final int textView1=0x7f0a003f;
-        public static final int textView10=0x7f0a0109;
-        public static final int textView2=0x7f0a00fd;
-        public static final int textView3=0x7f0a00fe;
-        public static final int textView4=0x7f0a00ff;
-        public static final int textView5=0x7f0a0100;
-        public static final int textView6=0x7f0a0101;
-        public static final int textView7=0x7f0a0102;
-        public static final int textView8=0x7f0a0103;
-        public static final int textView9=0x7f0a0104;
+        public static final int textView10=0x7f0a0108;
+        public static final int textView2=0x7f0a00fc;
+        public static final int textView3=0x7f0a00fd;
+        public static final int textView4=0x7f0a00fe;
+        public static final int textView5=0x7f0a00ff;
+        public static final int textView6=0x7f0a0100;
+        public static final int textView7=0x7f0a0101;
+        public static final int textView8=0x7f0a0102;
+        public static final int textView9=0x7f0a0103;
         public static final int tipo_evento_content=0x7f0a0064;
         public static final int tipo_evento_title=0x7f0a005f;
         public static final int title=0x7f0a0020;
@@ -459,11 +351,7 @@ public final class R {
         public static final int toggleButton3=0x7f0a00c2;
         public static final int usuarioText=0x7f0a0004;
         public static final int usuario_textview=0x7f0a0003;
-<<<<<<< HEAD
-        public static final int viernesLayout=0x7f0a010e;
-=======
-        public static final int viernesLayout=0x7f0a0111;
->>>>>>> 7a3e4f0086b14083c6756eabeef58c5d6545436a
+        public static final int viernesLayout=0x7f0a0110;
         public static final int welcome_textview=0x7f0a0001;
     }
     public static final class layout {
