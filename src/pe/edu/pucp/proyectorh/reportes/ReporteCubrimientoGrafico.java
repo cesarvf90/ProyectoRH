@@ -30,6 +30,8 @@ public class ReporteCubrimientoGrafico extends Fragment{
 	
 	private WebView browser;
 	int idpuesto;
+	String fechaini;
+	String fechafin;
 	
 	public ReporteCubrimientoGrafico(){
 		
@@ -51,8 +53,8 @@ public class ReporteCubrimientoGrafico extends Fragment{
 		
 		idpuesto = getArguments().getInt("PuestoSelec");
 		
-		String fechaini = getArguments().getString("fechaini");
-		String fechafin = getArguments().getString("fechafin");
+		 fechaini = getArguments().getString("fechaini");
+		 fechafin = getArguments().getString("fechafin");
 		System.out.println("fechaini " + fechaini);
 		System.out.println("fechafin " + fechafin);
 		
@@ -72,7 +74,7 @@ public class ReporteCubrimientoGrafico extends Fragment{
 	public void cargarGraficoPuesto(int idpuesto){
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
-			String request = ReporteServices.obtenerPostulaciones + "?idpuesto=" + idpuesto;
+			String request = ReporteServices.obtenerPostulaciones + "?idpuesto=" + idpuesto + "&finicio=" + fechaini + "&ffin=" + fechafin;
 
 			new getAvances().execute(request);
 			
@@ -96,12 +98,24 @@ public class ReporteCubrimientoGrafico extends Fragment{
 		protected void onPostExecute(String result) {
 			
 			System.out.println("Recibido: " + result.toString());
-			
+			List<ROfertasLaborales> ofertas;
+			try{
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			List<ROfertasLaborales> ofertas = gson.fromJson(result,new TypeToken<List<ROfertasLaborales>>(){}.getType());
+			ofertas = gson.fromJson(result,new TypeToken<List<ROfertasLaborales>>(){}.getType());
+			
+			}
+			catch(Exception e){
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de datos");
+				builder.setMessage("No se pudo recuperar la información.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				return;
+			}
 			
 			if (ofertas.size()==0){
-				System.out.println("null!");
 				 String summary = "<html><body>No se encontraron resultados</body></html>";
 				 browser.loadData(summary, "text/html", null);
 			}
@@ -132,6 +146,9 @@ public class ReporteCubrimientoGrafico extends Fragment{
 						bachiller.add(0);
 						master.add(0);
 						doctorado.add(0);
+						tecnico.add(0);
+						estudiante.add(0);
+						licenciado.add(0);
 						
 					}
 					

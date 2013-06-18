@@ -89,9 +89,9 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
-			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Registrado"+ "&"
-					+ "colaboradorID=" + LoginActivity.getUsuario().getID();
+			String request = Servicio.OfertasLaborales + "?descripcionFase="
+					+ "Registrado" + "&" + "colaboradorID="
+					+ LoginActivity.getUsuario().getID();
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
@@ -131,7 +131,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 								.getString("FechaRequerimiento"));
 						oferta.setNumeroPostulantes(ofertaObject
 								.getInt("NumeroPostulantes"));
-//						oferta.setEstado("Aprobado Jefe");
+						// oferta.setEstado("Aprobado Jefe");
 						JSONArray postulantesListObject = ofertaObject
 								.getJSONArray("Postulantes");
 

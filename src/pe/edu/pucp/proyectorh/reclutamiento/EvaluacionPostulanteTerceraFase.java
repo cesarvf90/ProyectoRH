@@ -40,7 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint({ "ValidFragment", "ValidFragment" })
-public class EvaluacionPostulante extends Fragment {
+public class EvaluacionPostulanteTerceraFase extends Fragment {
 
 	private View rootView;
 	private Postulante postulante;
@@ -52,7 +52,7 @@ public class EvaluacionPostulante extends Fragment {
 	private int totalPaginas;
 	private final int PREGUNTAS_X_PAGINA = 4;
 
-	public EvaluacionPostulante(OfertaLaboral oferta, Postulante postulante) {
+	public EvaluacionPostulanteTerceraFase(OfertaLaboral oferta, Postulante postulante) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 	}
@@ -163,7 +163,7 @@ public class EvaluacionPostulante extends Fragment {
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
-									ConfirmacionEvaluacion fragment = new ConfirmacionEvaluacion(
+									ConfirmacionEvaluacionTerceraFase fragment = new ConfirmacionEvaluacionTerceraFase(
 											oferta, postulante, funciones,
 											respuestas, evaluacion);
 									ft.setCustomAnimations(

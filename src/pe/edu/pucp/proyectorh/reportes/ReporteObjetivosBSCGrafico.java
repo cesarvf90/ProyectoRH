@@ -140,6 +140,8 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 		else{
 			//MODO OFFLINE
 			ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+			if (objetivosArch!=null){
+			
 			List<ObjetivosXPersonaRDTO> Personas = new ArrayList<ObjetivosXPersonaRDTO>();
 			for (int i=0;i<objetivosArch.size();i++){
 				if (objetivosArch.get(i).getIdpadre()==idObj){
@@ -194,7 +196,7 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 			
 			
 			browser.loadUrl("file:///android_asset/ReporteBSCperspectivabarchart.html");
-			
+		}
 		}
 	}
 	

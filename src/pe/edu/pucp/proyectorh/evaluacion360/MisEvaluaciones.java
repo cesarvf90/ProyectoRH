@@ -5,7 +5,7 @@ import java.util.List;
 
 
 import pe.edu.pucp.proyectorh.R;
-import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulante;
+import pe.edu.pucp.proyectorh.reclutamiento.EvaluacionPostulanteTerceraFase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -92,7 +92,7 @@ public class MisEvaluaciones extends Fragment {
 		                "\nSpinner 1 : "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
 					Toast.LENGTH_SHORT).show();*/
 				  
-				  EvaluacionPostulante fragment = new EvaluacionPostulante(null, null);
+				  EvaluacionPostulanteTerceraFase fragment = new EvaluacionPostulanteTerceraFase(null, null);
 				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
 				  ft.replace(R.id.opcion_detail_container, fragment);
 				  ft.addToBackStack(null);

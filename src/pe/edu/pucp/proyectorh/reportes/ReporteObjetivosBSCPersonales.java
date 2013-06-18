@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
@@ -35,6 +40,7 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 	int nivel;
 	String objpadre;
 	ArrayList<PersonaXObjetivoDTO> listaObjetivosxPersona;
+	
 	
 	int idPadre;
 	int idPersp;
@@ -121,6 +127,8 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 			//MODO OFFLINE
 			
 			ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
+			if (objetivosArch!=null){
+			
 			ArrayList<List<ObjetivoDTO>> objetivos = new ArrayList<List<ObjetivoDTO>>();
 			ArrayList<String> personas = new ArrayList<String>();
 			
@@ -139,7 +147,8 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 						
 						//obtener hijos
 						for (int j=0;j<objetivosArch.size();j++){
-							if (objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()){
+							if ((objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()) && 
+							     (objetivosArch.get(j).getColaboradorID() == objetivosArch.get(i).getColaboradorID())){
 								listaHijos.add(objetivosArch.get(j));
 							}
 								
@@ -153,10 +162,11 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 			
 			ObjetivoPersonalAdapter adaptador = new ObjetivoPersonalAdapter(getActivity().getApplicationContext(), personas, objetivos);
 			expandObjetivos.setAdapter(adaptador);
+			for(int i=0; i < adaptador.getGroupCount(); i++){
+				expandObjetivos.expandGroup(i);
+			}
 			
-			
-			
-			
+		}
 		}
 			
 			
@@ -193,110 +203,126 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 	}
 	
 	
-
 public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
-	
+
 	private ArrayList<String> personas;
 	private ArrayList<List<ObjetivoDTO>> objetivos;
 	private Context context;
-	List<ObjetivoDTO> objetivosPersonal;
-	
-	GridView gridView;
-	
+    int gpglobal;
+	ArrayList<GridView> listaGridView ;
+
 	public ObjetivoPersonalAdapter(Context contexto, ArrayList<String> personas, ArrayList<List<ObjetivoDTO>> objetivos) {
 		this.context = contexto;
 		this.personas = personas;
 		this.objetivos = objetivos;
-		System.out.println("entro a constructor");
+		listaGridView = new ArrayList<GridView>(); 
+		for (int i=0;i<personas.size();i++){
+			listaGridView.add(null);
+		}
 	}
-	
-	
+
+
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
-	
-	
+
+
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		System.out.println("entro a childview");
+		System.out.println("entro a childview..definiendo vista gp:" + groupPosition);
+		System.out.println("padre:" + getGroup(groupPosition) );
+		System.out.print("hijos:" );
+		for (int i=0;i<objetivos.get(groupPosition).size();i++){
+			System.out.print(objetivos.get(groupPosition).get(i).getDescripcion() + ", ");
+		}
+		System.out.println();
 		
+
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		
+
+
 		View view;
-		 
-		if (convertView == null) {
+
+		
 			
+			System.out.println("entra a setgridview...");
+
 			view = new View(context);
 
 			view = inflater.inflate(R.layout.reportebscgridadapter, null);
-			
-			gridView = (GridView) view.findViewById(R.id.reportebscgridObjetivosPersonales);
-			
-			gridView.setAdapter(new ObjetivoAdapter(context,objetivos.get(groupPosition)));
-			
-			objetivosPersonal = objetivos.get(groupPosition);
-			
-			gridView.setOnItemClickListener(new OnItemClickListener() {
+
+			listaGridView.set(groupPosition,  (GridView) view.findViewById(R.id.reportebscgridObjetivosPersonales));
+
+			listaGridView.get(groupPosition).setAdapter(new ObjetivoAdapter(context,objetivos.get(groupPosition)));
+
+			gpglobal = groupPosition;
+			System.out.println("positions: ");
+
+			listaGridView.get(groupPosition).setOnItemClickListener(new OnItemClickListener() {
+				int gp = gpglobal;
 				@Override
 				public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
+					parent.getParent();
+					System.out.print("(grouppos: " + gp +", ppos: " + position + ")");
+					System.out.print("(size: " + objetivos.get(gp).size() + ")");
+					System.out.println(" hijos:" + objetivos.get(gp).get(position).getHijos()
+							+ " descp: " + objetivos.get(gp).get(position).getDescripcion() );
+
+					/*	Toast.makeText(parent.getContext(), 
+					"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+					Toast.LENGTH_SHORT).show(); */
 					
-					if (objetivosPersonal.get(position).getHijos()==0) {
-						
+					if (objetivos.get(gp).get(position).getHijos()==0) {
+
 						Toast.makeText(v.getContext(),
 								"Objetivo de último nivel", Toast.LENGTH_SHORT).show();
 					}
 					else{
-						
-						
+
+
 						Bundle b = new Bundle();
 						b.putInt("nivel",nivel + 1);
 						//String cadena = "" + ((TextView) v.findViewById(R.id.reportebscObjetivolabel)).getText();
-						String cadena = objetivosPersonal.get(position).getDescripcion();
+						String cadena = objetivos.get(gp).get(position).getDescripcion();
 						b.putString("objetivopadre", cadena);
-						
-						b.putInt("idPadre",objetivosPersonal.get(position).getIdObjetivo());
+
+						b.putInt("idPadre",objetivos.get(gp).get(position).getIdObjetivo());
 						b.putInt("modo",modo);
 						b.putString("archivo", nomArch);
-						
+
 						ReporteObjetivosBSCObjetivos fragment = new ReporteObjetivosBSCObjetivos();
 						fragment.setArguments(b);
-						
+
 						FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
 						ft.replace(R.id.opcion_detail_container, fragment);
 						ft.addToBackStack(null);
 						ft.commit();
-						
+
 					}
-				   
+
 				}
 			});
-			
-			
-			
-		}
-		else{
-			view = convertView;
-		}
+
+
+
+		
  
 		return view;
-			
+
 
 	}
-	
+
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
-		System.out.println("entro a groupview");
 
 		String nombre = getGroup(groupPosition);
 
 		if (convertView == null) {
-			System.out.println("entro aqui groupview2");
 			LayoutInflater infalInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(
@@ -309,12 +335,12 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 
 		return convertView;
 	}
-	
+
 	@Override
 	public long getGroupId(int groupPosition) {
 		return groupPosition;
 	}
-	
+
 	@Override
 	public String getGroup(int groupPosition) {
 		return personas.get(groupPosition);
@@ -349,11 +375,10 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
-	
+
 
 	}
+
 
 	private class PersonaXObjetivoDTO
 	{
@@ -400,7 +425,6 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 	    
 	}
 
-	
 	
 
 }

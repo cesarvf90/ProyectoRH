@@ -43,7 +43,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ConfirmacionEvaluacion extends Fragment {
+public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 
 	private View rootView;
 	private Postulante postulante;
@@ -55,9 +55,9 @@ public class ConfirmacionEvaluacion extends Fragment {
 
 	// private ProgressDialog progressDialog = null;
 
-	public ConfirmacionEvaluacion(OfertaLaboral oferta, Postulante postulante,
-			ArrayList<Funcion> funciones, ArrayList<Respuesta> respuestas,
-			Evaluacion evaluacion) {
+	public ConfirmacionEvaluacionPrimeraFase(OfertaLaboral oferta,
+			Postulante postulante, ArrayList<Funcion> funciones,
+			ArrayList<Respuesta> respuestas, Evaluacion evaluacion) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 		this.funciones = funciones;
@@ -161,13 +161,10 @@ public class ConfirmacionEvaluacion extends Fragment {
 	}
 
 	private HttpResponse llamarServicioEnviarRespuestas() {
-		// progressDialog = new ProgressDialog(getActivity());
-		// progressDialog.setMessage("Registrando evaluación...");
-		// progressDialog.show();
 		JSONObject registroEvaluacion = generaRegistroEvaluacionJSON();
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(
-				Servicio.RegistrarRespuestasEvaluacionTerceraFase);
+				Servicio.RegistrarRespuestasEvaluacionPrimeraFase);
 		try {
 			StringEntity stringEntity = new StringEntity(
 					registroEvaluacion.toString());
@@ -188,17 +185,15 @@ public class ConfirmacionEvaluacion extends Fragment {
 			System.out.println("Respuesta POST Recibido: "
 					+ resultstring.toString());
 			inputstream.close();
-			resultstring = resultstring.substring(1, resultstring.length() - 1);
+			// resultstring = resultstring.substring(1, resultstring.length() -
+			// 1);
 			JSONObject resultadoRegistroJSON = new JSONObject(resultstring);
 			manejarRespuesta(resultadoRegistroJSON);
 		} catch (ClientProtocolException e) {
-			// progressDialog.dismiss();
 			System.out.println("Excepcion al registrar " + e.toString());
 		} catch (IOException e) {
-			// progressDialog.dismiss();
 			System.out.println("Excepcion al registrar " + e.toString());
 		} catch (JSONException e) {
-			// progressDialog.dismiss();
 			System.out.println("Excepcion al registrar " + e.toString());
 		}
 		return null;
@@ -216,10 +211,8 @@ public class ConfirmacionEvaluacion extends Fragment {
 				mostrarConfirmacion();
 			}
 		} catch (JSONException e) {
-			// progressDialog.dismiss();
 			ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
 		} catch (NullPointerException ex) {
-			// progressDialog.dismiss();
 			ErrorServicio
 					.mostrarErrorComunicacion(ex.toString(), getActivity());
 		}
@@ -251,10 +244,10 @@ public class ConfirmacionEvaluacion extends Fragment {
 		try {
 			registroObject.put("idPostulante", postulante.getID());
 			registroObject.put("idOfertaLaboral", oferta.getID());
-			registroObject.put("descripcionFase", "Aprobado RRHH");
+			registroObject.put("descripcionFase", "Registrado");
 			JSONObject evaluacionObject = new JSONObject();
-			evaluacionObject.put("FechaInicio", "02/06/2013 14:03:23");
-			evaluacionObject.put("FechaFin", "02/06/2013 14:33:54");
+			evaluacionObject.put("FechaInicio", "18/06/2013 14:03:23");
+			evaluacionObject.put("FechaFin", "18/06/2013 14:33:54");
 			evaluacionObject.put("Comentarios", evaluacion.getComentarios());
 			evaluacionObject
 					.put("Observaciones", evaluacion.getObservaciones());
@@ -280,11 +273,22 @@ public class ConfirmacionEvaluacion extends Fragment {
 	}
 
 	private void mostrarConfirmacion() {
-		TextView mensajeConfirmacionText = (TextView) rootView
-				.findViewById(R.id.mensaje_confirmacion_evaluacion);
-		mensajeConfirmacionText
-				.setText("Se registró la evaluación realizada. El código de la evaluación es "
-						+ evaluacion.getID());
+		getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				System.out
+						.println("Se muestra la confirmacion Primera fase. Id evaluacion "
+								+ evaluacion.getID());
+				System.out.println("Se muestra la confirmacion");
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setTitle("Registro exitoso");
+				builder.setMessage("Se registró la evaluación exitosamente.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			}
+		});
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
