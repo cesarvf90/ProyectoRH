@@ -50,7 +50,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:orientation="vertical" >
 
             <TextView
@@ -61,6 +60,7 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/reclut_cargo_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Puesto:"
@@ -111,14 +111,14 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="150sp"
+                android:layout_height="135sp"
                 android:text="Descripción:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="150sp"
+                android:layout_height="135sp"
                 android:text="Comentarios:"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -152,8 +152,7 @@
             <TextView
                 android:id="@+id/reclut_area_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                
+                android:layout_height="wrap_content"                
                 android:text="  "
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
@@ -217,7 +216,7 @@
             <TextView
                 android:id="@+id/reclut_descripcion_input"
                 android:layout_width="match_parent"
-                android:layout_height="150sp"
+                android:layout_height="135sp"
                 android:ems="10"
                 android:text="  "
                 android:textSize="24sp" >
@@ -226,7 +225,7 @@
             <EditText
                 android:id="@+id/reclut_comentarios_input"
                 android:layout_width="match_parent"
-                android:layout_height="150sp"
+                android:layout_height="135sp"
                 android:editable="false"
                 android:ems="10"
                 android:gravity="top|center_vertical"

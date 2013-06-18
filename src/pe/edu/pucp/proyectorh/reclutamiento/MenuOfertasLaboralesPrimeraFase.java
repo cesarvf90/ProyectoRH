@@ -90,7 +90,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 	private void obtenerOfertasPendientes(Usuario usuario) {
 		if (ConnectionManager.connect(getActivity())) {
 			String request = Servicio.OfertasLaboralesTerceraFase
-					+ "?descripcionFase=" + "Aprobado%20RRHH"+ "&"
+					+ "?descripcionFase=" + "Registrado"+ "&"
 					+ "colaboradorID=" + LoginActivity.getUsuario().getID();
 			new ObtencionOfertas(this.getActivity()).execute(request);
 		} else {
