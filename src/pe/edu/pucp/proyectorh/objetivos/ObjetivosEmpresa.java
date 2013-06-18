@@ -31,8 +31,6 @@ public class ObjetivosEmpresa extends Fragment {
 	FragmentActivity actv;
 	
 	private Spinner spinnerPeriodo;
-	private Button btnDescCambios;
-	private Button btnGuardarCambios;
 	
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
 	ArrayList<String> listaNombrePer = new ArrayList<String>();
