@@ -7,15 +7,43 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:gravity="left"
         android:text="Consulta de Concovatorias"
-        android:textSize="20sp" />
+        android:textSize="30sp" 
+        android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp"
+		android:id="@+id/candidatosxpuesto1titulo"/>
 	
-	<TextView
+	<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="35dp"
+    android:background="@color/verde_menubar"
+    android:layout_marginTop="60dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+    
+	     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:text="Opciones"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp" />
+    
+     </RelativeLayout>
+	
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginTop="120dp"
+	    android:layout_marginLeft="30dp" >
+	     
+	<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:textSize="20sp"
         android:text="Seleccione Convocatoria:" />
 	
 	<Spinner
@@ -23,15 +51,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp" />
+	    android:layout_marginRight="30dp"  />
+	</LinearLayout>
 	
 	<Button
+	    
         android:id="@+id/candxpuestobtnConsultar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Consultar"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="150dp"  />
+        android:layout_marginTop="250dp"  />
 	
 	<ProgressBar
         android:id="@+id/candxpuestoprogressbar"
