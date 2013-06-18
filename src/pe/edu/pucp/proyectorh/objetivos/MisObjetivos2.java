@@ -27,7 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 
-public class MisObjetivos extends Fragment {
+public class MisObjetivos2 extends Fragment {
 	
 	public int indicador=0;
 	
@@ -38,21 +38,20 @@ public class MisObjetivos extends Fragment {
 	ArrayList<ObjetivosBSC> objsHijos;
 	
 	private Spinner spinnerPeriodo;
-	private Spinner spinnerObjetivos;
 	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
 	List<String> listaNombrePer;
-	ArrayList<ObjetivosBSC> listaObjetivosPadre;
-	ArrayList<ArrayList<ObjetivosBSC>> listaObjetivosHijo;
-	List<String> listaNombreObj;
 	int periodoBSCActual;
-	int objetivoActual;
 	
 	ExpandableListView listaObjs;
 	
 	Context contexto;
-	ObjetivosExpandableAdapter adapter;	
+	ObjetivosExpandableAdapter adapter;
 	
-	public MisObjetivos(){
+	private ArrayList<ObjetivosBSC> groups;
+	private ArrayList<ArrayList<ObjetivosBSC>> childs;
+	
+	
+	public MisObjetivos2(){
 		
 	}
 	
@@ -76,42 +75,62 @@ public class MisObjetivos extends Fragment {
 			 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 			 */
 			spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerMisObjsPeriodo);
-			spinnerObjetivos = (Spinner) rootView.findViewById(R.id.spinnerMisObjsObjetivo);
 			listaNombrePer = new ArrayList<String>();
 			ListadoPeriodos lp = new ListadoPeriodos();
 			Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
+
+			
+			listaObjs = (ExpandableListView) rootView.findViewById(R.id.listaObjetivos);
+			System.out.println("setea a cero");
+	    	groups= new ArrayList<ObjetivosBSC>();
+	    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
+			//listaObjs.setLongClickable(true);
+	    	listaObjs.setFocusable(false);
+	    	listaObjs.setFocusableInTouchMode(false);
+	        
+			// Se muestra la informacion de la oferta
+			listaObjs.setOnGroupClickListener(new OnGroupClickListener() {
+				@Override
+				public boolean onGroupClick(ExpandableListView parent, View v,
+						int groupPosition, long id) {
+					System.out.println("------------>Clickeo papa gp="+groupPosition);
+
+					return false;
+				}
+			});
+			
+			
+			listaObjs.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					System.out.println("------------>Clickeo item");
+					
+					// TODO Auto-generated method stub
+					
+				}
+			});
+
+			// Se muestra la informacion de el postulante
+			listaObjs.setOnChildClickListener(new OnChildClickListener() {
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v,
+						int groupPosition, int childPosition, long id) {
+						System.out.println("------------>Clickeo hijo gp="+groupPosition+ " y chp="+childPosition);
+						return false;
+				}
+			});
 
 		return rootView;
 	}
 	
 	
     private void loadData(ArrayList<ObjetivosBSC> listObjetivosPadre){
-    	listaObjetivosPadre = new ArrayList<ObjetivosBSC>();
-    	listaNombreObj = new ArrayList<String>();
-    	
     	for(int i=0;i<listObjetivosPadre.size();i++){
     		System.out.println("agrega obj="+listObjetivosPadre.get(i).Nombre);
-    		listaObjetivosPadre.add(listObjetivosPadre.get(i));
-    		listaNombreObj.add(listObjetivosPadre.get(i).Nombre);	
+    		groups.add(listObjetivosPadre.get(i));
       	}
     	
-    	ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombreObj);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerObjetivos.setAdapter(dataAdapter);
-		spinnerObjetivos.setOnItemSelectedListener(new OnItemSelectedListener(){
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-				objetivoActual = listaObjetivosPadre.get(pos).ID;
-				System.out.println("objetivo seleccionado="+objetivoActual);
-				mostrarHijos();
-			}
-			
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-			}
-		});
-		
     	ListadoObjetivosChild lo = new ListadoObjetivosChild();
     	String rutaLlamada ="";
 
@@ -125,10 +144,10 @@ public class MisObjetivos extends Fragment {
     	
     	System.out.println("Ruta-Hijos="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
-    }
-    
-    public void mostrarHijos(){
-    	System.out.println("mostrar hijos de obj="+objetivoActual);
+	
+    	System.out.println("new adapter");
+    	adapter = new ObjetivosExpandableAdapter(contexto, groups, childs);
+    	listaObjs.setAdapter(adapter);
     }
     
     private ArrayList<ObjetivosBSC> obtenerHijos(int idPadre, ArrayList<ObjetivosBSC> listObjetivosBSC){
@@ -142,10 +161,10 @@ public class MisObjetivos extends Fragment {
     }
     
     private void loadDataChild(ArrayList<ObjetivosBSC> listObjetivosHijos){
-    	listaObjetivosHijo = new ArrayList<ArrayList<ObjetivosBSC>>();
-    	for(int i=0;i<listaObjetivosPadre.size();i++){
-    		listaObjetivosHijo.add(obtenerHijos(listaObjetivosPadre.get(i).ID,listObjetivosHijos));
+    	for(int i=0;i<groups.size();i++){
+    		childs.add(obtenerHijos(groups.get(i).ID,listObjetivosHijos));
     	}
+    	adapter.actualizaHijos(childs);
     }
     
     public boolean isAdmin(){
@@ -153,9 +172,11 @@ public class MisObjetivos extends Fragment {
     }
 	
 	public  void listarObjetivos(){
+    	groups= new ArrayList<ObjetivosBSC>();
+    	childs= new ArrayList<ArrayList<ObjetivosBSC>>();
 
     	ListadoObjetivos lo = new ListadoObjetivos();
-    	String rutaLlamada =""; 
+    	String rutaLlamada ="";
     	
     	if(indicador==IND_MISOBJS){
     		System.out.println("MIS OBJETIVOS");

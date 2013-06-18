@@ -85,11 +85,9 @@ public class Modulo {
 
 	public static List<ModuloItem> obtenerFuncionalidadesEvaluacion360() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Mis evaluaciones"));
-		submodulos.add(new ModuloItem("2", "Rol evaluador"));
-		submodulos.add(new ModuloItem("3", "Rol de Evaluado"));
-//		submodulos.add(new ModuloItem("3", "Mis subordinados"));
-		submodulos.add(new ModuloItem("4", "Mis subordinados"));
+		submodulos.add(new ModuloItem("1", "Mis Pendientes"));
+		submodulos.add(new ModuloItem("2", "Rol de Evaluado"));
+		submodulos.add(new ModuloItem("3", "Mis subordinados"));
 		return submodulos;
 	}
 

@@ -1,5 +1,6 @@
 package pe.edu.pucp.proyectorh.reportes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,18 +17,31 @@ import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.getAvances;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ReportePersonalBSCGrafico extends Fragment {
 	
 	int idcolaborador;
 	WebView browser;
+	Spinner spinnerPeriodo;
+	List<HistoricoBSC> historico;
+	Button btnDetalle;
+	int posicion=0;
 	
 	public ReportePersonalBSCGrafico(){
 		
@@ -48,9 +62,11 @@ public class ReportePersonalBSCGrafico extends Fragment {
 				container, false);
 		
 		idcolaborador = getArguments().getInt("ColaboradorSelec");
-		
+		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.reporteperbscspinnerGraf);
+		btnDetalle = (Button) rootView.findViewById(R.id.reporteperbscbtnDetalle);
 		
 		browser = (WebView)rootView.findViewById(R.id.reporteperbscWebkit);
+		
 		
 		String titulo = getArguments().getString("titulo");
 		// set value into textview
@@ -58,6 +74,8 @@ public class ReportePersonalBSCGrafico extends Fragment {
 		textView.setText(titulo);
 		
 		cargarGraficoHistorico(idcolaborador);
+		
+		customizarEstilos(getActivity(), rootView);
 		
 		return rootView;
 	}
@@ -93,24 +111,123 @@ public class ReportePersonalBSCGrafico extends Fragment {
 			System.out.println("Recibido: " + result.toString());
 			
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			List<HistoricoBSC> historico = gson.fromJson(result,new TypeToken<List<ROfertasLaborales>>(){}.getType());
+			historico = gson.fromJson(result,new TypeToken<List<HistoricoBSC>>(){}.getType());
 			
-			//habilitamos javascript y flash
-			browser.getSettings().setJavaScriptEnabled(true);
-			browser.getSettings().setPluginsEnabled(true);
-			/*
-			DataObject data = new DataObject();
+			ArrayList<String> listaPeriodos = new ArrayList<String> ();  
+			for (int i=0; i<historico.size();i++ ){
+				listaPeriodos.add(historico.get(i).idperiodo + "");
+			}
 			
-			InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, listaPeriodos);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					posicion = pos;
+				   
+					
+					int [] objetivos = new int[3];
+					
+					for(int i=0;i<historico.get(pos).getObjetivos().size();i++){
+						
+						if (historico.get(pos).getObjetivos().get(i).getAvance() == 100) objetivos[0] = objetivos[0] + 1; 
+						else if (historico.get(pos).getObjetivos().get(i).getAvance() > 75) objetivos[1] = objetivos[1] + 1;
+						else objetivos[2] = objetivos[2] + 1; 
+					}
+					
+					//habilitamos javascript y flash
+					browser.getSettings().setJavaScriptEnabled(true);
+					browser.getSettings().setPluginsEnabled(true);
+
+					DataObject data = new DataObject(objetivos);
+					
+					InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);
+					
+					browser.addJavascriptInterface(intface, "Android");
+					
+					
+					browser.loadUrl("file:///android_asset/ReporteBSCpersonal.html");
+
+				  }
+				
 			
-			browser.addJavascriptInterface(intface, "Android");
-			*/
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			});
 			
-			browser.loadUrl("file:///android_asset/ReporteBSCpersonal.html");
+			btnDetalle.setOnClickListener(new OnClickListener() {
+				 
+				  @Override
+				  public void onClick(View v) {
+					  
+					  	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setTitle("Detalle del periodo");
+						String cadena = "Avan.  Objetivo\n";
+						for(int i=0;i<historico.get(posicion).getObjetivos().size();i++){
+							cadena = cadena + historico.get(posicion).getObjetivos().get(i).getAvance() + "%";
+							if (historico.get(posicion).getObjetivos().get(i).getAvance() < 10) cadena = cadena + "   ";
+							else if (historico.get(posicion).getObjetivos().get(i).getAvance() < 100) cadena = cadena + "  ";
+							
+							cadena = cadena + "\t\t" + historico.get(posicion).getObjetivos().get(i).getDescripcion() + "\n";
+						}
+						
+						builder.setMessage(cadena);
+						builder.setCancelable(false);
+						builder.setPositiveButton("Ok", null);
+						builder.create();
+						builder.show();
+				  
+				  }
+			});
 			
 			
 		}
 	}
+	
+	public class DataObject {
+		
+		int[] objetivos; 
+		
+		public DataObject(int[] objetivos){
+			this.objetivos = objetivos;
+		}
+
+	}
+	
+	public class InterfaceChartLineal {
+	    Context mContext;
+	    DataObject obj;
+	    /** Instantiate the interface and set the context */
+	    InterfaceChartLineal(Context c, DataObject o) {
+	        mContext = c;
+	        obj = o;
+	    }
+
+	    /* Show a toast from the web page 
+	    public void showToast(String toast) {
+	        Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+	    }*/
+	    
+	    public String getData(){
+	    	
+	    	
+	    	Gson gson = new Gson();
+	    	 
+	    	// convert java object to JSON format,
+	    	// and returned as JSON formatted string
+	    	String json = gson.toJson(obj);
+	    	System.out.println(json);
+	    	return json;
+	    }
+
+
+	}
+	
 	
 	
 	public class HistoricoBSC
@@ -146,6 +263,22 @@ public class ReportePersonalBSCGrafico extends Fragment {
 			}
 	         
 	         
+	}
+	
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+			((TextView) view).setTypeface(Typeface.createFromAsset(
+			context.getAssets(), "OpenSans-Light.ttf"));
+		}
+		} catch (Exception e) {
+		}
 	}
 		
 	

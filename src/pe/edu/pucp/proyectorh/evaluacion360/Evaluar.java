@@ -1,14 +1,23 @@
 package pe.edu.pucp.proyectorh.evaluacion360;
 
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
+import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
+import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivosChild;
+import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.*;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 
 
@@ -18,13 +27,14 @@ public class Evaluar extends Fragment {
 	
 	ExpandableListView listaProcesos;
 	
-	private ArrayList<ProcesoEvaluacion360> groups;
-	private ArrayList<ArrayList<Evaluados360>> childs;
+	public Evaluados360 evaluado;
 	
-	Evaluacion360ExpandableAdapater adapter;
 	private int numPagina;
 	private int totalPaginas;
 	int modoPrueba=1;
+	
+	LinearLayout lay;
+	LinearLayout lay2;
 	
 	public Evaluar(){
 		
@@ -35,47 +45,78 @@ public class Evaluar extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	private void activarBotonSiguiente() {
-		Button botonSiguiente = (Button) rootView
-				.findViewById(R.id.siguienteEvaluacionEva);
-		botonSiguiente.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (numPagina < totalPaginas - 1) {
-					//guardarRespuestas();
-					numPagina++;
-					//refreshLayout();
-				} else {
-					Toast.makeText(getActivity(),
-							"Estas son las últimas preguntas de la evaluación",
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+	public class ListadoPreguntas extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("RecibidoPreg: " + result.toString());
+			ArrayList<Pregunta360> listPregs = Pregunta360.getPreguntasByResult(result);		
+			loadData(listPregs);
+		}
 	}
 
-	private void activarBotonAtras() {
-		Button botonAtras = (Button) rootView
-				.findViewById(R.id.atrasEvaluacionEva);
-		botonAtras.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (numPagina > 0) {
-					//guardarRespuestas();
-					numPagina--;
-					//refreshLayout();
-				} else {
-					Toast.makeText(
-							getActivity(),
-							"Estas son las primeras preguntas de la evaluación",
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+	public class ListadoRespuestas extends AsyncCall {
+		@Override
+		protected void onPostExecute(String result) {
+			System.out.println("RecibidoResp: " + result.toString());
+		}
 	}
+	
+	
+	public void obtenerPuntajes(){
+		ArrayList<Respuesta360> respuestas = new ArrayList<Respuesta360>();
+		for( int i = 0; i < lay2.getChildCount(); i++ ){
+			  if( lay2.getChildAt(i) instanceof RatingEvaluar ){
+				  RatingEvaluar estrellitas = (RatingEvaluar)lay2.getChildAt(i);
+				  System.out.println("encontro lay de preg="+estrellitas.idPregunta+ " con punt="+estrellitas.getRating());
+				  Respuesta360 rpta = new Respuesta360();
+				  rpta.PreguntaID = estrellitas.idPregunta;
+				  rpta.Puntaje = (int)estrellitas.getRating();
+				  respuestas.add(rpta);
+			  }
+		}
+		Gson geson= new Gson();
+		System.out.println("rpta="+geson.toJson(respuestas));
+		
+		ListadoRespuestas lo = new ListadoRespuestas();
+    	String rutaLlamada = Servicio.EnviarRespuestas+"?respuestas="+geson.toJson(respuestas); 
+    	System.out.println("Ruta-Hijos="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
+	}
+	
+	class RatingEvaluar extends RatingBar{
+		
+		int idPregunta;
 
+		public RatingEvaluar(Context context) {
+			super(context);
+			this.setNumStars(5);
+			this.setStepSize(1);
+			// TODO Auto-generated constructor stub
+		}
+		
+	}
+	public void loadData(ArrayList<Pregunta360> listPregs){
+		
+		lay2 = new LinearLayout(contexto);
+		lay2.setOrientation(LinearLayout.VERTICAL);
+		
+		for (int i=0;i<listPregs.size();i++){
+			System.out.println("Entra estrellitas con i="+i);
+    		
+			TextView txt = new TextView(contexto);
+    		txt.setText(listPregs.get(i).TextoPregunta);
+    		txt.setLayoutParams(new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+    		
+    		lay2.addView(txt); 
+    		
+    		RatingEvaluar estrellitas = new RatingEvaluar(contexto);
+    		estrellitas.setLayoutParams(new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+    		
+    		estrellitas.idPregunta= listPregs.get(i).ID;
+    		lay2.addView(estrellitas);
+    	}
+		lay.addView(lay2);
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,32 +130,61 @@ public class Evaluar extends Fragment {
 		 * CODIGO PARA MANEJO DE PERIODO (SPINNER)
 		 */
 		QuickContactBadge imagen = (QuickContactBadge) rootView.findViewById(R.id.evaluacionImagenContacto);
+		TextView nombre = (TextView)rootView.findViewById(R.id.evaluacion360Nombre);
+		TextView area = (TextView)rootView.findViewById(R.id.evaluacion360Area);
+		TextView puesto = (TextView)rootView.findViewById(R.id.evaluacion360Puesto);
 		
-		TextView p1 = (TextView)rootView.findViewById(R.id.pregunta1Eva);
-		p1.setText("¿Cuenta con la capacidad 1?");
-		TextView p2 = (TextView)rootView.findViewById(R.id.pregunta2Eva);
-		p2.setText("¿Cuenta con la capacidad 2?");
-		TextView p3 = (TextView)rootView.findViewById(R.id.pregunta3Eva);
-		p3.setText("¿Cuenta con la capacidad 3?");
-		TextView p4 = (TextView)rootView.findViewById(R.id.pregunta4Eva);
-		p4.setText("¿Cuenta con la capacidad 4?");
+		nombre.setText(evaluado.evaluado.NombreCompleto);
+		area.setText(evaluado.evaluado.Area);
+		puesto.setText(evaluado.evaluado.Puesto);
 		
+		lay = (LinearLayout)rootView.findViewById(R.id.layEvaluacion);
 		
-		//TableLayout lay = (TableLayout)rootView.findViewById(R.id.layEvaluacion);
-		//TableLayout lay2 = new TableLayout(contexto);
-    	//for (int i=0;i<10;i++){
-    		//String texto = "capacidad "+i;
-    		//TextView txt = new TextView(contexto);
-    		//txt.setText(texto);
-    		
-    		//RatingBar estrellitas = new RatingBar(contexto);
-    		
-    		//lay2.addView(txt);
-    		//lay2.addView(estrellitas);
-    	//}
-    	//lay.addView(lay2);
 
+		ListadoPreguntas lo = new ListadoPreguntas();
+    	String rutaLlamada = Servicio.ListarPreguntas+"?idEvaluado="+evaluado.evaluado.ID+"&idProcesoEvaluacion="+evaluado.ProcesoEnElQueParticipanID; 
+    	System.out.println("Ruta-Hijos="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
+
+		Button guardarCambios = (Button) rootView.findViewById(R.id.finalizarEva360);
+	 	guardarCambios.setOnClickListener(new OnClickListener() {
+			  @Override
+			  public void onClick(View v) {
+				  System.out.println("finaliza cambios");
+				  //VALIDAR TODOS LOS OBJETIVOS
+				  if(validaLlenado()){
+					  obtenerPuntajes();
+				  }
+			  }
+		});
+		
 		return rootView;
+	}
+	
+	public boolean validaLlenado(){
+		boolean valida = true;
+		for( int i = 0; i < lay2.getChildCount(); i++ ){
+			  if( lay2.getChildAt(i) instanceof RatingEvaluar ){
+				  RatingEvaluar estrellitas = (RatingEvaluar)lay2.getChildAt(i);
+				  if(estrellitas.getRating()==0){
+					  valida = false;
+				  }
+			  }
+		}
+		
+		System.out.println("valida="+valida);
+		if(valida){
+			return true;
+		}else{
+			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+			builder.setTitle("Error en validación");
+			builder.setMessage("Debe llenar todas las preguntas.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+	  }
+		return false;
 	}
 
 }

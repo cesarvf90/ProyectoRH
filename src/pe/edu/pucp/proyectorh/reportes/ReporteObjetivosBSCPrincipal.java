@@ -18,6 +18,7 @@ import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,8 +42,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
 	int periodoSelec;
 	String titulo;
-	
-	ToggleButton botonModo;
+
 	
 	List<PeriodoDTO> listaPeriodos;
 	List<String> lista ;
@@ -69,8 +69,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		
 		//fuente
 		TextView txt = (TextView) rootView.findViewById(R.id.reportebsc1titulo);  
-		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
-		txt.setTypeface(font);
+
 		
 		pbarra = (ProgressBar) rootView.findViewById(R.id.reportebscprogressbar);
 
@@ -79,7 +78,6 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		lista = new ArrayList<String>();
 		obtenerlistaPeriodos();
 		
-		botonModo = (ToggleButton) rootView.findViewById(R.id.reportebsctoggleButton);
 
 		btnSubmit = (Button) rootView.findViewById(R.id.reportebscbtnConsultar);
 		
@@ -88,24 +86,9 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			  @Override
 			  public void onClick(View v) {
 				  
-		 /*
-			    Toast.makeText(v.getContext(),
-				"Seleccionado "+ String.valueOf(spinnerPeriodo.getSelectedItem()), 
-					Toast.LENGTH_SHORT).show();
-			*/    
-				  
-				  //obtener reporte y grabar
-				  
-				  //poner validacion de modo seleccionado
-				  if (botonModo.isChecked()){
-					  modo=1;
-				  }
-				  else{
-					  modo=0;
-					  nomArch = "reporteRH" + periodoSelec +  ".txt";
-				  }
 					 
-				  
+				  modo=0;
+				  nomArch = "reporteRH" + periodoSelec +  ".txt";
 
 				  if(modo==0){
 					  //MODO OFFLINE
@@ -160,6 +143,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		 
 			});
 
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
 	}
 	
@@ -380,7 +364,21 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
 	
 	
-	
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+			((TextView) view).setTypeface(Typeface.createFromAsset(
+			context.getAssets(), "OpenSans-Light.ttf"));
+		}
+		} catch (Exception e) {
+		}
+	}
 	
 	
 	
