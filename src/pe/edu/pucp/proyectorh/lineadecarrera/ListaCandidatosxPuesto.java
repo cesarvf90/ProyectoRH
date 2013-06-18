@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.webkit.WebView;
 
 public class ListaCandidatosxPuesto extends Fragment{
@@ -66,6 +67,10 @@ public class ListaCandidatosxPuesto extends Fragment{
 		
 		View rootView = inflater.inflate(R.layout.candidatosxpuesto2lista,
 				container, false);
+		
+		TextView txt = (TextView) rootView.findViewById(R.id.candidatosxpuesto2listatitulo);  
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");  
+		txt.setTypeface(font);
 		
 		idConvocatoriaC = getArguments().getInt("ConvSelec");
 		spinnerRequisitos = (Spinner) rootView.findViewById(R.id.cand_x_puesto_requi);
