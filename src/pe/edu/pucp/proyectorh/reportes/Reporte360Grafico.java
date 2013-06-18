@@ -48,11 +48,11 @@ public class Reporte360Grafico extends Fragment{
 		
 		browser.loadUrl("file:///android_asset/Reporte360chart.html");
 		
-		
+		/*
 		String titulo = getArguments().getString("titulo");
 		// set value into textview
 		TextView textView = (TextView)rootView.findViewById(R.id.reporte360Titulografico);
-		textView.setText(titulo);
+		textView.setText(titulo);*/
 		
 		return rootView;
 	}
@@ -86,12 +86,14 @@ public class Reporte360Grafico extends Fragment{
 	}
 	
 	public class DataObject {
-		String[] periodo = new String[] { 
-				"Periodo 1", "Periodo 2", "Periodo 3", "Periodo 4"};
+		String[] procesoEval = new String[] { 
+				"Proceso de Evaluación 1", "Proceso de Evaluación 2", "Proceso de Evaluación 3", "Proceso de Evaluación 4"};
 		
-		int[] requerido = new int[] { 10, 12, 14, 16 };
-		int[] dato360 = new int[] { 13, 15, 18, 20 };
-		int[] ponderado = new int[] { 30, 33, 36, 39 };
+		int[] jefe = new int[] { 10, 13, 14, 16 };
+		int[] compañerosPares = new int[] { 13, 15, 18, 16 };
+		int[] subordinados = new int[] { 15, 12, 14, 17 };
+		int[] notafinal = new int[] { 16, 14, 17, 16 };
+		
 
 	}
 	

@@ -123,6 +123,8 @@ public class Servicio {
 	
 	public final static String ConsultarEvaluacionesDelEquipoDeTrabajo = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/consultarEvaluacionesDelEquipoDeTrabajo";
 	
+	public final static String ConsultarNotasDeProcesoDeEvaluaciones = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/consultarNotasDeProcesoDeEvaluaciones";
+	
 	/**
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral
 	 * pendientes de aprobar
