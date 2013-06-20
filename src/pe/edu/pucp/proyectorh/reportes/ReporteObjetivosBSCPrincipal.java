@@ -216,13 +216,49 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Error de conexción");
+			/*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexión");
 			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
 			builder.setCancelable(false);
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
+			*/
+			//obtener los de offline
+			List<PeriodoDTO> periodos = PersistentHandler.getPeriodosFromFile(getActivity(), "periodosReporte.txt");
+			
+			listaPeriodos = periodos;
+			//lista = new ArrayList<String>();
+			for(int i =0; i<listaPeriodos.size();i++){
+				
+				lista.add(listaPeriodos.get(i).getNombre());
+				
+			}
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerPeriodo.setAdapter(dataAdapter);
+			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					
+				/*	Toast.makeText(parent.getContext(), 
+						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+						Toast.LENGTH_SHORT).show(); */
+					
+					periodoSelec = listaPeriodos.get(pos).getID(); //aqui idobjetivo selec
+					titulo = parent.getItemAtPosition(pos).toString();
+
+				  }
+				
+			
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			});
 		}
 
 		
@@ -240,11 +276,29 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 		protected void onPostExecute(String result) {
 
 			System.out.println("Recibido: " + result.toString());
-
+			List<PeriodoDTO> periodos;
+			try{
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
-			List<PeriodoDTO> periodos = gson.fromJson(result,
+			periodos = gson.fromJson(result,
 					new TypeToken<List<PeriodoDTO>>(){}.getType());
+			}
+			catch(Exception e){
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Error de datos");
+				builder.setMessage("No se pudo recuperar la información.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+				return;
+			}
 			
+			if (periodos.size()>0){
+				
+				String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+				PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), "periodosReporte.txt");
+				
+			}
 			
 			listaPeriodos = periodos;
 			//lista = new ArrayList<String>();

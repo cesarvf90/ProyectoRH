@@ -181,8 +181,18 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				  
 				  int bsc = objetivosEmpresa.get(i).getBSCId() -1;
 				  if ((bsc>=0) && (bsc<=3)){
-					  arregloAvance[bsc]= arregloAvance[bsc] +  ( objetivosEmpresa.get(i).getAvance()* objetivosEmpresa.get(i).getPeso() / 100);
+				  //hijos
+					  for (int j=0;j<objetivos.size();j++){
+						  if (objetivos.get(j).getIdpadre()==objetivosEmpresa.get(i).getIdObjetivo()){
+							  
+							  
+								  arregloAvance[bsc]= arregloAvance[bsc] +  (int)( objetivos.get(j).getAvance()* objetivos.get(j).getPeso() / 100);
+							 
+						  }
+						  
+					  }
 				  }
+				  
 				  
 				  
 			  }
