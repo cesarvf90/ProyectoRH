@@ -96,7 +96,7 @@ public class Reporte360Grafico extends Fragment{
 		int[] jefe = new int[] { 10, 13, 14, 16 };
 		int[] compañerosPares = new int[] { 13, 15, 18, 16 };
 		int[] subordinados = new int[] { 15, 12, 14, 17 };
-		int[] notafinal = new int[] { 16, 14, 17, 16 };
+		int[] nota = new int[] { 16, 14, 17, 16 };
 		
 
 	}
