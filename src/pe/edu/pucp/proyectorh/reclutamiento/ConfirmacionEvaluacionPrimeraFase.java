@@ -28,6 +28,7 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,6 +44,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+@SuppressLint("ValidFragment")
 public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 
 	private View rootView;
@@ -52,7 +54,7 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
 	private int puntajeTotal = 0;
-
+	
 	public ConfirmacionEvaluacionPrimeraFase(OfertaLaboral oferta,
 			Postulante postulante, ArrayList<Funcion> funciones,
 			ArrayList<Respuesta> respuestas, Evaluacion evaluacion) {

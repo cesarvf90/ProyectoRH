@@ -111,19 +111,19 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 			} else if (Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO) {
-				if (id.equals("1")) { // Aprobar Postulante
+				/*if (id.equals("1")) { // Aprobar Postulante
 
-				}
+				}*/
 				if (id.equals("2")) {// Aprobar Solicitudes Oferta Laboral
 					AprobarSolicitudOfertaLaboral fragment = new AprobarSolicitudOfertaLaboral();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Aprobar Solicitudes Promoción
+				/*if (id.equals("3")) {// Aprobar Solicitudes Promoción
 
-				}
-				if (id.equals("4")) {// Evaluar Postulante 2da fase
+				}*/
+				if (id.equals("4")) {// Evaluar Postulante 1ra fase
 					MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
