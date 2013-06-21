@@ -114,7 +114,7 @@ public class MainActivity extends FragmentActivity implements
 				/*if (id.equals("1")) { // Aprobar Postulante
 
 				}*/
-				if (id.equals("2")) {// Aprobar Solicitudes Oferta Laboral
+				if (id.equals("1")) {// Aprobar Solicitudes Oferta Laboral
 					AprobarSolicitudOfertaLaboral fragment = new AprobarSolicitudOfertaLaboral();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -123,19 +123,19 @@ public class MainActivity extends FragmentActivity implements
 				/*if (id.equals("3")) {// Aprobar Solicitudes Promoción
 
 				}*/
-				if (id.equals("4")) {// Evaluar Postulante 1ra fase
+				if (id.equals("2")) {// Evaluar Postulante 1ra fase
 					MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("5")) {// Evaluar Postulante 3ra fase
+				if (id.equals("3")) {// Evaluar Postulante 3ra fase
 					MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("6")) {// Postular a Convocatoria
+				if (id.equals("4")) {// Postular a Convocatoria
 					PostularOfertaLaboral fragment = new PostularOfertaLaboral();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
