@@ -45,17 +45,14 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 	private View rootView;
 	private Postulante postulante;
 	private OfertaLaboral oferta;
-	private ArrayList<Funcion> competencias; // para fines practicas, FUNCION =
-												// COMPENTENCIA en cuanto a
-												// estructura
+	private ArrayList<Funcion> competencias; // para fines practicos, FUNCION = COMPENTENCIA en cuanto a estructura
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
 	private int numPagina;
 	private int totalPaginas;
 	private final int PREGUNTAS_X_PAGINA = 4;
 
-	public EvaluacionPostulantePrimeraFase(OfertaLaboral oferta,
-			Postulante postulante) {
+	public EvaluacionPostulantePrimeraFase(OfertaLaboral oferta, Postulante postulante) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 	}
@@ -366,7 +363,6 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 						// funcion.setPuestoID(funcionObject.getString("PuestoID"));
 						competencias.add(funcion);
 					}
-					// agregarcompetenciasMock();
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
 					ocultarMensajeProgreso();

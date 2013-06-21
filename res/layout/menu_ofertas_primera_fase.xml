@@ -114,15 +114,6 @@
                     android:textColor="@android:color/black"
                     android:paddingBottom="10px"
                     android:textSize="24sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-					android:paddingLeft="20px"
-                    android:text="Última entrevista:"
-                    android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
-                    android:textSize="24sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -173,14 +164,6 @@
 
                 <TextView
                     android:id="@+id/rec_ofertas_numeropostulantes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/rec_ofertas_fecultentrevista"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
