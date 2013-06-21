@@ -15,35 +15,54 @@
 		android:layout_marginTop="10dp"
 		android:id="@+id/reporte3601titulo"/>
   
-    <LinearLayout
+    <RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="35dp"
+    android:background="@color/verde_menubar"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView 
         android:layout_marginLeft="30dp"
-        android:text="Colaborador: "
+        android:textSize="20sp"
+        android:text="Opciones"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp" />
+    
+     </RelativeLayout>
+    
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
-        
-    	<TextView 
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="Seleccione proceso de evaluación" />
+    
+    <Spinner
+        android:id="@+id/reporte360spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="23dp" />
+    
+     <Button
+        android:id="@+id/reporte360btnConsultar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:id="@+id/nombreUsuarioRep"
-        android:textSize="20sp"/>
- 	   
-        
-        
-    </LinearLayout>
+        android:text="Detalles"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="28dp"  />
 
     <WebView
         
         android:id="@+id/reporte360WebkitGLineal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
-        android:layout_marginTop="15dp"/>
-    
-    
+        android:layout_marginTop="33dp"/>
+       
 
 </LinearLayout>
