@@ -44,7 +44,7 @@ public class PostularOfertaLaboral extends Fragment {
 	private static final String OPERACION_INVALIDA = "false";
 	private int IDOfertaLaboral;
 	private Button postularButton;
-	
+
 	private int posicionLista = -1;
 	private SolicitudOfertaLaboral solicitud;
 	boolean espera = true;
@@ -60,12 +60,13 @@ public class PostularOfertaLaboral extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(
-				R.layout.postular_oferta_laboral, container, false);
+		this.rootView = inflater.inflate(R.layout.postular_oferta_laboral,
+				container, false);
 
 		customizarEstilos(getActivity(), rootView);
-		llamarServicioObtenerOfertasLaborales(LoginActivity.getUsuario().getID(), "Aprobado");
-		
+		llamarServicioObtenerOfertasLaborales(LoginActivity.getUsuario()
+				.getID(), "Aprobado");
+
 		return rootView;
 	}
 
@@ -84,23 +85,25 @@ public class PostularOfertaLaboral extends Fragment {
 		} catch (Exception e) {
 		}
 	}
-	
-	private void llamarServicioObtenerOfertasLaborales(String ID, String estadoOferta) {
+
+	private void llamarServicioObtenerOfertasLaborales(String ID,
+			String estadoOferta) {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.ObtenerOfertasParaPostulacion
-					+ "?colaboradorID=" + ID + "&estadoOfertaLaboral=" + estadoOferta;
+					+ "?colaboradorID=" + ID + "&estadoOfertaLaboral="
+					+ estadoOferta;
 			System.out.println("pagina: " + request);
 			new deserializarJSON(this.getActivity()).execute(request);
 		}
 	}
 
 	public class deserializarJSON extends AsyncCall {
-		
+
 		public deserializarJSON(Activity activity) {
 			super(activity);
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("result: " + result);
@@ -124,7 +127,8 @@ public class PostularOfertaLaboral extends Fragment {
 			JSONObject jsonObject = new JSONObject(result);
 			// System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
-			if (procesaRespuesta(respuesta)) {
+			if (respuesta.equals("true")) {
+				// if (procesaRespuesta(respuesta)) {
 				JSONObject data = (JSONObject) jsonObject.get("data");
 				JSONArray listaOfertasLaborales = (JSONArray) data
 						.get("ofertasLaborales");
@@ -154,6 +158,26 @@ public class PostularOfertaLaboral extends Fragment {
 					puestosSolicitudes.add(solicitud.getPuesto());
 				}
 				mostrarSolicitudes();
+			} else {
+				String message = jsonObject.getString("message");
+				if (message.startsWith("Error en la BD:")){
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Problema en el servidor");
+					builder.setMessage("Hay un problema en el servidor.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();	
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Mensaje del servidor");
+					builder.setMessage(message);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
@@ -172,7 +196,7 @@ public class PostularOfertaLaboral extends Fragment {
 			System.out.println("entre al catch4");
 			System.out.println(ex2.toString());
 			mostrarErrorComunicacion(ex2.toString());
-		} 
+		}
 
 	}
 
@@ -181,26 +205,26 @@ public class PostularOfertaLaboral extends Fragment {
 				.findViewById(R.id.reclut_lista_solicit_of_laboral);
 		this.postularButton = (Button) this.rootView
 				.findViewById(R.id.reclu_btn_Validar);
-		
 
 		// System.out.println("solicitudes != NULL");
-		/*this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
-				android.R.layout.simple_list_item_1, puestosSolicitudes);*/
-		
-		this.solicitudesAdapter = new ArrayAdapter<String>(
-			    this.getActivity(), android.R.layout.simple_list_item_1,
-			    puestosSolicitudes) {
-			   @Override
-			   public View getView(int position, View convertView, ViewGroup parent) {
-			    TextView view = (TextView) super.getView(position, convertView,
-			      parent);
-			    view
-			      .setTypeface(Typeface.createFromAsset(getActivity()
-			        .getAssets(), EstiloApp.FORMATO_LETRA_APP));
-			    return view;
-			   }
-			  };
-		
+		/*
+		 * this.solicitudesAdapter = new
+		 * ArrayAdapter<String>(this.getActivity(),
+		 * android.R.layout.simple_list_item_1, puestosSolicitudes);
+		 */
+
+		this.solicitudesAdapter = new ArrayAdapter<String>(this.getActivity(),
+				android.R.layout.simple_list_item_1, puestosSolicitudes) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				TextView view = (TextView) super.getView(position, convertView,
+						parent);
+				view.setTypeface(Typeface.createFromAsset(getActivity()
+						.getAssets(), EstiloApp.FORMATO_LETRA_APP));
+				return view;
+			}
+		};
+
 		listaSolicitudes.setAdapter(solicitudesAdapter);
 		listaSolicitudes
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -214,8 +238,7 @@ public class PostularOfertaLaboral extends Fragment {
 						// IDOfertaLaboral =
 						// solicitudes.get(position).getSolicitudID();
 
-						IDOfertaLaboral = solicitudes.get(position)
-								.getID();
+						IDOfertaLaboral = solicitudes.get(position).getID();
 						posicionLista = position;
 					}
 				});
@@ -244,13 +267,16 @@ public class PostularOfertaLaboral extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									if (posicionLista != -1) {
-										
+
 										// comunicarle al ws que se postulo
 										// a la oferta
 										// laboral
 
-										enviarPostulacionOfertaLaboral(LoginActivity.getUsuario().getID(), IDOfertaLaboral);
-										
+										enviarPostulacionOfertaLaboral(
+												LoginActivity.getUsuario()
+														.getID(),
+												IDOfertaLaboral);
+
 									}
 									dialog.cancel();
 								}
@@ -262,20 +288,17 @@ public class PostularOfertaLaboral extends Fragment {
 			}
 		});
 
-		
 	}
 
 	private void mostrarErrorComunicacion(String excepcion) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 		builder.setTitle("Error de servicio");
-		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
-				+ excepcion.toString());
+		builder.setMessage("El servicio solicitado no está disponible en el servidor.");
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();
 		builder.show();
-
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
@@ -318,7 +341,7 @@ public class PostularOfertaLaboral extends Fragment {
 				.findViewById(R.id.reclut_cargo_input);
 		TextView puestolabel = (TextView) rootView
 				.findViewById(R.id.reclut_cargo_label);
-		
+
 		if (solicitudOfertaLaboral.getPuesto() != null) {
 			int cantidadCaracteresPuestoOferta = solicitudOfertaLaboral
 					.getPuesto().length();
@@ -337,7 +360,7 @@ public class PostularOfertaLaboral extends Fragment {
 			}
 			System.out.println(cantidadCaracteresPuestoOferta);
 		}
-		
+
 		puesto.setText(solicitudOfertaLaboral.getPuesto() == "null" ? " - "
 				: solicitudOfertaLaboral.getPuesto());
 
@@ -363,7 +386,7 @@ public class PostularOfertaLaboral extends Fragment {
 		} else {
 			fechaRequerimiento.setText("");
 		}
-		
+
 		TextView fechaLimiteSolicitud = (TextView) rootView
 				.findViewById(R.id.reclut_fecha_limite_input);
 		if (solicitudOfertaLaboral.getFechaLimiteSolicitud() != null) {
@@ -391,11 +414,13 @@ public class PostularOfertaLaboral extends Fragment {
 		if ((solicitudOfertaLaboral.getDescripcion() == null)
 				|| (solicitudOfertaLaboral.getDescripcion() == "null"))
 			descripcion.setText(" - ");
-		else if (solicitudOfertaLaboral.getDescripcion().isEmpty() || (solicitudOfertaLaboral.getDescripcion() == "") || (solicitudOfertaLaboral.getDescripcion().length()<=0))
+		else if (solicitudOfertaLaboral.getDescripcion().isEmpty()
+				|| (solicitudOfertaLaboral.getDescripcion() == "")
+				|| (solicitudOfertaLaboral.getDescripcion().length() <= 0))
 			descripcion.setText(comment);
 		else
 			descripcion.setText(solicitudOfertaLaboral.getDescripcion());
-		
+
 	}
 
 	private void enviarPostulacionOfertaLaboral(String IDusuario,
@@ -403,7 +428,8 @@ public class PostularOfertaLaboral extends Fragment {
 		if (ConnectionManager.connect(this.getActivity())) {
 			// construir llamada al servicio
 			String request = Servicio.EnviarPostulacionOfertaLaboral
-					+ "?colaboradorID=" + IDusuario + "&ofertaLaboralID=" + IDofertaLaboral;					
+					+ "?colaboradorID=" + IDusuario + "&ofertaLaboralID="
+					+ IDofertaLaboral;
 			System.out.println("pagina: " + request);
 			new enviarMensajeWS().execute(request);
 		}
@@ -453,7 +479,8 @@ public class PostularOfertaLaboral extends Fragment {
 				posicionLista = -1; // volvemos a colocar el posicion en -1
 				SolicitudOfertaLaboral nueva = new SolicitudOfertaLaboral();
 				mostrarSolicitudSeleccionada(nueva);
-				llamarServicioObtenerOfertasLaborales(LoginActivity.getUsuario().getID(), "Aprobado");
+				llamarServicioObtenerOfertasLaborales(LoginActivity
+						.getUsuario().getID(), "Aprobado");
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
@@ -467,6 +494,6 @@ public class PostularOfertaLaboral extends Fragment {
 			System.out.println("entre al catch3");
 			System.out.println(ex2.toString());
 			mostrarErrorComunicacion(ex2.toString());
-		} 
+		}
 	}
 }

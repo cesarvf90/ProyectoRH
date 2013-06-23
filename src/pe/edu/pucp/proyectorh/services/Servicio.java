@@ -137,7 +137,7 @@ public class Servicio {
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral a las que
 	 * el colaborador puede postular
 	 */
-	public final static String ObtenerOfertasParaPostulacion = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
+	public final static String ObtenerOfertasParaPostulacion = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesColaborador";
 
 	/**
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una
