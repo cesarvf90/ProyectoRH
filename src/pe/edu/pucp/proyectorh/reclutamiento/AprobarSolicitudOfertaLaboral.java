@@ -124,7 +124,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			JSONObject jsonObject = new JSONObject(result);
 			// System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
-			if (procesaRespuesta(respuesta)) {
+			if (respuesta.equals("true")) {
+				// if (procesaRespuesta(respuesta)) {
 				JSONObject data = (JSONObject) jsonObject.get("data");
 				JSONArray listaOfertasLaborales = (JSONArray) data
 						.get("ofertasLaborales");
@@ -155,14 +156,27 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				}
 				mostrarSolicitudes();
 			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						this.getActivity());
-				builder.setTitle("Mensaje del servidor");
-				builder.setMessage("Todavía no existen ofertas laborales pendientes de aprobar.");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
-				builder.create();
-				builder.show();
+				String message = jsonObject.getString("message");
+				if (message
+						.equals("No existen Ofertas Laborales con el estado Pendiente")) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Mensaje del servidor");
+					builder.setMessage("Todavía no existen ofertas laborales pendientes de aprobar.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Problema en el servidor");
+					builder.setMessage("Hay un problema en el servidor.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
