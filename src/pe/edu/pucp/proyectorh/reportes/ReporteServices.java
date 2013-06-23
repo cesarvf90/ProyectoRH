@@ -16,8 +16,10 @@ public class ReporteServices {
 	
 	public final static String obtenerPersonasXObjetivo = "http://dp2kendo.apphb.com/Reportes/Reportes/PersonasXObjetivo";
 	
-	public final static String obtenerPostulaciones = "http://dp2kendo.apphb.com/Reportes/Reportes/PostulacionySeleccion";
+	public final static String obtenerProcesosEvaluacion = "http://dp2kendo.apphb.com/Reportes/Reporte360/ReporteColaborador";
 	
+	public final static String obtenerPostulaciones = "http://dp2kendo.apphb.com/Reportes/Reportes/PostulacionySeleccion";
+		
 	public final static String obtenerHistoricoObjetivos = "http://dp2kendo.apphb.com/Reportes/Reportes/HistoricoObjetivos";
 	
 	public final static String obtenerAreas = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarAreas";
