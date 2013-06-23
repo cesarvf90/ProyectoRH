@@ -138,24 +138,28 @@ public class Reporte360Detalle extends Fragment{
 				ArrayList<String> evaluadores = new ArrayList<String>();
 				ArrayList<Integer> notas = new ArrayList<Integer>();
 				String posEval=getArguments().getString("Nomproceso");
-				
+				int pos=0;
 				for (int i=0;i<procesosEval.size();i++){
-					if(procesosEval.get(i).getProcesoNombre().equals(posEval)){
-						for (int j=0;j<procesosEval.get(i).getCompetenciasEvaluadas().size();j++){
+					if(procesosEval.get(i).getProcesoNombre().equals(posEval)){			
+						pos=i;
+						
+					}
+				}
+						for (int j=0;j<procesosEval.get(pos).getCompetenciasEvaluadas().size();j++){
 							if (j==0){
-							for (int k=0;k<procesosEval.get(i).getCompetenciasEvaluadas().get(j).getNotasParciales().size();k++){
-								evaluadores.add(procesosEval.get(i).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).getTipoEvaluador());
-								notas.add(procesosEval.get(i).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).geNotaParcial());
+							for (int k=0;k<procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getNotasParciales().size();k++){
+								evaluadores.add(procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).getTipoEvaluador());
+								notas.add(procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).geNotaParcial());
+								
 							}		
 												
 							}
 							
-							lista.add(procesosEval.get(i).getCompetenciasEvaluadas().get(j).getCompetenciaNombre());	
+							lista.add(procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getCompetenciaNombre());	
 							
 					}
-											
-					}
-					}
+										
+									
 				
 				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
 				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
