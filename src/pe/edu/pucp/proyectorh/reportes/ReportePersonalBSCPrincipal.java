@@ -3,18 +3,26 @@ package pe.edu.pucp.proyectorh.reportes;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment.deserializarJSON;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getReportePeriodo;
+import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCGrafico.HistoricoBSC;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
+import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -75,18 +83,24 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 			  @Override
 			  public void onClick(View v) {
 				  
-				  
-				  ReportePersonalBSCGrafico fragment = new ReportePersonalBSCGrafico();
-				  Bundle argumentos = new Bundle();
-			      argumentos.putInt("ColaboradorSelec", colaboradorSelec);
-			      argumentos.putString("titulo", titulo);
-			      fragment.setArguments(argumentos);
-			      
-				  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
-				  ft.replace(R.id.opcion_detail_container, fragment);
-				  ft.addToBackStack(null);
-				  ft.commit();
-			  
+				  if( PersistentHandler.buscarArchivo(getActivity(), "ObjPersonal" + colaboradorSelec +".txt")){
+					  
+					  ReportePersonalBSCGrafico fragment = new ReportePersonalBSCGrafico();
+					  Bundle argumentos = new Bundle();
+				      argumentos.putInt("ColaboradorSelec", colaboradorSelec);
+				      argumentos.putString("titulo", titulo);
+				      fragment.setArguments(argumentos);
+				      
+					  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+					  ft.replace(R.id.opcion_detail_container, fragment);
+					  ft.addToBackStack(null);
+					  ft.commit();
+						
+					}
+				  else{
+					  obtenerReporteOffline(colaboradorSelec);
+				  }
+
 			  }
 		});
 		
@@ -95,6 +109,60 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 		customizarEstilos(getActivity(), rootView);
 		return rootView;
 	}
+	
+	protected void obtenerReporteOffline(int idColab){
+		
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
+			
+			String request = ReporteServices.obtenerHistoricoObjetivos + "?idColaborador=" + idColab;
+
+			new getReporteColaborador().execute(request);
+			
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexión");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		}
+		
+	}
+	
+public class getReporteColaborador extends AsyncCall{
+		
+		
+		@Override
+		protected void onPostExecute(String result) {
+
+			System.out.println("Recibido: " + result.toString());
+			
+			
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), "ObjPersonal" + colaboradorSelec +".txt");
+		      
+			ReportePersonalBSCGrafico fragment = new ReportePersonalBSCGrafico();
+			  Bundle argumentos = new Bundle();
+		      argumentos.putInt("ColaboradorSelec", colaboradorSelec);
+		      argumentos.putString("titulo", titulo);
+		      fragment.setArguments(argumentos);
+		      
+			  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+			  ft.replace(R.id.opcion_detail_container, fragment);
+			  ft.addToBackStack(null);
+			  ft.commit();
+			
+			
+		}
+		
+	}
+	
+	
+	
 	
 	public class ColaboradorRDTO
 	{
@@ -152,36 +220,40 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 		else{
 			//offline
 			String trama = PersistentHandler.getColaboradorFromFile(getActivity(), "colabReporte.txt");
-			probarDeserializacionJSON(trama);
-			//colaboradores
-			for (int i=0;i<colaboradores.size();i++){
-				lista.add(colaboradores.get(i).getNombres() + " " + colaboradores.get(i).getApellidoPaterno());
+			
+			if (trama!=null){
+			
+				probarDeserializacionJSON(trama);
+				//colaboradores
+				for (int i=0;i<colaboradores.size();i++){
+					lista.add(colaboradores.get(i).getNombres() + " " + colaboradores.get(i).getApellidoPaterno());
+				}
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerColaborador.setAdapter(dataAdapter);
+				spinnerColaborador.setOnItemSelectedListener(new OnItemSelectedListener(){
+					
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						
+					/*	Toast.makeText(parent.getContext(), 
+							"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+							Toast.LENGTH_SHORT).show(); */
+						
+						colaboradorSelec = Integer.parseInt(colaboradores.get(pos).getId());
+						titulo = parent.getItemAtPosition(pos).toString();
+	
+					  }
+					
+				
+					@Override
+					  public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+					  }
+					
+				});
+		
 			}
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerColaborador.setAdapter(dataAdapter);
-			spinnerColaborador.setOnItemSelectedListener(new OnItemSelectedListener(){
-				
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					
-				/*	Toast.makeText(parent.getContext(), 
-						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
-						Toast.LENGTH_SHORT).show(); */
-					
-					colaboradorSelec = Integer.parseInt(colaboradores.get(pos).getId());
-					titulo = parent.getItemAtPosition(pos).toString();
-
-				  }
-				
-			
-				@Override
-				  public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-				  }
-				
-			});
-			
 		}
 	}
 
