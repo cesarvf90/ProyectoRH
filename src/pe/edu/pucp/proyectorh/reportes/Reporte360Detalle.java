@@ -138,6 +138,7 @@ public class Reporte360Detalle extends Fragment{
 				ArrayList<String> evaluadores = new ArrayList<String>();
 				ArrayList<Integer> notas = new ArrayList<Integer>();
 				String posEval=getArguments().getString("Nomproceso");
+								
 				int pos=0;
 				for (int i=0;i<procesosEval.size();i++){
 					if(procesosEval.get(i).getProcesoNombre().equals(posEval)){			
@@ -171,24 +172,29 @@ public class Reporte360Detalle extends Fragment{
 						
 						ArrayList<String> evaluadores = new ArrayList<String>();
 						ArrayList<Integer> notas = new ArrayList<Integer>();
+						String posEval2=getArguments().getString("Nomproceso");
+						int posic=0;
 						
  
 						for (int i=0;i<procesosEval.size();i++){
+							if(procesosEval.get(i).getProcesoNombre().equals(posEval2)){			
+								posic=i;
+								
+							}
+						}
 
-							for (int j=0;j<procesosEval.get(i).getCompetenciasEvaluadas().size();j++){
+							for (int j=0;j<procesosEval.get(posic).getCompetenciasEvaluadas().size();j++){
 								if (j==pos){
-								for (int k=0;k<procesosEval.get(i).getCompetenciasEvaluadas().get(j).getNotasParciales().size();k++){
-									evaluadores.add(procesosEval.get(i).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).getTipoEvaluador());
-									notas.add(procesosEval.get(i).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).geNotaParcial());
+								for (int k=0;k<procesosEval.get(posic).getCompetenciasEvaluadas().get(j).getNotasParciales().size();k++){
+									evaluadores.add(procesosEval.get(posic).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).getTipoEvaluador());
+									notas.add(procesosEval.get(posic).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).geNotaParcial());
 								}					
 				
 								}
 						
 						}
 						
-					}
-
-						
+										
 						browser.getSettings().setJavaScriptEnabled(true);
 						browser.getSettings().setPluginsEnabled(true);
 						DataObject data = new DataObject(evaluadores, notas);
