@@ -44,6 +44,7 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 	private View rootView;
 	private ArrayList<OfertaLaboral> ofertas;
 	private ArrayList<ArrayList<ArrayList<Postulante>>> postulantes;
+	private final static String MENSAJE_NO_HAY_OFERTAS = "No existe postulaciones que hayan llegado a la fase Registrado";
 
 	// Ayudan a conocer que oferta o postulante se esta mostrando
 	private int ofertaSeleccionadaPosicion = -1;
@@ -111,7 +112,8 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 				postulantes = new ArrayList<ArrayList<ArrayList<Postulante>>>();
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
-				if (procesaRespuesta(respuesta)) {
+				String mensajeRespuesta = jsonObject.getString("message");
+				if (procesaRespuesta(respuesta, mensajeRespuesta)) {
 					JSONObject datosObject = (JSONObject) jsonObject
 							.get("data");
 					JSONArray ofertasListObject = (JSONArray) datosObject
@@ -169,6 +171,8 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 						ofertas.add(oferta);
 					}
 					mostrarOfertas();
+					ocultarMensajeProgreso();
+				} else {
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
@@ -347,9 +351,21 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 		gradoAcademicoText.setText(Constante.CADENA_VACIA);
 	}
 
-	public boolean procesaRespuesta(String respuestaServidor) {
+	public boolean procesaRespuesta(String respuestaServidor,
+			String mensajeRespuesta) {
 		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
 			return true;
+		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)
+				&& MENSAJE_NO_HAY_OFERTAS.equals(mensajeRespuesta)) {
+			// Se muestra mensaje de servicio no disponible
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("No hay ofertas");
+			builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+			return false;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
 			// Se muestra mensaje de servicio no disponible
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -382,5 +398,5 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 			textView.setText(Constante.ESPACIO_VACIO);
 		}
 	}
-	
+
 }
