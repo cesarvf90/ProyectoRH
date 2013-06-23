@@ -107,7 +107,7 @@ public class ReporteObjetivosBSCObjetivos extends Fragment {
 				} else {
 					// Se muestra mensaje de error de conexion con el servicio
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setTitle("Error de conexción");
+					builder.setTitle("Error de conexión");
 					builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
 					builder.setCancelable(false);
 					builder.setPositiveButton("Ok", null);

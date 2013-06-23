@@ -15,6 +15,7 @@
             </div>
             <script>
             
+            
                 function createChart() {
 					var jsonString = Android.getData();
         			var arrAvance = JSON.parse(jsonString);
@@ -32,17 +33,8 @@
                             type: "column"
                         },
                         series: [{
-                            name: "Jefe",
-                            data: arrAvance.jefe
-                        }, {
-                        	name: "Compañeros Pares",
-                            data: arrAvance.compañerosPares
-                        }, {
-                        	name: "Subordinados",
-                            data: arrAvance.subordinados
-                        }, {
-                        	name: "Nota final",
-                            data: arrAvance.notafinal
+                            name: "Notas",
+                            data: arrAvance.notas
                         }],
                         valueAxis: {
                             labels: {
@@ -54,7 +46,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: arrAvance.procesoEval,
+                            categories: arrAvance.evaluad,
                             line: {
                                 visible: false
                             }

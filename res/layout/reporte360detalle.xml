@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+ <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="left"
+        android:text="Detalle Reporte 360"
+        android:textSize="30sp"
+		android:layout_marginLeft="30dp"
+		android:layout_marginTop="10dp"
+		android:id="@+id/reporte3602titulo"/>
+  
+   
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="Seleccione la capacidad" />
+    
+    <Spinner
+        android:id="@+id/reporte360detallespinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="23dp" />
+  
+    <WebView
+        
+        android:id="@+id/reporte360detalleWebkitGLineal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

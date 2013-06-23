@@ -21,5 +21,5 @@ public class ConstanteServicio {
 	/**
 	 * Mensaje de servicio no disponible
 	 */
-	public static final String MENSAJE_SERVICIO_NO_DISPONIBLE = "El servicio solicitado no está disponible en el servidor: ";
+	public static final String MENSAJE_SERVICIO_NO_DISPONIBLE = "El servicio solicitado no está disponible en el servidor.";
 }

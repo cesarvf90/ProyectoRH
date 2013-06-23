@@ -119,6 +119,14 @@ public class Servicio {
 
 	public final static String ConsultarSubordinados = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo";
 
+	
+	public final static String ConsultarEvaluacionesDelEquipoDeTrabajo = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/consultarEvaluacionesDelEquipoDeTrabajo";
+	
+	public final static String ConsultarNotasDeProcesoDeEvaluaciones = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/consultarNotasDeProcesoDeEvaluaciones";
+	
+
+
+
 	/**
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral
 	 * pendientes de aprobar
@@ -129,7 +137,7 @@ public class Servicio {
 	 * Servicio que devuelve la lista de solicitudes de oferta laboral a las que
 	 * el colaborador puede postular
 	 */
-	public final static String ObtenerOfertasParaPostulacion = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesXEstado";
+	public final static String ObtenerOfertasParaPostulacion = "http://dp2kendo.apphb.com/WSOfertaLaboral/getOfertasLaboralesColaborador";
 
 	/**
 	 * Servicio que android da como respuesta a la aprobación o rechazo de una

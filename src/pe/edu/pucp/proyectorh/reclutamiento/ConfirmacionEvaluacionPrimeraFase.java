@@ -28,21 +28,23 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+@SuppressLint("ValidFragment")
 public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 
 	private View rootView;
@@ -52,8 +54,6 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
 	private int puntajeTotal = 0;
-
-	// private ProgressDialog progressDialog = null;
 
 	public ConfirmacionEvaluacionPrimeraFase(OfertaLaboral oferta,
 			Postulante postulante, ArrayList<Funcion> funciones,
@@ -133,7 +133,6 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 						});
 				builder.setPositiveButton("Aceptar",
 						new DialogInterface.OnClickListener() {
-
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
@@ -210,11 +209,20 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 				evaluacion.setID(evaluacionObject.getInt("ID"));
 				mostrarConfirmacion();
 			}
-		} catch (JSONException e) {
-			ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
-		} catch (NullPointerException ex) {
-			ErrorServicio
-					.mostrarErrorComunicacion(ex.toString(), getActivity());
+		} catch (final JSONException e) {
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					ErrorServicio.mostrarErrorComunicacion(e.toString(),
+							getActivity());
+				}
+			});
+		} catch (final NullPointerException ex) {
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					ErrorServicio.mostrarErrorComunicacion(ex.toString(),
+							getActivity());
+				}
+			});
 		}
 	}
 
@@ -227,8 +235,7 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 				total.append(line);
 			}
 		} catch (Exception e) {
-			Toast.makeText(getActivity(), "Stream Exception",
-					Toast.LENGTH_SHORT).show();
+			System.out.println("Stream Exception");
 		}
 		return total.toString();
 	}
@@ -276,15 +283,30 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 		getActivity().runOnUiThread(new Runnable() {
 			public void run() {
 				System.out
-						.println("Se muestra la confirmacion Primera fase. Id evaluacion "
+						.println("Se muestra la confirmacion primera fase. Id evaluacion "
 								+ evaluacion.getID());
-				System.out.println("Se muestra la confirmacion");
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
 				builder.setTitle("Registro exitoso");
 				builder.setMessage("Se registró la evaluación exitosamente.");
 				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
+				builder.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								FragmentTransaction ft = getActivity()
+										.getSupportFragmentManager()
+										.beginTransaction();
+								MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
+								ft.setCustomAnimations(
+										android.R.anim.slide_in_left,
+										android.R.anim.slide_out_right);
+								ft.replace(R.id.opcion_detail_container,
+										fragment, "detailFragment").commit();
+							}
+
+						});
 				builder.create();
 				builder.show();
 			}
@@ -295,24 +317,34 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
 			return true;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
-			// Se muestra mensaje de servicio no disponible
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pudo registrar las respuestas de la evaluación. Intente nuevamente");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					// Se muestra mensaje de servicio no disponible
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Servicio no disponible");
+					builder.setMessage("No se pudo registrar las respuestas de la evaluación. Intente nuevamente.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
+			});
 			return false;
 		} else {
-			// Se muestra mensaje de la respuesta invalida del servidor
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Problema en el servidor");
-			builder.setMessage("Hay un problema en el servidor.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					// Se muestra mensaje de la respuesta invalida del servidor
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Problema en el servidor");
+					builder.setMessage("Hay un problema en el servidor.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
+			});
 			return false;
 		}
 	}

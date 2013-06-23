@@ -32,4 +32,8 @@ public class ProcesoEvaluacion360 {
 			}
 			return listaProcesos;
 	    }
+	  
+	  public String toString() {
+		  return Nombre;	  
+	  }
 }

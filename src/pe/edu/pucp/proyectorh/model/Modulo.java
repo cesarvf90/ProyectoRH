@@ -73,13 +73,13 @@ public class Modulo {
 
 	public static List<ModuloItem> obtenerFuncionalidadesReclutamiento() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Aprobar postulante"));
+		//submodulos.add(new ModuloItem("1", "Aprobar postulante"));
 		submodulos
-				.add(new ModuloItem("2", "Aprobar solicitudes de oferta laboral"));
-		submodulos.add(new ModuloItem("3", "Aprobar solicitudes de promoción laboral"));
-		submodulos.add(new ModuloItem("4", "Evaluar postulantes 1ra fase"));
-		submodulos.add(new ModuloItem("5", "Evaluar postulantes 3ra fase"));
-		submodulos.add(new ModuloItem("6", "Postular a oferta laboral"));
+				.add(new ModuloItem("1", "Aprobar solicitudes de oferta laboral"));
+		//submodulos.add(new ModuloItem("3", "Aprobar solicitudes de promoción laboral"));
+		submodulos.add(new ModuloItem("2", "Evaluar postulantes 1ra fase"));
+		submodulos.add(new ModuloItem("3", "Evaluar postulantes 3ra fase"));
+		submodulos.add(new ModuloItem("4", "Postular a oferta laboral"));
 		return submodulos;
 	}
 

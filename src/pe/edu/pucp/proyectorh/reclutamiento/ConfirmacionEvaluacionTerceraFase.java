@@ -34,6 +34,7 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 
@@ -131,7 +131,6 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 						});
 				builder.setPositiveButton("Aceptar",
 						new DialogInterface.OnClickListener() {
-
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
@@ -208,11 +207,20 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 				evaluacion.setID(evaluacionObject.getInt("ID"));
 				mostrarConfirmacion();
 			}
-		} catch (JSONException e) {
-			ErrorServicio.mostrarErrorComunicacion(e.toString(), getActivity());
-		} catch (NullPointerException ex) {
-			ErrorServicio
-					.mostrarErrorComunicacion(ex.toString(), getActivity());
+		} catch (final JSONException e) {
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					ErrorServicio.mostrarErrorComunicacion(e.toString(),
+							getActivity());
+				}
+			});
+		} catch (final NullPointerException ex) {
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					ErrorServicio.mostrarErrorComunicacion(ex.toString(),
+							getActivity());
+				}
+			});
 		}
 	}
 
@@ -225,8 +233,7 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 				total.append(line);
 			}
 		} catch (Exception e) {
-			Toast.makeText(getActivity(), "Stream Exception",
-					Toast.LENGTH_SHORT).show();
+			System.out.println("Stream Exception");
 		}
 		return total.toString();
 	}
@@ -281,7 +288,23 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 				builder.setTitle("Registro exitoso");
 				builder.setMessage("Se registró la evaluación exitosamente.");
 				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
+				builder.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								FragmentTransaction ft = getActivity()
+										.getSupportFragmentManager()
+										.beginTransaction();
+								MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
+								ft.setCustomAnimations(
+										android.R.anim.slide_in_left,
+										android.R.anim.slide_out_right);
+								ft.replace(R.id.opcion_detail_container,
+										fragment, "detailFragment").commit();
+							}
+
+						});
 				builder.create();
 				builder.show();
 			}
@@ -292,24 +315,34 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 		if (ConstanteServicio.SERVICIO_OK.equals(respuestaServidor)) {
 			return true;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
-			// Se muestra mensaje de servicio no disponible
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pudo registrar las respuestas de la evaluación. Intente nuevamente");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					// Se muestra mensaje de servicio no disponible
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Servicio no disponible");
+					builder.setMessage("No se pudo registrar las respuestas de la evaluación. Intente nuevamente.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
+			});
 			return false;
 		} else {
-			// Se muestra mensaje de la respuesta invalida del servidor
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Problema en el servidor");
-			builder.setMessage("Hay un problema en el servidor.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					// Se muestra mensaje de la respuesta invalida del servidor
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Problema en el servidor");
+					builder.setMessage("Hay un problema en el servidor.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
+			});
 			return false;
 		}
 	}

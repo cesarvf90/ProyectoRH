@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal.AreaRDTO;
+import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
+import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCGrafico.HistoricoBSC;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 
 import com.google.gson.Gson;
@@ -109,8 +112,9 @@ public class PersistentHandler {
 		ArrayList<ObjetivoDTO> objetivos;
 		String state = Environment.getExternalStorageState();
 
-		File file = new File(whereIAm.getFilesDir(), fileName);
+		
 		try {
+			File file = new File(whereIAm.getFilesDir(), fileName);
 			InputStream is = new FileInputStream(file);
 			InputStreamReader isr = new InputStreamReader(is);
 		    BufferedReader br = new BufferedReader(isr);
@@ -135,6 +139,127 @@ public class PersistentHandler {
 		
 		
 	}
+	
+public static ArrayList<PeriodoDTO> getPeriodosFromFile(Context whereIAm, String fileName) {
+		
+		ArrayList<PeriodoDTO> periodos;
+		String state = Environment.getExternalStorageState();
+
+		
+		try {
+			File file = new File(whereIAm.getFilesDir(), fileName);
+			InputStream is = new FileInputStream(file);
+			InputStreamReader isr = new InputStreamReader(is);
+		    BufferedReader br = new BufferedReader(isr);
+
+		    String s;
+		    s = br.readLine(); //fecha
+		    s = br.readLine(); //trama supergigante
+		    isr.close();
+		    is.close();
+		    
+		    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+		    periodos = gson.fromJson(s,
+					new TypeToken<List<PeriodoDTO>>(){}.getType());
+		    return periodos;
+		    
+		} catch (Exception e) {
+			System.out.println("Error al leer archivo  " + e);
+			
+		}
+		return null;
+		
+		
+		
+	}
+
+public static ArrayList<AreaRDTO> getAreasFromFile(Context whereIAm, String fileName) {
+	
+	ArrayList<AreaRDTO> areas;
+	String state = Environment.getExternalStorageState();
+
+	
+	try {
+		File file = new File(whereIAm.getFilesDir(), fileName);
+		InputStream is = new FileInputStream(file);
+		InputStreamReader isr = new InputStreamReader(is);
+	    BufferedReader br = new BufferedReader(isr);
+
+	    String s;
+	    s = br.readLine(); //fecha
+	    s = br.readLine(); //trama supergigante
+	    isr.close();
+	    is.close();
+	    
+	    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+	    areas = gson.fromJson(s,
+				new TypeToken<List<AreaRDTO>>(){}.getType());
+	    return areas;
+	    
+	} catch (Exception e) {
+		System.out.println("Error al leer archivo  " + e);
+		
+	}
+	return null;
+
+}
+
+public static String getColaboradorFromFile(Context whereIAm, String fileName) {
+	
+
+	String state = Environment.getExternalStorageState();
+	try {
+	File file = new File(whereIAm.getFilesDir(), fileName);
+	
+		InputStream is = new FileInputStream(file);
+		InputStreamReader isr = new InputStreamReader(is);
+	    BufferedReader br = new BufferedReader(isr);
+
+	    String s;
+	    s = br.readLine(); //fecha
+	    s = br.readLine(); //trama supergigante
+	    return s;
+	    
+	} catch (Exception e) {
+		System.out.println("Error al leer archivo  " + e);
+		
+	}
+	return null;
+
+}
+
+public static ArrayList<HistoricoBSC> getHistoricoBSCFromFile(Context whereIAm, String fileName) {
+	
+	ArrayList<HistoricoBSC> hist;
+	String state = Environment.getExternalStorageState();
+
+	
+	try {
+		File file = new File(whereIAm.getFilesDir(), fileName);
+		InputStream is = new FileInputStream(file);
+		InputStreamReader isr = new InputStreamReader(is);
+	    BufferedReader br = new BufferedReader(isr);
+
+	    String s;
+	    s = br.readLine(); //fecha
+	    s = br.readLine(); //trama supergigante
+	    isr.close();
+	    is.close();
+	    
+	    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+	    hist = gson.fromJson(s,
+				new TypeToken<List<HistoricoBSC>>(){}.getType());
+	    return hist;
+	    
+	} catch (Exception e) {
+		System.out.println("Error al leer archivo  " + e);
+		
+	}
+	return null;
+
+}
+
+
 	
 	public static String getFechaReporte(Context whereIAm, String fileName){
 		

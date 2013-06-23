@@ -124,7 +124,8 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 			JSONObject jsonObject = new JSONObject(result);
 			// System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
-			if (procesaRespuesta(respuesta)) {
+			if (respuesta.equals("true")) {
+				// if (procesaRespuesta(respuesta)) {
 				JSONObject data = (JSONObject) jsonObject.get("data");
 				JSONArray listaOfertasLaborales = (JSONArray) data
 						.get("ofertasLaborales");
@@ -155,14 +156,25 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 				}
 				mostrarSolicitudes();
 			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						this.getActivity());
-				builder.setTitle("Mensaje del servidor");
-				builder.setMessage("Todavía no existen ofertas laborales pendientes de aprobar.");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Ok", null);
-				builder.create();
-				builder.show();
+				String message = jsonObject.getString("message");
+				if (message.startsWith("Error en la BD:")){
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Problema en el servidor");
+					builder.setMessage("Hay un problema en el servidor.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();	
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Mensaje del servidor");
+					builder.setMessage(message);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
@@ -339,13 +351,11 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 		builder.setTitle("Error de servicio");
-		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
-				+ excepcion.toString());
+		builder.setMessage("El servicio solicitado no está disponible en el servidor");
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();
 		builder.show();
-
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {

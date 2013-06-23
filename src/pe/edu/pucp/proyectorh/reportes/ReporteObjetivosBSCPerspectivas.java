@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.getReportePeriodo;
+import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCGrafico.HistoricoBSC;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
@@ -28,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
@@ -140,13 +142,31 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 			
 			pbarra.setVisibility(View.INVISIBLE);
 			
-			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-
-			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), nomArch);
+			String trama = result;
 			
-			//actualizar gridview
-			cargarAvances(idPeriodo);
+			ArrayList<ObjetivoDTO> pruebaObjetivos=null;
 			
+			//prueba
+			try{
+				Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+				pruebaObjetivos = gson.fromJson(trama, new TypeToken<List<ObjetivoDTO>>(){}.getType()); 
+				
+			}
+			catch(Exception e){
+				Toast.makeText(getActivity(), "Error al actualizar el reporte", Toast.LENGTH_SHORT).show();
+				
+				
+			}
+			
+			if (pruebaObjetivos!=null){
+			
+				String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+	
+				PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), nomArch);
+				
+				//actualizar gridview
+				cargarAvances(idPeriodo);
+			}
 			
 		}
 		
@@ -181,8 +201,18 @@ public class ReporteObjetivosBSCPerspectivas extends Fragment {
 				  
 				  int bsc = objetivosEmpresa.get(i).getBSCId() -1;
 				  if ((bsc>=0) && (bsc<=3)){
-					  arregloAvance[bsc]= arregloAvance[bsc] +  ( objetivosEmpresa.get(i).getAvance()* objetivosEmpresa.get(i).getPeso() / 100);
+				  //hijos
+					  for (int j=0;j<objetivos.size();j++){
+						  if (objetivos.get(j).getIdpadre()==objetivosEmpresa.get(i).getIdObjetivo()){
+							  
+							  
+								  arregloAvance[bsc]= arregloAvance[bsc] +  (int)( objetivos.get(j).getAvance()* objetivos.get(j).getPeso() / 100);
+							 
+						  }
+						  
+					  }
 				  }
+				  
 				  
 				  
 			  }

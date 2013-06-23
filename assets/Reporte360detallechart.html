@@ -15,30 +15,30 @@
             </div>
             <script>
             
+            
                 function createChart() {
 					var jsonString = Android.getData();
         			var arrAvance = JSON.parse(jsonString);
         			
-                
                     $("#chart").kendoChart({
                     	theme:"metro",
                         title: {
                             visible: false
                         },
                         legend: {
-                         	visible: false
-                            //position: "top"
+                         	//visible: false
+                            position: "top"
                         },
                         seriesDefaults: {
-                            type: "bar"
+                            type: "column"
                         },
                         series: [{
-                            name: "Avance",
-                            data: arrAvance.avance
+                            name: "Notas Detalle",
+                            data: arrAvance.notas
                         }],
                         valueAxis: {
                             labels: {
-                                format: "{0}%"
+                                format: "{0}"
                             },
                             line: {
                                 visible: false
@@ -46,7 +46,7 @@
                             axisCrossingValue: 0
                         },
                         categoryAxis: {
-                            categories: arrAvance.personas,
+                            categories: arrAvance.evaluad,
                             line: {
                                 visible: false
                             }
@@ -59,14 +59,17 @@
                     });
                 }
 
+					
+
                 $(document).ready(function() {
                     setTimeout(function() {
                         // Initialize the chart with a delay to make sure
                         // the initial animation is visible
                         createChart();
 
-                        $("#example").bind("kendo:skinChange", function(e) {
-                            createChart();
+                        $("#example").bind("kendo:skinChange", function(e) {		    
+						                        
+                           createChart();
                         });
                     }, 400);
                 });
