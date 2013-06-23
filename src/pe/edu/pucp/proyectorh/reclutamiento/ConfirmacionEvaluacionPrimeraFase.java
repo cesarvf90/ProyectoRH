@@ -54,7 +54,7 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 	private ArrayList<Respuesta> respuestas;
 	private Evaluacion evaluacion;
 	private int puntajeTotal = 0;
-	
+
 	public ConfirmacionEvaluacionPrimeraFase(OfertaLaboral oferta,
 			Postulante postulante, ArrayList<Funcion> funciones,
 			ArrayList<Respuesta> respuestas, Evaluacion evaluacion) {
@@ -298,7 +298,7 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 								FragmentTransaction ft = getActivity()
 										.getSupportFragmentManager()
 										.beginTransaction();
-								MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
+								MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
 								ft.setCustomAnimations(
 										android.R.anim.slide_in_left,
 										android.R.anim.slide_out_right);
