@@ -8,10 +8,7 @@ import java.util.List;
 import pe.edu.pucp.proyectorh.LoginActivity;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.DataObject;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.InterfaceChartLineal;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.ROfertasLaborales;
-import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.getAvances;
+
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 

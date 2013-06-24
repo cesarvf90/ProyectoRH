@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoGrafico.ROferta;
 import pe.edu.pucp.proyectorh.reportes.ReporteCubrimientoPrincipal.AreaRDTO;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
 import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCGrafico.HistoricoBSC;
@@ -260,6 +261,37 @@ public static ArrayList<HistoricoBSC> getHistoricoBSCFromFile(Context whereIAm, 
 
 }
 
+
+public static ArrayList<ROferta> getReporteOfertasFromFile(Context whereIAm, String fileName) {
+	
+	ArrayList<ROferta> hist;
+	String state = Environment.getExternalStorageState();
+
+	
+	try {
+		File file = new File(whereIAm.getFilesDir(), fileName);
+		InputStream is = new FileInputStream(file);
+		InputStreamReader isr = new InputStreamReader(is);
+	    BufferedReader br = new BufferedReader(isr);
+
+	    String s;
+	    s = br.readLine(); //fecha
+	    s = br.readLine(); //trama supergigante
+	    isr.close();
+	    is.close();
+	    
+	    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
+	    hist = gson.fromJson(s,
+				new TypeToken<List<ROferta>>(){}.getType());
+	    return hist;
+	    
+	} catch (Exception e) {
+		System.out.println("Error al leer archivo  " + e);
+		
+	}
+	return null;
+
+}
 
 	
 	public static String getFechaReporte(Context whereIAm, String fileName){

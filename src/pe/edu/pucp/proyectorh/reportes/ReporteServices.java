@@ -24,5 +24,7 @@ public class ReporteServices {
 	
 	public final static String obtenerAreas = "http://dp2kendo.apphb.com/Reportes/Reportes/ListarAreas";
 	
+	public final static String obtenerOfertas = "http://dp2kendo.apphb.com/Reportes/Reportes/OfertasLaborales";
+	
 
 }
