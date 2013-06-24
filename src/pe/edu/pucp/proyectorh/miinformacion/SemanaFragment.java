@@ -57,10 +57,11 @@ public class SemanaFragment extends Fragment {
 		c.setTime(fechaEscogida);
 		// TODO cvasquez: validar bien el dia de la semana porque cambia el
 		// calculo para cada fecha segun lo que estaba previsto
-		diaDeLaSemana = (c.get(Calendar.DAY_OF_WEEK) + 5) % 7;
-		if (diaDeLaSemana == 0) {
-			diaDeLaSemana = 7;
-		}
+		// diaDeLaSemana = (c.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+		// if (diaDeLaSemana == 0) {
+		// diaDeLaSemana = 7;
+		// }
+		diaDeLaSemana = c.get(Calendar.DAY_OF_WEEK);
 		System.out.println("Día número " + diaDeLaSemana + " en la semana");
 		int diaFechaActual = diaEscogido.get(Calendar.DAY_OF_MONTH);
 		primerDiaSemana = diaFechaActual - diaDeLaSemana + 1;

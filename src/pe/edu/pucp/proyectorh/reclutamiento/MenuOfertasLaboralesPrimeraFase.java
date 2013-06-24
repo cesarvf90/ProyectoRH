@@ -40,7 +40,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 
 public class MenuOfertasLaboralesPrimeraFase extends Fragment {
-
+	
 	private View rootView;
 	private ArrayList<OfertaLaboral> ofertas;
 	private ArrayList<ArrayList<ArrayList<Postulante>>> postulantes;
@@ -112,8 +112,8 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 				postulantes = new ArrayList<ArrayList<ArrayList<Postulante>>>();
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
-				String mensajeRespuesta = jsonObject.getString("message");
-				if (procesaRespuesta(respuesta, mensajeRespuesta)) {
+				//String mensajeRespuesta = jsonObject.getString("message");
+				if (respuesta.equals("true")) {
 					JSONObject datosObject = (JSONObject) jsonObject
 							.get("data");
 					JSONArray ofertasListObject = (JSONArray) datosObject
@@ -174,13 +174,17 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 					ocultarMensajeProgreso();
 				} else {
 					ocultarMensajeProgreso();
+					String message = jsonObject.getString("message");
+					procesaRespuesta(respuesta, message); //la respuesta siempre es FALSE
 				}
 			} catch (JSONException e) {
 				ocultarMensajeProgreso();
+				System.out.println(e.toString());
 				ErrorServicio.mostrarErrorComunicacion(e.toString(),
 						getActivity());
 			} catch (NullPointerException ex) {
 				ocultarMensajeProgreso();
+				System.out.println(ex.toString());
 				ErrorServicio.mostrarErrorComunicacion(ex.toString(),
 						getActivity());
 			}

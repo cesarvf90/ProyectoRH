@@ -112,12 +112,15 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 				postulantes = new ArrayList<ArrayList<ArrayList<Postulante>>>();
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
-				String mensajeRespuesta = jsonObject.getString("message");
-				if (procesaRespuesta(respuesta, mensajeRespuesta)) {
+				if ("true".equals(respuesta)) {
 					JSONObject datosObject = (JSONObject) jsonObject
 							.get("data");
 					JSONArray ofertasListObject = (JSONArray) datosObject
 							.get("ofertasLaborales");
+					if (ofertasListObject.length() == 0) {
+						ocultarMensajeProgreso();
+						mostrarMensajeNoHayOfertas();
+					}
 					ofertas = new ArrayList<OfertaLaboral>();
 					for (int i = 0; i < ofertasListObject.length(); ++i) {
 						JSONObject ofertaObject = ofertasListObject
@@ -174,6 +177,8 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 					ocultarMensajeProgreso();
 				} else {
 					ocultarMensajeProgreso();
+					String message = jsonObject.getString("message");
+					procesaRespuesta(respuesta, message);
 				}
 			} catch (JSONException e) {
 				ocultarMensajeProgreso();
@@ -361,14 +366,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 			return true;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)
 				&& MENSAJE_NO_HAY_OFERTAS.equals(mensajeRespuesta)) {
-			// Se muestra mensaje de servicio no disponible
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("No hay ofertas");
-			builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			mostrarMensajeNoHayOfertas();
 			return false;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
 			// Se muestra mensaje de servicio no disponible
@@ -391,6 +389,16 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 			builder.show();
 			return false;
 		}
+	}
+
+	private void mostrarMensajeNoHayOfertas() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("No hay ofertas");
+		builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
+		builder.setCancelable(false);
+		builder.setPositiveButton("Ok", null);
+		builder.create();
+		builder.show();
 	}
 
 	private void mostrarTexto(int idTextView, String texto) {

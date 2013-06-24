@@ -252,7 +252,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 					builder.setTitle("Validar Solicitud Oferta Laboral");
 					builder.setMessage("¿Desea aprobar la solicitud de oferta laboral?");
 					builder.setCancelable(false);
-					builder.setNegativeButton("Cancelar",
+					builder.setNegativeButton("No, cancelar",
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
@@ -260,7 +260,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 									dialog.cancel();
 								}
 							});
-					builder.setPositiveButton("Aceptar",
+					builder.setPositiveButton("Sí, aprobar",
 							new DialogInterface.OnClickListener() {
 
 								@Override
@@ -303,7 +303,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 					builder.setTitle("Validar Solicitud Oferta Laboral");
 					builder.setMessage("¿Desea rechazar la solicitud de oferta laboral?");
 					builder.setCancelable(false);
-					builder.setNegativeButton("Cancelar",
+					builder.setNegativeButton("No, cancelar",
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
@@ -311,7 +311,7 @@ public class AprobarSolicitudOfertaLaboral extends Fragment {
 									dialog.cancel();
 								}
 							});
-					builder.setPositiveButton("Aceptar",
+					builder.setPositiveButton("Sí, rechazar",
 							new DialogInterface.OnClickListener() {
 
 								@Override
