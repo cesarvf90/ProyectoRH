@@ -21,7 +21,6 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
-import pe.edu.pucp.proyectorh.utils.Constante;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -50,8 +49,10 @@ public class AgendaFragment extends Fragment {
 	private ArrayList<Evento> eventos;
 	private View rootView;
 	private Date fechaActual;
+	private boolean seTrajoEventos;
 
 	public AgendaFragment() {
+		seTrajoEventos = false;
 	}
 
 	@Override
@@ -64,10 +65,15 @@ public class AgendaFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.calendar, container, false);
 
-		llamarServicioEventos();
-
 		month = Calendar.getInstance();
 		onNewIntent(getActivity().getIntent());
+
+		if (!seTrajoEventos) {
+			llamarServicioEventos();
+			seTrajoEventos = true;
+		} else {
+			handler.post(calendarUpdater);
+		}
 
 		items = new ArrayList<String>();
 		adapter = new CalendarAdapter(this.getActivity(), month);
@@ -122,12 +128,14 @@ public class AgendaFragment extends Fragment {
 					int diaSelecccionado = Integer
 							.valueOf(adapter.days[position]);
 					Calendar diaEscogido = new GregorianCalendar();
+					// diaEscogido.set(month.get(Calendar.YEAR),
+					// month.get(Calendar.MONTH) - 1, diaSelecccionado);
 					diaEscogido.set(month.get(Calendar.YEAR),
-							month.get(Calendar.MONTH) - 1, diaSelecccionado);
-					int primerDiaSemana = diaEscogido.getFirstDayOfWeek();
-					System.out.println(diaEscogido.toString());
+							month.get(Calendar.MONTH), diaSelecccionado);
+					System.out.println("Día escogido: "
+							+ diaEscogido.toString());
 					SemanaFragment fragment = new SemanaFragment(eventos,
-							month, primerDiaSemana);
+							month, diaEscogido);
 					getActivity().getSupportFragmentManager()
 							.beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -144,12 +152,14 @@ public class AgendaFragment extends Fragment {
 					int diaSelecccionado = Integer
 							.valueOf(adapter.days[position]);
 					Calendar diaEscogido = new GregorianCalendar();
+					// diaEscogido.set(month.get(Calendar.YEAR),
+					// month.get(Calendar.MONTH) - 1, diaSelecccionado);
 					diaEscogido.set(month.get(Calendar.YEAR),
-							month.get(Calendar.MONTH) - 1, diaSelecccionado);
-					int primerDiaSemana = diaEscogido.getFirstDayOfWeek();
-					System.out.println(diaEscogido.toString());
+							month.get(Calendar.MONTH), diaSelecccionado);
+					System.out.println("Día escogido: "
+							+ diaEscogido.toString());
 					SemanaFragment fragment = new SemanaFragment(eventos,
-							month, primerDiaSemana);
+							month, diaEscogido);
 					getActivity().getSupportFragmentManager()
 							.beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -220,14 +230,20 @@ public class AgendaFragment extends Fragment {
 
 	private void llamarServicioEventos() {
 		if (ConnectionManager.connect(getActivity())) {
-			// TODO cvasquez obtener fecha inicial de un mes atras y final de un
-			// mes adelante
-			// String fechaDesde = fechaActual;
-			String fechaDesde = "28/05/2013%2000:00:00";
-			String fechaHasta = "30/07/2013%2023:59:59";
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			String[] dateArr = dateFormat.format(fechaActual).split("/");
+			Date fechaDesdeDate = fechaActual;
+			Date fechaHastaDate = fechaActual;
+			fechaDesdeDate.setMonth(Integer.parseInt(dateArr[1]) - 3);
+			String fechaDesde = dateFormat.format(fechaDesdeDate)
+					+ "%2000:00:00";
+			fechaHastaDate.setMonth(Integer.parseInt(dateArr[1]) + 3);
+			String fechaHasta = dateFormat.format(fechaHastaDate)
+					+ "%2023:59:59";
 			String request = Servicio.ObtenerEventos + "?colaboradorID="
 					+ LoginActivity.getUsuario().getID() + "&fechaDesde="
 					+ fechaDesde + "&fechaHasta=" + fechaHasta;
+			System.out.println("Request eventos; " + request);
 			new ObtencionEventos(this.getActivity()).execute(request);
 		} else {
 			ErrorServicio.mostrarErrorConexion(getActivity());
@@ -244,6 +260,7 @@ public class AgendaFragment extends Fragment {
 		protected void onPostExecute(String result) {
 			Colaborador colaboradorCreador;
 			ArrayList<Colaborador> listaInvitados;
+			eventos = new ArrayList<Evento>();
 			System.out.println("Recibido: " + result.toString());
 			try {
 				JSONObject jsonObject = new JSONObject(result);
@@ -253,7 +270,6 @@ public class AgendaFragment extends Fragment {
 							.get("data");
 					JSONArray eventosListObject = (JSONArray) datosObject
 							.get("eventos");
-					eventos = new ArrayList<Evento>();
 					for (int i = 0; i < eventosListObject.length(); ++i) {
 						JSONObject eventoObject = eventosListObject
 								.getJSONObject(i);
@@ -283,13 +299,13 @@ public class AgendaFragment extends Fragment {
 							Colaborador invitado = new Colaborador();
 							invitado.setNombreCompleto(invitadoObject
 									.getString("NombreCompleto"));
-							invitado.setNombres(invitadoObject
-									.getString("Nombre"));
-							invitado.setApellidos(invitadoObject
-									.getString("ApellidoPaterno")
-									+ Constante.ESPACIO_VACIO
-									+ invitadoObject
-											.getString("ApellidoMaterno"));
+							// invitado.setNombres(invitadoObject
+							// .getString("Nombre"));
+							// invitado.setApellidos(invitadoObject
+							// .getString("ApellidoPaterno")
+							// + Constante.ESPACIO_VACIO
+							// + invitadoObject
+							// .getString("ApellidoMaterno"));
 							invitado.setArea(invitadoObject.getString("Area"));
 							invitado.setPuesto(invitadoObject
 									.getString("Puesto"));
@@ -303,6 +319,8 @@ public class AgendaFragment extends Fragment {
 						eventos.add(evento);
 					}
 					handler.post(calendarUpdater);
+					ocultarMensajeProgreso();
+				} else {
 					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {

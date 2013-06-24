@@ -30,13 +30,43 @@ public class SemanaFragment extends Fragment {
 	private View rootView;
 	private ArrayList<Evento> eventos;
 	private Calendar month;
+	private Calendar diaEscogido;
 	private int primerDiaSemana;
+	private int ultimoDiaSemana;
+	private int diaDeLaSemana;
 
 	public SemanaFragment(ArrayList<Evento> eventos, Calendar month,
-			int primerDiaSemana) {
+			Calendar diaEscogido) {
 		this.eventos = eventos;
 		this.month = month;
-		this.primerDiaSemana = primerDiaSemana;
+		this.diaEscogido = diaEscogido;
+		Date fechaEscogida = new Date();
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			fechaEscogida = formatter.parse(String.valueOf(diaEscogido
+					.get(Calendar.YEAR))
+					+ "/"
+					+ String.valueOf(diaEscogido.get(Calendar.MONTH) + 1)
+					+ "/"
+					+ String.valueOf(diaEscogido.get(Calendar.DAY_OF_MONTH)));
+		} catch (ParseException e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(fechaEscogida);
+		// TODO cvasquez: validar bien el dia de la semana porque cambia el
+		// calculo para cada fecha segun lo que estaba previsto
+		diaDeLaSemana = (c.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+		if (diaDeLaSemana == 0) {
+			diaDeLaSemana = 7;
+		}
+		System.out.println("Día número " + diaDeLaSemana + " en la semana");
+		int diaFechaActual = diaEscogido.get(Calendar.DAY_OF_MONTH);
+		primerDiaSemana = diaFechaActual - diaDeLaSemana + 1;
+		ultimoDiaSemana = diaFechaActual + 7 - diaDeLaSemana;
+		System.out.println("Semana del " + primerDiaSemana + " al "
+				+ ultimoDiaSemana);
 	}
 
 	@Override
@@ -76,50 +106,81 @@ public class SemanaFragment extends Fragment {
 	private void mostrarEventos() {
 		TextView semanaTitleText = (TextView) rootView
 				.findViewById(R.id.semana_title);
-		semanaTitleText.setText("Semana del " + primerDiaSemana + " de "
+		semanaTitleText.setText("Semana del "
+				+ diaEscogido.get(Calendar.DAY_OF_MONTH) + " de "
 				+ android.text.format.DateFormat.format("MMMM", month)
 				+ " del " + month.get(Calendar.YEAR));
 		for (final Evento evento : eventos) {
-			// Se evalua el dia para ubicarlo en un layout
-			RelativeLayout diaLayout = obtieneDiaLayout(evento);
+			if (esEventoDeLaSemana(evento)) {
 
-			// Se evaluan las horas para ubicarlo con margenes y longitud
-			RelativeLayout.LayoutParams layoutParametros = new RelativeLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, obtenerHorasDuracion(evento)
-							* UNA_HORA);
-			layoutParametros.topMargin = obtenerHoraInicial(evento) * UNA_HORA;
+				// Se evalua el dia para ubicarlo en un layout
+				RelativeLayout diaLayout = obtieneDiaLayout(evento);
 
-			View eventoView = new View(getActivity());
-			eventoView.setLayoutParams(layoutParametros);
-			eventoView.setBackgroundColor(Color.CYAN);
+				// Se evaluan las horas para ubicarlo con margenes y longitud
+				RelativeLayout.LayoutParams layoutParametros = new RelativeLayout.LayoutParams(
+						LayoutParams.FILL_PARENT, obtenerHorasDuracion(evento)
+								* UNA_HORA);
+				layoutParametros.topMargin = obtenerHoraInicial(evento)
+						* UNA_HORA;
 
-			Button eventoButton = new Button(rootView.getContext());
+				View eventoView = new View(getActivity());
+				eventoView.setLayoutParams(layoutParametros);
+				eventoView.setBackgroundColor(Color.CYAN);
 
-			eventoButton.setText(evento.getNombre());
-			eventoButton.setTextColor(Color.WHITE);
-			eventoButton.setTag(evento.getID());
-			pintarEvento(eventoView, evento);
-			diaLayout.addView(eventoView);
-			diaLayout.addView(eventoButton);
-			eventoView.setLayoutParams(layoutParametros);
-			eventoButton.setLayoutParams(layoutParametros);
+				Button eventoButton = new Button(rootView.getContext());
 
-			Button eventoSeleccionadoButton = (Button) rootView
-					.findViewWithTag(evento.getID());
-			eventoSeleccionadoButton.setOnClickListener(new OnClickListener() {
+				eventoButton.setText(evento.getNombre());
+				eventoButton.setTextColor(Color.WHITE);
+				eventoButton.setTag(evento.getID());
+				pintarEvento(eventoView, evento);
+				diaLayout.addView(eventoView);
+				diaLayout.addView(eventoButton);
+				eventoView.setLayoutParams(layoutParametros);
+				eventoButton.setLayoutParams(layoutParametros);
 
-				@Override
-				public void onClick(View v) {
-					System.out.println("Se selecciono el evento");
-					FragmentTransaction ft = getActivity()
-							.getSupportFragmentManager().beginTransaction();
-					EventoFragment fragment = new EventoFragment(evento);
-					ft.setCustomAnimations(android.R.anim.slide_in_left,
-							android.R.anim.slide_out_right);
-					ft.replace(R.id.opcion_detail_container, fragment,
-							"detailFragment").addToBackStack("tag").commit();
-				}
-			});
+				Button eventoSeleccionadoButton = (Button) rootView
+						.findViewWithTag(evento.getID());
+				eventoSeleccionadoButton
+						.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								System.out.println("Se selecciono el evento");
+								FragmentTransaction ft = getActivity()
+										.getSupportFragmentManager()
+										.beginTransaction();
+								EventoFragment fragment = new EventoFragment(
+										evento);
+								ft.setCustomAnimations(
+										android.R.anim.slide_in_left,
+										android.R.anim.slide_out_right);
+								ft.replace(R.id.opcion_detail_container,
+										fragment, "detailFragment")
+										.addToBackStack("tag").commit();
+							}
+						});
+			}
+		}
+	}
+
+	private boolean esEventoDeLaSemana(Evento evento) {
+		// Day of week : 1 - miercoles
+		// TODO cvasquez: validar eventos de un mes pasado o siguiente en la
+		// semana consultada
+		String fecha[] = evento.getFechaInicio().split("/");
+		int diaEvento = Integer.parseInt(fecha[0]);
+		int mesEvento = Integer.parseInt(fecha[1]);
+		if (mesEvento != (month.get(Calendar.MONTH) + 1)) {
+			return false;
+		}
+		if ((diaEvento >= primerDiaSemana) && (diaEvento <= ultimoDiaSemana)) {
+			System.out
+					.println("Evento del " + diaEvento + " está en la semana");
+			return true;
+		} else {
+			System.out.println("Evento del " + diaEvento
+					+ " no está en la semana");
+			return false;
 		}
 	}
 

@@ -161,8 +161,7 @@ public class EventoFragment extends Fragment {
 	protected void mostrarInvitadoSeleccionado(Colaborador invitado) {
 		TextView nombreText = (TextView) rootView
 				.findViewById(R.id.invitado_nombre_content);
-		nombreText.setText(invitado.getNombres() + Constante.ESPACIO_VACIO
-				+ invitado.getApellidos());
+		nombreText.setText(invitado.getNombreCompleto());
 		TextView areaText = (TextView) rootView
 				.findViewById(R.id.invitado_area_content);
 		areaText.setText(invitado.getArea());
