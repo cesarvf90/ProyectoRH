@@ -165,7 +165,7 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 											.currentTimeMillis());
 									SimpleDateFormat formatoFecha = new SimpleDateFormat();
 									formatoFecha
-											.applyPattern("dd/M/yyyy HH:mm:ss");
+											.applyPattern("dd/MM/yyyy HH:mm:ss");
 									evaluacion.setFechaFin(formatoFecha
 											.format(actual));
 									FragmentTransaction ft = getActivity()
@@ -425,7 +425,7 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 		evaluacion = new Evaluacion();
 		Date actual = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		formatoFecha.applyPattern("dd/M/yyyy HH:mm:ss");
+		formatoFecha.applyPattern("dd/MM/yyyy HH:mm:ss");
 		evaluacion.setFechaInicio(formatoFecha.format(actual));
 
 		totalPaginas = (funciones.size() + PREGUNTAS_X_PAGINA - 1)
