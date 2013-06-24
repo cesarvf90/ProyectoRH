@@ -17,6 +17,7 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -154,7 +155,7 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			
 			String request = "http://dp2kendo.apphb.com/Reportes/Reportes/ObjetivosOffline?idperiodo=" + idPeriodo;
 
-			new getReportePeriodo().execute(request);
+			new getReportePeriodo(getActivity()).execute(request);
 			
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
@@ -171,13 +172,14 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 	
 	public class getReportePeriodo extends AsyncCall{
 		
-		@Override
-		protected void onPreExecute(){
-			pbarra.setVisibility(View.VISIBLE);
+		public getReportePeriodo(Activity activity) {
+			super(activity);
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
+			
+			ocultarMensajeProgreso();
 			
 			System.out.println("Recibido: " + result.toString());
 			
@@ -227,38 +229,42 @@ public class ReporteObjetivosBSCPrincipal extends Fragment {
 			//obtener los de offline
 			List<PeriodoDTO> periodos = PersistentHandler.getPeriodosFromFile(getActivity(), "periodosReporte.txt");
 			
-			listaPeriodos = periodos;
-			//lista = new ArrayList<String>();
-			for(int i =0; i<listaPeriodos.size();i++){
-				
-				lista.add(listaPeriodos.get(i).getNombre());
-				
-			}
+			if (periodos !=null)  {
 			
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+				listaPeriodos = periodos;
+				//lista = new ArrayList<String>();
+				for(int i =0; i<listaPeriodos.size();i++){
 					
-				/*	Toast.makeText(parent.getContext(), 
-						"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
-						Toast.LENGTH_SHORT).show(); */
+					lista.add(listaPeriodos.get(i).getNombre());
 					
-					periodoSelec = listaPeriodos.get(pos).getID(); //aqui idobjetivo selec
-					titulo = parent.getItemAtPosition(pos).toString();
-
-				  }
+				}
 				
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerPeriodo.setAdapter(dataAdapter);
+				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+					
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						
+					/*	Toast.makeText(parent.getContext(), 
+							"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
+							Toast.LENGTH_SHORT).show(); */
+						
+						periodoSelec = listaPeriodos.get(pos).getID(); //aqui idobjetivo selec
+						titulo = parent.getItemAtPosition(pos).toString();
+	
+					  }
+					
+				
+					@Override
+					  public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+					  }
+					
+				});
 			
-				@Override
-				  public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-				  }
-				
-			});
+		}
 		}
 
 		
