@@ -158,6 +158,7 @@ public static ArrayList<PeriodoDTO> getPeriodosFromFile(Context whereIAm, String
 		    isr.close();
 		    is.close();
 		    
+		    
 		    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
 		    periodos = gson.fromJson(s,
 					new TypeToken<List<PeriodoDTO>>(){}.getType());

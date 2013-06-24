@@ -117,7 +117,7 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 			
 			String request = ReporteServices.obtenerHistoricoObjetivos + "?idColaborador=" + idColab;
 
-			new getReporteColaborador().execute(request);
+			new getReporteColaborador(getActivity()).execute(request);
 			
 		} else {
 			// Se muestra mensaje de error de conexion con el servicio
@@ -134,9 +134,15 @@ public class ReportePersonalBSCPrincipal extends Fragment {
 	
 public class getReporteColaborador extends AsyncCall{
 		
-		
+		public getReporteColaborador(Activity activity) {
+			super(activity);
+		}
+	
+	
 		@Override
 		protected void onPostExecute(String result) {
+			
+			ocultarMensajeProgreso();
 
 			System.out.println("Recibido: " + result.toString());
 			
@@ -219,7 +225,7 @@ public class getReporteColaborador extends AsyncCall{
 		}
 		else{
 			//offline
-			String trama = PersistentHandler.getColaboradorFromFile(getActivity(), "colabReporte.txt");
+			String trama = PersistentHandler.getColaboradorFromFile(getActivity(), "colabReporte" + idUsuario  + ".txt");
 			
 			if (trama!=null){
 			
@@ -269,7 +275,7 @@ public class getReporteColaborador extends AsyncCall{
 			probarDeserializacionJSON(result);
 			
 			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + trama, getActivity(), "colabReporte.txt");
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + trama, getActivity(), "colabReporte"  +  LoginActivity.getUsuario().getID() +".txt");
 			
 			//colaboradores
 			for (int i=0;i<colaboradores.size();i++){

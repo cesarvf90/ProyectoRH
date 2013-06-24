@@ -307,8 +307,10 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 				}
 			});
 
-
-
+			ViewGroup.LayoutParams layoutParams = listaGridView.get(groupPosition).getLayoutParams();
+			layoutParams.height = 200*((objetivos.get(groupPosition).size() + 1)/2); //this is in pixels
+			listaGridView.get(groupPosition).setLayoutParams(layoutParams);
+			
 		
  
 		return view;
