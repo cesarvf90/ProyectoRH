@@ -13,20 +13,15 @@
         android:textSize="30sp"
         android:layout_marginLeft="30dp"
 		android:layout_marginTop="10dp" />
-    
-    <LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="50dp"> 
+
     
    		<ExpandableListView
 	        android:id="@+id/reportebscexpandable"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" >
+	        android:layout_height="fill_parent"
+	        android:layout_marginTop="50dp" >
 	    </ExpandableListView>
 	    
-    </LinearLayout>   
     
 
 </RelativeLayout>

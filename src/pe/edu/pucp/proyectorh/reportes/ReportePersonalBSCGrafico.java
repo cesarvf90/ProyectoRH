@@ -178,6 +178,7 @@ public class ReportePersonalBSCGrafico extends Fragment {
 	
 	public void cargarGraficoHistorico(int idcolab){
 
+		System.out.println("entre a cargarhistorico de archivo");
 		historico = null;
 		
 		historico = PersistentHandler.getHistoricoBSCFromFile(getActivity(), "ObjPersonal" + idcolaborador +".txt");
@@ -251,11 +252,11 @@ public class ReportePersonalBSCGrafico extends Fragment {
 						  
 						  	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 							builder.setTitle("Detalle del periodo");
-							String cadena = "Avan. Objetivo\n";
+							String cadena = "Avan.   Objetivo\n";
 							for(int i=0;i<historico.get(posicion).getObjetivos().size();i++){
 								cadena = cadena + historico.get(posicion).getObjetivos().get(i).getAvance() + "%";
-								if (historico.get(posicion).getObjetivos().get(i).getAvance() < 10) cadena = cadena + "   ";
-								else if (historico.get(posicion).getObjetivos().get(i).getAvance() < 100) cadena = cadena + " ";
+								if (historico.get(posicion).getObjetivos().get(i).getAvance() < 10) cadena = cadena + "    ";
+								else if (historico.get(posicion).getObjetivos().get(i).getAvance() < 100) cadena = cadena + "  ";
 								
 								cadena = cadena + "   " + historico.get(posicion).getObjetivos().get(i).getDescripcion() + "\n";
 							}
