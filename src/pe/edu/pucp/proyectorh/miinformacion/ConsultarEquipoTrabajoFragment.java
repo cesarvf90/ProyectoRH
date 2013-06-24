@@ -371,11 +371,10 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	}
 
 	private void mostrarErrorComunicacion(String excepcion) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this
-				.getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
 		builder.setTitle("Error de servicio");
-		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
-				+ excepcion.toString());
+		builder.setMessage("El servicio solicitado no está disponible en el servidor.");
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();
