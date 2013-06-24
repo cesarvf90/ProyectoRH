@@ -65,6 +65,9 @@ public class SemanaFragment extends Fragment {
 		System.out.println("Día número " + diaDeLaSemana + " en la semana");
 		int diaFechaActual = diaEscogido.get(Calendar.DAY_OF_MONTH);
 		primerDiaSemana = diaFechaActual - diaDeLaSemana + 1;
+		if (primerDiaSemana <= 0) {
+			primerDiaSemana = 1;
+		}
 		ultimoDiaSemana = diaFechaActual + 7 - diaDeLaSemana;
 		System.out.println("Semana del " + primerDiaSemana + " al "
 				+ ultimoDiaSemana);
