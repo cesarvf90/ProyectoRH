@@ -18,7 +18,9 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import pe.edu.pucp.proyectorh.reportes.ReporteObjetivosBSCPrincipal.PeriodoDTO;
+import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCPrincipal.getReporteColaborador;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -54,18 +56,7 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 	String titulo;
 	
 	List<AreaRDTO> areas;
-	
-	private Button btnDesde;
-	private Button btnHasta;
-	TextView txtdesde;
-	TextView txthasta;
-	
-	int anho;
-	int mes;
-	int dia;
-	int anhofin;
-	int mesfin;
-	int diafin;
+
 
 	
 	public ReporteCubrimientoPrincipal(){
@@ -98,46 +89,7 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 
 		obtenerlistaPuestos();
 		
-		//fecha de hoy
-		Calendar c = Calendar.getInstance();
-		anho = anhofin = c.get(Calendar.YEAR);
-		mes = mesfin = c.get(Calendar.MONTH) + 1;
-		dia = diafin = c.get(Calendar.DAY_OF_MONTH);
 
-		
-		
-		txtdesde = (TextView) rootView.findViewById(R.id.reportecubdesde); 
-		txtdesde.setText(new StringBuilder()
-		// Month is 0 based, just add 1
-		.append(dia).append("/").append(mes).append("/")
-		.append(anho).append(" "));
-		txthasta = (TextView) rootView.findViewById(R.id.reportecubhasta);
-		txthasta.setText(new StringBuilder()
-		// Month is 0 based, just add 1
-		.append(dia).append("/").append(mes).append("/")
-		.append(anho).append(" "));
-		
-		btnDesde = (Button) rootView.findViewById(R.id.reportecubbtndesde);
-		btnHasta = (Button) rootView.findViewById(R.id.reportecubbtnhasta);
-		
-		/*datepickers*/
-		btnDesde.setOnClickListener(new OnClickListener() {
-			 
-			  @Override
-			  public void onClick(View v) {
-				  DialogFragment newFragment = new DatePickerFragment();
-				   newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-			  }
-		});
-		
-		btnHasta.setOnClickListener(new OnClickListener() {
-			 
-			  @Override
-			  public void onClick(View v) {
-				  DatePickerFragmentFin newFragment = new DatePickerFragmentFin();
-				   newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-			  }
-		});
 		
 		
 
@@ -147,30 +99,38 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 			 
 			  @Override
 			  public void onClick(View v) {
-				  
-				  String dateString1 = "" + anho;
-			      if (mes<10) dateString1 = dateString1 + "/" + "0" + mes + "/" +  dia;
-			      else dateString1  = dateString1 +  "/" + mes + "/" +  dia;
-			      
-			      String dateString2 = "" + anhofin;
-			      if (mesfin<10) dateString2 = dateString2 + "/" + "0" + mesfin + "/" +  diafin;
-			      else dateString2  = dateString2 +  "/" + mesfin + "/" +  diafin;
-				  
-				  if (dateString1.compareTo(dateString2) >0){
-					  Toast.makeText(getActivity(), "La fecha inicial debe ser menor a la fecha final", Toast.LENGTH_SHORT).show(); 
-				  }
-				  else{
+
+					  
+					  
+					  if( PersistentHandler.buscarArchivo(getActivity(), "ReporteOferta" + puestoSelec +".txt")){
+						  
+						  ReporteCubrimientoGrafico fragment = new ReporteCubrimientoGrafico();
+						  Bundle argumentos = new Bundle();
+					      argumentos.putInt("PuestoSelec", puestoSelec);
+					      argumentos.putString("titulo", titulo);
+					      fragment.setArguments(argumentos);
+					      
+						  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+						  ft.replace(R.id.opcion_detail_container, fragment);
+						  ft.addToBackStack(null);
+						  ft.commit();
+							
+						}
+					  else{
+						  obtenerReporteOffline(puestoSelec);
+					  }
+
+					  
+					  /*
 					  ReporteCubrimientoGrafico fragment = new ReporteCubrimientoGrafico();
 					  Bundle argumentos = new Bundle();
 				      argumentos.putInt("PuestoSelec", puestoSelec);
 				      argumentos.putString("titulo", titulo);
 				      
-				      /*fechaini*/
 				      String fechadesde = "" + dia;
 				      if (mes<10) fechadesde = fechadesde + "/" + "0" + mes + "/" + anho;
 				      else fechadesde  = fechadesde + "/" + mes + "/" + anho;
 				      
-				      /*fechafin*/
 				      String fechahasta = "" + diafin;
 				      if (mesfin<10) fechahasta = fechahasta + "/" + "0" + mesfin + "/" + anhofin;
 				      else fechahasta  = fechahasta + "/" + mesfin + "/" +  anhofin;
@@ -183,8 +143,8 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 					  ft.replace(R.id.opcion_detail_container, fragment);
 					  ft.addToBackStack(null);
 					  ft.commit();
+				  */
 				  
-				  }
 				  
 			  }
 		});
@@ -193,55 +153,66 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		return rootView;
 	}
 	
-	
-	private class DatePickerFragment extends DialogFragment
-    implements DatePickerDialog.OnDateSetListener {
-
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+	protected void obtenerReporteOffline(int idpuesto){
+		
+		if (ConnectionManager.connect(getActivity())) {
+			// construir llamada al servicio
 			
-			return new DatePickerDialog(getActivity(), this, anho, (mes-1), dia);
+			String request = ReporteServices.obtenerAreas ; // + "?puesto=" + idpuesto;
+
+			new getReporteOferta(getActivity()).execute(request);
+			
+		} else {
+			// Se muestra mensaje de error de conexion con el servicio
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Error de conexión");
+			builder.setMessage("No se pudo conectar con el servidor. Revise su conexión a Internet.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
 		}
 		
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			anho = selectedYear;
-			mes = selectedMonth +1;
-			dia = selectedDay;
-			
-			// set selected date into textview
-			txtdesde.setText(new StringBuilder().append(dia)
-			   .append("/").append(mes).append("/").append(anho)
-			   .append(" "));
-
- 
-		}
 	}
 	
-	private class DatePickerFragmentFin extends DialogFragment
-    implements DatePickerDialog.OnDateSetListener {
-
+	public class getReporteOferta extends AsyncCall{
+		
+		public getReporteOferta(Activity activity) {
+			super(activity);
+		}
+	
+	
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		protected void onPostExecute(String result) {
 			
-			return new DatePickerDialog(getActivity(), this, anhofin, (mesfin-1), diafin);
+			ocultarMensajeProgreso();
+			
+			//harcodear result
+
+			System.out.println("Recibido: " + result.toString());
+			
+			
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+			PersistentHandler.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(), "ReporteOferta" + puestoSelec +".txt");
+		      
+			ReporteCubrimientoGrafico fragment = new ReporteCubrimientoGrafico();
+			  Bundle argumentos = new Bundle();
+		      argumentos.putInt("PuestoSelec", puestoSelec);
+		      argumentos.putString("titulo", titulo);
+		      fragment.setArguments(argumentos);
+		      
+			  FragmentTransaction ft  =  getActivity().getSupportFragmentManager().beginTransaction();
+			  ft.replace(R.id.opcion_detail_container, fragment);
+			  ft.addToBackStack(null);
+			  ft.commit();
+			
+			
 		}
 		
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			anhofin = selectedYear;
-			mesfin = selectedMonth +1;
-			diafin = selectedDay;
-			
-			// set selected date into textview
-			txthasta.setText(new StringBuilder().append(diafin)
-			   .append("/").append(mesfin).append("/").append(anhofin)
-			   .append(" "));
-
- 
-		}
 	}
- 
+	
+	
 	protected void obtenerlistaPuestos(){
 		
 		if (ConnectionManager.connect(getActivity())) {
@@ -445,6 +416,7 @@ public class ReporteCubrimientoPrincipal extends Fragment {
          
          
     }
+	
 	
 	 private void customizarEstilos(Context context, View view) {
 			try {

@@ -17,8 +17,10 @@ import pe.edu.pucp.proyectorh.connection.ConnectionManager;
 import pe.edu.pucp.proyectorh.model.ColaboradorEquipoTrabajo;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
+import android.R.color;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -91,10 +93,8 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 		expandObjetivos = (ExpandableListView) rootView.findViewById(R.id.reportebscexpandable);
 		
 		cargarObjetivos(idPadre,idPeriodo,idPersp);
-		
-		
-		
-		
+
+		customizarEstilos(getActivity(), rootView);
 		
 		return rootView;
 	}
@@ -129,44 +129,44 @@ public class ReporteObjetivosBSCPersonales extends Fragment {
 			ArrayList<ObjetivoDTO> objetivosArch = PersistentHandler.getObjFromFile(getActivity(), nomArch);
 			if (objetivosArch!=null){
 			
-			ArrayList<List<ObjetivoDTO>> objetivos = new ArrayList<List<ObjetivoDTO>>();
-			ArrayList<String> personas = new ArrayList<String>();
-			
-			//obtener por padre
-			for (int i=0;i<objetivosArch.size();i++){
-				if (objetivosArch.get(i).getIdpadre()==idobjPadre){
-					
-					//este objetivo es el de personaxobjetivo, se muestran sus hijos
-					
-					//validacion si colaborador es null no mostrar
-					if (objetivosArch.get(i).getColaboradorNombre()!=null){
-						System.out.println(objetivosArch.get(i).getColaboradorNombre());
-						personas.add(objetivosArch.get(i).getColaboradorNombre());
+				ArrayList<List<ObjetivoDTO>> objetivos = new ArrayList<List<ObjetivoDTO>>();
+				ArrayList<String> personas = new ArrayList<String>();
+				
+				//obtener por padre
+				for (int i=0;i<objetivosArch.size();i++){
+					if (objetivosArch.get(i).getIdpadre()==idobjPadre){
 						
-						ArrayList<ObjetivoDTO> listaHijos = new ArrayList<ObjetivoDTO> (); 
+						//este objetivo es el de personaxobjetivo, se muestran sus hijos
 						
-						//obtener hijos
-						for (int j=0;j<objetivosArch.size();j++){
-							if ((objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()) && 
-							     (objetivosArch.get(j).getColaboradorID() == objetivosArch.get(i).getColaboradorID())){
-								listaHijos.add(objetivosArch.get(j));
+						//validacion si colaborador es null no mostrar
+						if (objetivosArch.get(i).getColaboradorNombre()!=null){
+							System.out.println(objetivosArch.get(i).getColaboradorNombre());
+							personas.add(objetivosArch.get(i).getColaboradorNombre());
+							
+							ArrayList<ObjetivoDTO> listaHijos = new ArrayList<ObjetivoDTO> (); 
+							
+							//obtener hijos
+							for (int j=0;j<objetivosArch.size();j++){
+								if ((objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()) && 
+								     (objetivosArch.get(j).getColaboradorID() == objetivosArch.get(i).getColaboradorID())){
+									listaHijos.add(objetivosArch.get(j));
+								}
+									
 							}
-								
+							
+							objetivos.add(listaHijos);
 						}
 						
-						objetivos.add(listaHijos);
 					}
-					
 				}
-			}
+				
+				ObjetivoPersonalAdapter adaptador = new ObjetivoPersonalAdapter(getActivity().getApplicationContext(), personas, objetivos);
+				expandObjetivos.setAdapter(adaptador);
+				for(int i=0; i < adaptador.getGroupCount(); i++){
+					expandObjetivos.expandGroup(i);
+				}
 			
-			ObjetivoPersonalAdapter adaptador = new ObjetivoPersonalAdapter(getActivity().getApplicationContext(), personas, objetivos);
-			expandObjetivos.setAdapter(adaptador);
-			for(int i=0; i < adaptador.getGroupCount(); i++){
-				expandObjetivos.expandGroup(i);
 			}
-			
-		}
 		}
 			
 			
@@ -307,8 +307,10 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 				}
 			});
 
-
-
+			ViewGroup.LayoutParams layoutParams = listaGridView.get(groupPosition).getLayoutParams();
+			layoutParams.height = 200*((objetivos.get(groupPosition).size() + 1)/2); //this is in pixels
+			listaGridView.get(groupPosition).setLayoutParams(layoutParams);
+			
 		
  
 		return view;
@@ -377,6 +379,21 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 	}
 
 
+	}
+
+	private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+			((TextView) view).setTextColor(Color.BLACK);
+		}
+		} catch (Exception e) {
+		}
 	}
 
 

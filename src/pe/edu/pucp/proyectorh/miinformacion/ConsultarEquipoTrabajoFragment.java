@@ -62,7 +62,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
 		return rootView;
 	}
-	
+
 	private void customizarEstilos(Context context, View view) {
 		try {
 			if (view instanceof ViewGroup) {
@@ -90,11 +90,11 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	}
 
 	public class deserializarJSON extends AsyncCall {
-		
+
 		public deserializarJSON(Activity activity) {
 			super(activity);
-		}		
-		
+		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			// MISMA LOGICA QUE probarDeserializacionGSON
@@ -153,7 +153,7 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 			JSONObject jsonObject = new JSONObject(result);
 			System.out.println("result: " + result);
 			String respuesta = jsonObject.getString("success");
-			if (procesaRespuesta(respuesta)) {
+			if (respuesta.equals("true")) {
 				// System.out.println("respuesta: "+respuesta);
 				// Obtenemos el jefe de todos --NIVEL 0
 				JSONObject dataObject = (JSONObject) jsonObject.get("data");
@@ -174,7 +174,6 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 				JSONArray listaSubordinadosNivel1 = (JSONArray) jefeObject
 						.get("Subordinados");
 
-				
 				System.out.println("listaSubordinadosNivel1: "
 						+ listaSubordinadosNivel1.toString());
 
@@ -206,10 +205,10 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 					}
 
 					padres.add(subordinadoNivel1);
-					//System.out.println(subordinadoNivel1.toString());
+					// System.out.println(subordinadoNivel1.toString());
 					JSONArray listaSubordinadosNivel2 = (JSONArray) subordinadoNivel1Object
 							.get("Subordinados");
-					
+
 					JSONObject subordinadoNivel2Object;
 					hijos.add(new ArrayList<ArrayList<ColaboradorEquipoTrabajo>>());
 
@@ -234,17 +233,38 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 								new ArrayList<ColaboradorEquipoTrabajo>());
 						hijos.get(i).get(j).add(subordinadoNivel2);
 
-						//System.out.println(subordinadoNivel2.toString());
+						// System.out.println(subordinadoNivel2.toString());
 
 					}
 				}
 				/*
-				System.out
-						.println("***********************************************************************");
-				System.out.println(padres.toString());
-				System.out.println(hijos.toString());*/
-				
+				 * System.out .println(
+				 * "***********************************************************************"
+				 * ); System.out.println(padres.toString());
+				 * System.out.println(hijos.toString());
+				 */
+
 				mostrarEquipo();
+			} else {
+				String message = jsonObject.getString("message");
+				if (message.startsWith("Error en la BD:")) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Problema en el servidor");
+					builder.setMessage("Hay un problema en el servidor.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							this.getActivity());
+					builder.setTitle("Mensaje del servidor");
+					builder.setMessage(message);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+				}
 			}
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
@@ -371,11 +391,10 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 	}
 
 	private void mostrarErrorComunicacion(String excepcion) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this
-				.getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
 		builder.setTitle("Error de servicio");
-		builder.setMessage("El servicio solicitado no está disponible en el servidor: "
-				+ excepcion.toString());
+		builder.setMessage("El servicio solicitado no está disponible en el servidor.");
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();

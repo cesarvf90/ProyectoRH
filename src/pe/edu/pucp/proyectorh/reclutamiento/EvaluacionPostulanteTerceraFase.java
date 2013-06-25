@@ -52,7 +52,8 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 	private int totalPaginas;
 	private final int PREGUNTAS_X_PAGINA = 4;
 
-	public EvaluacionPostulanteTerceraFase(OfertaLaboral oferta, Postulante postulante) {
+	public EvaluacionPostulanteTerceraFase(OfertaLaboral oferta,
+			Postulante postulante) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 	}
@@ -160,6 +161,13 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
+									Date actual = new Date(System
+											.currentTimeMillis());
+									SimpleDateFormat formatoFecha = new SimpleDateFormat();
+									formatoFecha
+											.applyPattern("dd/MM/yyyy HH:mm:ss");
+									evaluacion.setFechaFin(formatoFecha
+											.format(actual));
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
@@ -417,10 +425,9 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 		evaluacion = new Evaluacion();
 		Date actual = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		formatoFecha.applyPattern("dd/MM/yyyy");
+		formatoFecha.applyPattern("dd/MM/yyyy HH:mm:ss");
 		evaluacion.setFechaInicio(formatoFecha.format(actual));
 
-		// totalPaginas = funciones.size() / PREGUNTAS_X_PAGINA;
 		totalPaginas = (funciones.size() + PREGUNTAS_X_PAGINA - 1)
 				/ PREGUNTAS_X_PAGINA;
 	}
