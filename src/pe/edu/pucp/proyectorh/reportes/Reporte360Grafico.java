@@ -135,8 +135,7 @@ public class Reporte360Grafico extends Fragment{
 			else{
 				
 				ArrayList<String> evaluadores = new ArrayList<String>();
-				ArrayList<Integer> notas = new ArrayList<Integer>();
-				String nombreProceso="proceso prueba";
+				ArrayList<Integer> notas = new ArrayList<Integer>();				
 				
 				for (int i=0;i<procesosEval.size();i++){
 
