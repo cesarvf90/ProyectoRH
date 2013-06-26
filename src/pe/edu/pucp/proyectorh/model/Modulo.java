@@ -114,7 +114,7 @@ public class Modulo {
 		submodulos.add(new ModuloItem("1", "Reporte de Evaluación 360"));
 		submodulos
 				.add(new ModuloItem("2", "Reporte histórico de Objetivos"));
-		submodulos.add(new ModuloItem("3", "Reporte de Cubrimiento de Puestos"));
+		submodulos.add(new ModuloItem("3", "Reporte de Ofertas Laborales"));
 		submodulos.add(new ModuloItem("4", "Reporte de Objetivos BSC"));
 		return submodulos;
 	}
