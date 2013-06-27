@@ -61,7 +61,7 @@ public class MenuFragment extends ExpandableListFragment {
 		List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
 		List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
 
-		// Se agregan las funcionalidades de RH++
+		// Se agregan las modulos de RH++
 		for (ModuloItem modulo : Modulo.MODULOS) {
 			Map<String, String> curGroupMap = new HashMap<String, String>();
 			groupData.add(curGroupMap);
@@ -69,27 +69,40 @@ public class MenuFragment extends ExpandableListFragment {
 			curGroupMap.put(NAME, modulo.getNombre());
 		}
 
+		// Se agregan las opciones de cada modulo
 		for (int i = 0; i < 6; i++) {
 			List<Map<String, String>> children = new ArrayList<Map<String, String>>();
 			List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 			switch (i + 1) {
 			case 1:
-				submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
+				submodulos = Modulo
+						.obtenerFuncionalidadesMiInformacion(LoginActivity
+								.getUsuario());
 				break;
 			case 2:
-				submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
+				submodulos = Modulo
+						.obtenerFuncionalidadesReclutamiento(LoginActivity
+								.getUsuario());
 				break;
 			case 3:
-				submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
+				submodulos = Modulo
+						.obtenerFuncionalidadesEvaluacion360(LoginActivity
+								.getUsuario());
 				break;
 			case 4:
-				submodulos = Modulo.obtenerFuncionalidadesObjetivos();
+				submodulos = Modulo
+						.obtenerFuncionalidadesObjetivos(LoginActivity
+								.getUsuario());
 				break;
 			case 5:
-				submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
+				submodulos = Modulo
+						.obtenerFuncionalidadesLineaDeCarrera(LoginActivity
+								.getUsuario());
 				break;
 			case 6:
-				submodulos = Modulo.obtenerFuncionalidadesReportes();
+				submodulos = Modulo
+						.obtenerFuncionalidadesReportes(LoginActivity
+								.getUsuario());
 				break;
 			}
 
@@ -148,7 +161,6 @@ public class MenuFragment extends ExpandableListFragment {
 						+ (childPosition + 1));
 				// cambiar color de hijo elegido
 				if (lastColored != null) {
-					// lastColored.setBackgroundColor(Color.TRANSPARENT);
 					lastColored.setBackgroundColor(Color.parseColor("#848484"));
 					lastColored.invalidate();
 				}
@@ -167,22 +179,32 @@ public class MenuFragment extends ExpandableListFragment {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		switch (i + 1) {
 		case 1:
-			submodulos = Modulo.obtenerFuncionalidadesMiInformacion();
+			submodulos = Modulo
+					.obtenerFuncionalidadesMiInformacion(LoginActivity
+							.getUsuario());
 			break;
 		case 2:
-			submodulos = Modulo.obtenerFuncionalidadesReclutamiento();
+			submodulos = Modulo
+					.obtenerFuncionalidadesReclutamiento(LoginActivity
+							.getUsuario());
 			break;
 		case 3:
-			submodulos = Modulo.obtenerFuncionalidadesEvaluacion360();
+			submodulos = Modulo
+					.obtenerFuncionalidadesEvaluacion360(LoginActivity
+							.getUsuario());
 			break;
 		case 4:
-			submodulos = Modulo.obtenerFuncionalidadesObjetivos();
+			submodulos = Modulo.obtenerFuncionalidadesObjetivos(LoginActivity
+					.getUsuario());
 			break;
 		case 5:
-			submodulos = Modulo.obtenerFuncionalidadesLineaDeCarrera();
+			submodulos = Modulo
+					.obtenerFuncionalidadesLineaDeCarrera(LoginActivity
+							.getUsuario());
 			break;
 		case 6:
-			submodulos = Modulo.obtenerFuncionalidadesReportes();
+			submodulos = Modulo.obtenerFuncionalidadesReportes(LoginActivity
+					.getUsuario());
 			break;
 		}
 		return submodulos;

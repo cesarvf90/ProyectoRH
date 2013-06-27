@@ -11,6 +11,7 @@ import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
+import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
 import pe.edu.pucp.proyectorh.objetivos.RegistroAvance;
@@ -86,56 +87,56 @@ public class MainActivity extends FragmentActivity implements
 	public void onItemSelected(String id) {
 		if (dosPaneles) {
 			if (Modulo.MODULO_ACTUAL == Constante.MI_INFORMACION) {
-				if (id.equals("1")) { // Información personal
+				if (Modulo.INFORMACION_PERSONAL.equals(id)) { // Información
+																// personal
 					VisualizarInfoColaboradoFragment fragment = new VisualizarInfoColaboradoFragment();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("2")) {// Mi equipo de trabajo
+				if (Modulo.EQUIPO_TRABAJO.equals(id)) {// Mi equipo de trabajo
 					ConsultarEquipoTrabajoFragment fragment = new ConsultarEquipoTrabajoFragment();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Mis contactos
+				if (Modulo.CONTACTOS.equals(id)) {// Mis contactos
 					ContactosFragment fragment = new ContactosFragment();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("4")) {// Mi agenda
+				if (Modulo.AGENDA.equals(id)) {// Mi agenda
 					AgendaFragment fragment = new AgendaFragment();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
 			} else if (Modulo.MODULO_ACTUAL == Constante.RECLUTAMIENTO) {
-				/*if (id.equals("1")) { // Aprobar Postulante
-
-				}*/
-				if (id.equals("1")) {// Aprobar Solicitudes Oferta Laboral
+				if (Modulo.APROBAR_SOLICITUDES.equals(id)) {// Aprobar
+															// Solicitudes
+															// Oferta Laboral
 					AprobarSolicitudOfertaLaboral fragment = new AprobarSolicitudOfertaLaboral();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				/*if (id.equals("3")) {// Aprobar Solicitudes Promoción
-
-				}*/
-				if (id.equals("2")) {// Evaluar Postulante 1ra fase
+				if (Modulo.EVALUACION_FASE1.equals(id)) {// Evaluar Postulante
+															// 1ra fase
 					MenuOfertasLaboralesPrimeraFase fragment = new MenuOfertasLaboralesPrimeraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Evaluar Postulante 3ra fase
+				if (Modulo.EVALUACION_FASE3.equals(id)) {// Evaluar Postulante
+															// 3ra fase
 					MenuOfertasLaboralesTerceraFase fragment = new MenuOfertasLaboralesTerceraFase();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("4")) {// Postular a Convocatoria
+				if (Modulo.POSTULAR_OFERTA.equals(id)) {// Postular a
+														// Convocatoria
 					PostularOfertaLaboral fragment = new PostularOfertaLaboral();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -144,28 +145,28 @@ public class MainActivity extends FragmentActivity implements
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.REPORTES) {
 
-				if ("1".equals(id)) {
+				if (Modulo.REPORTE_EVALUACION_360.equals(id)) {
 					Reporte360Grafico fragment = new Reporte360Grafico();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				
-				if ("2".equals(id)) {
+
+				if (Modulo.REPORTE_HISTORICO_OBJETIVOS.equals(id)) {
 					ReportePersonalBSCPrincipal fragment = new ReportePersonalBSCPrincipal();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
 
-				if ("3".equals(id)) {
+				if (Modulo.REPORTE_OFERTAS_LABORALES.equals(id)) {
 					ReporteCubrimientoPrincipal fragment = new ReporteCubrimientoPrincipal();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
 
-				if ("4".equals(id)) {
+				if (Modulo.REPORTE_OBJETIVOS_BSC.equals(id)) {
 					ReporteObjetivosBSCPrincipal fragment = new ReporteObjetivosBSCPrincipal();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -173,20 +174,21 @@ public class MainActivity extends FragmentActivity implements
 				}
 			}
 
-			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) { //SE ACTUALIZO
-				if (id.equals("1")) {// Rol evaluadores
+			else if (Modulo.MODULO_ACTUAL == Constante.EVALUACION_360) { // SE
+																			// ACTUALIZO
+				if (Modulo.PENDIENTES.equals(id)) {// Rol evaluadores
 					RolEvaluador fragment = new RolEvaluador();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("2")) {// Rol de Evaluado
+				if (Modulo.ROL_EVALUADO.equals(id)) {// Rol de Evaluado
 					RolEvaluado fragment = new RolEvaluado();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Mis subordinados
+				if (Modulo.SUBORDINADOS.equals(id)) {// Mis subordinados
 					pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados fragment = new pe.edu.pucp.proyectorh.evaluacion360.MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -195,13 +197,15 @@ public class MainActivity extends FragmentActivity implements
 			}
 
 			else if (Modulo.MODULO_ACTUAL == Constante.LINEA_DE_CARRERA) {
-				if (id.equals("1")) { // Comparar capacidades
+				if (Modulo.COMPARAR_CAPACIDADES.equals(id)) { // Comparar
+																// capacidades
 					ComparaCapacidad fragment = new ComparaCapacidad();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("2")) {// Candidatos por puesto
+				if (Modulo.CANDIDATOS_X_PUESTO.equals(id)) {// Candidatos por
+															// puesto
 					CandidatosxPuesto fragment = new CandidatosxPuesto();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
@@ -209,22 +213,25 @@ public class MainActivity extends FragmentActivity implements
 				}
 
 			} else if (Modulo.MODULO_ACTUAL == Constante.OBJETIVOS) {
-				if (id.equals("1")) { // Objetivos Empresa
+				if (Modulo.OBJETIVOS_EMPRESARIALES.equals(id)) { // Objetivos
+																	// Empresa
 					ObjetivosEmpresa fragment = new ObjetivosEmpresa();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("2")) {// Mis Objetivos
+				if (Modulo.OBJETIVOS_PROPIOS.equals(id)) {// Mis Objetivos
 					MisObjetivos fragment = new MisObjetivos();
 					fragment.indicador = MisObjetivos.IND_MISOBJS;
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-				if (id.equals("3")) {// Objetivos Subordinados (PARA CREAR
-										// OBJETIVOS PARA MIS SUBORDINADOS -
-										// EVER)
+				if (Modulo.OBJETIVOS_EQUIPO.equals(id)) {// Objetivos
+															// Subordinados
+															// (PARA CREAR
+					// OBJETIVOS PARA MIS SUBORDINADOS -
+					// EVER)
 					MisObjetivos fragment = new MisObjetivos();
 					fragment.indicador = MisObjetivos.IND_SUBORD;
 					getSupportFragmentManager().beginTransaction()
@@ -232,22 +239,23 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 
-				if (id.equals("4")) {// Registrar Avance
+				if (Modulo.REGISTRAR_AVANCE.equals(id)) {// Registrar Avance
 					RegistroAvance fragment = new RegistroAvance();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 
 				}
-				if (id.equals("5")) {// Mis Avances
+				if (Modulo.VISUALIZAR_AVANCE.equals(id)) {// Mis Avances
 					VisualizacionAvance fragment = new VisualizacionAvance();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 
 				}
-				if (id.equals("6")) {// Monitoreo ( PARA VER LOS OBJETIVOS DE
-										// MIS SUBORDINADOS - CARLOS)
+				if (Modulo.MONITOREO.equals(id)) {// Monitoreo ( PARA VER LOS
+													// OBJETIVOS DE
+					// MIS SUBORDINADOS - CARLOS)
 					MisSubordinados fragment = new MisSubordinados();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)

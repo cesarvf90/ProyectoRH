@@ -1,6 +1,7 @@
 package pe.edu.pucp.proyectorh.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Clase mapeada contra Usuario DBObject
@@ -15,6 +16,7 @@ public class Usuario {
 	private String password;
 	private ArrayList<ColaboradorEquipoTrabajo> padres;
 	private ArrayList<ArrayList<ArrayList<ColaboradorEquipoTrabajo>>> hijos;
+	private HashMap<String, Rol> roles;
 	private ColaboradorEquipoTrabajo jefe;
 	private boolean seTrajoContactos = false;
 
@@ -80,6 +82,14 @@ public class Usuario {
 
 	public void setSeTrajoContactos(boolean seTrajoContactos) {
 		this.seTrajoContactos = seTrajoContactos;
+	}
+
+	public HashMap<String, Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(HashMap<String, Rol> roles) {
+		this.roles = roles;
 	}
 
 }
