@@ -97,7 +97,7 @@ public class Modulo {
 		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 
-		if (usuario.getRoles().get("Información personal").isPermiso()) {
+		if (usuario.getRoles().get("Informacion personal").isPermiso()) {
 			INFORMACION_PERSONAL = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(INFORMACION_PERSONAL,
 					"Información personal"));
@@ -222,12 +222,12 @@ public class Modulo {
 			Usuario usuario) {
 		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		if (usuario.getRoles().get("Reporte de Evaluación 360").isPermiso()) {
+		if (usuario.getRoles().get("Reporte de Evaluacion 360").isPermiso()) {
 			REPORTE_EVALUACION_360 = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(REPORTE_EVALUACION_360,
 					"Reporte de Evaluación 360"));
 		}
-		if (usuario.getRoles().get("Reporte histórico de Objetivos")
+		if (usuario.getRoles().get("Reporte historico de Objetivos")
 				.isPermiso()) {
 			REPORTE_HISTORICO_OBJETIVOS = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(REPORTE_HISTORICO_OBJETIVOS,
