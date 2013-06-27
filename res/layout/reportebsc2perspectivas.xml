@@ -52,7 +52,7 @@
 	        android:layout_marginLeft="30dp"
 	        android:text="Refrescar"
 
-	         />
+	    />
 	    
 	    <ProgressBar
         android:id="@+id/reportebscprogressbarRef"

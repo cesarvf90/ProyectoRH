@@ -14,20 +14,126 @@
 		android:layout_marginTop="10dp" >
     </TextView>
     
-    <TextView
-        android:id="@+id/reportecubDisplayFechagrafico"
-        android:layout_width="fill_parent"
+    
+    <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+	    
+	    <TextView
+	        android:id="@+id/reportecubDisplayFechagrafico"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:gravity="left"
+	        android:layout_marginLeft="30dp">
+	    </TextView>
+	    
+	    <Button
+	        android:id="@+id/reportecubActualizar"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="30dp"
+	        android:text="Refrescar"
+
+	         />
+	    
+		<ProgressBar
+	        android:id="@+id/reportecubprogressbarRef"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:visibility="invisible"
+	        android:indeterminate="true"/>
+	     </LinearLayout>
+	     
+   <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" >
+		
+       <TextView
+        android:text="Seleccione oferta "
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:gravity="left"
-        android:layout_marginLeft="30dp">
+        android:layout_marginLeft="30dp" >
     </TextView>
+    
+    <Spinner
+	        android:id="@+id/reportecubofertaspinnerGraf"
+	        android:layout_width="300dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="30dp" />
+    
+    
+    </LinearLayout>
+    
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center" >
+	    
+	    <Button
+	        android:id="@+id/reportecubbtnPost"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Postulantes"
+	        />
+    
+	    <Button
+	        android:id="@+id/reportecubbtnFase1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Fase 1"
+	        android:layout_marginLeft="20dp"
+	        />
+	    
+	    <Button
+	        android:id="@+id/reportecubbtnFase2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Fase 2"
+	        android:layout_marginLeft="20dp"
+	         />
+	    
+	    <Button
+	        android:id="@+id/reportecubbtnFase3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Fase 3"
+	        android:layout_marginLeft="20dp"
+	         />
+    
+    </LinearLayout>
+    
+    <RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="35dp"
+    android:background="@color/verde_menubar"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+   
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/reportecubtitulobargraf"
+        android:text="Opciones"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp" />
+    
+     </RelativeLayout>
     
     <WebView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/reportecubWebkit"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dp" />
+    
+
     
     
 
