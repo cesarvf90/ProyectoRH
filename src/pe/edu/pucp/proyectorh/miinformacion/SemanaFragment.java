@@ -116,7 +116,6 @@ public class SemanaFragment extends Fragment {
 				+ " del " + month.get(Calendar.YEAR));
 		for (final Evento evento : eventos) {
 			if (esEventoDeLaSemana(evento)) {
-
 				// Se evalua el dia para ubicarlo en un layout
 				RelativeLayout diaLayout = obtieneDiaLayout(evento);
 
@@ -168,9 +167,6 @@ public class SemanaFragment extends Fragment {
 	}
 
 	private boolean esEventoDeLaSemana(Evento evento) {
-		// Day of week : 1 - miercoles
-		// TODO cvasquez: validar eventos de un mes pasado o siguiente en la
-		// semana consultada
 		String fecha[] = evento.getFechaInicio().split("/");
 		int diaEvento = Integer.parseInt(fecha[0]);
 		int mesEvento = Integer.parseInt(fecha[1]);

@@ -97,7 +97,7 @@ public final class R {
         public static final int TextViewChild01=0x7f0a0089;
         public static final int TextViewGroup=0x7f0a008a;
         public static final int UnoDeEstosSubordinados=0x7f0a00b3;
-        public static final int about=0x7f0a013f;
+        public static final int about=0x7f0a0140;
         public static final int accordion_list=0x7f0a0000;
         public static final int agenda_title=0x7f0a001e;
         public static final int alcanceDesc=0x7f0a001c;
@@ -139,9 +139,9 @@ public final class R {
         public static final int detalle_invitado=0x7f0a007d;
         public static final int detalle_invitado_content=0x7f0a0083;
         public static final int detalleofertas_title=0x7f0a0095;
-        public static final int diasLayout=0x7f0a0135;
-        public static final int diasLinearLayout=0x7f0a0136;
-        public static final int domingoLayout=0x7f0a0137;
+        public static final int diasLayout=0x7f0a0136;
+        public static final int diasLinearLayout=0x7f0a0137;
+        public static final int domingoLayout=0x7f0a0138;
         public static final int editTextComentarios=0x7f0a0054;
         public static final int editTextObservaciones=0x7f0a0055;
         public static final int elEventoDeEvaluacion=0x7f0a010c;
@@ -177,8 +177,8 @@ public final class R {
         public static final int funcionesscroll=0x7f0a00c6;
         public static final int gridview=0x7f0a0023;
         public static final int header=0x7f0a001f;
-        public static final int help=0x7f0a0140;
-        public static final int horasLayout=0x7f0a0133;
+        public static final int help=0x7f0a0141;
+        public static final int horasLayout=0x7f0a0134;
         public static final int infopostulante_title=0x7f0a009d;
         public static final int invitado_area_content=0x7f0a0085;
         public static final int invitado_area_title=0x7f0a007f;
@@ -190,7 +190,7 @@ public final class R {
         public static final int invitado_puesto_title=0x7f0a0080;
         public static final int invitado_telefono_content=0x7f0a0087;
         public static final int invitado_telefono_title=0x7f0a0081;
-        public static final int juevesLayout=0x7f0a013b;
+        public static final int juevesLayout=0x7f0a013c;
         public static final int laSupervisionDeEvaluaciones=0x7f0a010e;
         public static final int layAvance=0x7f0a00c1;
         public static final int layEvaluacion=0x7f0a005e;
@@ -200,6 +200,7 @@ public final class R {
         public static final int layout_general_creador_evento=0x7f0a0061;
         public static final int layout_lista=0x7f0a0079;
         public static final int layout_lista_invitados=0x7f0a0078;
+        public static final int leyenda_colores=0x7f0a0127;
         public static final int linearLayout1=0x7f0a0002;
         public static final int listaObjetivos=0x7f0a0092;
         public static final int listaProcesos=0x7f0a010b;
@@ -208,11 +209,11 @@ public final class R {
         public static final int loginButton=0x7f0a0007;
         public static final int lugar_evento_content=0x7f0a0077;
         public static final int lugar_evento_title=0x7f0a0072;
-        public static final int lunesLayout=0x7f0a0138;
-        public static final int martesLayout=0x7f0a0139;
+        public static final int lunesLayout=0x7f0a0139;
+        public static final int martesLayout=0x7f0a013a;
         public static final int mensaje_confirmacion_evaluacion=0x7f0a0057;
         public static final int menu_segunda_fase_title_layout=0x7f0a0093;
-        public static final int menu_settings=0x7f0a013e;
+        public static final int menu_settings=0x7f0a013f;
         public static final int menu_tercera_fase_title_layout=0x7f0a00a3;
         public static final int menuofertas_title=0x7f0a0094;
         public static final int mi_info_contactos_title_layout=0x7f0a00a5;
@@ -241,7 +242,7 @@ public final class R {
         public static final int mi_info_tableRow2=0x7f0a0114;
         public static final int mi_info_tableRow9=0x7f0a0120;
         public static final int mi_info_title_layout=0x7f0a010f;
-        public static final int miercolesLayout=0x7f0a013a;
+        public static final int miercolesLayout=0x7f0a013b;
         public static final int miinfo_contactos_apellidos=0x7f0a00ab;
         public static final int miinfo_contactos_area=0x7f0a00ac;
         public static final int miinfo_contactos_correo=0x7f0a00b0;
@@ -308,8 +309,8 @@ public final class R {
         public static final int reclut_responsable_input=0x7f0a0019;
         public static final int reclut_sueldo_tentativo_input=0x7f0a0015;
         public static final int reclut_title_layout=0x7f0a000a;
-        public static final int relativeLayout1=0x7f0a0127;
-        public static final int relativeLayout242=0x7f0a0131;
+        public static final int relativeLayout1=0x7f0a0128;
+        public static final int relativeLayout242=0x7f0a0132;
         public static final int reporte3601titulo=0x7f0a00d3;
         public static final int reporte3602titulo=0x7f0a00d9;
         public static final int reporte360WebkitGLineal=0x7f0a00dc;
@@ -362,9 +363,9 @@ public final class R {
         public static final int reporteperbscsDisplayfecha=0x7f0a0104;
         public static final int reporteperbscspinner=0x7f0a0101;
         public static final int reporteperbscspinnerGraf=0x7f0a0107;
-        public static final int sabadoLayout=0x7f0a013d;
-        public static final int scrollView1=0x7f0a0130;
-        public static final int semanaContenidoLayout=0x7f0a0132;
+        public static final int sabadoLayout=0x7f0a013e;
+        public static final int scrollView1=0x7f0a0131;
+        public static final int semanaContenidoLayout=0x7f0a0133;
         public static final int semana_title=0x7f0a0126;
         public static final int siguienteEvaluacion=0x7f0a00d2;
         public static final int spinnerMisObjsObjetivo=0x7f0a008e;
@@ -374,15 +375,15 @@ public final class R {
         public static final int text1=0x7f0a004c;
         public static final int text2=0x7f0a004d;
         public static final int textView1=0x7f0a004b;
-        public static final int textView10=0x7f0a0134;
-        public static final int textView2=0x7f0a0128;
-        public static final int textView3=0x7f0a0129;
-        public static final int textView4=0x7f0a012a;
-        public static final int textView5=0x7f0a012b;
-        public static final int textView6=0x7f0a012c;
-        public static final int textView7=0x7f0a012d;
-        public static final int textView8=0x7f0a012e;
-        public static final int textView9=0x7f0a012f;
+        public static final int textView10=0x7f0a0135;
+        public static final int textView2=0x7f0a0129;
+        public static final int textView3=0x7f0a012a;
+        public static final int textView4=0x7f0a012b;
+        public static final int textView5=0x7f0a012c;
+        public static final int textView6=0x7f0a012d;
+        public static final int textView7=0x7f0a012e;
+        public static final int textView8=0x7f0a012f;
+        public static final int textView9=0x7f0a0130;
         public static final int tipo_evento_content=0x7f0a0074;
         public static final int tipo_evento_title=0x7f0a006f;
         public static final int title=0x7f0a0021;
@@ -395,7 +396,7 @@ public final class R {
         public static final int toggleButton3=0x7f0a00d7;
         public static final int usuarioText=0x7f0a0004;
         public static final int usuario_textview=0x7f0a0003;
-        public static final int viernesLayout=0x7f0a013c;
+        public static final int viernesLayout=0x7f0a013d;
         public static final int welcome_textview=0x7f0a0001;
     }
     public static final class layout {

@@ -34,8 +34,7 @@ public class LoginActivity extends Activity {
 	public static final String USUARIO_INVALIDO = "0";
 
 	public static Usuario usuario;
-	public int DEBUG_NO_LOGIN = 0; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
-									// LOGIN
+	public int DEBUG_NO_LOGIN = 0; // 1: para no validar login
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -166,6 +165,8 @@ public class LoginActivity extends Activity {
 							pe.edu.pucp.proyectorh.MainActivity.class);
 					ocultarMensajeProgreso();
 					startActivity(loginIntent);
+				} else {
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ocultarMensajeProgreso();
