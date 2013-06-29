@@ -31,7 +31,6 @@ public class PersistentHandlerReporte360Detalle {
 			Context whereIAm, String fileName) {
 		String state = Environment.getExternalStorageState();
 
-
 		try {
 			File file = new File(whereIAm.getFilesDir(), fileName);
 			OutputStream os = new FileOutputStream(file);
@@ -39,6 +38,7 @@ public class PersistentHandlerReporte360Detalle {
 			writer.write(texto);
 			writer.close();
 			os.close();
+			
 		} catch (IOException e) {
 			System.out.println("Error writing in " + fileName);
 		}
@@ -48,6 +48,7 @@ public class PersistentHandlerReporte360Detalle {
 
 	}
 
+	
 	public static boolean buscarArchivo(Context whereIAm,
 			String fileNameExpected) {
 
