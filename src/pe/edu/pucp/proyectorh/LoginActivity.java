@@ -1,9 +1,13 @@
 package pe.edu.pucp.proyectorh;
 
+import java.util.HashMap;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import pe.edu.pucp.proyectorh.connection.ConnectionManager;
+import pe.edu.pucp.proyectorh.model.Rol;
 import pe.edu.pucp.proyectorh.model.Usuario;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.ConstanteServicio;
@@ -34,8 +38,7 @@ public class LoginActivity extends Activity {
 	public static final String USUARIO_INVALIDO = "0";
 
 	public static Usuario usuario;
-	public int DEBUG_NO_LOGIN = 0; // COLOCAR EN 1 CUANDO NO SE DESEE VALIDAR
-									// LOGIN
+	public int DEBUG_NO_LOGIN = 0; // 1: para no validar login
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -150,6 +153,7 @@ public class LoginActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			Rol rol;
 			System.out.println("Recibido: " + result.toString());
 			try {
 				JSONObject jsonObject = new JSONObject(result);
@@ -162,10 +166,30 @@ public class LoginActivity extends Activity {
 					usuario = new Usuario(usuarioObject.getString("ID"),
 							usuarioObject.getString("Username"),
 							usuarioObject.getString("Password"));
+					JSONArray rolesListObject = (JSONArray) usuarioObject
+							.get("Roles");
+					HashMap<String, Rol> roles = new HashMap<String, Rol>();
+					for (int i = 0; i < rolesListObject.length(); ++i) {
+						JSONObject rolObject = rolesListObject.getJSONObject(i);
+						rol = new Rol();
+						if (!rolObject.getBoolean("EsWeb")) {
+							rol.setID(rolObject.getInt("ID"));
+							rol.setEliminado(rolObject
+									.getBoolean("IsEliminado"));
+							rol.setWeb(rolObject.getBoolean("EsWeb"));
+							rol.setNombre(rolObject.getString("Nombre"));
+							rol.setPermiso(rolObject.getBoolean("Permiso"));
+							rol.setArea(rolObject.getString("Area"));
+							roles.put(rol.getNombre(), rol);
+						}
+					}
+					usuario.setRoles(roles);
 					Intent loginIntent = new Intent(LoginActivity.this,
 							pe.edu.pucp.proyectorh.MainActivity.class);
 					ocultarMensajeProgreso();
 					startActivity(loginIntent);
+				} else {
+					ocultarMensajeProgreso();
 				}
 			} catch (JSONException e) {
 				ocultarMensajeProgreso();

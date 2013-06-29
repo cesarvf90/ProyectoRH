@@ -9,6 +9,36 @@ import pe.edu.pucp.proyectorh.utils.Constante;
 
 public class Modulo {
 
+	// Indicadores de indice de permiso cada funcionalidad dentro del modulo
+	public static String INFORMACION_PERSONAL = "";
+	public static String EQUIPO_TRABAJO = "";
+	public static String CONTACTOS = "";
+	public static String AGENDA = "";
+
+	public static String APROBAR_SOLICITUDES = "";
+	public static String EVALUACION_FASE1 = "";
+	public static String EVALUACION_FASE3 = "";
+	public static String POSTULAR_OFERTA = "";
+
+	public static String PENDIENTES = "";
+	public static String ROL_EVALUADO = "";
+	public static String SUBORDINADOS = "";
+
+	public static String OBJETIVOS_EMPRESARIALES = "";
+	public static String OBJETIVOS_PROPIOS = "";
+	public static String OBJETIVOS_EQUIPO = "";
+	public static String REGISTRAR_AVANCE = "";
+	public static String VISUALIZAR_AVANCE = "";
+	public static String MONITOREO = "";
+
+	public static String COMPARAR_CAPACIDADES = "";
+	public static String CANDIDATOS_X_PUESTO = "";
+
+	public static String REPORTE_EVALUACION_360 = "";
+	public static String REPORTE_HISTORICO_OBJETIVOS = "";
+	public static String REPORTE_OFERTAS_LABORALES = "";
+	public static String REPORTE_OBJETIVOS_BSC = "";
+
 	public static class ModuloItem {
 
 		public String id;
@@ -62,61 +92,158 @@ public class Modulo {
 		MODULOS_MAP.put(item.id, item);
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesMiInformacion() {
+	public static List<ModuloItem> obtenerFuncionalidadesMiInformacion(
+			Usuario usuario) {
+		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Información personal"));
-		submodulos.add(new ModuloItem("2", "Mi equipo de trabajo"));
-		submodulos.add(new ModuloItem("3", "Mis contactos"));
-		submodulos.add(new ModuloItem("4", "Agenda"));
+
+		if (usuario.getRoles().get("Informacion personal").isPermiso()) {
+			INFORMACION_PERSONAL = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(INFORMACION_PERSONAL,
+					"Información personal"));
+		}
+		if (usuario.getRoles().get("Mi equipo de trabajo").isPermiso()) {
+			EQUIPO_TRABAJO = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(EQUIPO_TRABAJO,
+					"Mi equipo de trabajo"));
+		}
+		if (usuario.getRoles().get("Mis contactos").isPermiso()) {
+			CONTACTOS = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(CONTACTOS, "Mis contactos"));
+		}
+		if (usuario.getRoles().get("Agenda").isPermiso()) {
+			AGENDA = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(AGENDA, "Agenda"));
+		}
 		return submodulos;
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesReclutamiento() {
+	public static List<ModuloItem> obtenerFuncionalidadesReclutamiento(
+			Usuario usuario) {
+		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		//submodulos.add(new ModuloItem("1", "Aprobar postulante"));
-		submodulos
-				.add(new ModuloItem("1", "Aprobar solicitudes de oferta laboral"));
-		//submodulos.add(new ModuloItem("3", "Aprobar solicitudes de promoción laboral"));
-		submodulos.add(new ModuloItem("2", "Evaluar postulantes 1ra fase"));
-		submodulos.add(new ModuloItem("3", "Evaluar postulantes 3ra fase"));
-		submodulos.add(new ModuloItem("4", "Postular a oferta laboral"));
+		if (usuario.getRoles().get("Aprobar solicitudes de oferta laboral")
+				.isPermiso()) {
+			APROBAR_SOLICITUDES = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(APROBAR_SOLICITUDES,
+					"Aprobar solicitudes de oferta laboral"));
+		}
+		if (usuario.getRoles().get("Evaluar postulantes 1ra fase").isPermiso()) {
+			EVALUACION_FASE1 = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(EVALUACION_FASE1,
+					"Evaluar postulantes 1ra fase"));
+		}
+		if (usuario.getRoles().get("Evaluar postulantes 3ra fase").isPermiso()) {
+			EVALUACION_FASE3 = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(EVALUACION_FASE3,
+					"Evaluar postulantes 3ra fase"));
+		}
+		if (usuario.getRoles().get("Postular a oferta laboral").isPermiso()) {
+			POSTULAR_OFERTA = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(POSTULAR_OFERTA,
+					"Postular a oferta laboral"));
+		}
 		return submodulos;
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesEvaluacion360() {
+	public static List<ModuloItem> obtenerFuncionalidadesEvaluacion360(
+			Usuario usuario) {
+		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Mis Pendientes"));
-		submodulos.add(new ModuloItem("2", "Rol de Evaluado"));
-		submodulos.add(new ModuloItem("3", "Mis subordinados"));
+		if (usuario.getRoles().get("Mis Pendientes").isPermiso()) {
+			PENDIENTES = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(PENDIENTES, "Mis Pendientes"));
+		}
+		if (usuario.getRoles().get("Rol de Evaluado").isPermiso()) {
+			ROL_EVALUADO = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(ROL_EVALUADO, "Rol de Evaluado"));
+		}
+		if (usuario.getRoles().get("Mis subordinados").isPermiso()) {
+			SUBORDINADOS = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(SUBORDINADOS, "Mis subordinados"));
+		}
 		return submodulos;
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesObjetivos() {
+	public static List<ModuloItem> obtenerFuncionalidadesObjetivos(
+			Usuario usuario) {
+		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Objetivos Empresariales"));
-		submodulos.add(new ModuloItem("2", "Objetivos Propios"));
-		submodulos.add(new ModuloItem("3", "Objetivos para Equipo"));
-		submodulos.add(new ModuloItem("4", "Registrar Avance"));
-		submodulos.add(new ModuloItem("5", "Visualizar Avances"));
-		submodulos.add(new ModuloItem("6", "Monitoreo"));
+		if (usuario.getRoles().get("Objetivos Empresariales").isPermiso()) {
+			OBJETIVOS_EMPRESARIALES = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(OBJETIVOS_EMPRESARIALES,
+					"Objetivos Empresariales"));
+		}
+		if (usuario.getRoles().get("Objetivos Propios").isPermiso()) {
+			OBJETIVOS_PROPIOS = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(OBJETIVOS_PROPIOS,
+					"Objetivos Propios"));
+		}
+		if (usuario.getRoles().get("Objetivos para Equipo").isPermiso()) {
+			OBJETIVOS_EQUIPO = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(OBJETIVOS_EQUIPO,
+					"Objetivos para Equipo"));
+		}
+		if (usuario.getRoles().get("Registrar Avance").isPermiso()) {
+			REGISTRAR_AVANCE = String.valueOf(idSecuencial++);
+			submodulos
+					.add(new ModuloItem(REGISTRAR_AVANCE, "Registrar Avance"));
+		}
+		if (usuario.getRoles().get("Visualizar Avances").isPermiso()) {
+			VISUALIZAR_AVANCE = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(VISUALIZAR_AVANCE,
+					"Visualizar Avances"));
+		}
+		if (usuario.getRoles().get("Monitoreo").isPermiso()) {
+			MONITOREO = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(MONITOREO, "Monitoreo"));
+		}
 		return submodulos;
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesLineaDeCarrera() {
+	public static List<ModuloItem> obtenerFuncionalidadesLineaDeCarrera(
+			Usuario usuario) {
+		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Comparar capacidades"));
-		submodulos.add(new ModuloItem("2", "Candidatos por puesto"));
+		if (usuario.getRoles().get("Comparar capacidades").isPermiso()) {
+			COMPARAR_CAPACIDADES = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(COMPARAR_CAPACIDADES,
+					"Comparar capacidades"));
+		}
+		if (usuario.getRoles().get("Candidatos por puesto").isPermiso()) {
+			CANDIDATOS_X_PUESTO = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(CANDIDATOS_X_PUESTO,
+					"Candidatos por puesto"));
+		}
 		return submodulos;
 	}
 
-	public static List<ModuloItem> obtenerFuncionalidadesReportes() {
+	public static List<ModuloItem> obtenerFuncionalidadesReportes(
+			Usuario usuario) {
+		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Reporte de Evaluación 360"));
-		submodulos
-				.add(new ModuloItem("2", "Reporte histórico de Objetivos"));
-		submodulos.add(new ModuloItem("3", "Reporte de Cubrimiento de Puestos"));
-		submodulos.add(new ModuloItem("4", "Reporte de Objetivos BSC"));
+		if (usuario.getRoles().get("Reporte de Evaluacion 360").isPermiso()) {
+			REPORTE_EVALUACION_360 = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(REPORTE_EVALUACION_360,
+					"Reporte de Evaluación 360"));
+		}
+		if (usuario.getRoles().get("Reporte historico de Objetivos")
+				.isPermiso()) {
+			REPORTE_HISTORICO_OBJETIVOS = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(REPORTE_HISTORICO_OBJETIVOS,
+					"Reporte histórico de Objetivos"));
+		}
+		if (usuario.getRoles().get("Reporte de Cubrimiento de Puestos")
+				.isPermiso()) {
+			REPORTE_OFERTAS_LABORALES = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(REPORTE_OFERTAS_LABORALES,
+					"Reporte de Ofertas Laborales"));
+		}
+		if (usuario.getRoles().get("Reporte de Objetivos BSC").isPermiso()) {
+			REPORTE_OBJETIVOS_BSC = String.valueOf(idSecuencial++);
+			submodulos.add(new ModuloItem(REPORTE_OBJETIVOS_BSC,
+					"Reporte de Objetivos BSC"));
+		}
 		return submodulos;
 	}
-
 }

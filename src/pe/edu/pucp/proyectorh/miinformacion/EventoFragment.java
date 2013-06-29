@@ -170,10 +170,10 @@ public class EventoFragment extends Fragment {
 		puestoText.setText(invitado.getPuesto());
 		TextView telefonoText = (TextView) rootView
 				.findViewById(R.id.invitado_telefono_content);
-		telefonoText.setText(invitado.getPuesto());
+		telefonoText.setText(invitado.getTelefono());
 		TextView correoText = (TextView) rootView
 				.findViewById(R.id.invitado_correo_content);
-		correoText.setText(invitado.getPuesto());
+		correoText.setText(invitado.getCorreoElectronico());
 	}
 
 	private void mostrarTexto(TextView textView, String texto) {
