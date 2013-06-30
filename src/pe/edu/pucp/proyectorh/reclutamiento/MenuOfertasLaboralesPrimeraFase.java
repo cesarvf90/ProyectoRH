@@ -112,12 +112,15 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 				postulantes = new ArrayList<ArrayList<ArrayList<Postulante>>>();
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
-				//String mensajeRespuesta = jsonObject.getString("message");
 				if (respuesta.equals("true")) {
 					JSONObject datosObject = (JSONObject) jsonObject
 							.get("data");
 					JSONArray ofertasListObject = (JSONArray) datosObject
 							.get("ofertasLaborales");
+					if (ofertasListObject.length() == 0) {
+						ocultarMensajeProgreso();
+						mostrarMensajeNoHayOfertas();
+					}
 					ofertas = new ArrayList<OfertaLaboral>();
 					for (int i = 0; i < ofertasListObject.length(); ++i) {
 						JSONObject ofertaObject = ofertasListObject
@@ -309,9 +312,13 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 		mostrarTexto(R.id.infopostulante_title, postulante.toString());
 		mostrarTexto(R.id.rec_postulante_nombre, postulante.getNombres());
 		mostrarTexto(R.id.rec_postulante_apellidos, postulante.getApellidos());
-		mostrarTexto(R.id.rec_postulante_docidentidad,
-				postulante.getTipoDocumento() + Constante.ESPACIO_VACIO
-						+ postulante.getNumeroDocumento());
+		mostrarTexto(
+				R.id.rec_postulante_docidentidad,
+				postulante.getTipoDocumento()
+						+ Constante.ESPACIO_VACIO
+						+ (Constante.NULL.equals(postulante
+								.getNumeroDocumento()) ? Constante.CADENA_VACIA
+								: postulante.getNumeroDocumento()));
 		mostrarTexto(R.id.rec_postulante_centroestudios,
 				postulante.getCentroEstudios());
 		mostrarTexto(R.id.rec_postulante_gradoacademico,
@@ -391,6 +398,16 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 			builder.show();
 			return false;
 		}
+	}
+	
+	private void mostrarMensajeNoHayOfertas() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("No hay ofertas");
+		builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
+		builder.setCancelable(false);
+		builder.setPositiveButton("Ok", null);
+		builder.create();
+		builder.show();
 	}
 
 	private void mostrarTexto(int idTextView, String texto) {

@@ -52,7 +52,8 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 	private int totalPaginas;
 	private final int PREGUNTAS_X_PAGINA = 4;
 
-	public EvaluacionPostulantePrimeraFase(OfertaLaboral oferta, Postulante postulante) {
+	public EvaluacionPostulantePrimeraFase(OfertaLaboral oferta, 
+			Postulante postulante) {
 		this.oferta = oferta;
 		this.postulante = postulante;
 	}
@@ -160,6 +161,13 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
+									Date actual = new Date(System
+											.currentTimeMillis());
+									SimpleDateFormat formatoFecha = new SimpleDateFormat();
+									formatoFecha
+											.applyPattern("dd/MM/yyyy HH:mm:ss");
+									evaluacion.setFechaFin(formatoFecha
+											.format(actual));
 									FragmentTransaction ft = getActivity()
 											.getSupportFragmentManager()
 											.beginTransaction();
@@ -418,7 +426,7 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 		evaluacion = new Evaluacion();
 		Date actual = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatoFecha = new SimpleDateFormat();
-		formatoFecha.applyPattern("dd/MM/yyyy");
+		formatoFecha.applyPattern("dd/MM/yyyy HH:mm:ss");
 		evaluacion.setFechaInicio(formatoFecha.format(actual));
 
 		// totalPaginas = competencias.size() / PREGUNTAS_X_PAGINA;
