@@ -231,13 +231,6 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		System.out.println("entro a childview..definiendo vista gp:" + groupPosition);
-		System.out.println("padre:" + getGroup(groupPosition) );
-		System.out.print("hijos:" );
-		for (int i=0;i<objetivos.get(groupPosition).size();i++){
-			System.out.print(objetivos.get(groupPosition).get(i).getDescripcion() + ", ");
-		}
-		System.out.println();
 		
 
 		LayoutInflater inflater = (LayoutInflater) context
@@ -259,7 +252,6 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 			listaGridView.get(groupPosition).setAdapter(new ObjetivoAdapter(context,objetivos.get(groupPosition)));
 
 			gpglobal = groupPosition;
-			System.out.println("positions: ");
 
 			listaGridView.get(groupPosition).setOnItemClickListener(new OnItemClickListener() {
 				int gp = gpglobal;
@@ -267,12 +259,13 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 				public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 					parent.getParent();
+					/*
 					System.out.print("(grouppos: " + gp +", ppos: " + position + ")");
 					System.out.print("(size: " + objetivos.get(gp).size() + ")");
 					System.out.println(" hijos:" + objetivos.get(gp).get(position).getHijos()
 							+ " descp: " + objetivos.get(gp).get(position).getDescripcion() );
 
-					/*	Toast.makeText(parent.getContext(), 
+						Toast.makeText(parent.getContext(), 
 					"seleccionado : " + parent.getItemAtPosition(pos).toString() + " id: " + listaPeriodos.get(pos).getID(),
 					Toast.LENGTH_SHORT).show(); */
 					
@@ -308,7 +301,7 @@ public class ObjetivoPersonalAdapter extends BaseExpandableListAdapter {
 			});
 
 			ViewGroup.LayoutParams layoutParams = listaGridView.get(groupPosition).getLayoutParams();
-			layoutParams.height = 200*((objetivos.get(groupPosition).size() + 1)/2); //this is in pixels
+			layoutParams.height = 100*((objetivos.get(groupPosition).size() + 1)/2); //this is in pixels 100 -> tablet, 200->cel
 			listaGridView.get(groupPosition).setLayoutParams(layoutParams);
 			
 		

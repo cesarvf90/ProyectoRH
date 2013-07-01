@@ -38,53 +38,48 @@
                                 size: arrPost.bachiller[0],
                                 category: "Bachiller"
                             }, {
-                               x: arrPost.bachiller[2],
-                                y: arrPost.bachiller[1],
-                                size: arrPost.bachiller[0],
+                               x: arrPost.master[2],
+                                y: arrPost.master[1],
+                                size: arrPost.master[0],
                                 category: "Master"
                             }, {
-                                x: arrPost.bachiller[2],
-                                y: arrPost.bachiller[1],
-                                size: arrPost.bachiller[0],
+                                x: arrPost.doctorado[2],
+                                y: arrPost.doctorado[1],
+                                size: arrPost.doctorado[0],
                                 category: "Doctor"
                             }, {
-                                x: arrPost.bachiller[2],
-                                y: arrPost.bachiller[1],
-                                size: arrPost.bachiller[0],
+                                x: arrPost.tecnico[2],
+                                y: arrPost.tecnico[1],
+                                size: arrPost.tecnico[0],
                                 category: "Técnico"
                             }, {
-                                x: arrPost.bachiller[2],
-                                y: arrPost.bachiller[1],
-                                size: arrPost.bachiller[0],
+                                x: arrPost.licenciado[2],
+                                y: arrPost.licenciado[1],
+                                size: arrPost.licenciado[0],
                                 category: "Licenciado"
                             }, {
-                                x: arrPost.bachiller[2],
-                                y: arrPost.bachiller[1],
-                                size: arrPost.bachiller[0],
+                                x: arrPost.estudiante[2],
+                                y: arrPost.estudiante[1],
+                                size: arrPost.estudiante[0],
                                 category: "Estudiante"
                             }]
                         }],
                         xAxis: {
                             labels: {
                                 format: "{0:N0}",
-                                skip: 1
+                                skip: 0
                             },
+                            majorUnit: 1,
+                            axisCrossingValue: 0,
  							title: {
                                 text: "Aprobados"
-                            },
-                            axisCrossingValue: -5000,
-                            majorUnit: 2000,
-                            plotBands: [{
-                                from: -5000,
-                                to: 0,
-                                color: "#00f",
-                                opacity: 0.05
-                            }]
+                            }
                         },
                         yAxis: {
                         	title: {
                                 text: "Puntaje promedio"
                             },
+                            majorUnit: 1,
                             labels: {
                                 format: "{0:N0}"
                             },

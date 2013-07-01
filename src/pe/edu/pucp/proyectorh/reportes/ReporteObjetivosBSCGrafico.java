@@ -156,18 +156,16 @@ public class ReporteObjetivosBSCGrafico extends Fragment{
 						persona.setNombreColaborador(objetivosArch.get(i).getColaboradorNombre());
 						
 						int promedio=0;
-						int cantidad=0;
 						
 						//obtener avance de hijos
 						for (int j=0;j<objetivosArch.size();j++){
 							if (objetivosArch.get(j).getIdpadre()==objetivosArch.get(i).getIdObjetivo()){
-								promedio += objetivosArch.get(j).getAvance();
-								cantidad++;
+								promedio += objetivosArch.get(j).getAvance()*objetivosArch.get(j).getPeso() / 100 ;
+
 							}
 								
 						}
-						
-						if (cantidad>0) promedio =promedio /cantidad;
+
 						persona.setAvance(promedio);
 						Personas.add(persona);
 						

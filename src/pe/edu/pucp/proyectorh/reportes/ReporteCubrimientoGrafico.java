@@ -55,10 +55,14 @@ public class ReporteCubrimientoGrafico extends Fragment{
 	Button btnFase2;
 	Button btnFase3;
 	
+	Button btnDetalle;
+	
 	int procesoSelec;
 	
 	TextView displayTitulo;
 	Spinner spinnerOferta;
+	
+	int faseSelec;
 	
 	
 	public ReporteCubrimientoGrafico(){
@@ -113,6 +117,56 @@ public class ReporteCubrimientoGrafico extends Fragment{
 			  }
 		});
 		
+		btnDetalle = (Button)rootView.findViewById(R.id.reportecubbtnDetalle);
+		
+		btnDetalle.setOnClickListener(new OnClickListener() {
+			 
+			  @Override
+			  public void onClick(View v) {
+				  
+				  if (ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes() != null){
+					  
+					  	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setTitle("Detalle de fase");
+						
+						String cadena = "Punt.  Nombre                             \tGrado          Univ.\n";
+						for(int i=0;i<ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().size();i++){
+							cadena = cadena + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getPuntaje();
+							if (ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getPuntaje() < 10) cadena = cadena + "   ";
+							else cadena = cadena + " ";
+							
+							cadena = cadena + "   " + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getNombre();
+							
+							int lenNombre = ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getNombre().length();
+							while (lenNombre < 35 ){
+								cadena = cadena + " ";
+								lenNombre ++ ;
+							}
+
+							cadena = cadena  + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getGradoAcademico();
+							
+							int lenGrado = ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getGradoAcademico().length();
+							
+							while (lenGrado < 12 ){
+								cadena = cadena + " ";
+								lenGrado ++ ;
+							}
+							
+							cadena = cadena  + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getProveniencia() + "\n";
+						}
+						
+						builder.setMessage(cadena);
+						builder.setCancelable(false);
+						builder.setPositiveButton("Ok", null);
+					
+						AlertDialog alertDialog = builder.create();
+						alertDialog.getWindow().setLayout(800, 600); //Controlling width and height.
+						alertDialog.show();
+					  }
+				  
+				  
+			  }
+		});
 		
 		
 		btnPostulantes = (Button)rootView.findViewById(R.id.reportecubbtnPost);
@@ -125,8 +179,9 @@ public class ReporteCubrimientoGrafico extends Fragment{
 			  @Override
 			  public void onClick(View v) {
 				  displayTitulo.setText("Postulantes por Oferta Laboral");
-				//  cambiarFase(0);
-				  
+				  faseSelec = 0;
+				  cambiarFase(0);
+				 
 				  
 			  }
 		});
@@ -140,7 +195,8 @@ public class ReporteCubrimientoGrafico extends Fragment{
 			  @Override
 			  public void onClick(View v) {
 				  displayTitulo.setText("Postulantes por Oferta Laboral: Fase 1");
-				//  cambiarFase(1);
+				  faseSelec = 1;
+				  cambiarFase(1);
 				  
 				  
 			  }
@@ -155,7 +211,8 @@ public class ReporteCubrimientoGrafico extends Fragment{
 			  @Override
 			  public void onClick(View v) {
 				  displayTitulo.setText("Postulantes por Oferta Laboral: Fase 2");
-				 // cambiarFase(2);
+				  faseSelec = 2;
+				  cambiarFase(2);
 				  
 				  
 			  }
@@ -170,14 +227,15 @@ public class ReporteCubrimientoGrafico extends Fragment{
 			  @Override
 			  public void onClick(View v) {
 				  displayTitulo.setText("Postulantes por Oferta Laboral: Fase 3");
-				 // cambiarFase(3);
+				  faseSelec = 3;
+				  cambiarFase(3);
 				  
 				  
 			  }
 		});
 
 		ofertas= new ArrayList<ROferta>();
-		//cargarGraficoPuesto(idpuesto);
+		cargarGraficoPuesto(idpuesto);
 		
 		
 		return rootView;
@@ -196,6 +254,8 @@ public class ReporteCubrimientoGrafico extends Fragment{
 	public void  cambiarFase(int fase){
 		
 		if (ofertas.size()>0){
+			
+			System.out.println("total fases: " + ofertas.get(procesoSelec).getFases().size() + " ...entrando a fase " + fase);
 		
 		ArrayList<Double> bachiller = new ArrayList<Double>() {{ add(0.0); add(0.0); add(0.0); }};  //numPost, promedioPunt, aprob
 		ArrayList<Double> master = new ArrayList<Double>()  {{ add(0.0); add(0.0); add(0.0); }}; 
@@ -206,17 +266,25 @@ public class ReporteCubrimientoGrafico extends Fragment{
 		
 		for (int i = 0; i< ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().size();i++){
 			
+			
+			
 			if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getGradoAcademico().equals("Bachiller")){
 				bachiller.set(0, bachiller.get(0) + 1); //numpost++
 				bachiller.set(1, bachiller.get(1) + ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getPuntaje()); //promedioPunt
 				
-				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(1).getPostulantes().size();j++){
+				if ((fase + 1)< ofertas.get(procesoSelec).getFases().size()){
 					
-					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getID() == ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getID()){
-						bachiller.set(2, bachiller.get(2) + 1); //aprob++
-						break;
+				
+				
+					for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().size();j++){
+											
+						if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getNombre())){
+							bachiller.set(2, bachiller.get(2) + 1); //aprob++
+							break;
+						}
+						
 					}
-					
+				
 				}
 				
 			}
@@ -225,13 +293,17 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				master.set(0, master.get(0) + 1); //numpost++
 				master.set(1, master.get(1) + ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getPuntaje()); //promedioPunt
 				
-				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(1).getPostulantes().size();j++){
+				if ((fase + 1)< ofertas.get(procesoSelec).getFases().size()){
+				
+				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().size();j++){
 					
-					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getID() == ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getID()){
+					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getNombre())){
 						master.set(2, master.get(2) + 1); //aprob++
 						break;
 					}
 					
+				}
+				
 				}
 				
 			}
@@ -240,13 +312,17 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				doctorado.set(0, doctorado.get(0) + 1); //numpost++
 				doctorado.set(1, doctorado.get(1) + ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getPuntaje()); //promedioPunt
 				
-				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(1).getPostulantes().size();j++){
+				if ((fase + 1)< ofertas.get(procesoSelec).getFases().size()){
+				
+				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().size();j++){
 					
-					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getID() == ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getID()){
+					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getNombre())){
 						doctorado.set(2, doctorado.get(2) + 1); //aprob++
 						break;
 					}
 					
+				}
+				
 				}
 				
 			}
@@ -255,13 +331,17 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				tecnico.set(0, tecnico.get(0) + 1); //numpost++
 				tecnico.set(1, tecnico.get(1) + ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getPuntaje()); //promedioPunt
 				
-				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(1).getPostulantes().size();j++){
+				if ((fase + 1)< ofertas.get(procesoSelec).getFases().size()){
+				
+				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().size();j++){
 					
-					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getID() == ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getID()){
+					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getNombre())){
 						tecnico.set(2, tecnico.get(2) + 1); //aprob++
 						break;
 					}
 					
+				}
+				
 				}
 				
 			}
@@ -270,13 +350,17 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				estudiante.set(0, estudiante.get(0) + 1); //numpost++
 				estudiante.set(1, estudiante.get(1) + ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getPuntaje()); //promedioPunt
 				
-				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(1).getPostulantes().size();j++){
+				if ((fase + 1)< ofertas.get(procesoSelec).getFases().size()){
+				
+				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().size();j++){
 					
-					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getID() == ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getID()){
+					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getNombre())){
 						estudiante.set(2, estudiante.get(2) + 1); //aprob++
 						break;
 					}
 					
+				}
+				
 				}
 				
 			}
@@ -285,13 +369,17 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				licenciado.set(0, licenciado.get(0) + 1); //numpost++
 				licenciado.set(1, licenciado.get(1) + ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getPuntaje()); //promedioPunt
 				
-				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(1).getPostulantes().size();j++){
+				if ((fase + 1)< ofertas.get(procesoSelec).getFases().size()){
+				
+				for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().size();j++){
 					
-					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getID() == ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getID()){
+					if (ofertas.get(procesoSelec).getFases().get(fase).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(fase + 1).getPostulantes().get(j).getNombre())){
 						licenciado.set(2, licenciado.get(2) + 1); //aprob++
 						break;
 					}
 					
+				}
+				
 				}
 				
 			}
@@ -424,6 +512,7 @@ public class ReporteCubrimientoGrafico extends Fragment{
 						public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 							
 							procesoSelec=pos;
+							displayTitulo.setText("Postulantes por Oferta Laboral");
 							cambiarFase(0);
 						}
 						
@@ -498,7 +587,7 @@ public class ReporteCubrimientoGrafico extends Fragment{
 			for (int i=0;i<3;i++){
 				bachiller[i] = arrayBach.get(i);
 				master[i] = arrayMaster.get(i);
-				doctorado[i] = arrayMaster.get(i);
+				doctorado[i] = arrayDoctor.get(i);
 				tecnico[i] = arrayTec.get(i);
 				licenciado[i] = arrayLic.get(i);
 				estudiante[i] = arrayEst.get(i);

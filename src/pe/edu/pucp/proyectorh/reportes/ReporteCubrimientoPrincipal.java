@@ -158,7 +158,7 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		if (ConnectionManager.connect(getActivity())) {
 			// construir llamada al servicio
 			
-			String request = ReporteServices.obtenerAreas ; // + "?puesto=" + idpuesto;
+			String request = ReporteServices.obtenerOfertas + "?puesto=" + idpuesto;
 
 			new getReporteOferta(getActivity()).execute(request);
 			
@@ -186,8 +186,6 @@ public class ReporteCubrimientoPrincipal extends Fragment {
 		protected void onPostExecute(String result) {
 			
 			ocultarMensajeProgreso();
-			
-			//harcodear result
 
 			System.out.println("Recibido: " + result.toString());
 			

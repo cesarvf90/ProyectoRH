@@ -64,6 +64,13 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="30dp" />
     
+      <Button
+        android:id="@+id/reportecubbtnDetalle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver detalle"
+        android:layout_marginLeft="200dp" />
+    
     
     </LinearLayout>
     
@@ -131,10 +138,8 @@
         android:id="@+id/reportecubWebkit"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="50dp" />
+	 />
     
 
-    
-    
 
 </LinearLayout>
