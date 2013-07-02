@@ -16,8 +16,10 @@ import pe.edu.pucp.proyectorh.reportes.ReportePersonalBSCGrafico.getReporteObjPe
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.utils.NetDateTimeAdapter;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -26,12 +28,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -126,42 +131,90 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				  
 				  if (ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes() != null){
 					  
-					  	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-						builder.setTitle("Detalle de fase");
+					  	
 						
-						String cadena = "Punt.  Nombre                             \tGrado          Univ.\n";
-						for(int i=0;i<ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().size();i++){
-							cadena = cadena + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getPuntaje();
-							if (ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getPuntaje() < 10) cadena = cadena + "   ";
-							else cadena = cadena + " ";
-							
-							cadena = cadena + "   " + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getNombre();
-							
-							int lenNombre = ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getNombre().length();
-							while (lenNombre < 35 ){
-								cadena = cadena + " ";
-								lenNombre ++ ;
-							}
+					    TableLayout tableLayout = new TableLayout(getActivity());
+					    TableRow tableRow = new TableRow(getActivity());;
+					    TextView textView;
 
-							cadena = cadena  + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getGradoAcademico();
+					    for (int i = 0; i < 4; i++) {
+
+				            textView = new TextView(getActivity());
+				            if (i==0) textView.setText("Puntaje");
+				            if (i==1) textView.setText("Nombres");
+				            if (i==2) textView.setText("Grado");
+				            if (i==3) textView.setText("Universidad");
+				            if (i>0) textView.setPadding(5, 5, 15, 5);
+				            textView.setTextSize(18);
+				            tableRow.addView(textView);
+					        
+					        
+					    }
+					    tableLayout.addView(tableRow);
+
+						
+						for(int i=0;i<ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().size();i++){
 							
-							int lenGrado = ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getGradoAcademico().length();
+							tableRow = new TableRow(getActivity());
 							
-							while (lenGrado < 12 ){
-								cadena = cadena + " ";
-								lenGrado ++ ;
-							}
+							textView = new TextView(getActivity());
+							textView.setText(""+ (int)ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getPuntaje());
+							textView.setPadding(5, 5, 5, 5);
+				            textView.setTextSize(18);
+				            tableRow.addView(textView);
+				            
+				            textView = new TextView(getActivity());
+							textView.setText(ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getNombre());
+							textView.setPadding(5, 5, 15, 5);
+				            textView.setTextSize(18);
+				            tableRow.addView(textView);
+				            
+				            textView = new TextView(getActivity());
+							textView.setText(ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getGradoAcademico());
+							textView.setPadding(5, 5, 15, 5);
+				            textView.setTextSize(18);
+				            tableRow.addView(textView);
+				            
+				            textView = new TextView(getActivity());
+							textView.setText(ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getProveniencia());
+							textView.setPadding(5, 5, 15, 5);
+				            textView.setTextSize(18);
+				            tableRow.addView(textView);
+				            
+				            tableLayout.addView(tableRow);
 							
-							cadena = cadena  + ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getProveniencia() + "\n";
+							
 						}
 						
-						builder.setMessage(cadena);
+						
+						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setTitle("Detalle de fase");
+						//builder.setMessage(cadena);
 						builder.setCancelable(false);
 						builder.setPositiveButton("Ok", null);
-					
-						AlertDialog alertDialog = builder.create();
-						alertDialog.getWindow().setLayout(800, 600); //Controlling width and height.
-						alertDialog.show();
+
+						
+						Dialog d = builder.setView(tableLayout).create();
+						// (That new View is just there to have something inside the dialog that can grow big enough to cover the whole screen.)
+
+						d.show();
+
+						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+						lp.copyFrom(d.getWindow().getAttributes());
+						lp.width = 900;
+						lp.height = 600;
+
+						//change position of window on screen
+						//lp.x = mwidth/2; //set these values to what work for you; probably like I have here at
+						//lp.y = mheight/2;        //half the screen width and height so it is in center
+
+						//set the dim level of the background
+						//lp.dimAmount=0.1f; //change this value for more or less dimming
+
+						d.getWindow().setAttributes(lp);
+
+						
+						
 					  }
 				  
 				  
@@ -237,7 +290,7 @@ public class ReporteCubrimientoGrafico extends Fragment{
 		ofertas= new ArrayList<ROferta>();
 		cargarGraficoPuesto(idpuesto);
 		
-		
+		customizarEstilos(getActivity(), rootView);
 		return rootView;
 	}
 	
@@ -493,10 +546,8 @@ public class ReporteCubrimientoGrafico extends Fragment{
 					 browser.loadData(summary, "text/html", null);
 			  }
 			  else{
-				  procesoSelec = 0;
-				  
-				  
-				  
+				  //procesoSelec = 0;
+
 				  List<String> listaOferta = new ArrayList<String>();
 					for(int i = 0; i<ofertas.size();i++){
 						
@@ -513,7 +564,7 @@ public class ReporteCubrimientoGrafico extends Fragment{
 							
 							procesoSelec=pos;
 							displayTitulo.setText("Postulantes por Oferta Laboral");
-							cambiarFase(0);
+							cambiarFase(procesoSelec);
 						}
 						
 					
@@ -748,6 +799,22 @@ public class ReporteCubrimientoGrafico extends Fragment{
         
     }
 	
+    
+    private void customizarEstilos(Context context, View view) {
+		try {
+			if (view instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) view;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					customizarEstilos(context, child);
+				}
+			} else if (view instanceof TextView) {
+			((TextView) view).setTypeface(Typeface.createFromAsset(
+			context.getAssets(), "OpenSans-Light.ttf"));
+		}
+		} catch (Exception e) {
+		}
+	}
 	
 
 }

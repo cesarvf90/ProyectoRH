@@ -7,8 +7,8 @@
     <TextView
         android:id="@+id/reportecubTitulografico"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:textSize="20sp"
+        android:layout_height="40dp"
+        android:textSize="30sp"
         android:gravity="left"
         android:layout_marginLeft="30dp"
 		android:layout_marginTop="10dp" >
@@ -114,7 +114,7 @@
     
     <RelativeLayout 
     android:layout_width="fill_parent"
-    android:layout_height="35dp"
+    android:layout_height="40dp"
     android:background="@color/verde_menubar"
     android:layout_marginTop="5dp"
     android:layout_marginLeft="10dp"
@@ -127,9 +127,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:id="@+id/reportecubtitulobargraf"
-        android:text="Opciones"
         android:textColor="@color/white"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp" 
+        android:textSize="24sp"/>
     
      </RelativeLayout>
     
