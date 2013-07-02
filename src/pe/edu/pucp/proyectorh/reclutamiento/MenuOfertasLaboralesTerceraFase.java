@@ -260,7 +260,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
 					builder.setTitle("Evaluar postulante");
-					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
+					builder.setMessage("¿Desea realizar la evaluación de entrevista 3ra para este postulante?");
 					builder.setCancelable(false);
 					builder.setCancelable(false);
 					builder.setNegativeButton("Cancelar",

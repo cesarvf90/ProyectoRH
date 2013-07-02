@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.rgb(29, 148, 59)));
-		bar.setTitle("RH++ " + LoginActivity.getUsuario().getUsername());
+		bar.setTitle("Usuario: " + LoginActivity.getUsuario().getUsername());
 	}
 
 	private void customizarEstilos(Context context, View view) {

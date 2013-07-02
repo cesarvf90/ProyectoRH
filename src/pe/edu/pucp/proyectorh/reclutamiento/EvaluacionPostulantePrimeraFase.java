@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,9 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.rendir_evaluaciones, container,
 				false);
+		TextView descEvalTextView = (TextView) rootView
+				.findViewById(R.id.descripcion_evaluacion);
+		descEvalTextView.setText("Se evalúan las competencias para el puesto de trabajo. Se debe otorgar un puntaje entre 1 y 5 para cada una.");
 		llamarServicioObtenerEvaluacion();
 		activarBotonAtras();
 		activarBotonFinalizar();
@@ -204,13 +208,18 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 		TextView pregunta4Text = (TextView) rootView
 				.findViewById(R.id.pregunta4);
 		RatingBar ratingPregunta1 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta1);
+				.findViewById(R.id.ratingPregunta1);		
 		RatingBar ratingPregunta2 = (RatingBar) rootView
-				.findViewById(R.id.ratingPregunta2);
+				.findViewById(R.id.ratingPregunta2);				
 		RatingBar ratingPregunta3 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta3);
 		RatingBar ratingPregunta4 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta4);
+		
+		ratingPregunta1.setStepSize(1);
+		ratingPregunta2.setStepSize(1);
+		ratingPregunta3.setStepSize(1);
+		ratingPregunta4.setStepSize(1);
 
 		if (numPagina * PREGUNTAS_X_PAGINA < competencias.size()) {
 			pregunta1Text.setText(numPagina
