@@ -106,6 +106,8 @@ public class Servicio {
 
 	public final static String ModificarAvance = "http://dp2kendo.apphb.com/Objetivos/WSMisObjetivos/ModificarAvance";
 
+	public final static String	ListarSubordinados = "";
+	
 	// PARA EVALUACION 360
 	public final static String ListarProcesosEvaluacion360 = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluador/Read";
 
@@ -124,7 +126,7 @@ public class Servicio {
 	
 	public final static String ConsultarNotasDeProcesoDeEvaluaciones = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/consultarNotasDeProcesoDeEvaluaciones";
 	
-
+	
 
 
 	/**
