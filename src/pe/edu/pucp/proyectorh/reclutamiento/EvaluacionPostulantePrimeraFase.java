@@ -248,7 +248,6 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 		} else {
 			pregunta2Text.setText(Constante.CADENA_VACIA);
 			ratingPregunta2.setVisibility(View.INVISIBLE);
-			return;
 		}
 
 		if (numPagina * PREGUNTAS_X_PAGINA + 2 < competencias.size()) {
@@ -264,7 +263,6 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 		} else {
 			pregunta3Text.setText(Constante.CADENA_VACIA);
 			ratingPregunta3.setVisibility(View.INVISIBLE);
-			return;
 		}
 
 		if (numPagina * PREGUNTAS_X_PAGINA + 3 < competencias.size()) {
@@ -380,6 +378,7 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 						// funcion.setPuestoID(funcionObject.getString("PuestoID"));
 						competencias.add(funcion);
 					}
+					System.out.println("competencias: "+competencias + " "+competencias.size());
 					prepararRespuestasYEvaluacion();
 					mostrarEvaluacion();
 					ocultarMensajeProgreso();
@@ -431,7 +430,7 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 			respuesta.setPuntaje(0);
 			respuestas.add(respuesta);
 		}
-
+		System.out.println("respuestas: "+respuestas + " "+respuestas.size());
 		evaluacion = new Evaluacion();
 		Date actual = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatoFecha = new SimpleDateFormat();
