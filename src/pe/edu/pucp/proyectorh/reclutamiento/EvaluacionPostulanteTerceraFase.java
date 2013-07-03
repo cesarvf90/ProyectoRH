@@ -244,7 +244,6 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 		} else {
 			pregunta2Text.setText(Constante.CADENA_VACIA);
 			ratingPregunta2.setVisibility(View.INVISIBLE);
-			return;
 		}
 
 		if (numPagina * PREGUNTAS_X_PAGINA + 2 < funciones.size()) {
@@ -260,7 +259,6 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 		} else {
 			pregunta3Text.setText(Constante.CADENA_VACIA);
 			ratingPregunta3.setVisibility(View.INVISIBLE);
-			return;
 		}
 
 		if (numPagina * PREGUNTAS_X_PAGINA + 3 < funciones.size()) {
