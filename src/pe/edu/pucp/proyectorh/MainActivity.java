@@ -14,6 +14,7 @@ import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
 import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos;
+import pe.edu.pucp.proyectorh.objetivos.Monitoreo;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;
 import pe.edu.pucp.proyectorh.objetivos.RegistroAvance;
 import pe.edu.pucp.proyectorh.objetivos.VisualizacionAvance;
@@ -257,7 +258,7 @@ public class MainActivity extends FragmentActivity implements
 				if (Modulo.MONITOREO.equals(id)) {// Monitoreo ( PARA VER LOS
 													// OBJETIVOS DE
 					// MIS SUBORDINADOS - CARLOS)
-					MisSubordinados fragment = new MisSubordinados();
+					Monitoreo fragment = new Monitoreo();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();

@@ -12,12 +12,17 @@ public class ObjetivosBSC{
 	public String Nombre;
 	public int Peso;
 	public String AvanceFinal;
-	public boolean IsAsignadoAPersona;
+	//public boolean IsAsignadoAPersona;
 	public int CreadorID;
 	public int TipoObjetivoBSCID;
 	public int ObjetivoPadreID;
 	public int BSCID;	
 	public ArrayList<AvanceDTO> LosProgresos;
+	public String FechaCreacion;
+	public String FechaFinalizacion;
+	public String comentarioUltimoAvance;
+	public int PesoMiObjetivo;
+	public int AvanceFinaldeAlgunProceso;
 	
 	public boolean seElimina=true;
 	

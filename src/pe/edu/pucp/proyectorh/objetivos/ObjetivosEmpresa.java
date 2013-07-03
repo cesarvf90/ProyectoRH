@@ -12,6 +12,7 @@ import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -126,7 +127,7 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public void creaObjetivo(ObjetivosBSC obj, int contFila, int numLayout){
 		System.out.println("--->Creara");
-		AddObjetivo co = new AddObjetivo();
+		AddObjetivo co = new AddObjetivo(actv);
 		co.obj= obj;
 		co.contFila = contFila;
 		co.numLay = numLayout;
@@ -137,7 +138,7 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public void actualizaObjetivo(ObjetivosBSC obj,int contFila){
 		System.out.println("-->Actualizar");
-		UpdateObjetivo co = new UpdateObjetivo();
+		UpdateObjetivo co = new UpdateObjetivo(actv);
 		co.obj= obj;
 		String rutaLlamada = Servicio.ActualizaObjetivoBSC+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&TipoObjetivoBSCID="+obj.TipoObjetivoBSCID+"&BSCID="+periodoBSCActual+"&ID="+obj.ID;
 		System.out.println("------->EMF-rutaActualizar="+rutaLlamada);
@@ -151,7 +152,7 @@ public class ObjetivosEmpresa extends Fragment {
 			if(objetivosLeidos.get(i).seElimina){
 				ObjetivosBSC obj = objetivosLeidos.get(i);
 				System.out.println("--->Eliminara Obj="+obj.Nombre);
-				DeleteObjetivo co = new DeleteObjetivo();
+				DeleteObjetivo co = new DeleteObjetivo(actv);
 				co.numObj=i;
 				String rutaLlamada = Servicio.EliminarObjetivoBSC+"?objetivoID="+obj.ID;
 				System.out.println("------->EMF-rutaCrear="+rutaLlamada);
@@ -164,6 +165,11 @@ public class ObjetivosEmpresa extends Fragment {
 		ObjetivosBSC obj;
 		int contFila;
 		int numLay;
+		
+		public AddObjetivo(Activity activity) {
+			super(activity);
+		}
+		
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoAddObj: " + result.toString());
@@ -187,7 +193,9 @@ public class ObjetivosEmpresa extends Fragment {
 						((TableFila)layoutTab4.getChildAt(contFila)).idObjetivo=idRecibido;
 					}
 				}
+				ocultarMensajeProgreso();
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO ADD="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -196,6 +204,10 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public class UpdateObjetivo extends AsyncCall {
 		ObjetivosBSC obj;
+		
+		public UpdateObjetivo(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoUpdateObj: " + result.toString());
@@ -208,7 +220,9 @@ public class ObjetivosEmpresa extends Fragment {
 					getObjLeido(obj.ID).Peso = obj.Peso;
 					System.out.println("mod->obj="+getObjLeido(obj.ID).Nombre+" con p="+getObjLeido(obj.ID).Peso);
 				}
+				ocultarMensajeProgreso();
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO ACT="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -217,6 +231,10 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public class DeleteObjetivo extends AsyncCall {
 		int numObj;
+		
+		public DeleteObjetivo(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoDeleteObj: " + result.toString());
@@ -228,7 +246,9 @@ public class ObjetivosEmpresa extends Fragment {
 					System.out.println("eliminara");
 					objetivosLeidos.remove(numObj);
 				}
+				ocultarMensajeProgreso();
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO DEL="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -237,6 +257,7 @@ public class ObjetivosEmpresa extends Fragment {
 	
 	public class ListadoObjetivos extends AsyncCall {
 		int auxPerspectiva = perspectivaActual;
+
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
@@ -278,6 +299,7 @@ public class ObjetivosEmpresa extends Fragment {
 	}
 		
 	public class ListadoPeriodos extends AsyncCall {
+		
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
