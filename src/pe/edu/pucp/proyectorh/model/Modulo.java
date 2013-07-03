@@ -150,11 +150,6 @@ public class Modulo {
 			Usuario usuario) {
 		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-<<<<<<< HEAD
-		submodulos.add(new ModuloItem("1", "Mis Pendientes"));
-		submodulos.add(new ModuloItem("2", "Mis Evaluaciones"));
-		submodulos.add(new ModuloItem("3", "Mis Colaboradores"));
-=======
 		if (usuario.getRoles().get("Mis Pendientes").isPermiso()) {
 			PENDIENTES = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(PENDIENTES, "Mis Pendientes"));
@@ -167,7 +162,6 @@ public class Modulo {
 			SUBORDINADOS = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(SUBORDINADOS, "Mis subordinados"));
 		}
->>>>>>> 42205ea5bf4bf52d7b24beaf4b8864c58ad5ed5d
 		return submodulos;
 	}
 
@@ -175,14 +169,7 @@ public class Modulo {
 			Usuario usuario) {
 		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-<<<<<<< HEAD
-		submodulos.add(new ModuloItem("1", "Objetivos de la Empresa"));
-		submodulos.add(new ModuloItem("2", "Mis Objetivos"));
-		submodulos.add(new ModuloItem("3", "Objetivos de subordinados"));
-		submodulos.add(new ModuloItem("4", "Registrar Avance"));
-		submodulos.add(new ModuloItem("5", "Visualizar Avances"));
-		submodulos.add(new ModuloItem("6", "Monitoreo en mi equipo de trabajo"));
-=======
+
 		if (usuario.getRoles().get("Objetivos Empresariales").isPermiso()) {
 			OBJETIVOS_EMPRESARIALES = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(OBJETIVOS_EMPRESARIALES,
@@ -212,7 +199,7 @@ public class Modulo {
 			MONITOREO = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(MONITOREO, "Monitoreo"));
 		}
->>>>>>> 42205ea5bf4bf52d7b24beaf4b8864c58ad5ed5d
+
 		return submodulos;
 	}
 

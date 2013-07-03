@@ -183,13 +183,8 @@ public class MainActivity extends FragmentActivity implements
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
 				}
-<<<<<<< HEAD
-				if (id.equals("2")) {// Rol de Evaluado
-					RolEvaluadoEver fragment = new RolEvaluadoEver();
-=======
 				if (Modulo.ROL_EVALUADO.equals(id)) {// Rol de Evaluado
-					RolEvaluado fragment = new RolEvaluado();
->>>>>>> 42205ea5bf4bf52d7b24beaf4b8864c58ad5ed5d
+					RolEvaluadoEver fragment = new RolEvaluadoEver();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();
