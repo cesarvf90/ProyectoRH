@@ -57,13 +57,12 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:orientation="vertical"
                 android:paddingBottom="25px" >
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70sp"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
                     android:text="Puesto laboral:"
@@ -111,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
-                    android:text="Número postulantes:"
+                    android:text="Nro postulantes:"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -125,8 +124,9 @@
                 <TextView
                     android:id="@+id/rec_ofertas_puesto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70sp"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -135,14 +135,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
-
+                
                 <TextView
                     android:id="@+id/rec_ofertas_solicitante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -151,6 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -159,6 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -167,6 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -190,7 +195,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
                 android:orientation="vertical" >
 
                 <TextView
@@ -216,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
-                    android:text="Documento de identidad:"
+                    android:text="Doc. de identidad:"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -250,6 +254,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -258,6 +264,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -266,6 +274,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -274,6 +284,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -282,6 +294,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
