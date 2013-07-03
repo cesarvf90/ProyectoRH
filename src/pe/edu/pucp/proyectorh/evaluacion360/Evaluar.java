@@ -150,6 +150,7 @@ public class Evaluar extends Fragment {
     		estrellitas.idPregunta= listPregs.get(i).ID;
     		lay2.addView(estrellitas);
     	}
+		lay2.setLongClickable(true);
 		lay.addView(lay2);
 	}
 	
@@ -175,7 +176,7 @@ public class Evaluar extends Fragment {
 		puesto.setText(evaluado.evaluado.Puesto);
 		
 		lay = (LinearLayout)rootView.findViewById(R.id.layEvaluacion);
-		
+		lay.setLongClickable(true);
 
 		ListadoPreguntas lo = new ListadoPreguntas();
     	String rutaLlamada = Servicio.ListarPreguntas+"?idEvaluador="+LoginActivity.getUsuario().getID()+"&idProcesoEvaluacion="+evaluado.ProcesoEnElQueParticipanID+"&idColaboradorEvaluado="+evaluado.evaluado.ID; 

@@ -57,7 +57,7 @@ public class MisSubordinados extends Fragment {
 		losDatos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		elProcesoDeLaLista.setAdapter(losDatos);
 		
-		preparaLaSupervisionDePruebas(elLadoDerecho);
+		//preparaLaSupervisionDePruebas(elLadoDerecho);
 		
 		elProcesoDeLaLista.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override

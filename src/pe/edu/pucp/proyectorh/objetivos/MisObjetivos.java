@@ -19,6 +19,7 @@ import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -248,7 +249,7 @@ public class MisObjetivos extends Fragment {
 	
 	public void creaObjetivo(ObjetivosBSC obj, int contFila){
 		System.out.println("--->Creara");
-		AddObjetivo co = new AddObjetivo();
+		AddObjetivo co = new AddObjetivo(actv);
 		co.obj= obj;
 		co.contFila = contFila;
 		
@@ -267,7 +268,7 @@ public class MisObjetivos extends Fragment {
 	
 	public void actualizaObjetivo(ObjetivosBSC obj,int contFila){
 		System.out.println("-->Actualizar");
-		UpdateObjetivo co = new UpdateObjetivo();
+		UpdateObjetivo co = new UpdateObjetivo(actv);
 		co.obj= obj;
 		
 		String rutaLlamada="";
@@ -290,7 +291,7 @@ public class MisObjetivos extends Fragment {
 			if(listadoActual.get(i).seElimina){
 				ObjetivosBSC obj = listadoActual.get(i);
 				System.out.println("--->Eliminara Obj="+obj.Nombre);
-				DeleteObjetivo co = new DeleteObjetivo();
+				DeleteObjetivo co = new DeleteObjetivo(actv);
 				co.numObj=i;
 				
 				String rutaLlamada="";
@@ -311,6 +312,9 @@ public class MisObjetivos extends Fragment {
 	public class AddObjetivo extends AsyncCall {
 		ObjetivosBSC obj;
 		int contFila;
+		public AddObjetivo(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoAddObj: " + result.toString());
@@ -326,7 +330,9 @@ public class MisObjetivos extends Fragment {
 					
 					((TableFila)lay.getChildAt(contFila)).idObjetivo=idRecibido;
 				}
+				ocultarMensajeProgreso();
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO ADD="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -335,6 +341,9 @@ public class MisObjetivos extends Fragment {
 	
 	public class UpdateObjetivo extends AsyncCall {
 		ObjetivosBSC obj;
+		public UpdateObjetivo(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoUpdateObj: " + result.toString());
@@ -347,7 +356,9 @@ public class MisObjetivos extends Fragment {
 					getObjLeido(obj.ID).Peso = obj.Peso;
 					System.out.println("mod->obj="+getObjLeido(obj.ID).Nombre+" con p="+getObjLeido(obj.ID).Peso);
 				}
+				ocultarMensajeProgreso();
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO ACT="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -356,6 +367,9 @@ public class MisObjetivos extends Fragment {
 	
 	public class DeleteObjetivo extends AsyncCall {
 		int numObj;
+		public DeleteObjetivo(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("RecibidoDeleteObj: " + result.toString());
@@ -367,7 +381,9 @@ public class MisObjetivos extends Fragment {
 					System.out.println("eliminara");
 					listadoActual.remove(numObj);
 				}
+				ocultarMensajeProgreso();
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO DEL="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -377,18 +393,20 @@ public class MisObjetivos extends Fragment {
     private void loadData(ArrayList<ObjetivosBSC> listObjetivosPadre){
     	listaObjetivosPadre = new ArrayList<ObjetivosBSC>();
     	listaNombreObj = new ArrayList<String>();
-    	
+    	if (listObjetivosPadre.size() > 0){
+			objetivoActual = listObjetivosPadre.get(0).ID;
+		}
     	for(int i=0;i<listObjetivosPadre.size();i++){
     		System.out.println("agrega obj="+listObjetivosPadre.get(i).Nombre);
     		listaObjetivosPadre.add(listObjetivosPadre.get(i));
     		listaNombreObj.add(listObjetivosPadre.get(i).Nombre);	
       	}
     	
-    	ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombreObj);
+		ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombreObj);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerObjetivos.setAdapter(dataAdapter);
 		
-    	ListadoObjetivosChild lo = new ListadoObjetivosChild();
+    	ListadoObjetivosChild lo = new ListadoObjetivosChild(actv);
     	String rutaLlamada ="";
 
     	if(indicador==IND_MISOBJS){
@@ -514,6 +532,7 @@ public class MisObjetivos extends Fragment {
     private ArrayList<ObjetivosBSC> obtenerHijos(int idPadre, ArrayList<ObjetivosBSC> listObjetivosBSC){
     	ArrayList<ObjetivosBSC> hijos = new ArrayList<ObjetivosBSC>();
     	for(int i=0;i<listObjetivosBSC.size();i++){
+    		System.out.println("compara a="+listObjetivosBSC.get(i).ObjetivoPadreID +" con b="+ idPadre);
     		if(listObjetivosBSC.get(i).ObjetivoPadreID==idPadre){
     			hijos.add(listObjetivosBSC.get(i));
     		}
@@ -528,6 +547,7 @@ public class MisObjetivos extends Fragment {
     		listaObjetivosHijo.add(obtenerHijos(listaObjetivosPadre.get(i).ID,listObjetivosHijos));
     	}
     	System.out.println("evelyn");
+    	mostrarHijos();
     	//se actualiza el spinner
     	spinnerObjetivos.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
@@ -543,6 +563,7 @@ public class MisObjetivos extends Fragment {
 					// TODO Auto-generated method stub
 			}
 		});
+    	
     }
     
     public boolean isAdmin(){
@@ -551,7 +572,7 @@ public class MisObjetivos extends Fragment {
 	
 	public  void listarObjetivos(){
 
-    	ListadoObjetivos lo = new ListadoObjetivos();
+    	ListadoObjetivos lo = new ListadoObjetivos(actv);
     	String rutaLlamada =""; 
     	
     	if(indicador==IND_MISOBJS){
@@ -567,13 +588,19 @@ public class MisObjetivos extends Fragment {
 	}
 	
 	public class ListadoObjetivos extends AsyncCall {
+		
+		public ListadoObjetivos(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			try{
 				System.out.println("Recibido: " + result.toString());
 				ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
 				loadData(listObjetivosBSC);
+				ocultarMensajeProgreso();
 			}catch(Exception e){
+				ocultarMensajeProgreso();
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
@@ -618,13 +645,19 @@ public class MisObjetivos extends Fragment {
 	}
 
 	public class ListadoObjetivosChild extends AsyncCall {
+		
+		public ListadoObjetivosChild(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			try{
 				System.out.println("Recibido: " + result.toString());
 				listObjetivosHijos = ObjetivosBSC.getObjetivosByResult(result);		
 				loadDataChild(listObjetivosHijos);
+				ocultarMensajeProgreso();
 			}catch(Exception e){
+				ocultarMensajeProgreso();
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
@@ -632,6 +665,7 @@ public class MisObjetivos extends Fragment {
 	
 	
 	public class ListadoPeriodos extends AsyncCall {
+
 		@Override
 		protected void onPostExecute(String result) {
 			try{
