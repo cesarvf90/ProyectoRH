@@ -11,65 +11,86 @@
     
         <div id="example" class="k-content">
             <div class="chart-wrapper">
-                <div id="chart" style="background-color:transparent;"></div>
+                <div id="chart"></div>
+
             </div>
             <script>
-            
                 function createChart() {
-					var jsonString = Android.getData();
-        			var arrAvance = JSON.parse(jsonString);
-        			
+                	var jsonString = Android.getData();
+        			var arrPost = JSON.parse(jsonString);
+                
                 
                     $("#chart").kendoChart({
                     	theme:"metro",
                         title: {
-                            visible: false
+                        	visible: false
                         },
                         legend: {
-                         	//visible: false
-                            position: "top"
+                            visible: true
                         },
                         seriesDefaults: {
-                            type: "column"
+                            type: "bubble"
                         },
                         series: [{
-                            name: "Bachiller",
-                            data: arrAvance.bachiller
-                        }, {
-                        	name: "Maestria",
-                            data: arrAvance.master
-                        }, {
-                        	name: "Doctorado",
-                            data: arrAvance.doctorado
-                        }, {
-                            name: "Técnico",
-                            data: arrAvance.tecnico
-                        }, {
-                        	name: "Licenciado",
-                            data: arrAvance.licenciado
-                        }, {
-                        	name: "Estudiante",
-                            data: arrAvance.estudiante
+                            data: [{
+                                x: arrPost.bachiller[2],
+                                y: arrPost.bachiller[1],
+                                size: arrPost.bachiller[0],
+                                category: "Bachiller"
+                            }, {
+                               x: arrPost.master[2],
+                                y: arrPost.master[1],
+                                size: arrPost.master[0],
+                                category: "Master"
+                            }, {
+                                x: arrPost.doctorado[2],
+                                y: arrPost.doctorado[1],
+                                size: arrPost.doctorado[0],
+                                category: "Doctor"
+                            }, {
+                                x: arrPost.tecnico[2],
+                                y: arrPost.tecnico[1],
+                                size: arrPost.tecnico[0],
+                                category: "Técnico"
+                            }, {
+                                x: arrPost.licenciado[2],
+                                y: arrPost.licenciado[1],
+                                size: arrPost.licenciado[0],
+                                category: "Licenciado"
+                            }, {
+                                x: arrPost.estudiante[2],
+                                y: arrPost.estudiante[1],
+                                size: arrPost.estudiante[0],
+                                category: "Estudiante"
+                            }]
                         }],
-                        valueAxis: {
+                        xAxis: {
                             labels: {
-                                format: "{0}"
+                                format: "{0:N0}",
+                                skip: 0
                             },
-                            line: {
-                                visible: false
-                            },
-                            axisCrossingValue: 0
+                            majorUnit: 1,
+                            axisCrossingValue: 0,
+ 							title: {
+                                text: "Aprobados"
+                            }
                         },
-                        categoryAxis: {
-                            categories: arrAvance.univ,
+                        yAxis: {
+                        	title: {
+                                text: "Puntaje promedio"
+                            },
+                            majorUnit: 1,
+                            labels: {
+                                format: "{0:N0}"
+                            },
                             line: {
-                                visible: false
+                                width: 0
                             }
                         },
                         tooltip: {
                             visible: true,
-                            format: "{0}%",
-                            template: "#= series.name #: #= value #"
+                            format: "{3}: {2:N0} postulantes",
+                            opacity: 1
                         }
                     });
                 }
@@ -86,11 +107,13 @@
                     }, 400);
                 });
             </script>
-            <style type="text/css">
-		        #chart {
-		            background-color:rgb(11, 100, 23);
-		        }
-		    </style>
+            <style scoped>
+                .chart-wrapper {
+                    position: relative;
+                }
+
+
+            </style>
         </div>
 
 

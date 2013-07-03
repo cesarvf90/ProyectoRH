@@ -21,6 +21,7 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.CalendarAdapter;
+import pe.edu.pucp.proyectorh.utils.Constante;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -279,6 +280,7 @@ public class AgendaFragment extends Fragment {
 						evento.setFechaInicio(eventoObject.getString("Inicio"));
 						evento.setFechaFin(eventoObject.getString("Fin"));
 						evento.setEstado(eventoObject.getString("Estado"));
+						evento.setLugar(eventoObject.getString("LugarEvento"));
 						colaboradorCreador = new Colaborador();
 						colaboradorCreador.setNombreCompleto(eventoObject
 								.getString("Creador"));
@@ -299,13 +301,13 @@ public class AgendaFragment extends Fragment {
 							Colaborador invitado = new Colaborador();
 							invitado.setNombreCompleto(invitadoObject
 									.getString("NombreCompleto"));
-							// invitado.setNombres(invitadoObject
-							// .getString("Nombre"));
-							// invitado.setApellidos(invitadoObject
-							// .getString("ApellidoPaterno")
-							// + Constante.ESPACIO_VACIO
-							// + invitadoObject
-							// .getString("ApellidoMaterno"));
+							invitado.setNombres(invitadoObject
+									.getString("Nombres"));
+							invitado.setApellidos(invitadoObject
+									.getString("ApellidoPaterno")
+									+ Constante.ESPACIO_VACIO
+									+ invitadoObject
+											.getString("ApellidoMaterno"));
 							invitado.setArea(invitadoObject.getString("Area"));
 							invitado.setPuesto(invitadoObject
 									.getString("Puesto"));

@@ -59,7 +59,23 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 		this.rootView = inflater.inflate(R.layout.consultar_equipo_trabajo,
 				container, false);
 		customizarEstilos(getActivity(), rootView);
-		llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
+		//llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
+		
+		if ((LoginActivity.usuario.getPadres() == null)
+				|| (LoginActivity.usuario.getHijos() == null)
+				|| (LoginActivity.usuario.getJefe() == null)) {
+			System.out.println("Primera vez: llamamos al WS");
+			// probarDeserializacionJSON("");
+			llamarServicioConsultarEquipoTrabajo(LoginActivity.getUsuario().getID());
+
+		} else {
+			System.out.println("Ya en memoria");
+			this.padres = LoginActivity.usuario.getPadres();
+			this.hijos = LoginActivity.usuario.getHijos();
+			this.jefe = LoginActivity.usuario.getJefe();
+			mostrarEquipo();
+		}
+		
 		return rootView;
 	}
 
@@ -291,26 +307,9 @@ public class ConsultarEquipoTrabajoFragment extends Fragment {
 
 		// loadDataPrueba();
 
-		if ((LoginActivity.usuario.getPadres() == null)
-				|| (LoginActivity.usuario.getHijos() == null)
-				|| (LoginActivity.usuario.getJefe() == null)) {
-			System.out.println("Primera vez: llamamos al WS");
-			// probarDeserializacionJSON("");
-			llamarServicioConsultarEquipoTrabajo(LoginActivity.usuario.getID());
-			LoginActivity.usuario.setJefe(this.jefe);
-			LoginActivity.usuario.setHijos(this.hijos);
-			LoginActivity.usuario.setPadres(this.padres);
-			/*
-			 * this.padres = LoginActivity.usuario.getPadres(); this.hijos =
-			 * LoginActivity.usuario.getHijos(); this.jefe =
-			 * LoginActivity.usuario.getJefe();
-			 */
-		} else {
-			System.out.println("Ya en memoria");
-			this.padres = LoginActivity.usuario.getPadres();
-			this.hijos = LoginActivity.usuario.getHijos();
-			this.jefe = LoginActivity.usuario.getJefe();
-		}
+		LoginActivity.usuario.setJefe(this.jefe);
+		LoginActivity.usuario.setHijos(this.hijos);
+		LoginActivity.usuario.setPadres(this.padres);
 
 		// Si todo salió bien y logramos poblar todos los elementos, levantamos
 		// la vista

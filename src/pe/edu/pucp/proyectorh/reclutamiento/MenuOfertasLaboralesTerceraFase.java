@@ -260,7 +260,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
 					builder.setTitle("Evaluar postulante");
-					builder.setMessage("¿Desea realizar la evaluación de entrevista final para este postulante?");
+					builder.setMessage("¿Desea realizar la evaluación de entrevista 3ra fase para este postulante?");
 					builder.setCancelable(false);
 					builder.setCancelable(false);
 					builder.setNegativeButton("Cancelar",
@@ -325,7 +325,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
 		mostrarTexto(R.id.detalleofertas_title, oferta.toString());
-		mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());
+		mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());	
 		mostrarTexto(R.id.rec_ofertas_area, oferta.getPuesto().getArea()
 				.getNombre());
 		mostrarTexto(R.id.rec_ofertas_solicitante, oferta.getSolicitante());
@@ -406,6 +406,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 		if ((texto != null) && (!Constante.CADENA_VACIA.equals(texto))
 				&& (!Constante.NULL.equals(texto))) {
 			textView.setText(texto);
+			
 		} else {
 			textView.setText(Constante.ESPACIO_VACIO);
 		}

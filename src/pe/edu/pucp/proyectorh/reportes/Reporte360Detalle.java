@@ -87,10 +87,114 @@ public class Reporte360Detalle extends Fragment{
 	
 	
 	public void cargarGraficoProcesosEvaluacionDetalle(String userColaborador){
+		
+	if (PersistentHandlerReporte360Detalle.buscarArchivo(getActivity(), "reporte360" + userColaborador + "lala"+".txt")){
+		
+		procesosEval=PersistentHandlerReporte360Detalle.getProcFromFile(getActivity(), "reporte360" + userColaborador + "lala"+ ".txt");
+		
+		if (procesosEval.size()==0){
+			 String summary = "<html><body>No se encontraron capacidades ya que no hay procesos de evaluación</body></html>";
+			 browser.loadData(summary, "text/html", null);
+		}
+		else{				
+			ArrayList<String> evaluadores = new ArrayList<String>();
+			ArrayList<Integer> notas = new ArrayList<Integer>();
+			String posEval=getArguments().getString("Nomproceso");
+							
+			int pos=0;
+			for (int i=0;i<procesosEval.size();i++){
+				if(procesosEval.get(i).getProcesoNombre().equals(posEval)){			
+					pos=i;
 					
+				}
+			}
+					for (int j=0;j<procesosEval.get(pos).getCompetenciasEvaluadas().size();j++){
+						if (j==0){
+						for (int k=0;k<procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getNotasParciales().size();k++){
+							evaluadores.add(procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).getTipoEvaluador());
+							notas.add(procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).geNotaParcial());
+							
+						}		
+											
+						}
+						
+						lista.add(procesosEval.get(pos).getCompetenciasEvaluadas().get(j).getCompetenciaNombre());	
+						
+				}
+									
+								
+			
+			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, lista);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinnerCapacidad.setAdapter(dataAdapter);
+			spinnerCapacidad.setOnItemSelectedListener(new OnItemSelectedListener(){
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					
+					ArrayList<String> evaluadores = new ArrayList<String>();
+					ArrayList<Integer> notas = new ArrayList<Integer>();
+					String posEval2=getArguments().getString("Nomproceso");
+					int posic=0;
+					
+
+					for (int i=0;i<procesosEval.size();i++){
+						if(procesosEval.get(i).getProcesoNombre().equals(posEval2)){			
+							posic=i;
+							
+						}
+					}
+
+						for (int j=0;j<procesosEval.get(posic).getCompetenciasEvaluadas().size();j++){
+							if (j==pos){
+							for (int k=0;k<procesosEval.get(posic).getCompetenciasEvaluadas().get(j).getNotasParciales().size();k++){
+								evaluadores.add(procesosEval.get(posic).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).getTipoEvaluador());
+								notas.add(procesosEval.get(posic).getCompetenciasEvaluadas().get(j).getNotasParciales().get(k).geNotaParcial());
+							}					
+			
+							}
+					
+					}
+					
+									
+					browser.getSettings().setJavaScriptEnabled(true);
+					browser.getSettings().setPluginsEnabled(true);
+					DataObject data = new DataObject(evaluadores, notas);
+								
+					InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);				
+					
+					browser.addJavascriptInterface(intface, "Android");				
+					
+					browser.loadUrl("file:///android_asset/Reporte360detallechart.html");
+
+				  }
+				
+			
+				@Override
+				  public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+				  }
+				
+			});
+			//habilitamos javascript y flash
+			browser.getSettings().setJavaScriptEnabled(true);
+			browser.getSettings().setPluginsEnabled(true);
+			DataObject data = new DataObject(evaluadores, notas);
+						
+			InterfaceChartLineal intface = new InterfaceChartLineal(getActivity(),data);				
+			
+			browser.addJavascriptInterface(intface, "Android");				
+			
+			browser.loadUrl("file:///android_asset/Reporte360detallechart.html");
+		}
+		
+			
+		}
+	else
+	{
 		if (ConnectionManager.connect(getActivity())) {
-			// construir llamada al servicio
-			String request = ReporteServices.obtenerProcesosEvaluacion + "?userName=" + userColaborador;
+				// construir llamada al servicio
+			String request = ReporteServices.obtenerProcesosEvaluacion + "?userName=" + userColaborador;		
 
 			new getDetalle().execute(request);
 			
@@ -104,6 +208,7 @@ public class Reporte360Detalle extends Fragment{
 			builder.create();
 			builder.show();
 		}
+	}
 		
 		
 	}
@@ -119,6 +224,8 @@ public class Reporte360Detalle extends Fragment{
 						
 			Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new NetDateTimeAdapter()).create();
 			procesosEval = gson.fromJson(result,new TypeToken<List<RProcesosEvaluacion>>(){}.getType());
+			String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+			PersistentHandlerReporte360Detalle.agregarArchivoPersistente(currentDateTimeString + "\n" + result, getActivity(),  "reporte360" + userColaborador + "lala"+".txt");
 			}
 			catch(Exception e){
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

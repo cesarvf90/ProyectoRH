@@ -97,7 +97,6 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 
 	public void deserealizarJSON(String result) {
 		try {
-
 			System.out.println("Recibido: " + result.toString());
 			JSONObject jsonObject = new JSONObject(result);
 
@@ -149,33 +148,22 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 			} else {
 				String message = jsonObject.getString("message");
 				if (message.startsWith("Error en la BD:")){
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							this.getActivity());
-					builder.setTitle("Problema en el servidor");
-					builder.setMessage("Hay un problema en el servidor.");
-					builder.setCancelable(false);
-					builder.setPositiveButton("Ok", null);
-					builder.create();
-					builder.show();	
+					mostrarErrorComunicacion("Problema en el servidor");
 				} else {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							this.getActivity());
-					builder.setTitle("Mensaje del servidor");
-					builder.setMessage(message);
-					builder.setPositiveButton("Ok", null);
-					builder.create();
-					builder.show();
+					mostrarErrorComunicacion(message);	
 				}
 			}
 
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());
-			mostrarErrorComunicacion(e.toString());
+			mostrarErrorComunicacion("El servicio solicitado no está disponible en el servidor");
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
 			System.out.println(ex.toString());
-			mostrarErrorComunicacion(ex.toString());
+			mostrarErrorComunicacion("El servicio solicitado no está disponible en el servidor");
+		} catch (Exception e) {
+			mostrarErrorComunicacion("El servicio solicitado no está disponible en el servidor");
 		}
 
 	}
@@ -289,24 +277,31 @@ public class VisualizarInfoColaboradoFragment extends Fragment {
 		} catch (JSONException e) {
 			System.out.println("entre al catch1");
 			System.out.println(e.toString());
-			mostrarErrorComunicacion(e.toString());
+			mostrarErrorComunicacion("El servicio solicitado no está disponible en el servidor");
 		} catch (NullPointerException ex) {
 			System.out.println("entre al catch2");
 			System.out.println(ex.toString());
-			mostrarErrorComunicacion(ex.toString());
+			mostrarErrorComunicacion("El servicio solicitado no está disponible en el servidor");
+		}catch (Exception e) {
+			mostrarErrorComunicacion("El servicio solicitado no está disponible en el servidor");
 		}
 
 	}
 
-	private void mostrarErrorComunicacion(String excepcion) {
+	private void mostrarErrorComunicacion(String mensaje) {
+		try
+		{
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 		builder.setTitle("Error de servicio");
-		builder.setMessage("El servicio solicitado no está disponible en el servidor.");
+		builder.setMessage(mensaje);
 		builder.setCancelable(false);
 		builder.setPositiveButton("Ok", null);
 		builder.create();
 		builder.show();
+		}
+		catch(Exception e)
+		{}
 	}
 
 	public boolean procesaRespuesta(String respuestaServidor) {
