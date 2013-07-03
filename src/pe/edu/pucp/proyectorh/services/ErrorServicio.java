@@ -28,13 +28,18 @@ public class ErrorServicio {
 	 * @param excepcion
 	 * @param activity
 	 */
-	public static void mostrarErrorComunicacion(String excepcion, Activity activity) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setTitle("Error de servicio");
-		builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE);
-		builder.setCancelable(false);
-		builder.setPositiveButton("Ok", null);
-		builder.create();
-		builder.show();
+	public static void mostrarErrorComunicacion(String excepcion,
+			Activity activity) {
+		try {
+			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+			builder.setTitle("Error de servicio");
+			builder.setMessage(ConstanteServicio.MENSAJE_SERVICIO_NO_DISPONIBLE);
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		} catch (Exception e) {
+
+		}
 	}
 }
