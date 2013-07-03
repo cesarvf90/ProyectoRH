@@ -12,7 +12,7 @@ public class Pregunta360 {
 	public String TextoPregunta;
 	public int ExamenID;
     public int CapacidadID;
-    public int Puntuacion;
+    public double Puntuacion;
     public int Peso;
     public int competenciaID;
     public int ID;

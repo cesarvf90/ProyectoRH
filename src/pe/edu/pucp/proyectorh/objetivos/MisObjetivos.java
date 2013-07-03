@@ -569,9 +569,13 @@ public class MisObjetivos extends Fragment {
 	public class ListadoObjetivos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
-			loadData(listObjetivosBSC);
+			try{
+				System.out.println("Recibido: " + result.toString());
+				ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
+				loadData(listObjetivosBSC);
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
@@ -616,40 +620,48 @@ public class MisObjetivos extends Fragment {
 	public class ListadoObjetivosChild extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			listObjetivosHijos = ObjetivosBSC.getObjetivosByResult(result);		
-			loadDataChild(listObjetivosHijos);
+			try{
+				System.out.println("Recibido: " + result.toString());
+				listObjetivosHijos = ObjetivosBSC.getObjetivosByResult(result);		
+				loadDataChild(listObjetivosHijos);
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
 	
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
-		protected void onPostExecute(String result) {		
-			listaPeriodos = Periodo.getPeriodosByResult(result);
-			for(int i=0; i<listaPeriodos.size(); i++){
-				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+		protected void onPostExecute(String result) {
+			try{
+				listaPeriodos = Periodo.getPeriodosByResult(result);
+				for(int i=0; i<listaPeriodos.size(); i++){
+					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+				}
+					
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerPeriodo.setAdapter(dataAdapter);
+					
+				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						periodoBSCActual = listaPeriodos.get(pos).BSCID;
+						System.out.println("periodo seleccionado="+periodoBSCActual);
+						listarObjetivos();
+							 
+						//EMF-//actualizaTabs();
+					}
+					
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+							// TODO Auto-generated method stub
+					}
+				});
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
-				
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-				
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoBSCActual = listaPeriodos.get(pos).BSCID;
-					System.out.println("periodo seleccionado="+periodoBSCActual);
-					listarObjetivos();
-						 
-					//EMF-//actualizaTabs();
-				}
-				
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-				}
-			});
 		}
 	}
 	

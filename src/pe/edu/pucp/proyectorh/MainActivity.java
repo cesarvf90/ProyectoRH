@@ -5,6 +5,7 @@ import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
 import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
 import pe.edu.pucp.proyectorh.connection.DataBaseContactosConnection;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluado;
+import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluadoEver;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
@@ -181,7 +182,7 @@ public class MainActivity extends FragmentActivity implements
 							.commit();
 				}
 				if (id.equals("2")) {// Rol de Evaluado
-					RolEvaluado fragment = new RolEvaluado();
+					RolEvaluadoEver fragment = new RolEvaluadoEver();
 					getSupportFragmentManager().beginTransaction()
 							.replace(R.id.opcion_detail_container, fragment)
 							.commit();

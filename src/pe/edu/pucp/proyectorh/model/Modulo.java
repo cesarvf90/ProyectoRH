@@ -86,19 +86,19 @@ public class Modulo {
 	public static List<ModuloItem> obtenerFuncionalidadesEvaluacion360() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
 		submodulos.add(new ModuloItem("1", "Mis Pendientes"));
-		submodulos.add(new ModuloItem("2", "Rol de Evaluado"));
-		submodulos.add(new ModuloItem("3", "Mis subordinados"));
+		submodulos.add(new ModuloItem("2", "Mis Evaluaciones"));
+		submodulos.add(new ModuloItem("3", "Mis Colaboradores"));
 		return submodulos;
 	}
 
 	public static List<ModuloItem> obtenerFuncionalidadesObjetivos() {
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
-		submodulos.add(new ModuloItem("1", "Objetivos Empresariales"));
-		submodulos.add(new ModuloItem("2", "Objetivos Propios"));
-		submodulos.add(new ModuloItem("3", "Objetivos para Equipo"));
+		submodulos.add(new ModuloItem("1", "Objetivos de la Empresa"));
+		submodulos.add(new ModuloItem("2", "Mis Objetivos"));
+		submodulos.add(new ModuloItem("3", "Objetivos de subordinados"));
 		submodulos.add(new ModuloItem("4", "Registrar Avance"));
 		submodulos.add(new ModuloItem("5", "Visualizar Avances"));
-		submodulos.add(new ModuloItem("6", "Monitoreo"));
+		submodulos.add(new ModuloItem("6", "Monitoreo en mi equipo de trabajo"));
 		return submodulos;
 	}
 
