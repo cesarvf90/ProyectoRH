@@ -12,15 +12,34 @@
             android:id="@+id/semana_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="2.0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/leyenda_colores"
+            android:id="@+id/leyenda_colores_empresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Empresa Personal Especial"
+            android:text="Empresa"
+            android:textColor="#008000"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/leyenda_colores_personal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textColor="#000080"
+            android:text="Personal"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/leyenda_colores_especial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textColor="#800080"
+            android:text="Especial"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
