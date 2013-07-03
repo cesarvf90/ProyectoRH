@@ -2,6 +2,8 @@ package pe.edu.pucp.proyectorh.evaluacion360;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 
 import pe.edu.pucp.proyectorh.LoginActivity;
@@ -9,8 +11,11 @@ import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.*;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos.ListadoObjetivosChild;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
+import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,6 +29,7 @@ import android.widget.*;
 public class Evaluar extends Fragment {
 	View rootView;
 	Context contexto;
+	FragmentActivity actv;
 	
 	ExpandableListView listaProcesos;
 	
@@ -48,16 +54,44 @@ public class Evaluar extends Fragment {
 	public class ListadoPreguntas extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("RecibidoPreg: " + result.toString());
-			ArrayList<Pregunta360> listPregs = Pregunta360.getPreguntasByResult(result);		
-			loadData(listPregs);
+			try{
+				System.out.println("RecibidoPreg: " + result.toString());
+				ArrayList<Pregunta360> listPregs = Pregunta360.getPreguntasByResult(result);		
+				loadData(listPregs);
+			}catch(Exception e){
+				System.out.println("se cayo en ListadoPreguntas e="+e.toString());
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 
 	public class ListadoRespuestas extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("RecibidoResp: " + result.toString());
+			try{
+				System.out.println("RecibidoResp: " + result.toString());
+				JSONObject jsonObject = new JSONObject(result);
+				String respuesta = jsonObject.getString("success");
+				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(actv);
+					builder.setTitle("Evaluación 360");
+					builder.setMessage("Se guardaron todas las respuestas.");
+					builder.setCancelable(false);
+					builder.setPositiveButton("Ok", null);
+					builder.create();
+					builder.show();
+					FragmentTransaction ft = actv.getSupportFragmentManager().beginTransaction();
+					RolEvaluador fragment = new RolEvaluador();
+					ft.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+					ft.replace(R.id.opcion_detail_container,fragment, "detailFragment").addToBackStack("tag").commit();
+
+				}else{
+					Servicio.mostrarErrorComunicacion("Error: No se pudo guardar las respuestas.",actv);
+				}
+			}catch(Exception e){
+				System.out.println("se cayo en ListadoRespuestas, e="+e.toString());
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
@@ -78,7 +112,7 @@ public class Evaluar extends Fragment {
 		System.out.println("rpta="+geson.toJson(respuestas));
 		
 		ListadoRespuestas lo = new ListadoRespuestas();
-    	String rutaLlamada = Servicio.EnviarRespuestas+"?respuestas="+geson.toJson(respuestas); 
+    	String rutaLlamada = Servicio.EnviarRespuestas+"?respuestas="+geson.toJson(respuestas)+"&tablaEvaluadorID="+evaluado.ID; 
     	System.out.println("Ruta-Hijos="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
 	}
@@ -91,6 +125,7 @@ public class Evaluar extends Fragment {
 			super(context);
 			this.setNumStars(5);
 			this.setStepSize(1);
+			
 			// TODO Auto-generated constructor stub
 		}
 		
@@ -121,6 +156,7 @@ public class Evaluar extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView  = inflater.inflate(R.layout.evaluar,container, false);
+		actv = getActivity();
 		contexto = rootView.getContext();
 		rootView.findViewById(R.layout.evaluar);
 		
@@ -142,7 +178,7 @@ public class Evaluar extends Fragment {
 		
 
 		ListadoPreguntas lo = new ListadoPreguntas();
-    	String rutaLlamada = Servicio.ListarPreguntas+"?idEvaluado="+evaluado.evaluado.ID+"&idProcesoEvaluacion="+evaluado.ProcesoEnElQueParticipanID; 
+    	String rutaLlamada = Servicio.ListarPreguntas+"?idEvaluador="+LoginActivity.getUsuario().getID()+"&idProcesoEvaluacion="+evaluado.ProcesoEnElQueParticipanID+"&idColaboradorEvaluado="+evaluado.evaluado.ID; 
     	System.out.println("Ruta-Hijos="+rutaLlamada);
 		Servicio.llamadaServicio(this.getActivity(), lo,rutaLlamada); //SE LLAMA A VER MIS OBJETIVOS DEFINIDOS PARA MI
 

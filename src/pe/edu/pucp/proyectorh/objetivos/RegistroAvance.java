@@ -65,9 +65,13 @@ public class RegistroAvance extends Fragment {
 	public class ListadoObjetivos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
-			loadData();
+			try{
+				System.out.println("Recibido: " + result.toString());
+				listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);		
+				loadData();
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
@@ -200,30 +204,34 @@ public class RegistroAvance extends Fragment {
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			listaPeriodos = Periodo.getPeriodosByResult(result);
-			System.out.println("result="+result);
-			for(int i=0; i<listaPeriodos.size(); i++){
-				System.out.println("aumenta periodo="+listaPeriodos.get(i).Nombre);
-				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+			try{
+				listaPeriodos = Periodo.getPeriodosByResult(result);
+				System.out.println("result="+result);
+				for(int i=0; i<listaPeriodos.size(); i++){
+					System.out.println("aumenta periodo="+listaPeriodos.get(i).Nombre);
+					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+				}
+					
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerPeriodo.setAdapter(dataAdapter);
+					
+				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						periodoBSCActual = listaPeriodos.get(pos).BSCID;
+						System.out.println("periodo seleccionado="+periodoBSCActual);
+						listarObjetivos();
+					}
+					
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+							// TODO Auto-generated method stub
+					}
+				});
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
-				
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-				
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoBSCActual = listaPeriodos.get(pos).BSCID;
-					System.out.println("periodo seleccionado="+periodoBSCActual);
-					listarObjetivos();
-				}
-				
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-				}
-			});
 		}
 	}
 	

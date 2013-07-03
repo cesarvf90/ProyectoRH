@@ -41,18 +41,26 @@ public class RolEvaluador extends Fragment {
 	public class ListadoProcesos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			ArrayList<ProcesoEvaluacion360> listProcesos = ProcesoEvaluacion360.getProcesosByResult(result);		
-			loadData(listProcesos);
+			try{
+				System.out.println("Recibido: " + result.toString());
+				ArrayList<ProcesoEvaluacion360> listProcesos = ProcesoEvaluacion360.getProcesosByResult(result);		
+				loadData(listProcesos);
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
 	public class ListadoEvaluados extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("Recibido: " + result.toString());
-			ArrayList<Evaluados360> listEvaluados = Evaluados360.getEvaluadosByResult(result);		
-			loadDataChild(listEvaluados);
+			try{
+				System.out.println("Recibido: " + result.toString());
+				ArrayList<Evaluados360> listEvaluados = Evaluados360.getEvaluadosByResult(result);		
+				loadDataChild(listEvaluados);
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
