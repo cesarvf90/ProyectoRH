@@ -26,8 +26,8 @@
             android:id="@+id/detalleofertas_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
             android:layout_gravity="left|center_vertical"
+            android:layout_weight="3"
             android:paddingTop="10px"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
@@ -57,62 +57,61 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-				android:paddingBottom="25px"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingBottom="25px" >
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:layout_height="70sp"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Puesto laboral:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Área:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Solicitante:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Fecha solicitud:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"    
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Fase actual:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
-                    android:text="Número postulantes:"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="20px"
+                    android:text="Nro postulantes:"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -125,49 +124,55 @@
                 <TextView
                     android:id="@+id/rec_ofertas_puesto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
+                    android:layout_height="70sp"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_ofertas_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
-
+                
                 <TextView
                     android:id="@+id/rec_ofertas_solicitante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_ofertas_fechasolicitud"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_ofertas_faseactual"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_ofertas_numeropostulantes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
@@ -176,8 +181,8 @@
             android:id="@+id/infopostulante_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="#1d943b"
             android:paddingLeft="10px"
-			android:background="#1d943b"
             android:textColor="@android:color/white"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
@@ -190,52 +195,51 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
                 android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Nombre:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Apellidos"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
-                    android:text="Documento de identidad:"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
+                    android:text="Doc. de identidad:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
                     android:text="Centro de estudios:"
                     android:textColor="@android:color/black"
-                    android:paddingBottom="10px"
                     android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:paddingLeft="20px"
-					android:text="Grado académico:"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:paddingLeft="20px"
+                    android:text="Grado académico:"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -249,40 +253,50 @@
                     android:id="@+id/rec_postulante_nombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_postulante_apellidos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_postulante_docidentidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_postulante_centroestudios"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rec_postulante_gradoacademico"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:paddingBottom="10px"
+                    android:text="  "
+                    android:paddingLeft="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>

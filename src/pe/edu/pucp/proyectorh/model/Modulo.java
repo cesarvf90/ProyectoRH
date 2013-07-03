@@ -169,6 +169,7 @@ public class Modulo {
 			Usuario usuario) {
 		int idSecuencial = 1;
 		List<ModuloItem> submodulos = new ArrayList<ModuloItem>();
+
 		if (usuario.getRoles().get("Objetivos Empresariales").isPermiso()) {
 			OBJETIVOS_EMPRESARIALES = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(OBJETIVOS_EMPRESARIALES,
@@ -198,6 +199,7 @@ public class Modulo {
 			MONITOREO = String.valueOf(idSecuencial++);
 			submodulos.add(new ModuloItem(MONITOREO, "Monitoreo"));
 		}
+
 		return submodulos;
 	}
 

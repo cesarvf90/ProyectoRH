@@ -10,6 +10,7 @@ import pe.edu.pucp.proyectorh.model.*;
 import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 public class VisualizacionAvance extends Fragment {
 	View rootView;
 	Context contexto;
+	FragmentActivity actv;
 	
 	ExpandableListView listaObjs;
 	
@@ -48,31 +50,35 @@ public class VisualizacionAvance extends Fragment {
 	
 	public class ListadoPeriodos extends AsyncCall {
 		@Override
-		protected void onPostExecute(String result) {		
-			listaPeriodos = Periodo.getPeriodosByResult(result);
-			for(int i=0; i<listaPeriodos.size(); i++){
-				listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+		protected void onPostExecute(String result) {
+			try{
+				listaPeriodos = Periodo.getPeriodosByResult(result);
+				for(int i=0; i<listaPeriodos.size(); i++){
+					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+				}
+					
+				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinnerPeriodo.setAdapter(dataAdapter);
+					
+				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+						periodoBSCActual = listaPeriodos.get(pos).BSCID;
+						System.out.println("periodo seleccionado="+periodoBSCActual);
+						listarObjetivos();
+							 
+						//EMF-//actualizaTabs();
+					}
+					
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+							// TODO Auto-generated method stub
+					}
+				});
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
-				
-			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinnerPeriodo.setAdapter(dataAdapter);
-				
-			spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-					periodoBSCActual = listaPeriodos.get(pos).BSCID;
-					System.out.println("periodo seleccionado="+periodoBSCActual);
-					listarObjetivos();
-						 
-					//EMF-//actualizaTabs();
-				}
-				
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-				}
-			});
 		}
 	}
 	
@@ -89,11 +95,15 @@ public class VisualizacionAvance extends Fragment {
 	public class ListadoObjetivos extends AsyncCall {
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("RecibidoListadoObj: " + result.toString());
-			ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);	
-			groups = new ArrayList<ObjetivosBSC>();
-			childs = new ArrayList<ArrayList<AvanceDTO>>();
-			loadData(listObjetivosBSC);
+			try{
+				System.out.println("RecibidoListadoObj: " + result.toString());
+				ArrayList<ObjetivosBSC> listObjetivosBSC = ObjetivosBSC.getObjetivosByResult(result);	
+				groups = new ArrayList<ObjetivosBSC>();
+				childs = new ArrayList<ArrayList<AvanceDTO>>();
+				loadData(listObjetivosBSC);
+			}catch(Exception e){
+				Servicio.mostrarErrorComunicacion(e.toString(),actv);
+			}
 		}
 	}
 	
@@ -115,6 +125,7 @@ public class VisualizacionAvance extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView  = inflater.inflate(R.layout.visualizacion_avance,container, false);
 		contexto = rootView.getContext();
+		actv = getActivity();
 		rootView.findViewById(R.layout.visualizacion_avance);
 		
 		Resources res = getResources();

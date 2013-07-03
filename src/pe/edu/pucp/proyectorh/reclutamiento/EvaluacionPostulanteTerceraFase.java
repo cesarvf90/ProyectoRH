@@ -211,6 +211,11 @@ public class EvaluacionPostulanteTerceraFase extends Fragment {
 				.findViewById(R.id.ratingPregunta3);
 		RatingBar ratingPregunta4 = (RatingBar) rootView
 				.findViewById(R.id.ratingPregunta4);
+		
+		ratingPregunta1.setStepSize(1);
+		ratingPregunta2.setStepSize(1);
+		ratingPregunta3.setStepSize(1);
+		ratingPregunta4.setStepSize(1);
 
 		if (numPagina * PREGUNTAS_X_PAGINA < funciones.size()) {
 			pregunta1Text.setText(numPagina
