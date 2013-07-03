@@ -156,7 +156,7 @@ public class MisSubordinados extends Fragment {
 		String direccionDeDestino = Servicio.ConsultarSubordinados + "?deEsteColaborador=" + LoginActivity.usuario.getID();
 //		String direccionDeDestino = "http://dp2kendo.apphb.com/Evaluacion360/GestorDatosDeColaboradores/conocerEquipoDeTrabajo?deEsteColaborador=23";
 		
-		
+		System.out.println("pide="+direccionDeDestino);
 		new UnaConsultaDeDatos().execute(direccionDeDestino);
 		
 		ArrayList<String> empleadosConSusDatos = new ArrayList<String>();

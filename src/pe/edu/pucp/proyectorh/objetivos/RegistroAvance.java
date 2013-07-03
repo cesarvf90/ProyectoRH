@@ -134,7 +134,7 @@ public class RegistroAvance extends Fragment {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 				layAux.objetivoID=listObjetivosBSC.get(pos).ID;
 				System.out.println("obj seleccionado="+layAux.objetivoID);
-				layAux.porcentaje.setText(listObjetivosBSC.get(pos).AvanceFinal);
+				layAux.porcentaje.setText(listObjetivosBSC.get(pos).AvanceFinaldeAlgunProceso);
 			}
 			
 			@Override
