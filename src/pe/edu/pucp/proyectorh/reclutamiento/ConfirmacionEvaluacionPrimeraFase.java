@@ -251,7 +251,7 @@ public class ConfirmacionEvaluacionPrimeraFase extends Fragment {
 		try {
 			registroObject.put("idPostulante", postulante.getID());
 			registroObject.put("idOfertaLaboral", oferta.getID());
-			registroObject.put("descripcionFase", "Aprobado RRHH");
+			registroObject.put("descripcionFase", "Registrado");
 			JSONObject evaluacionObject = new JSONObject();
 			evaluacionObject.put("FechaInicio", evaluacion.getFechaInicio());
 			evaluacionObject.put("FechaFin", evaluacion.getFechaFin());
