@@ -121,8 +121,8 @@ public class SemanaFragment extends Fragment {
 
 				// Se evaluan las horas para ubicarlo con margenes y longitud
 				RelativeLayout.LayoutParams layoutParametros = new RelativeLayout.LayoutParams(
-						LayoutParams.FILL_PARENT, obtenerHorasDuracion(evento)
-								* UNA_HORA);
+						LayoutParams.FILL_PARENT,
+						(int) (obtenerHorasDuracion(evento) * UNA_HORA));
 				layoutParametros.topMargin = obtenerHoraInicial(evento)
 						* UNA_HORA;
 
@@ -170,7 +170,9 @@ public class SemanaFragment extends Fragment {
 		String fecha[] = evento.getFechaInicio().split("/");
 		int diaEvento = Integer.parseInt(fecha[0]);
 		int mesEvento = Integer.parseInt(fecha[1]);
-		if (mesEvento != (month.get(Calendar.MONTH) + 1)) {
+		int anioEvento = Integer.parseInt(fecha[2].substring(0, 4));
+		if (mesEvento != (month.get(Calendar.MONTH) + 1)
+				|| (anioEvento != month.get(Calendar.YEAR))) {
 			return false;
 		}
 		if ((diaEvento >= primerDiaSemana) && (diaEvento <= ultimoDiaSemana)) {
@@ -205,7 +207,7 @@ public class SemanaFragment extends Fragment {
 		return fechaInicio.getHours();
 	}
 
-	private int obtenerHorasDuracion(Evento evento) {
+	private double obtenerHorasDuracion(Evento evento) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy HH:mm:ss");
 		Date fechaInicio = new Date();
 		Date fechaFin = new Date();
@@ -215,7 +217,10 @@ public class SemanaFragment extends Fragment {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return fechaFin.getHours() - fechaInicio.getHours();
+		double diferenciaHoras = (fechaFin.getHours() - fechaInicio.getHours());
+		double diferenciaMinutos = (fechaFin.getMinutes() - fechaInicio
+				.getMinutes()) / 60.0;
+		return diferenciaHoras + diferenciaMinutos;
 	}
 
 	/**

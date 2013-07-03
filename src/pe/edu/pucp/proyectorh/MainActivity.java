@@ -2,9 +2,7 @@ package pe.edu.pucp.proyectorh;
 
 import pe.edu.pucp.proyectorh.lineadecarrera.CandidatosxPuesto;
 import pe.edu.pucp.proyectorh.lineadecarrera.ComparaCapacidad;
-import pe.edu.pucp.proyectorh.objetivos.MisSubordinados;
 import pe.edu.pucp.proyectorh.connection.DataBaseContactosConnection;
-import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluado;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluadoEver;
 import pe.edu.pucp.proyectorh.evaluacion360.RolEvaluador;
 import pe.edu.pucp.proyectorh.miinformacion.AgendaFragment;
@@ -12,7 +10,6 @@ import pe.edu.pucp.proyectorh.miinformacion.ConsultarEquipoTrabajoFragment;
 import pe.edu.pucp.proyectorh.miinformacion.ContactosFragment;
 import pe.edu.pucp.proyectorh.miinformacion.VisualizarInfoColaboradoFragment;
 import pe.edu.pucp.proyectorh.model.Modulo;
-import pe.edu.pucp.proyectorh.model.Modulo.ModuloItem;
 import pe.edu.pucp.proyectorh.objetivos.MisObjetivos;
 import pe.edu.pucp.proyectorh.objetivos.Monitoreo;
 import pe.edu.pucp.proyectorh.objetivos.ObjetivosEmpresa;

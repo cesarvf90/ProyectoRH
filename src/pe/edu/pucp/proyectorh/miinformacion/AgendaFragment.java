@@ -129,8 +129,6 @@ public class AgendaFragment extends Fragment {
 					int diaSelecccionado = Integer
 							.valueOf(adapter.days[position]);
 					Calendar diaEscogido = new GregorianCalendar();
-					// diaEscogido.set(month.get(Calendar.YEAR),
-					// month.get(Calendar.MONTH) - 1, diaSelecccionado);
 					diaEscogido.set(month.get(Calendar.YEAR),
 							month.get(Calendar.MONTH), diaSelecccionado);
 					System.out.println("Día escogido: "
@@ -153,8 +151,6 @@ public class AgendaFragment extends Fragment {
 					int diaSelecccionado = Integer
 							.valueOf(adapter.days[position]);
 					Calendar diaEscogido = new GregorianCalendar();
-					// diaEscogido.set(month.get(Calendar.YEAR),
-					// month.get(Calendar.MONTH) - 1, diaSelecccionado);
 					diaEscogido.set(month.get(Calendar.YEAR),
 							month.get(Calendar.MONTH), diaSelecccionado);
 					System.out.println("Día escogido: "
@@ -235,10 +231,11 @@ public class AgendaFragment extends Fragment {
 			String[] dateArr = dateFormat.format(fechaActual).split("/");
 			Date fechaDesdeDate = fechaActual;
 			Date fechaHastaDate = fechaActual;
-			fechaDesdeDate.setMonth(Integer.parseInt(dateArr[1]) - 3);
+			fechaDesdeDate.setMonth(Integer.parseInt(dateArr[1]) - 4);
 			String fechaDesde = dateFormat.format(fechaDesdeDate)
 					+ "%2000:00:00";
-			fechaHastaDate.setMonth(Integer.parseInt(dateArr[1]) + 3);
+			fechaHastaDate.setMonth(Integer.parseInt(dateArr[1]) + 4);
+			fechaHastaDate.setYear(Integer.parseInt(dateArr[2]) + 1);
 			String fechaHasta = dateFormat.format(fechaHastaDate)
 					+ "%2023:59:59";
 			String request = Servicio.ObtenerEventos + "?colaboradorID="
