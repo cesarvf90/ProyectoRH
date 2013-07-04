@@ -63,8 +63,9 @@
                 android:paddingBottom="25px" >
 
                 <TextView
+                    android:id="@+id/rec_puesto_label"
                     android:layout_width="match_parent"
-                    android:layout_height="70sp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
                     android:text="Puesto laboral:"
@@ -126,7 +127,7 @@
                 <TextView
                     android:id="@+id/rec_ofertas_puesto"
                     android:layout_width="match_parent"
-                    android:layout_height="70sp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="10dp"
                     android:textColor="@android:color/black"

@@ -328,7 +328,24 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
 		//mostrarTexto(R.id.detalleofertas_title, oferta.toString());
-		mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());
+		//mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());
+		
+		TextView puesto = (TextView) rootView
+				.findViewById(R.id.rec_ofertas_puesto);
+		TextView puestolabel = (TextView) rootView
+				.findViewById(R.id.rec_puesto_label);
+		if (oferta.getPuesto().getNombre() != null) {
+			int cantidadCaracteresPuestoOferta = oferta.getPuesto().getNombre().length();
+			if (cantidadCaracteresPuestoOferta >= 28) {
+				puesto.setHeight(70);
+				puestolabel.setHeight(70);
+			} else {
+				puesto.setHeight(47);
+				puestolabel.setHeight(47);
+			}
+			System.out.println("length oferta:"+cantidadCaracteresPuestoOferta);
+		}
+		
 		mostrarTexto(R.id.rec_ofertas_area, oferta.getPuesto().getArea()
 				.getNombre());
 		mostrarTexto(R.id.rec_ofertas_solicitante, oferta.getSolicitante());
@@ -337,6 +354,8 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 		mostrarTexto(R.id.rec_ofertas_faseactual, oferta.getFaseActual());
 		mostrarTexto(R.id.rec_ofertas_numeropostulantes,
 				String.valueOf(oferta.getPostulantes().size()));
+		
+		System.out.println("length solicitante: "+oferta.getSolicitante().length());
 	}
 
 	/**
