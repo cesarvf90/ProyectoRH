@@ -35,32 +35,17 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content" />
 	</LinearLayout>
-	
-  	<TableLayout
-            android:orientation="vertical"
-            android:id="@+id/objsHijosMonitoreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >					
-    </TableLayout>
-    
-    <LinearLayout
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-	    	android:layout_height="wrap_content"
-	    	android:gravity="center_horizontal">
-	    
-	         <Button
-		        android:id="@+id/MisObjsDescCambiosMon"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="Descartar Cambios" />
-		    
-		     <Button
-		        android:id="@+id/MisObjsGuardarCambiosMon"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="Guardar Cambios" />
-	    
-    </LinearLayout>	
+	<ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:fillViewport="true">
+	  	<TableLayout
+	            android:orientation="vertical"
+	            android:id="@+id/objsHijosMonitoreo"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent" >					
+	    </TableLayout>
+    </ScrollView>
 
 </LinearLayout>

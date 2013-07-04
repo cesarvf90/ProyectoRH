@@ -108,6 +108,7 @@ public class Servicio {
 
 	public final static String	ListarSubordinados = "";
 	
+	public final static String GuardaAvance = "http://dp2kendo.apphb.com/Objetivos/Acordion/guardaValidacion";
 	// PARA EVALUACION 360
 	public final static String ListarProcesosEvaluacion360 = "http://dp2kendo.apphb.com/Evaluacion360/WSListarProcesosXEvaluador/Read";
 

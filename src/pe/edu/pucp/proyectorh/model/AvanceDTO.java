@@ -9,6 +9,7 @@ public class AvanceDTO {
 	public boolean FueRevisado;
 	public int ValorDelJefe;
 	public String Comentario;
+	public boolean EsRevision;
 
 	public String datos(){
 		return "ID="+ID+",Valor="+Valor+",Comentario="+Comentario;

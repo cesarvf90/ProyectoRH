@@ -122,30 +122,6 @@ public class Monitoreo extends Fragment {
 			String rutaLlamada  = Servicio.ConsultarSubordinados + "?deEsteColaborador=" + LoginActivity.usuario.getID();
 			Servicio.llamadaServicio(this.getActivity(), lp,rutaLlamada);
 
-			 Button descartarCambios = (Button) rootView.findViewById(R.id.MisObjsDescCambiosMon);
-			 descartarCambios.setOnClickListener(new OnClickListener() {
-					  @Override
-					  public void onClick(View v) {
-						  System.out.println("descarta cambios");
-						  mostrarHijos();
-					  }
-				});
-			 
-			 Button guardarCambios = (Button) rootView.findViewById(R.id.MisObjsGuardarCambiosMon);
-			 	guardarCambios.setOnClickListener(new OnClickListener() {
-					  @Override
-					  public void onClick(View v) {
-						  System.out.println("guarda cambios");
-						  //VALIDAR TODOS LOS OBJETIVOS
-						  for(int k=0;k<listadoActual.size();k++){
-								listadoActual.get(k).seElimina=true;
-						  }
-						  if(validaSumas()){
-							  guardaLayout();
-							  eliminaObjetivos();
-						  }
-					  }
-				});
 		return rootView;
 	}
 	
@@ -196,7 +172,13 @@ public class Monitoreo extends Fragment {
 				System.out.println("Recibido pER: " + result.toString());
 				ArrayList<Periodo> listaPeriodos = Periodo.getPeriodosByResult(result);
 				if (listaPeriodos.size()>0){
-					ultimoPeriodo = listaPeriodos.get(listaPeriodos.size()-1).BSCID;
+					for(int i = 0;i<listaPeriodos.size();i++){
+						System.out.println("-->evalua:"+listaPeriodos.get(i).Nombre+" con fe="+listaPeriodos.get(i).FechaFinDisplay);
+						if(listaPeriodos.get(i).FechaFinDisplay.equalsIgnoreCase("Activo")){
+							ultimoPeriodo = listaPeriodos.get(i).BSCID;
+							System.out.println("entra con Per="+ultimoPeriodo);
+						}
+					}
 				}
 				listarObjetivos();				
 			}catch(Exception e){
@@ -242,7 +224,7 @@ public class Monitoreo extends Fragment {
 	    	for(int i=0;i<listObjetivosPadre.size();i++){
 	    		System.out.println("agrega obj="+listObjetivosPadre.get(i).Nombre);
 	    		listaObjetivosPadre.add(listObjetivosPadre.get(i));
-	    		listaNombreObj.add(listObjetivosPadre.get(i).Nombre + " - ("+listObjetivosPadre.get(i).AvanceFinal+"%)");	
+	    		listaNombreObj.add(listObjetivosPadre.get(i).Nombre);	
 	      	}
 	    	
 			ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombreObj);
@@ -315,8 +297,13 @@ public class Monitoreo extends Fragment {
 				lay.addView(fila);
 				TableRow separador_cabecera = agregaSeparadorCabezera();
 				lay.addView(separador_cabecera);
+
 				for(int j=0; j< objBSC.LosProgresos.size();j++){
-					TableFila filita = agregaFilaAvance(objBSC.LosProgresos.get(j));
+					int ultimo=0;
+					if (j==objBSC.LosProgresos.size()-1){
+						ultimo = 1;
+					}
+					TableFila filita = agregaFilaAvance(objBSC.LosProgresos.get(j),ultimo);
 					lay.addView(filita);
 				}
 	    	}
@@ -343,22 +330,20 @@ public class Monitoreo extends Fragment {
 		}
 		    
 
-		public TableFila agregaFilaAvance(AvanceDTO avance){
+		public TableFila agregaFilaAvance(final AvanceDTO avance, int ultimo){
 				final TableFila fila = new TableFila(contexto);
 				String szNombre;
 				String szValor;
-				String szValorJefe;
 			
 				szNombre = avance.Comentario;
 				szValor = String.valueOf(avance.Valor);
-				szValorJefe = String.valueOf(avance.ValorDelJefe);
 				
 				fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		
 			    TextView descripObj = new TextView(contexto);
 			    descripObj.setText(szNombre);
 			    descripObj.setTextSize(16);
-			    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,60));
+			    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,80));
 			    fila.addView(descripObj);
 			    
 			    TextView valor = new TextView(contexto);
@@ -367,292 +352,105 @@ public class Monitoreo extends Fragment {
 			    valor.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
 			    fila.addView(valor);
 			    
-			    TextView valorJefe = new TextView(contexto);
-			    valorJefe.setText(szValorJefe);
+			    final EditText valorJefe = new EditText(contexto);
+			    valorJefe.setText(szValor);
 			    valorJefe.setTextSize(16);
-			    valorJefe.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
+			    valorJefe.setInputType(InputType.TYPE_CLASS_NUMBER);
+			    valorJefe.setVisibility(View.INVISIBLE);
 			    fila.addView(valorJefe);
 			    
+			    final TextView mensaje = new TextView(contexto);
+			    mensaje.setTextSize(16);
+			    mensaje.setVisibility(View.INVISIBLE);
+			    fila.addView(mensaje);
+			    
+			    final Button cambiar = new Button(contexto);
+			    cambiar.setText("Cambiar");
+			    cambiar.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						  System.out.println("cambiar");
+						  cambiaAvance(avance.ID, valorJefe.getText().toString());
+						  cambiar.setVisibility(View.INVISIBLE);
+						  valorJefe.setVisibility(View.INVISIBLE);
+						  mensaje.setText("Cambiado="+valorJefe.getText().toString());
+						  mensaje.setVisibility(View.VISIBLE);
+					  }
+				});
+			    cambiar.setVisibility(View.INVISIBLE);
+			    fila.addView(cambiar);
+			    
+			    
+			    
+			    final Button aprobar = new Button(contexto);
+			    final Button desaprobar = new Button(contexto);
+			    
+			    aprobar.setText("Ok");
+			    aprobar.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						  System.out.println("aprueba");
+						  aprobar.setVisibility(View.INVISIBLE);
+						  desaprobar.setVisibility(View.INVISIBLE);
+						  cambiaAvance(avance.ID, valorJefe.getText().toString());
+						  mensaje.setText("Aprobado");
+						  mensaje.setVisibility(View.VISIBLE);
+					  }
+				});
+			    aprobar.setVisibility(View.INVISIBLE);			 
+			    fila.addView(aprobar);
+			    
+			    desaprobar.setText("No");
+			    desaprobar.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						  System.out.println("aprueba");
+						  aprobar.setVisibility(View.INVISIBLE);
+						  desaprobar.setVisibility(View.INVISIBLE);
+						  valorJefe.setVisibility(View.VISIBLE);
+						  cambiar.setVisibility(View.VISIBLE);
+					  }
+				});
+			    desaprobar.setVisibility(View.INVISIBLE);
+			    fila.addView(desaprobar);
+			    
+			    if(ultimo==1 && avance.EsRevision==false){
+			    	aprobar.setVisibility(View.VISIBLE);
+			    	desaprobar.setVisibility(View.VISIBLE);
+			
+			    }
 			return fila;
 		}
 		    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public boolean validaSumas(){
-		int pesoFinal=0;
-		for( int i = 0; i < lay.getChildCount(); i++ ){
-			  if( lay.getChildAt(i) instanceof TableFila ){
-				  TableFila fila = (TableFila)lay.getChildAt(i);
-				  ObjetivosBSC myObj = new ObjetivosBSC();
-				  try{
-					 myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
-				  }catch(Exception e){
-					  myObj.Peso=0;
-				  }
-				  pesoFinal=pesoFinal+myObj.Peso;
-			  }
+	public void cambiaAvance(int id,String progreso){
+		int valor;
+		try{
+			valor = Integer.parseInt(progreso);
+		}catch(Exception e){
+			valor = 0;
 		}
+		GuardadoAvance lp = new GuardadoAvance(actv);
+		String rutaLlamada  = Servicio.GuardaAvance + "?progresoID=" + id+"&valor="+valor;
+		System.out.println("ruta="+rutaLlamada);
+		Servicio.llamadaServicio(this.getActivity(), lp,rutaLlamada);
+	}
+	
+	
+	public class GuardadoAvance extends AsyncCall {
 		
-		System.out.println("peso final="+pesoFinal);
-		if(pesoFinal==100||pesoFinal==0){
-			return true;
-		}else{
-			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-			builder.setTitle("Error en Suma de Pesos");
-			builder.setMessage("La suma de pesos es "+pesoFinal+" y debería ser 100.\nCorregir por favor.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-	  }
-		return false;
-	}
-	
-	
-	public void guardaLayout(){
-		System.out.println("analiza lay pa guardar");
-		for( int i = 0; i < lay.getChildCount(); i++ ){
-			  if( lay.getChildAt(i) instanceof TableFila ){
-				  TableFila fila = (TableFila)lay.getChildAt(i);
-				  System.out.println("encontro lay de obj="+fila.idObjetivo);
-				  ObjetivosBSC myObj = new ObjetivosBSC();
-				  myObj.ID= fila.idObjetivo;
-				  myObj.Nombre=((EditText)fila.getChildAt(0)).getText().toString();
-				  try{
-					 myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
-				  }catch(Exception e){
-					  myObj.Peso=0;
-				  }
-				  System.out.println("----->Nombre="+myObj.Nombre);
-				  if(!(myObj.Nombre==null || myObj.Nombre=="" || myObj.Nombre.isEmpty())){
-					  validaCambios(myObj,i);
-				  }
-				}
-		  }
-	}
-	
-	public ObjetivosBSC cambiaEstadoNoEliminar(int id){
-		ObjetivosBSC obj = new ObjetivosBSC();
-		for(int i=0;i<listadoActual.size();i++){
-			if(listadoActual.get(i).ID==id){
-				listadoActual.get(i).seElimina=false;
-				break;
-			}
-		}
-		return obj;
-	}
-	
-	public boolean comparaObjs(ObjetivosBSC obj1, ObjetivosBSC obj2){
-		boolean rpta=true;
-		if(obj1.Nombre==null){
-			obj1.Nombre= "";
-		}
-		if(obj2.Nombre==null){
-			obj2.Nombre= "";
-		}
-		
-		if(obj1.Nombre.compareTo(obj2.Nombre)!=0){
-			rpta=false;
-		}
-		
-		if(obj1.Peso!=obj2.Peso){
-			rpta=false;
-		}
-		
-		return rpta;
-	}
-	
-	
-	public void validaCambios(ObjetivosBSC obj, int contFila){
-		System.out.println("valida de objID="+obj.ID+ " n="+obj.Nombre+" y p="+obj.Peso+ " -tP="+obj.TipoObjetivoBSCID);
-		obj.seElimina=false;
-		cambiaEstadoNoEliminar(obj.ID);
-		if(obj.ID==-1){
-			creaObjetivo(obj,contFila);
-		}else{			
-			if(comparaObjs(obj,getObjLeido(obj.ID))==false){
-				actualizaObjetivo(obj,contFila);	
-			}
-		}
-	}
-	
-	public ObjetivosBSC getObjLeido(int id){
-		ObjetivosBSC obj = new ObjetivosBSC();
-		for(int i=0;i<listadoActual.size();i++){
-			if(listadoActual.get(i).ID==id){
-				obj=listadoActual.get(i);
-				break;
-			}
-		}
-		return obj;
-	}
-	
-	public void creaObjetivo(ObjetivosBSC obj, int contFila){
-		System.out.println("--->Creara");
-		AddObjetivo co = new AddObjetivo(actv);
-		co.obj= obj;
-		co.contFila = contFila;
-		
-		String rutaLlamada="";
-		if(indicador==IND_MISOBJS){
-    		System.out.println("CREAR MIS OBJETIVOS");
-    		rutaLlamada = Servicio.CrearObjetivoPropio+"?ObjetivoPadreID="+objetivoActual+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso;
-    	}else if(indicador==IND_SUBORD){
-    		System.out.println("MIS SUBORDINADOS");
-			rutaLlamada = Servicio.CrearObjetivoSub+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&ObjetivoPadreID="+objetivoActual;
-    	}
-		System.out.println("------->EMF-rutaCrear="+rutaLlamada);
-		
-		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
-	}
-	
-	public void actualizaObjetivo(ObjetivosBSC obj,int contFila){
-		System.out.println("-->Actualizar");
-		UpdateObjetivo co = new UpdateObjetivo(actv);
-		co.obj= obj;
-		
-		String rutaLlamada="";
-		if(indicador==IND_MISOBJS){
-    		System.out.println("ACT MIS OBJETIVOS");
-    		rutaLlamada = Servicio.ActualizaObjetivoPropio+"?ID="+obj.ID+"&ObjetivoPadreID="+objetivoActual+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso;
-    	}else if(indicador==IND_SUBORD){
-    		System.out.println("ACT MIS SUBORDINADOS");
-			rutaLlamada = Servicio.ActualizaObjetivoSub+"?ID="+obj.ID+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&ObjetivoPadreID="+objetivoActual;
-    	}
-		System.out.println("------->EMF-rutaCrear="+rutaLlamada);
-		
-		Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
-	}
-	
-	public void eliminaObjetivos(){
-		System.out.println("eliminar objs");
-		for(int i=0;i<listadoActual.size();i++){
-			System.out.println("-Analiza obj="+listadoActual.get(i).Nombre + " con estado="+listadoActual.get(i).seElimina);
-			if(listadoActual.get(i).seElimina){
-				ObjetivosBSC obj = listadoActual.get(i);
-				System.out.println("--->Eliminara Obj="+obj.Nombre);
-				DeleteObjetivo co = new DeleteObjetivo(actv);
-				co.numObj=i;
-				
-				String rutaLlamada="";
-				if(indicador==IND_MISOBJS){
-		    		System.out.println("ELIM MIS OBJETIVOS");
-		    		rutaLlamada = Servicio.EliminarObjetivoPropio+"?objetivoID="+obj.ID;
-		    	}else if(indicador==IND_SUBORD){
-		    		System.out.println("ELIM MIS SUBORDINADOS");
-					rutaLlamada = Servicio.EliminarObjetivoSub+"?objetivoID="+obj.ID;
-				}
-				System.out.println("------->EMF-rutaCrear="+rutaLlamada);
-
-				Servicio.llamadaServicio(this.getActivity(), co,rutaLlamada);
-			}
-		}
-	}
-	
-	public class AddObjetivo extends AsyncCall {
-		ObjetivosBSC obj;
-		int contFila;
-		public AddObjetivo(Activity activity) {
+		public GuardadoAvance(Activity activity) {
 			super(activity);
 		}
 		@Override
 		protected void onPostExecute(String result) {
-			System.out.println("RecibidoAddObj: " + result.toString());
+			System.out.println("Recibido: " + result.toString());
 			try {
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
-				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					System.out.println("agregara");
-					int idRecibido = jsonObject.getInt("ID");
-					obj.ID = idRecibido;
-					listadoActual.add(obj);
-					System.out.println("agregado obj con id="+obj.ID);
-					
-					((TableFila)lay.getChildAt(contFila)).idObjetivo=idRecibido;
+				ocultarMensajeProgreso();
+				if (!ConstanteServicio.SERVICIO_OK.equals(respuesta)) {					
+					Servicio.mostrarErrorComunicacion("Error al Recibir Respuesta.\nNo se guardo el cambio.\nIntente Nuevamente",actv);
 				}
-				ocultarMensajeProgreso();
-			} catch (Exception e) {
-				ocultarMensajeProgreso();
-				System.out.println("SE CAYO ADD="+e.toString());
-				Servicio.mostrarErrorComunicacion(e.toString(),actv);
-			}
-		}
-	}
-	
-	public class UpdateObjetivo extends AsyncCall {
-		ObjetivosBSC obj;
-		public UpdateObjetivo(Activity activity) {
-			super(activity);
-		}
-		@Override
-		protected void onPostExecute(String result) {
-			System.out.println("RecibidoUpdateObj: " + result.toString());
-			try {
-				JSONObject jsonObject = new JSONObject(result);
-				String respuesta = jsonObject.getString("success");
-				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					System.out.println("modificara");
-					getObjLeido(obj.ID).Nombre = obj.Nombre;
-					getObjLeido(obj.ID).Peso = obj.Peso;
-					System.out.println("mod->obj="+getObjLeido(obj.ID).Nombre+" con p="+getObjLeido(obj.ID).Peso);
-				}
-				ocultarMensajeProgreso();
 			} catch (Exception e) {
 				ocultarMensajeProgreso();
 				System.out.println("SE CAYO ACT="+e.toString());
@@ -661,30 +459,54 @@ public class Monitoreo extends Fragment {
 		}
 	}
 	
-	public class DeleteObjetivo extends AsyncCall {
-		int numObj;
-		public DeleteObjetivo(Activity activity) {
-			super(activity);
-		}
-		@Override
-		protected void onPostExecute(String result) {
-			System.out.println("RecibidoDeleteObj: " + result.toString());
-			try {
-				System.out.println("recibio ok");
-				JSONObject jsonObject = new JSONObject(result);
-				String respuesta = jsonObject.getString("success");
-				if (ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
-					System.out.println("eliminara");
-					listadoActual.remove(numObj);
-				}
-				ocultarMensajeProgreso();
-			} catch (Exception e) {
-				ocultarMensajeProgreso();
-				System.out.println("SE CAYO DEL="+e.toString());
-				Servicio.mostrarErrorComunicacion(e.toString(),actv);
-			}
-		}
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
    
 	

@@ -178,10 +178,18 @@ public class MisObjetivos extends Fragment {
 				  ObjetivosBSC myObj = new ObjetivosBSC();
 				  myObj.ID= fila.idObjetivo;
 				  myObj.Nombre=((EditText)fila.getChildAt(0)).getText().toString();
+				  
 				  try{
 					 myObj.Peso=Integer.parseInt(((EditText)fila.getChildAt(1)).getText().toString());
 				  }catch(Exception e){
 					  myObj.Peso=0;
+				  }
+				  if(indicador==IND_MISOBJS){
+					  try{
+						  myObj.PesoMiObjetivo = Integer.parseInt(((EditText)fila.getChildAt(2)).getText().toString());
+						  }catch(Exception e){
+							  myObj.PesoMiObjetivo=0;
+						  }
 				  }
 				  System.out.println("----->Nombre="+myObj.Nombre);
 				  if(!(myObj.Nombre==null || myObj.Nombre=="" || myObj.Nombre.isEmpty())){
@@ -216,6 +224,9 @@ public class MisObjetivos extends Fragment {
 		}
 		
 		if(obj1.Peso!=obj2.Peso){
+			rpta=false;
+		}
+		if(obj1.PesoMiObjetivo!=obj2.PesoMiObjetivo){
 			rpta=false;
 		}
 		
@@ -256,7 +267,7 @@ public class MisObjetivos extends Fragment {
 		String rutaLlamada="";
 		if(indicador==IND_MISOBJS){
     		System.out.println("CREAR MIS OBJETIVOS");
-    		rutaLlamada = Servicio.CrearObjetivoPropio+"?ObjetivoPadreID="+objetivoActual+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso;
+    		rutaLlamada = Servicio.CrearObjetivoPropio+"?ObjetivoPadreID="+objetivoActual+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&PesoMiObjetivo="+obj.PesoMiObjetivo;
     	}else if(indicador==IND_SUBORD){
     		System.out.println("MIS SUBORDINADOS");
 			rutaLlamada = Servicio.CrearObjetivoSub+"?Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&ObjetivoPadreID="+objetivoActual;
@@ -274,7 +285,7 @@ public class MisObjetivos extends Fragment {
 		String rutaLlamada="";
 		if(indicador==IND_MISOBJS){
     		System.out.println("ACT MIS OBJETIVOS");
-    		rutaLlamada = Servicio.ActualizaObjetivoPropio+"?ID="+obj.ID+"&ObjetivoPadreID="+objetivoActual+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso;
+    		rutaLlamada = Servicio.ActualizaObjetivoPropio+"?ID="+obj.ID+"&ObjetivoPadreID="+objetivoActual+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&PesoMiObjetivo="+obj.PesoMiObjetivo;
     	}else if(indicador==IND_SUBORD){
     		System.out.println("ACT MIS SUBORDINADOS");
 			rutaLlamada = Servicio.ActualizaObjetivoSub+"?ID="+obj.ID+"&Nombre="+obj.Nombre+"&Peso="+obj.Peso+"&ObjetivoPadreID="+objetivoActual;

@@ -15,6 +15,7 @@ import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.*;
@@ -33,9 +34,7 @@ public class RegistroAvance extends Fragment {
 	private ArrayList<ProcesoEvaluacion360> groups;
 	private ArrayList<ArrayList<Evaluados360>> childs;
 	
-	private Spinner spinnerPeriodo;
-	ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
-	List<String> listaNombrePer;
+		ArrayList<Periodo> listaPeriodos = new ArrayList<Periodo>();
 	int periodoBSCActual;	
 	TableLayout lay;
 
@@ -76,7 +75,7 @@ public class RegistroAvance extends Fragment {
 	}
 	
 	public  void registrarAvance(int id,int avance,String descrip){
-		RegistroDeAvance lo = new RegistroDeAvance();
+		RegistroDeAvance lo = new RegistroDeAvance(actv);
     	String rutaLlamada ="";
     	
     	rutaLlamada = Servicio.CrearAvance+"?idObjetivo="+id+"&alcance="+avance+"&descripcion="+descrip; 
@@ -86,16 +85,22 @@ public class RegistroAvance extends Fragment {
 	}
 	
 	public class RegistroDeAvance extends AsyncCall {
+		
+		public RegistroDeAvance(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
 			try {
 				JSONObject jsonObject = new JSONObject(result);
 				String respuesta = jsonObject.getString("success");
-				if (!ConstanteServicio.SERVICIO_OK.equals(respuesta)) {
+				ocultarMensajeProgreso();
+				if (!ConstanteServicio.SERVICIO_OK.equals(respuesta)) {					
 					Servicio.mostrarErrorComunicacion("Error al Recibir Respuesta.\nNo se guardaron los Avances.\nIntente Nuevamente",actv);
 				}
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				System.out.println("SE CAYO ACT="+e.toString());
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -211,28 +216,17 @@ public class RegistroAvance extends Fragment {
 			try{
 				listaPeriodos = Periodo.getPeriodosByResult(result);
 				System.out.println("result="+result);
-				for(int i=0; i<listaPeriodos.size(); i++){
-					System.out.println("aumenta periodo="+listaPeriodos.get(i).Nombre);
-					listaNombrePer.add(listaPeriodos.get(i).Nombre);	
+	
+				if (listaPeriodos.size()>0){
+					for(int i = 0;i<listaPeriodos.size();i++){
+						System.out.println("-->evalua:"+listaPeriodos.get(i).Nombre+" con fe="+listaPeriodos.get(i).FechaFinDisplay);
+						if(listaPeriodos.get(i).FechaFinDisplay.equalsIgnoreCase("Activo")){
+							periodoBSCActual = listaPeriodos.get(i).BSCID;
+							System.out.println("entra con Per="+periodoBSCActual);
+						}
+					}
 				}
-					
-				ArrayAdapter dataAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,listaNombrePer);
-				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spinnerPeriodo.setAdapter(dataAdapter);
-					
-				spinnerPeriodo.setOnItemSelectedListener(new OnItemSelectedListener(){
-					@Override
-					public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-						periodoBSCActual = listaPeriodos.get(pos).BSCID;
-						System.out.println("periodo seleccionado="+periodoBSCActual);
-						listarObjetivos();
-					}
-					
-					@Override
-					public void onNothingSelected(AdapterView<?> arg0) {
-							// TODO Auto-generated method stub
-					}
-				});
+				listarObjetivos();
 			}catch(Exception e){
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
@@ -268,8 +262,6 @@ public class RegistroAvance extends Fragment {
 		
 		lay =  (TableLayout)rootView.findViewById(R.id.layAvance);
 				
-		spinnerPeriodo = (Spinner) rootView.findViewById(R.id.spinnerRegistroPeriodo);
-		listaNombrePer = new ArrayList<String>();
 		ListadoPeriodos lp = new ListadoPeriodos();
 		Servicio.llamadaServicio(this.getActivity(), lp,Servicio.ListarPeriodos);
 
