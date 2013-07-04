@@ -5,13 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.EditText;
+import android.widget.TableRow;
 import android.widget.TextView;
 import pe.edu.pucp.proyectorh.R;
 import pe.edu.pucp.proyectorh.model.Colaborador;
+import pe.edu.pucp.proyectorh.model.ObjetivosBSC;
 //import pe.edu.pucp.proyectorh.evaluacion.ProcesoXEvaluadorXEvaluado;
 import pe.edu.pucp.proyectorh.evaluacion360.ProcesoXEvaluadorXEvaluado;
 
@@ -94,24 +98,31 @@ public class AdaptadorDeEvaluaciones extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
+	      if (convertView == null) {
+	            LayoutInflater infalInflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	            convertView = infalInflater.inflate(R.layout.subordinados_expandablelist_child, null);           
+	        }
+	        
 		ProcesoXEvaluadorXEvaluado pxexe = getChild(groupPosition, childPosition).get(0);
+		String nombre = "Evaluador: "+pxexe.getEvaluador().getNombreCompleto() +".";
+		String estado = "Estado: "+pxexe.getEstado()+".";
+		String nota = "Nota: "+pxexe.getLaCalificacion()+".";
+
+
+		TextView szNombre = (TextView) convertView.findViewById(R.id.misSubEvaluador);
+		szNombre.setText(nombre);
+		szNombre.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,70));
+		szNombre.setTextColor(Color.BLACK);	
 		
-		if (convertView == null) {
-			LayoutInflater procesador = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = procesador.inflate(R.layout.expandable_ofertas_child, null);
-			
-		}
+		TextView szEstado = (TextView) convertView.findViewById(R.id.misSubEstado);
+		szEstado.setText(estado);
+		szEstado.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+		szEstado.setTextColor(Color.BLACK);	
 		
-		TextView elMensaje = (TextView) convertView.findViewById(R.id.TextViewChild01);
-		
-		
-//		if (pxexe.getEstado() == "Pendiente") {
-		if (pxexe.getEstado().compareTo("Pendiente") == 0) {
-			elMensaje.setText(pxexe.getEvaluador().getNombreCompleto() + " lo evalúa. Su exámen esta pendiente.");
-		} else {
-			elMensaje.setText(pxexe.getEvaluador().getNombreCompleto() + " lo evaluó. Su nota final es " + pxexe.getLaCalificacion());
-			
-		}
+		TextView szNota = (TextView) convertView.findViewById(R.id.misSubNota);
+		szNota.setText(nota);
+		szNota.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+		szNota.setTextColor(Color.BLACK);	
 		
 		return convertView;
 		
@@ -149,12 +160,14 @@ public class AdaptadorDeEvaluaciones extends BaseExpandableListAdapter {
 		
 		if (convertView == null) {
 			LayoutInflater procesador = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = procesador.inflate(R.layout.expandable_ofertas_group, null);
+			convertView = procesador.inflate(R.layout.expandablelistview_group, null);
+			convertView.setBackgroundColor(Color.parseColor("#2EFE9A"));
 		}
 		
 		TextView groupTxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
 		
 		groupTxt.setText(subordinado.getNombreCompleto());
+		groupTxt.setTextColor(Color.BLACK);
 		
 		return convertView;
 		

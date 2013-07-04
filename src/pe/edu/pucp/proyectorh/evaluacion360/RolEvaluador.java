@@ -8,6 +8,7 @@ import pe.edu.pucp.proyectorh.services.AsyncCall;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -39,26 +40,37 @@ public class RolEvaluador extends Fragment {
 	}
 
 	public class ListadoProcesos extends AsyncCall {
+		public ListadoProcesos(Activity activity) {
+			super(activity);
+		}
+		
 		@Override
 		protected void onPostExecute(String result) {
 			try{
 				System.out.println("Recibido: " + result.toString());
 				ArrayList<ProcesoEvaluacion360> listProcesos = ProcesoEvaluacion360.getProcesosByResult(result);		
 				loadData(listProcesos);
+				ocultarMensajeProgreso();
 			}catch(Exception e){
+				ocultarMensajeProgreso();
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
 	}
 	
 	public class ListadoEvaluados extends AsyncCall {
+		public ListadoEvaluados(Activity activity) {
+			super(activity);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			try{
 				System.out.println("Recibido: " + result.toString());
 				ArrayList<Evaluados360> listEvaluados = Evaluados360.getEvaluadosByResult(result);		
 				loadDataChild(listEvaluados);
+				ocultarMensajeProgreso();
 			}catch(Exception e){
+				ocultarMensajeProgreso();
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
@@ -133,7 +145,7 @@ public class RolEvaluador extends Fragment {
 	    		groups.add(listProcesos.get(i));
 	      	}
 	    	
-	    	ListadoEvaluados le = new ListadoEvaluados();
+	    	ListadoEvaluados le = new ListadoEvaluados(actv);
 	    	String rutaLlamada ="";
 	    	rutaLlamada = Servicio.ListarMisEvaluados360+"?idUsuario="+LoginActivity.getUsuario().getID(); 
 		    System.out.println("Ruta-Hijos="+rutaLlamada);
@@ -165,7 +177,7 @@ public class RolEvaluador extends Fragment {
     	groups= new ArrayList<ProcesoEvaluacion360>();
     	childs= new ArrayList<ArrayList<Evaluados360>>();
 		listaProcesos.setLongClickable(true);
-		ListadoProcesos lp = new ListadoProcesos();
+		ListadoProcesos lp = new ListadoProcesos(actv);
 		String rutaLlamada = Servicio.ListarProcesosEvaluacion360+"?idUsuario="+LoginActivity.getUsuario().getID();
 		if(modoPrueba==1){
 			llamadaFalsaProcesos();

@@ -22,7 +22,7 @@ public class ObjetivosBSC{
 	public String FechaFinalizacion;
 	public String comentarioUltimoAvance;
 	public int PesoMiObjetivo;
-	public int AvanceFinaldeAlgunProceso;
+	public int AvanceFinalDeAlgunProgeso=0;
 	
 	public boolean seElimina=true;
 	

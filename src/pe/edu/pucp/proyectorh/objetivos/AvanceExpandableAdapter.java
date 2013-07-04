@@ -117,6 +117,7 @@ public class AvanceExpandableAdapter extends BaseExpandableListAdapter {
 
         TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
         grouptxt.setText(group);
+        grouptxt.setTextColor(Color.BLACK);
 
         return convertView;
     }

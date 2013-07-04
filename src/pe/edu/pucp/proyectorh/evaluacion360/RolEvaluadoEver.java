@@ -17,6 +17,7 @@ import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.MisEvaluacionesAdaptador;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -55,11 +56,16 @@ public class RolEvaluadoEver extends Fragment {
 	
 	public void listarProcesos(){
 		String rutaLlamada = Servicio.ConsultarNotasDeProcesoDeEvaluaciones + "?deEsteColaborador=" + LoginActivity.usuario.getID();
-		ListadoProcesos lp = new ListadoProcesos();
+		System.out.println("ruta="+rutaLlamada);
+		ListadoProcesos lp = new ListadoProcesos(actv);
 		Servicio.llamadaServicio(this.getActivity(), lp,rutaLlamada);
 	}
 
 	public class ListadoProcesos extends AsyncCall {
+		public ListadoProcesos(Activity activity) {
+			super(activity);
+		}
+		
 		@Override
 		protected void onPostExecute(String result) {
 			System.out.println("Recibido: " + result.toString());
@@ -114,16 +120,15 @@ public class RolEvaluadoEver extends Fragment {
 				
 				adapter = new EvaluadoExpandableAdapter(contexto, losProcesos);
 				listaProcesos.setAdapter(adapter);
+				ocultarMensajeProgreso();
 
 			} catch (Exception e) {
+				ocultarMensajeProgreso();
 				Servicio.mostrarErrorComunicacion(e.toString(),actv);
 			}
 		}
 	}
-	
-	
-	
-	
+		
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView  = inflater.inflate(R.layout.rol_evaluado,container, false);

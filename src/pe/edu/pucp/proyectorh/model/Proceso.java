@@ -7,31 +7,7 @@ public class Proceso {
 	public String ID;
 	public String elNombre;
 	
-	public static ArrayList<Proceso> tomarDatosTemporales()
-	{
-		ArrayList<Proceso> unosEventosDeEvaluacion = new ArrayList<Proceso>();
-		
-		unosEventosDeEvaluacion.add(new Proceso("1", "Enero 2013"));
-		unosEventosDeEvaluacion.add(new Proceso("2", "Área RR.HH. - Último semestre"));
-		
-		return unosEventosDeEvaluacion;
-	}
-	
-	public static ArrayList<String> entregarListado()
-	{
-		ArrayList<Proceso> periodos = tomarDatosTemporales();
-		
-		ArrayList<String> menuDeProcesos = new ArrayList<String>();
-		
-		for (Proceso evaluacion : periodos)
-		{
-			menuDeProcesos.add(evaluacion.presentadoBrevemente());
-			
-		}
-		
-		return menuDeProcesos;
-		
-	}
+
 
 	public Proceso() {
 		super();

@@ -132,9 +132,13 @@ public class RegistroAvance extends Fragment {
 		spinnerObjetivos.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-				layAux.objetivoID=listObjetivosBSC.get(pos).ID;
-				System.out.println("obj seleccionado="+layAux.objetivoID);
-				layAux.porcentaje.setText(listObjetivosBSC.get(pos).AvanceFinaldeAlgunProceso);
+				if (listObjetivosBSC!=null && listObjetivosBSC.size()>0){
+					layAux.objetivoID=listObjetivosBSC.get(pos).ID;
+					System.out.println("obj seleccionado="+layAux.objetivoID);
+					ObjetivosBSC auxi = listObjetivosBSC.get(pos);
+					System.out.println("val="+auxi.AvanceFinalDeAlgunProgeso);
+					layAux.porcentaje.setText(String.valueOf(auxi.AvanceFinalDeAlgunProgeso));
+				}
 			}
 			
 			@Override

@@ -438,30 +438,46 @@ public class MisObjetivos extends Fragment {
 		fila.flagUlt=flagUltimo;
 		String szNombre ="";
 		String szPeso ="0";
+		String szAporte ="0";
 		//String szCreador=LoginActivity.getUsuario().getUsername();
 		
 		if(objBSC != null){
 			szNombre=objBSC.Nombre;
 			szPeso = Integer.toString(objBSC.Peso);
 			fila.idObjetivo = objBSC.ID;
+			szAporte = Integer.toString(objBSC.PesoMiObjetivo);
 			//szCreador = LoginActivity.getUsuario().getUsername(); //objBSC.CreadorID;
 		}
 		
 		fila.setLayoutParams(new TableLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 
+		int a=85,b=15, c=0;
+		if(indicador==IND_MISOBJS){
+			a=70; b=15; c=15;			
+		}
+		
 	    EditText descripObj = new EditText(contexto);
 	    descripObj.setInputType(InputType.TYPE_CLASS_TEXT);
 
 	    descripObj.setText(szNombre);
-	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+	    descripObj.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,a));
 	    fila.addView(descripObj);
 		
 	    EditText peso = new EditText(contexto);
 	    peso.setInputType(InputType.TYPE_CLASS_NUMBER);
 
 	    peso.setText(szPeso);
-	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+	    peso.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,b));
 	    fila.addView(peso);
+	    
+	    if(indicador==IND_MISOBJS){
+		    EditText aporte = new EditText(contexto);
+		    aporte.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+		    aporte.setText(szAporte);
+		    aporte.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,c));
+		    fila.addView(aporte);		    	
+	    }
 	    
 	    Button eliminarObj = new Button(contexto);
 	    eliminarObj.setText("X");
@@ -611,23 +627,29 @@ public class MisObjetivos extends Fragment {
 		cabecera.setLayoutParams(new TableLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
+		int a=80,b=20, c=0;
+		if(indicador==IND_MISOBJS){
+			a=60; b=20; c=20;			
+		}
+		
 		TextView columna1 = new TextView(contexto);
-	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,80));
+	    columna1.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,a));
 	    columna1.setText("Descripción del Objetivo:");
 	    cabecera.addView(columna1);
 	    
 	    
 	    TextView columna2 = new TextView(contexto);
-	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
+	    columna2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,b));
 	    columna2.setText("Peso:");
 	    cabecera.addView(columna2);
 	    
-	    /*
-	    TextView columna3 = new TextView(contexto);
-	    columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,20));
-	    columna3.setText("Creador:");
-	    cabecera.addView(columna3);
-	    */
+		if(indicador==IND_MISOBJS){
+		    TextView columna3 = new TextView(contexto);
+		    columna3.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,c));
+		    columna3.setText("Aporte:");
+		    cabecera.addView(columna3);
+		}
+		
 	    return cabecera;
 	}
 	

@@ -93,14 +93,14 @@ public class EvaluadoExpandableAdapter extends BaseExpandableListAdapter {
 		
 		TextView mensaje = (TextView) convertView.findViewById(R.id.evaluadoDesc);
 		mensaje.setText(unResultado.getDescripcion());
-		mensaje.setLayoutParams(new TableLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,90));
+		mensaje.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,85));
+		mensaje.setTextColor(Color.BLACK);	
 		System.out.println("res="+unResultado.getDescripcion()+"fin");
 
 		TextView mensaje2 = (TextView) convertView.findViewById(R.id.evaluadoLogrado);
-		mensaje2.setText(" - "+unResultado.getNota() + "/100 ");
-		mensaje2.setLayoutParams(new TableLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,10));
+		mensaje2.setText("  "+unResultado.getNota() + "/100 ");
+		mensaje2.setLayoutParams(new TableRow.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT,15));
+		mensaje2.setTextColor(Color.BLACK);	
 		System.out.println("res2="+unResultado.getNota()+"fin2");
 
 	    return convertView;       
@@ -139,6 +139,7 @@ public class EvaluadoExpandableAdapter extends BaseExpandableListAdapter {
 
         TextView grouptxt = (TextView) convertView.findViewById(R.id.TextViewGroup);
         grouptxt.setText(group);
+        grouptxt.setTextColor(Color.BLACK);	
 
         return convertView;
     }
