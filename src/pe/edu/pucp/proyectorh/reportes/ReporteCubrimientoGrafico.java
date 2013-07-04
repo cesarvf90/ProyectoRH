@@ -137,13 +137,14 @@ public class ReporteCubrimientoGrafico extends Fragment{
 					    TableRow tableRow = new TableRow(getActivity());;
 					    TextView textView;
 
-					    for (int i = 0; i < 4; i++) {
+					    for (int i = 0; i < 5; i++) {
 
 				            textView = new TextView(getActivity());
 				            if (i==0) textView.setText("Puntaje");
 				            if (i==1) textView.setText("Nombres");
 				            if (i==2) textView.setText("Grado");
 				            if (i==3) textView.setText("Universidad");
+				            if (i==4) textView.setText("Resultado");
 				            if (i>0) textView.setPadding(5, 5, 15, 5);
 				            textView.setTextSize(18);
 				            tableRow.addView(textView);
@@ -181,6 +182,20 @@ public class ReporteCubrimientoGrafico extends Fragment{
 				            textView.setTextSize(18);
 				            tableRow.addView(textView);
 				            
+				            textView = new TextView(getActivity());
+				            textView.setText("");
+				            for (int j = 0; j< ofertas.get(procesoSelec).getFases().get(faseSelec + 1).getPostulantes().size();j++){
+								
+								if (ofertas.get(procesoSelec).getFases().get(faseSelec).getPostulantes().get(i).getNombre().equals(ofertas.get(procesoSelec).getFases().get(faseSelec + 1).getPostulantes().get(j).getNombre())){
+									textView.setText("Aprobado");
+									break;
+								}
+				            }
+
+							textView.setPadding(5, 5, 15, 5);
+				            textView.setTextSize(18);
+				            tableRow.addView(textView);
+				               
 				            tableLayout.addView(tableRow);
 							
 							
@@ -563,8 +578,9 @@ public class ReporteCubrimientoGrafico extends Fragment{
 						public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 							
 							procesoSelec=pos;
+							faseSelec=0;
 							displayTitulo.setText("Postulantes por Oferta Laboral");
-							cambiarFase(procesoSelec);
+							cambiarFase(0);
 						}
 						
 					
