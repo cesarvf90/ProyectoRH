@@ -326,7 +326,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
 		//mostrarTexto(R.id.detalleofertas_title, oferta.toString());
-		//mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());
+		mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());
 		
 		TextView puesto = (TextView) rootView
 				.findViewById(R.id.rec_ofertas_puesto);
