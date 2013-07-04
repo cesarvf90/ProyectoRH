@@ -13,23 +13,24 @@
 
         <TextView
             android:id="@+id/menuofertas_title"
-            android:layout_width="350px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:paddingLeft="10px"
-            android:text="@string/menuofertas_title"
+            android:text="Evaluaciones Pendientes\n3ra Fase - Funciones"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/detalleofertas_title"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:paddingTop="10px"
-            android:textColor="@android:color/black"
+            android:background="#1d943b"
+            android:layout_weight="3"            
+            android:paddingLeft="10px"
+            android:textColor="@android:color/white"
+            android:text="Detalles de la oferta laboral"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
     </LinearLayout>

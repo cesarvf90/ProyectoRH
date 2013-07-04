@@ -307,7 +307,8 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	protected void mostrarPostulanteSeleccionado(Postulante postulante) {
-		mostrarTexto(R.id.infopostulante_title, postulante.toString());
+		//mostrarTexto(R.id.infopostulante_title, postulante.toString());
+		mostrarTexto(R.id.infopostulante_title, "Detalles del postulante");
 		mostrarTexto(R.id.rec_postulante_nombre, postulante.getNombres());
 		mostrarTexto(R.id.rec_postulante_apellidos, postulante.getApellidos());
 		mostrarTexto(
@@ -324,7 +325,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	}
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
-		mostrarTexto(R.id.detalleofertas_title, oferta.toString());
+		//mostrarTexto(R.id.detalleofertas_title, oferta.toString());
 		mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());	
 		mostrarTexto(R.id.rec_ofertas_area, oferta.getPuesto().getArea()
 				.getNombre());
@@ -340,9 +341,9 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 	 * Se muestra en blanco todos los campos del postulante
 	 */
 	protected void mostrarPostulanteVacio() {
-		TextView tituloPostulanteText = (TextView) rootView
+		/*TextView tituloPostulanteText = (TextView) rootView
 				.findViewById(R.id.infopostulante_title);
-		tituloPostulanteText.setText(Constante.CADENA_VACIA);
+		tituloPostulanteText.setText(Constante.CADENA_VACIA);*/
 		TextView nombreText = (TextView) rootView
 				.findViewById(R.id.rec_postulante_nombre);
 		nombreText.setText(Constante.CADENA_VACIA);
@@ -370,35 +371,45 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 			return false;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
 			// Se muestra mensaje de servicio no disponible
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pueden obtener los ofertas laborales para evaluación. Intente nuevamente");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Servicio no disponible");
+				builder.setMessage("No se pueden obtener los ofertas laborales para evaluación. Intente nuevamente");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
 			return false;
 		} else {
 			// Se muestra mensaje de la respuesta invalida del servidor
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Problema en el servidor");
-			builder.setMessage("Hay un problema en el servidor.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Problema en el servidor");
+				builder.setMessage("Hay un problema en el servidor.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
 			return false;
 		}
 	}
 
 	private void mostrarMensajeNoHayOfertas() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("No hay ofertas");
-		builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
-		builder.setCancelable(false);
-		builder.setPositiveButton("Ok", null);
-		builder.create();
-		builder.show();
+		try {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("No hay ofertas");
+			builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
+			builder.setCancelable(false);
+			builder.setPositiveButton("Ok", null);
+			builder.create();
+			builder.show();
+		} catch (Exception e) {
+			
+		}
 	}
 
 	private void mostrarTexto(int idTextView, String texto) {

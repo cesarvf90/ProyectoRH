@@ -31,6 +31,7 @@ import pe.edu.pucp.proyectorh.services.ConstanteServicio;
 import pe.edu.pucp.proyectorh.services.ErrorServicio;
 import pe.edu.pucp.proyectorh.services.Servicio;
 import pe.edu.pucp.proyectorh.utils.EstiloApp;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,6 +47,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+@SuppressLint("ValidFragment")
 public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 
 	private View rootView;
@@ -321,14 +323,17 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
 					// Se muestra mensaje de servicio no disponible
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					builder.setTitle("Servicio no disponible");
-					builder.setMessage("No se pudo registrar las respuestas de la evaluación. Intente nuevamente.");
-					builder.setCancelable(false);
-					builder.setPositiveButton("Ok", null);
-					builder.create();
-					builder.show();
+					try {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								getActivity());
+						builder.setTitle("Servicio no disponible");
+						builder.setMessage("No se pudo registrar las respuestas de la evaluación. Intente nuevamente.");
+						builder.setCancelable(false);
+						builder.setPositiveButton("Ok", null);
+						builder.create();
+						builder.show();
+					} catch (Exception e) {
+					}
 				}
 			});
 			return false;
@@ -336,14 +341,17 @@ public class ConfirmacionEvaluacionTerceraFase extends Fragment {
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
 					// Se muestra mensaje de la respuesta invalida del servidor
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					builder.setTitle("Problema en el servidor");
-					builder.setMessage("Hay un problema en el servidor.");
-					builder.setCancelable(false);
-					builder.setPositiveButton("Ok", null);
-					builder.create();
-					builder.show();
+					try {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								getActivity());
+						builder.setTitle("Problema en el servidor");
+						builder.setMessage("Hay un problema en el servidor.");
+						builder.setCancelable(false);
+						builder.setPositiveButton("Ok", null);
+						builder.create();
+						builder.show();
+					} catch (Exception e) {
+					}
 				}
 			});
 			return false;

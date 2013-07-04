@@ -447,23 +447,29 @@ public class EvaluacionPostulantePrimeraFase extends Fragment {
 			return true;
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
 			// Se muestra mensaje de servicio no disponible
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pudo obtener la evaluación. Intente nuevamente");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Servicio no disponible");
+				builder.setMessage("No se pudo obtener la evaluación. Intente nuevamente");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
 			return false;
 		} else {
 			// Se muestra mensaje de la respuesta invalida del servidor
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Problema en el servidor");
-			builder.setMessage("Hay un problema en el servidor.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Problema en el servidor");
+				builder.setMessage("Hay un problema en el servidor.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
 			return false;
 		}
 	}
