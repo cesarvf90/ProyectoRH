@@ -231,11 +231,13 @@ public class AgendaFragment extends Fragment {
 			String[] dateArr = dateFormat.format(fechaActual).split("/");
 			Date fechaDesdeDate = fechaActual;
 			Date fechaHastaDate = fechaActual;
+			// Fecha desde 4 meses atras
 			fechaDesdeDate.setMonth(Integer.parseInt(dateArr[1]) - 4);
 			String fechaDesde = dateFormat.format(fechaDesdeDate)
 					+ "%2000:00:00";
-			fechaHastaDate.setMonth(Integer.parseInt(dateArr[1]) + 4);
-			fechaHastaDate.setYear(Integer.parseInt(dateArr[2]) + 1);
+			// Fecha hasta 1 anio y 4 meses adelante
+			fechaHastaDate.setMonth(Integer.parseInt(dateArr[1]) + 3);
+			fechaHastaDate.setYear(Integer.parseInt(dateArr[2]) - 1900 + 1);
 			String fechaHasta = dateFormat.format(fechaHastaDate)
 					+ "%2023:59:59";
 			String request = Servicio.ObtenerEventos + "?colaboradorID="

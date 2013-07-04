@@ -13,25 +13,27 @@
 
         <TextView
             android:id="@+id/menuofertas_title"
-            android:layout_width="350px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:paddingLeft="10px"
-            android:text="Evaluaciones Pendientes - 1ra Fase"
+            android:text="Evaluaciones Pendientes\n1ra Fase - Competencias"
             android:textColor="@android:color/black"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/detalleofertas_title"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
-            android:layout_weight="3"
-            android:paddingTop="10px"
-            android:textColor="@android:color/black"
+            android:background="#1d943b"
+            android:layout_weight="3"            
+            android:paddingLeft="10px"
+            android:textColor="@android:color/white"
+            android:text="Detalles de la oferta laboral"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
+
     </LinearLayout>
 
     <ExpandableListView
@@ -61,8 +63,9 @@
                 android:paddingBottom="25px" >
 
                 <TextView
+                    android:id="@+id/rec_puesto_label"
                     android:layout_width="match_parent"
-                    android:layout_height="70sp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
                     android:text="Puesto laboral:"
@@ -124,7 +127,7 @@
                 <TextView
                     android:id="@+id/rec_ofertas_puesto"
                     android:layout_width="match_parent"
-                    android:layout_height="70sp"
+                    android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="10dp"
                     android:textColor="@android:color/black"

@@ -309,7 +309,8 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 	}
 
 	protected void mostrarPostulanteSeleccionado(Postulante postulante) {
-		mostrarTexto(R.id.infopostulante_title, postulante.toString());
+		//mostrarTexto(R.id.infopostulante_title, postulante.toString());
+		mostrarTexto(R.id.infopostulante_title, "Detalles del postulante");
 		mostrarTexto(R.id.rec_postulante_nombre, postulante.getNombres());
 		mostrarTexto(R.id.rec_postulante_apellidos, postulante.getApellidos());
 		mostrarTexto(
@@ -326,8 +327,25 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 	}
 
 	protected void mostrarOfertaSeleccionada(OfertaLaboral oferta) {
-		mostrarTexto(R.id.detalleofertas_title, oferta.toString());
+		//mostrarTexto(R.id.detalleofertas_title, oferta.toString());
 		mostrarTexto(R.id.rec_ofertas_puesto, oferta.getPuesto().getNombre());
+		
+		TextView puesto = (TextView) rootView
+				.findViewById(R.id.rec_ofertas_puesto);
+		TextView puestolabel = (TextView) rootView
+				.findViewById(R.id.rec_puesto_label);
+		if (oferta.getPuesto().getNombre() != null) {
+			int cantidadCaracteresPuestoOferta = oferta.getPuesto().getNombre().length();
+			if (cantidadCaracteresPuestoOferta >= 28) {
+				puesto.setHeight(70);
+				puestolabel.setHeight(70);
+			} else {
+				puesto.setHeight(47);
+				puestolabel.setHeight(47);
+			}
+			System.out.println("length oferta:"+cantidadCaracteresPuestoOferta);
+		}
+		
 		mostrarTexto(R.id.rec_ofertas_area, oferta.getPuesto().getArea()
 				.getNombre());
 		mostrarTexto(R.id.rec_ofertas_solicitante, oferta.getSolicitante());
@@ -336,15 +354,17 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 		mostrarTexto(R.id.rec_ofertas_faseactual, oferta.getFaseActual());
 		mostrarTexto(R.id.rec_ofertas_numeropostulantes,
 				String.valueOf(oferta.getPostulantes().size()));
+		
+		System.out.println("length solicitante: "+oferta.getSolicitante().length());
 	}
 
 	/**
 	 * Se muestra en blanco todos los campos del postulante
 	 */
 	protected void mostrarPostulanteVacio() {
-		TextView tituloPostulanteText = (TextView) rootView
+		/*TextView tituloPostulanteText = (TextView) rootView
 				.findViewById(R.id.infopostulante_title);
-		tituloPostulanteText.setText(Constante.CADENA_VACIA);
+		tituloPostulanteText.setText(Constante.CADENA_VACIA);*/
 		TextView nombreText = (TextView) rootView
 				.findViewById(R.id.rec_postulante_nombre);
 		nombreText.setText(Constante.CADENA_VACIA);
@@ -369,6 +389,48 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)
 				&& MENSAJE_NO_HAY_OFERTAS.equals(mensajeRespuesta)) {
 			// Se muestra mensaje de servicio no disponible
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("No hay ofertas");
+				builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
+			return false;
+		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
+			// Se muestra mensaje de servicio no disponible
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Servicio no disponible");
+				builder.setMessage("No se pueden obtener los ofertas laborales para evaluación. Intente nuevamente");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
+			return false;
+		} else {
+			// Se muestra mensaje de la respuesta invalida del servidor
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Problema en el servidor");
+				builder.setMessage("Hay un problema en el servidor.");
+				builder.setCancelable(false);
+				builder.setPositiveButton("Ok", null);
+				builder.create();
+				builder.show();
+			} catch (Exception e) {
+			}
+			return false;
+		}
+	}
+	
+	private void mostrarMensajeNoHayOfertas() {
+		try {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("No hay ofertas");
 			builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
@@ -376,38 +438,9 @@ public class MenuOfertasLaboralesPrimeraFase extends Fragment {
 			builder.setPositiveButton("Ok", null);
 			builder.create();
 			builder.show();
-			return false;
-		} else if (ConstanteServicio.SERVICIO_ERROR.equals(respuestaServidor)) {
-			// Se muestra mensaje de servicio no disponible
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Servicio no disponible");
-			builder.setMessage("No se pueden obtener los ofertas laborales para evaluación. Intente nuevamente");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return false;
-		} else {
-			// Se muestra mensaje de la respuesta invalida del servidor
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Problema en el servidor");
-			builder.setMessage("Hay un problema en el servidor.");
-			builder.setCancelable(false);
-			builder.setPositiveButton("Ok", null);
-			builder.create();
-			builder.show();
-			return false;
+		} catch (Exception e) {
+			
 		}
-	}
-	
-	private void mostrarMensajeNoHayOfertas() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("No hay ofertas");
-		builder.setMessage("No posee ofertas pendientes de evaluación en este momento.");
-		builder.setCancelable(false);
-		builder.setPositiveButton("Ok", null);
-		builder.create();
-		builder.show();
 	}
 
 	private void mostrarTexto(int idTextView, String texto) {
