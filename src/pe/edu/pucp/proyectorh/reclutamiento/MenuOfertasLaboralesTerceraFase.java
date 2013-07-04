@@ -308,7 +308,7 @@ public class MenuOfertasLaboralesTerceraFase extends Fragment {
 
 	protected void mostrarPostulanteSeleccionado(Postulante postulante) {
 		//mostrarTexto(R.id.infopostulante_title, postulante.toString());
-		mostrarTexto(R.id.infopostulante_title, "Detalles del postulante");
+		//mostrarTexto(R.id.infopostulante_title, "Detalles del postulante");
 		mostrarTexto(R.id.rec_postulante_nombre, postulante.getNombres());
 		mostrarTexto(R.id.rec_postulante_apellidos, postulante.getApellidos());
 		mostrarTexto(
