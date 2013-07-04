@@ -37,7 +37,7 @@
 
     <ExpandableListView
         android:id="@+id/evaluar_lista_ofertas"
-        android:layout_width="350px"
+        android:layout_width="360px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/menu_tercera_fase_title_layout" >
@@ -186,6 +186,7 @@
             android:background="#1d943b"
             android:paddingLeft="10px"
             android:textColor="@android:color/white"
+            android:text = "Detalles del postulante"
             android:textSize="@dimen/Title"
             android:textStyle="bold" />
 
@@ -204,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
-                    android:text="Nombre:"
+                    android:text="Nombres:"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
@@ -213,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
-                    android:text="Apellidos"
+                    android:text="Apellidos:"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
